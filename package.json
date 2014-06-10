@@ -1,0 +1,27 @@
+{
+  "name": "bridgedbjs",
+  "version": "0.0.0",
+  "description": "JS client for BridgeDB JS client for BridgeDB.org id mapping framework webservices",
+  "main": "bridgedb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wikipathways/bridgedbjs.git"
+  },
+  "keywords": [
+    "bridgedb",
+    "biology"
+  ],
+  "author": "BridgeDB team",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/wikipathways/bridgedbjs/issues"
+  },
+  "homepage": "https://github.com/wikipathways/bridgedbjs",
+  "dependencies": {
+    "csv": "~0.4.0",
+    "lodash": "~2.4.1"
+  }
+}
