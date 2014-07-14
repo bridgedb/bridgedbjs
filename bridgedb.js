@@ -323,9 +323,19 @@ module.exports = (function(){
       req.end();
   }
 
-  function getXrefAliases(singleSpecies, systemCode, xRefId, callbackOutside) {
-    var path = '/' + encodeURIComponent(singleSpecies) + '/xrefs/' + encodeURIComponent(systemCode) + '/' + encodeURIComponent(xRefId);
-    //console.log(bridgedbUri);
+  function getXrefAliases(args, callbackOutside) {
+    var path;
+    if (!!args.iri) {
+      var iriComponents = args.iri.split('webservice.bridgedb.org');
+      path = iriComponents[iriComponents.length - 1];
+    } else if (!!args.singleSpecies && !!args.systemCode && typeof args.xRefId !== 'undefined') {
+      path = '/' + encodeURIComponent(args.singleSpecies) + '/xrefs/' + encodeURIComponent(args.systemCode) + '/' + encodeURIComponent(args.xRefId);
+    } else {
+      throw new Error('No IRI (URI) specified.');
+    }
+    
+    console.log('path');
+    console.log(path);
 
       var options = {
         host: 'webservice.bridgedb.org',
@@ -342,6 +352,8 @@ module.exports = (function(){
         });
 
         response.on('end', function () {
+          console.log('str');
+          console.log(str);
           //*
           csv().from
           .string(
@@ -349,7 +361,7 @@ module.exports = (function(){
             {delimiter:'\t',
             columns:['xRefId', 'dataSourceName']} )
             .to.array( function(data){
-              callbackOutside(data);
+              callbackOutside(null, data);
             });
         });
       };
@@ -360,6 +372,7 @@ module.exports = (function(){
 
   return {
     convertToEnsembl:convertToEnsembl,
-    getDataSources:getDataSources
+    getDataSources:getDataSources,
+    getXrefAliases:getXrefAliases
   };
 }());

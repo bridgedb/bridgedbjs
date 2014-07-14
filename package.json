@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/wikipathways/bridgedbjs",
   "dependencies": {
-    "csv": "~0.4.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "d3": "~3.4.10",
+    "csv": "~0.2.9"
   }
 }
