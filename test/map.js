@@ -10,7 +10,7 @@ bridgedb.convert({
 //*/
 
 //*
-bridgedb.convert({
+bridgedb.map({
   id: 'http://identifiers.org/uniprot/P38398',
   targetNamespace: 'ncbigene'
 }, function(err, targetIri) {

@@ -253,14 +253,14 @@ module.exports = (function(){
   }
 
   /**
-   * convert
+   * map
    *
    * @param args
    *  targetNamespace required. This namespace is the Miriam/identifiers.org namespace.
    * @param callback
    * @return Array containing IRIs to target database
    */
-  function convert(args, callback) {
+  function map(args, callback) {
     var targetNamespace = args.targetNamespace;
     if (!targetNamespace) {
       return callback('targetNamespace missing');
@@ -271,8 +271,7 @@ module.exports = (function(){
       });
       if (targetReferences.length > 0) {
         var targetIds = targetReferences.map(function(targetReference) {
-          var targetId = targetReference.dbId;
-          return 'http://identifiers.org/' + targetNamespace + '/' + targetId;
+          return targetReference.id;
         });
         return callback(null, targetIds);
       } else {
@@ -488,6 +487,7 @@ module.exports = (function(){
                   }
                   if (!!bridgedbDatabaseMetadataRow.namespace) {
                     xref.namespace = bridgedbDatabaseMetadataRow.namespace;
+                    xref.id = 'http://identifiers.org/' + bridgedbDatabaseMetadataRow.namespace + '/' + xref.dbId;
                   }
                   return mapCallback(null, xref);
                 });
@@ -506,7 +506,7 @@ module.exports = (function(){
   }
 
   return {
-    convert:convert,
+    map:map,
     getXrefs:getXrefs,
     getXrefsNestedForDisplay:getXrefsNestedForDisplay
   };
