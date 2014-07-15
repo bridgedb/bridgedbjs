@@ -151,6 +151,7 @@ module.exports = (function(){
       }
     } else {
       var entityReferenceIdCandidates = [
+        args.entityReference,
         args.id,
         args['@id'],
         args.identifier,
