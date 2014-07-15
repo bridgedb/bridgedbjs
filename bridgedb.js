@@ -24,6 +24,14 @@ module.exports = (function(){
 
   var providedDbId, providedDbName;
 
+  function corsifyBridgedbWebservicesOptions(options) {
+    var corsifiedOptionsHost = 'pointer.ucsf.edu';
+    var corsifiedOptionsPath = '/d3/r/data-sources/bridgedb.php' + options.path;
+    options.host = corsifiedOptionsHost;
+    options.path = corsifiedOptionsPath;
+    return options;
+  }
+
   function getBridgedbDatabaseMetadata(callbackOutside) {
     var that = this;
     if (this.bridgedbDatabaseMetadata) {
@@ -34,7 +42,9 @@ module.exports = (function(){
     var options = {
       host: 'pointer.ucsf.edu',
       path: '/d3/r/data-sources/bridgedb-datasources.php',
-      port: '80'
+      port: '80',
+      withCredentials: false//,
+      //headers: {'custom': 'Custom Header'}
     };
     //*/
 
@@ -43,7 +53,9 @@ module.exports = (function(){
     var options = {
       host: 'svn.bigcat.unimaas.nl',
       path: '/bridgedb/trunk/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt',
-      port: '80'
+      port: '80',
+      withCredentials: false//,
+    //headers: {'custom': 'Custom Header'}
     };
     //*/
 
@@ -184,11 +196,13 @@ module.exports = (function(){
           providedDbId = dbId;
 
           getBridgedbSystemCode(dbName, function(err, systemCode) {
-            var options = {
+            var options = corsifyBridgedbWebservicesOptions({
               host: 'webservice.bridgedb.org',
               path: '/contents',
-              port: '80'
-            };
+              port: '80',
+              withCredentials: false//,
+              //headers: {'custom': 'Custom Header'}
+            });
 
             var callbackOrganismsAvailableAtBridgedb = function(response) {
               var str = '';
@@ -283,17 +297,17 @@ module.exports = (function(){
 
   function getXrefsNestedForDisplay(args, callback) {
     var label = args.label,
-        desc = args.desc;
+        description = args.description;
 
     getXrefs(args, function(err, entityReferenceXrefs) {
-      if (err || typeof entityReferenceXrefs === 'undefined') { //BridgeDb Error
+      if (err || _.isNull(entityReferenceXrefs)) { //BridgeDb Error
         //For unannotated nodes, without dbName or dbId
         var annotationData = {
           'header': label,
-          'description': desc,
+          'description': description,
           'listItems': ['Missing dbId and dbName']
         };
-        callback('No entityReferenceXrefs returned. Likely BridgeDB Error', annotationData);
+        callback('No entityReferenceXrefs returned. Is BridgeDB down?', annotationData);
       }
 
       var currentDataSourceRow;
@@ -352,7 +366,7 @@ module.exports = (function(){
 
         var annotationData = {
           'header': label,
-          'description': desc,
+          'description': description,
           'listItems': nestedListItems
         };
         return callback(null, annotationData);
@@ -386,6 +400,17 @@ module.exports = (function(){
     ]);
   }
 
+  function normalizeText(inputText){
+    // not using \w because we don't want to include the underscore
+    var regexp = /[^A-Za-z0-9]/gi;
+    var alphanumericText = inputText.replace(regexp, '');
+    var normalizedText = alphanumericText;
+    if (!_.isNull(alphanumericText)) {
+      normalizedText = alphanumericText.toUpperCase();
+    }
+    return normalizedText;
+  }
+
   function getBridgedbDatabaseMetadataForDbName(dbName, callback) {
     var bridgedbDatabaseMetadata = this.bridgedbDatabaseMetadata;
     async.waterfall([
@@ -400,14 +425,21 @@ module.exports = (function(){
         }
       },
       function(waterfallCallback) {
+        // first attempt
         var bridgedbDatabaseMetadataForDbNameResults = bridgedbDatabaseMetadata.filter(function(row) { return row.dbName === dbName; });
+
+        // second attempt. if first attempt failed, we get a little looser about the match here on the second attempt.
         if (!bridgedbDatabaseMetadataForDbNameResults || bridgedbDatabaseMetadataForDbNameResults.length === 0) {
-          var regexp = /[^\w]/gi;
-          bridgedbDatabaseMetadataForDbNameResults = bridgedbDatabaseMetadata.filter(function(row) { return row.dbName.replace(regexp, '').toLowerCase() === dbName.replace(regexp, '').toLowerCase(); });
+          bridgedbDatabaseMetadataForDbNameResults = bridgedbDatabaseMetadata.filter(function(row) {
+            return normalizeText(row.dbName) === normalizeText(dbName);
+          });
+
+          // no third attempt. if nothing here, give up.
           if (!bridgedbDatabaseMetadataForDbNameResults || bridgedbDatabaseMetadataForDbNameResults.length === 0) {
             return callback('No BridgeDB database metadata returned for dbName "' + dbName + '"');
           }
         }
+
         return callback(null, bridgedbDatabaseMetadataForDbNameResults[0]);
       }
     ]);
@@ -437,11 +469,13 @@ module.exports = (function(){
   }
 
   function xrefExists(organism, systemCode, dbId, callbackOutside) {
-    var options = {
+    var options = corsifyBridgedbWebservicesOptions({
       host: 'webservice.bridgedb.org',
       path: '/' + organism + '/xrefExists/' + systemCode + '/' + dbId,
       port: '80',
-    };
+      withCredentials: false//,
+      //headers: {'custom': 'Custom Header'}
+    });
 
     var callback = function(response) {
       var str = '';
@@ -460,12 +494,13 @@ module.exports = (function(){
 
   function getXrefs(args, callbackOutside) {
     getBridgedbApiHostAndPathByEntityReference(args, function(err, hostAndPath) {
-      var options = {
+      var options = corsifyBridgedbWebservicesOptions({
         host: hostAndPath.host,
         path: hostAndPath.path,
-        port: '80'//,
+        port: '80',
+        withCredentials: false//,
         //headers: {'custom': 'Custom Header'}
-      };
+      });
 
       var callback = function(response) {
         var str = '';
@@ -474,30 +509,37 @@ module.exports = (function(){
         });
 
         response.on('end', function () {
-          csv().from
-          .string(
-            str,
-            {delimiter:'\t',
-            columns:['dbId', 'dbName']} )
-            .to.array( function(xrefs){
+          var enrichXref = function(xref, enrichXrefCallback) {
+            getBridgedbDatabaseMetadataForDbName(xref.dbName, function(err, bridgedbDatabaseMetadataRow) {
+              if (!!bridgedbDatabaseMetadataRow.type) {
+                xref.type = bridgedbDatabaseMetadataRow.type;
+              }
+              if (!!bridgedbDatabaseMetadataRow.namespace) {
+                xref.namespace = bridgedbDatabaseMetadataRow.namespace;
+                xref.id = 'http://identifiers.org/' + bridgedbDatabaseMetadataRow.namespace + '/' + xref.dbId;
+              }
+              return enrichXrefCallback(null, xref);
+            });
+          };
 
-              var enrichedXref = function(xref, mapCallback) {
-                getBridgedbDatabaseMetadataForDbName(xref.dbName, function(err, bridgedbDatabaseMetadataRow) {
-                  if (!!bridgedbDatabaseMetadataRow.type) {
-                    xref.type = bridgedbDatabaseMetadataRow.type;
-                  }
-                  if (!!bridgedbDatabaseMetadataRow.namespace) {
-                    xref.namespace = bridgedbDatabaseMetadataRow.namespace;
-                    xref.id = 'http://identifiers.org/' + bridgedbDatabaseMetadataRow.namespace + '/' + xref.dbId;
-                  }
-                  return mapCallback(null, xref);
-                });
-              };
-
-              async.map(xrefs, enrichedXref, function(err, enrichedXrefs) {
+          // if no results returned from BridgeDB, just return the provided data, formatted for display
+          if (_.isEmpty(str)) {
+            var xrefs = enrichXref({dbName: providedDbName, dbId: providedDbId}, function(err, enrichedXref) {
+              return callbackOutside(null, [enrichedXref]);
+            });
+          } else {
+            csv().from.string(
+              str,
+              {
+                delimiter: '\t',
+                columns: ['dbId', 'dbName']
+              }
+            ).to.array(function(xrefs){
+              async.map(xrefs, enrichXref, function(err, enrichedXrefs) {
                 callbackOutside(null, enrichedXrefs);
               });
             });
+          }
         });
       };
 
