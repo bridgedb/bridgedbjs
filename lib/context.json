@@ -1,0 +1,15 @@
+{
+  "id": "@id",
+  "bp": {
+    "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+    "@type": "@id"
+  },
+  "dbId": {
+    "@id": "bp:id",
+    "@type": "xsd:string"
+  },
+  "dbName": {
+    "@id": "bp:db",
+    "@type": "xsd:string"
+  }
+}

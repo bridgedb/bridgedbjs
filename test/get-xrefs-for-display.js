@@ -1,4 +1,4 @@
-var bridgedb = require('../bridgedb');
+var bridgedb = require('../index.js');
 
 bridgedb.getXrefsNestedForDisplay({
   //id: 'http://identifiers.org/ncbigene/4292'
