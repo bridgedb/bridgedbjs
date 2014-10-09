@@ -10,7 +10,7 @@ bridgedb1.getOrganismByIdentifier('http://identifiers.org/ncbigene/4292', functi
 });
 //*/
 
-/*
+//*
 bridgedb2.getOrganismByIdentifier('http://identifiers.org/ncbigene/103', function(err, organism) {
   console.log('organism by identifier');
   console.log(JSON.stringify(organism, null, '\t'));
