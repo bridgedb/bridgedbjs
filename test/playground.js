@@ -4,33 +4,36 @@ var bridgedb1 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-
-console.log('bridgedb1');
-console.log(bridgedb1);
-
-//var bridgedb2 = Bridgedb({apiUrlStub: 'http://webservice.bridgedb.org'});
 var bridgedb2 = Bridgedb();
+
 //*
-bridgedb1.xref.getOrganismByIdentifier('http://identifiers.org/ncbigene/4292', function(err, organism) {
+bridgedb1.organism.getByIdentifier('http://identifiers.org/ncbigene/4292', function(err, organism) {
   console.log('organism by identifier1');
   console.log(JSON.stringify(organism, null, '\t'));
-  console.log('bridgedb1a');
-  console.log(bridgedb1);
-  console.log('bridgedb2a');
-  console.log(bridgedb2);
 });
 //*/
 
 //*
-bridgedb2.xref.getOrganismByIdentifier('http://identifiers.org/ncbigene/103', function(err, organism) {
-  console.log('organism by identifier2');
+bridgedb2.organism.getByIdentifier('http://identifiers.org/ncbigene/174034', function(err, organism) {
+  console.log('organism by identifier2 should be c. elegans');
   console.log(JSON.stringify(organism, null, '\t'));
-  console.log('bridgedb1b');
+});
+//*/
+
+//*
+bridgedb1.organism.getByIdentifier('http://identifiers.org/ncbigene/103', function(err, organism) {
+  console.log('organism by identifier3 should be Homo sapiens');
+  console.log(JSON.stringify(organism, null, '\t'));
+  console.log('bridgedb1');
   console.log(bridgedb1);
-  console.log('bridgedb2b');
+  console.log('bridgedb2');
   console.log(bridgedb2);
 });
 //*/
+
+// C. elegans result
+//http://identifiers.org/ncbigene/174034
+//http://webservice.bridgedb.org/Caenorhabditis elegans/xrefs/L/174034
 
 /*
 bridgedb2.getOrganismByIdentifier('http://identifiers.org/ncbigene/103', function(err, organism) {
