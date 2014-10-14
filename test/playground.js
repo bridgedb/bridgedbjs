@@ -1,9 +1,15 @@
 var Bridgedb = require('../index.js');
 var _ = require('lodash');
-var bridgedb1 = Bridgedb({urlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php'});
-  console.log('bridgedb1');
-  console.log(bridgedb1);
-var bridgedb2 = Bridgedb({urlStub: 'http://webservice.bridgedb.org'});
+var bridgedb1 = Bridgedb({
+  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+});
+
+console.log('bridgedb1');
+console.log(bridgedb1);
+
+//var bridgedb2 = Bridgedb({apiUrlStub: 'http://webservice.bridgedb.org'});
+var bridgedb2 = Bridgedb();
 //*
 bridgedb1.xref.getOrganismByIdentifier('http://identifiers.org/ncbigene/4292', function(err, organism) {
   console.log('organism by identifier1');
