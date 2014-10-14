@@ -31,6 +31,14 @@ bridgedb1.organismService.getByIdentifier('http://identifiers.org/ncbigene/103',
 });
 //*/
 
+bridgedb1.xref.get({
+  id: 'http://identifiers.org/ncbigene/4292'
+}, function(err, entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+
+
 // C. elegans result
 //http://identifiers.org/ncbigene/174034
 //http://webservice.bridgedb.org/Caenorhabditis elegans/xrefs/L/174034
