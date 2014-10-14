@@ -1,8 +1,8 @@
-var Bridgedb = require('../index.js');
+var bridgedb = require('../index.js');
 var _ = require('lodash');
-var bridgedb1 = Bridgedb();
-bridgedb1.init({urlStub: 'pointer.ucsf.edu/d3/r/data-sources/bridgedb.php'});
-var bridgedb2 = Bridgedb();
+var bridgedb1 = bridgedb();
+var bridgedb2 = bridgedb();
+
 //*
 bridgedb1.getOrganismByIdentifier('http://identifiers.org/ncbigene/4292', function(err, organism) {
   console.log('organism by identifier1');
