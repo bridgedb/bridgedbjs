@@ -1,15 +1,28 @@
 {
-  "id": "@id",
   "bp": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
   },
-  "dbId": {
+  "db": {
+    "@id": "bp:db",
+    "@type": "xsd:string"
+  },
+  "id": "@id",
+  "identifier": {
     "@id": "bp:id",
     "@type": "xsd:string"
   },
-  "dbName": {
-    "@id": "bp:db",
+  "idot": {
+    "@id": "http://identifiers.org/terms#",
+    "@type": "@id"
+  },
+  "idRegexPattern": {
+    "@id": "idot:idRegexPattern",
     "@type": "xsd:string"
-  }
+  },
+  "namespace": {
+    "@id": "idot:namespace",
+    "@type": "xsd:string"
+  },
+  "type": "@type"
 }
