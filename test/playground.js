@@ -33,7 +33,7 @@ bridgedb1.organismService.getByIdentifier('http://identifiers.org/ncbigene/103',
 });
 //*/
 
-/*
+//*
 bridgedb1.xref.get({
   id: 'http://identifiers.org/ncbigene/4292'
 }, function(err, entityReferenceXrefs) {
@@ -43,7 +43,7 @@ bridgedb1.xref.get({
 //*/
 
 
-/*
+//*
 bridgedb1.entityReferenceService.getByDbAndIdentifierStreaming({
   db: 'Entrez Gene',
   identifier: '103'
@@ -62,7 +62,7 @@ bridgedb1.entityReferenceService.get('http://webservice.bridgedb.org/Human/xrefs
 });
 //*/
 
-/*
+//*
 bridgedb1.entityReferenceService.get({
   bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 }).each(function(entityReferenceXrefs) {
@@ -71,7 +71,7 @@ bridgedb1.entityReferenceService.get({
 });
 //*/
 
-/*
+//*
 bridgedb1.entityReferenceService.get({
   id: 'http://identifiers.org/ncbigene/103'
 }).each(function(entityReferenceXrefs) {
@@ -80,26 +80,36 @@ bridgedb1.entityReferenceService.get({
 });
 //*/
 
-/*
-bridgedb1.entityReferenceService.getByIriStreaming({
-  id: 'http://identifiers.org/ncbigene/103'
+//*
+bridgedb1.entityReferenceService.getByIri({
+  iri: 'http://identifiers.org/ncbigene/103'
 }).each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
 //*/
 
-/*
+//*
 bridgedb1.entityReferenceService.getByBridgedbUrlStreaming('http://webservice.bridgedb.org/Human/xrefs/L/1234').each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
 //*/
 
-/*
+//*
 bridgedb1.entityReferenceService.getByBridgedbUrlWithCallback('http://webservice.bridgedb.org/Human/xrefs/L/1234', function(err, entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
+//*
+bridgedb1.organismService.getNameByIri({
+  iri: 'http://identifiers.org/ncbigene/4292',
+  language: 'latin'
+}).each(function(organismName) {
+  console.log('organism latin name for http://identifiers.org/ncbigene/4292');
+  console.log(organismName);
 });
 //*/
 
