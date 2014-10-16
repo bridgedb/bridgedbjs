@@ -1,5 +1,7 @@
-var Bridgedb = require('../index.js');
 var _ = require('lodash');
+var highland = require('highland');
+var Bridgedb = require('../index.js');
+
 var bridgedb1 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
@@ -40,12 +42,26 @@ bridgedb1.xref.get({
 });
 //*/
 
-//*
-bridgedb1.entityReferenceService.getByBridgedbUrlWithCallback('http://webservice.bridgedb.org/Human/xrefs/L/1234', function(err, entityReferenceXrefs) {
+
+/*
+bridgedb1.entityReferenceService.getByDbAndIdentifierStreaming({
+  db: 'Entrez Gene',
+  identifier: '103'
+}).each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
 //*/
+
+//*
+bridgedb1.entityReferenceService.getByIriStreaming({
+  id: 'http://identifiers.org/ncbigene/103'
+}).each(function(entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
 /*
 bridgedb1.entityReferenceService.getByBridgedbUrlStreaming('http://webservice.bridgedb.org/Human/xrefs/L/1234').each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
@@ -53,6 +69,12 @@ bridgedb1.entityReferenceService.getByBridgedbUrlStreaming('http://webservice.br
 });
 //*/
 
+/*
+bridgedb1.entityReferenceService.getByBridgedbUrlWithCallback('http://webservice.bridgedb.org/Human/xrefs/L/1234', function(err, entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
 
 // C. elegans result
 //http://identifiers.org/ncbigene/174034
