@@ -53,7 +53,34 @@ bridgedb1.entityReferenceService.getByDbAndIdentifierStreaming({
 });
 //*/
 
+
 //*
+bridgedb1.entityReferenceService.get('http://webservice.bridgedb.org/Human/xrefs/L/1234')
+.each(function(entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
+/*
+bridgedb1.entityReferenceService.get({
+  bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+}).each(function(entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
+/*
+bridgedb1.entityReferenceService.get({
+  id: 'http://identifiers.org/ncbigene/103'
+}).each(function(entityReferenceXrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292');
+  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
+/*
 bridgedb1.entityReferenceService.getByIriStreaming({
   id: 'http://identifiers.org/ncbigene/103'
 }).each(function(entityReferenceXrefs) {
