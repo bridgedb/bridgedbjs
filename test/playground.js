@@ -113,6 +113,16 @@ bridgedb1.organismService.getNameByIri({
 });
 //*/
 
+//*
+bridgedb1.entityReferenceService.searchByName({
+  name: 'NFKB1',
+  organism: 'Homo sapiens'
+}).each(function(organismName) {
+  console.log('organism latin name at332');
+  console.log(organismName);
+});
+//*/
+
 // C. elegans result
 //http://identifiers.org/ncbigene/174034
 //http://webservice.bridgedb.org/Caenorhabditis elegans/xrefs/L/174034
