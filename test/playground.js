@@ -114,12 +114,12 @@ bridgedb1.organismService.getNameByIri({
 //*/
 
 //*
-bridgedb1.entityReferenceService.searchByName({
-  name: 'NFKB1',
+bridgedb1.entityReferenceService.searchByAttribute({
+  attribute: 'NFKB1',
   organism: 'Homo sapiens'
-}).each(function(organismName) {
-  console.log('organism latin name at332');
-  console.log(organismName);
+}).each(function(searchResults) {
+  console.log('searchResultsat332');
+  console.log(searchResults);
 });
 //*/
 
