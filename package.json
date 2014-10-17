@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "gulp-browserify": "~0.5.0",
-    "deep-diff": "~0.2.0"
+    "deep-diff": "~0.2.0",
+    "gulp-uglify": "~1.0.1"
   }
 }
