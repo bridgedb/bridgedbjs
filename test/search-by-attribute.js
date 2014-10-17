@@ -9,9 +9,9 @@ var bridgedb1 = Bridgedb({
 bridgedb1.entityReferenceService.searchByAttribute({
   attribute: 'Nfkb1',
   organism: 'Mouse'
-}).each(function(searchResults) {
-  searchResults.each(function(value) {
-    console.log('searchResultsat332');
-    console.log(value);
+}).each(function(searchResultStream) {
+  searchResultStream.each(function(searchResults) {
+    console.log('searchResultsat332a');
+    console.log(searchResults);
   });
 });
