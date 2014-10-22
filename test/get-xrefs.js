@@ -7,7 +7,7 @@ var bridgedb1 = Bridgedb({
 bridgedb1.xref.get({
   id: 'http://identifiers.org/ncbigene/4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
-}, function(err, entityReferenceXrefs) {
+}).each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
