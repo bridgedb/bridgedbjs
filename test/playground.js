@@ -90,14 +90,7 @@ bridgedb1.entityReferenceService.getByIri({
 //*/
 
 //*
-bridgedb1.entityReferenceService.getByBridgedbUrlStreaming('http://webservice.bridgedb.org/Human/xrefs/L/1234').each(function(entityReferenceXrefs) {
-  console.log('xrefs for http://identifiers.org/ncbigene/4292');
-  console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
-});
-//*/
-
-//*
-bridgedb1.entityReferenceService.getByBridgedbUrlWithCallback('http://webservice.bridgedb.org/Human/xrefs/L/1234', function(err, entityReferenceXrefs) {
+bridgedb1.entityReferenceService.getByBridgedbUrl('http://webservice.bridgedb.org/Human/xrefs/L/1234').each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
