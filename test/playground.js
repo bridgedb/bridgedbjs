@@ -34,7 +34,7 @@ bridgedb1.organismService.getByIdentifier('http://identifiers.org/ncbigene/103',
 //*/
 
 //*
-bridgedb1.xref.get({
+bridgedb1.xrefService.get({
   id: 'http://identifiers.org/ncbigene/4292'
 }, function(err, entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
@@ -44,7 +44,7 @@ bridgedb1.xref.get({
 
 
 //*
-bridgedb1.entityReferenceService.getByDbAndIdentifierStreaming({
+bridgedb1.entityReferenceService.get({
   db: 'Entrez Gene',
   identifier: '103'
 }).each(function(entityReferenceXrefs) {
