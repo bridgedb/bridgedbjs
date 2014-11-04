@@ -4,6 +4,7 @@ var bridgedb1 = Bridgedb({
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
+/*
 bridgedb1.compactInput({
   'id': 'http://identifiers.org/ncbigene/4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
@@ -24,6 +25,7 @@ bridgedb2.compactInput({
   'id': 'http://identifiers.org/ncbigene/4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 });
+//*/
 
 var bridgedb3 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
@@ -44,4 +46,11 @@ bridgedb3.compactInput({
   'db': 'Entrez Gene',
   'id': '4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+})
+.flatMap(bridgedb3.compactOutput)
+.each(function(result) {
+  console.log('result');
+  console.log(result);
 });
+
+//bridgedb3.compactOutput(internal);
