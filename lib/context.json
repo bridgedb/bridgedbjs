@@ -1,27 +1,42 @@
 {
-  "bp": {
+  "biopax": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
   },
   "db": {
-    "@id": "bp:db",
+    "@id": "biopax:db",
     "@type": "xsd:string"
   },
-  "id": "@id",
+  "dbName": {
+    "@id": "biopax:db",
+    "@type": "xsd:string"
+  },
+  "dbNames": {
+    "@id": "biopax:db",
+    "@type": "xsd:string"
+  },
+  "id": {
+    "@id": "@id",
+    "@type": "@id"
+  },
   "identifier": {
-    "@id": "bp:id",
+    "@id": "biopax:id",
     "@type": "xsd:string"
   },
   "idot": {
-    "@id": "http://identifiers.org/terms#",
+    "@id": "http://identifiers.org/idot/",
     "@type": "@id"
   },
-  "idRegexPattern": {
-    "@id": "idot:idRegexPattern",
+  "identifierPattern": {
+    "@id": "idot:identifierPattern",
     "@type": "xsd:string"
   },
-  "namespace": {
-    "@id": "idot:namespace",
+  "bridgedbInput": {
+    "@id":"http://www.example.org/bridgedb/input-vocab/",
+    "@type":"@id"
+  },
+  "preferredPrefix": {
+    "@id": "idot:preferredPrefix",
     "@type": "xsd:string"
   },
   "type": "@type"

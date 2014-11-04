@@ -1,0 +1,1062 @@
+[
+{"iris":["urn:miriam:bind","http://identifiers.org/bind/","http://www.bind.ca/"],"dbValueVariants":["BIND","Biomolecular Interaction Network Database","bind"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bind/"}
+,
+{"iris":["urn:miriam:chebi","http://identifiers.org/chebi/","http://www.ebi.ac.uk/chebi/","urn:miriam:obo.chebi","http://identifiers.org/obo.chebi/"],"dbValueVariants":["ChEBI","chebi"],"pattern":"^CHEBI:\\d+$","identifiersIri":"http://identifiers.org/chebi/"}
+,
+{"iris":["urn:miriam:ensembl","http://identifiers.org/ensembl/","http://www.ensembl.org/"],"dbValueVariants":["Ensembl","ensembl"],"pattern":"^((ENS[A-Z]*[FPTG]\\d{11}(\\.\\d+)?)|(FB\\w{2}\\d{7})|(Y[A-Z]{2}\\d{3}[a-zA-Z](\\-[A-Z])?)|([A-Z_a-z0-9]+(\\.)?(t)?(\\d+)?([a-z])?))$","identifiersIri":"http://identifiers.org/ensembl/"}
+,
+{"iris":["urn:miriam:ec-code","http://identifiers.org/ec-code/","urn:lsid:ec-code.org","http://www.ec-code.org/","http://www.ebi.ac.uk/IntEnz/"],"dbValueVariants":["Enzyme Nomenclature","Enzyme Classification","EC code","EC","ec-code"],"pattern":"^\\d+\\.-\\.-\\.-|\\d+\\.\\d+\\.-\\.-|\\d+\\.\\d+\\.\\d+\\.-|\\d+\\.\\d+\\.\\d+\\.(n)?\\d+$","identifiersIri":"http://identifiers.org/ec-code/"}
+,
+{"iris":["urn:miriam:uniprot","http://identifiers.org/uniprot/","urn:lsid:uniprot.org:uniprot","http://www.uniprot.org/","urn:lsid:uniprot.org"],"dbValueVariants":["UniProt Knowledgebase","UniProtKB","UniProt","Protein Knowledgebase","uniprot"],"pattern":"^([A-N,R-Z][0-9]([A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?$","identifiersIri":"http://identifiers.org/uniprot/"}
+,
+{"iris":["urn:miriam:taxonomy","http://identifiers.org/taxonomy/","http://bio2rdf.org/taxonomy","http://www.ncbi.nlm.nih.gov/Taxonomy/","http://www.taxonomy.org/"],"dbValueVariants":["Taxonomy","NEWT","NCBI taxonomy","taxonomy"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/taxonomy/"}
+,
+{"iris":["urn:miriam:biomodels.db","http://identifiers.org/biomodels.db/","http://bio2rdf.org/biomodels","http://www.ebi.ac.uk/biomodels/"],"dbValueVariants":["BioModels Database","BioModels","biomodels.db"],"pattern":"^((BIOMD|MODEL)\\d{10})|(BMID\\d{12})$","identifiersIri":"http://identifiers.org/biomodels.db/"}
+,
+{"iris":["urn:miriam:miriam.collection","http://identifiers.org/miriam.collection/","http://www.biomodels.net/MIRIAM/","urn:miriam:miriam","http://biomodels.net/MIRIAM/","urn:miriam:miriam.datatype"],"dbValueVariants":["MIRIAM Registry collection","MIRIAM Resources","MIRIAM","miriam.collection"],"pattern":"^MIR:000\\d{5}$","identifiersIri":"http://identifiers.org/miriam.collection/"}
+,
+{"iris":["urn:miriam:icd","http://identifiers.org/icd/","http://www.who.int/classifications/icd/"],"dbValueVariants":["ICD","icd"],"pattern":"^[A-Z]\\d+(\\.[-\\d+])?$","identifiersIri":"http://identifiers.org/icd/"}
+,
+{"iris":["urn:miriam:intact","http://identifiers.org/intact/","http://www.ebi.ac.uk/intact/"],"dbValueVariants":["IntAct","intact"],"pattern":"^EBI\\-[0-9]+$","identifiersIri":"http://identifiers.org/intact/"}
+,
+{"iris":["urn:miriam:interpro","http://identifiers.org/interpro/","http://bio2rdf.org/interpro","http://purl.uniprot.org/interpro/","http://www.ebi.ac.uk/interpro/"],"dbValueVariants":["InterPro","interpro"],"pattern":"^IPR\\d{6}$","identifiersIri":"http://identifiers.org/interpro/"}
+,
+{"iris":["urn:miriam:kegg.pathway","http://identifiers.org/kegg.pathway/","http://www.genome.jp/kegg/pathway/"],"dbValueVariants":["KEGG Pathway","kegg.pathway"],"pattern":"^\\w{2,4}\\d{5}$","identifiersIri":"http://identifiers.org/kegg.pathway/"}
+,
+{"iris":["urn:miriam:kegg.compound","http://identifiers.org/kegg.compound/","http://www.genome.jp/kegg/compound/"],"dbValueVariants":["KEGG Compound","kegg.compound"],"pattern":"^C\\d+$","identifiersIri":"http://identifiers.org/kegg.compound/"}
+,
+{"iris":["urn:miriam:kegg.reaction","http://identifiers.org/kegg.reaction/","http://www.genome.jp/kegg/reaction/"],"dbValueVariants":["KEGG Reaction","kegg.reaction"],"pattern":"^R\\d+$","identifiersIri":"http://identifiers.org/kegg.reaction/"}
+,
+{"iris":["urn:miriam:pubmed","http://identifiers.org/pubmed/","http://bio2rdf.org/pubmed","http://www.ncbi.nlm.nih.gov/PubMed/","http://www.pubmed.gov/"],"dbValueVariants":["PubMed","pubmed"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pubmed/"}
+,
+{"iris":["urn:miriam:omim","http://identifiers.org/omim/","http://bio2rdf.org/omim","http://www.ncbi.nlm.nih.gov/OMIM/"],"dbValueVariants":["OMIM","Online Mendelian Inheritance in Man","Mendelian Inheritance in Man","MIM","omim"],"pattern":"^[*#+%^]?\\d{6}$","identifiersIri":"http://identifiers.org/omim/"}
+,
+{"iris":["urn:miriam:pirsf","http://identifiers.org/pirsf/","http://pir.georgetown.edu/pirsf/"],"dbValueVariants":["PIRSF","Protein Information Resource","pirsf"],"pattern":"^PIRSF\\d{6}$","identifiersIri":"http://identifiers.org/pirsf/"}
+,
+{"iris":["urn:miriam:reactome","http://identifiers.org/reactome/","http://www.reactome.org/"],"dbValueVariants":["Reactome","Reactome Stable ID","reactome"],"pattern":"^REACT_\\d+(\\.\\d+)?$","identifiersIri":"http://identifiers.org/reactome/"}
+,
+{"iris":["urn:miriam:doi","http://identifiers.org/doi/","http://www.doi.org/"],"dbValueVariants":["DOI","Digital Object Identifier","doi"],"pattern":"^(doi\\:)?\\d{2}\\.\\d{4}.*$","identifiersIri":"http://identifiers.org/doi/"}
+,
+{"iris":["urn:miriam:pdb","http://identifiers.org/pdb/","http://www.pdb.org/"],"dbValueVariants":["Protein Data Bank","PDB","pdb"],"pattern":"^[0-9][A-Za-z0-9]{3}$","identifiersIri":"http://identifiers.org/pdb/"}
+,
+{"iris":["urn:miriam:clustr","http://identifiers.org/clustr/","http://www.ebi.ac.uk/clustr/"],"dbValueVariants":["CluSTr","clustr"],"pattern":"^[0-9A-Za-z]+:\\d+:\\d{1,5}(\\.\\d)?$","identifiersIri":"http://identifiers.org/clustr/"}
+,
+{"iris":["urn:miriam:go","http://identifiers.org/go/","http://bio2rdf.org/go","http://purl.obolibrary.org/obo/","urn:miriam:obo.go","http://identifiers.org/obo.go/","http://www.geneontology.org/"],"dbValueVariants":["Gene Ontology","GO","go"],"pattern":"^GO:\\d{7}$","identifiersIri":"http://identifiers.org/go/"}
+,
+{"iris":["urn:miriam:sgd","http://identifiers.org/sgd/","http://bio2rdf.org/sgd","http://www.yeastgenome.org/"],"dbValueVariants":["SGD","Saccharomyces Genome Database","sgd"],"pattern":"^((S\\d+$)|(Y[A-Z]{2}\\d{3}[a-zA-Z](\\-[A-Z])?))$","identifiersIri":"http://identifiers.org/sgd/"}
+,
+{"iris":["urn:miriam:biomodels.sbo","http://identifiers.org/biomodels.sbo/","http://biomodels.net/SBO/","http://www.biomodels.net/SBO/","urn:miriam:obo.sbo"],"dbValueVariants":["Systems Biology Ontology","SBO","biomodels.sbo"],"pattern":"^SBO:\\d{7}$","identifiersIri":"http://identifiers.org/biomodels.sbo/"}
+,
+{"iris":["urn:miriam:kegg.drug","http://identifiers.org/kegg.drug/","http://www.genome.jp/kegg/drug/"],"dbValueVariants":["KEGG Drug","kegg.drug"],"pattern":"^D\\d+$","identifiersIri":"http://identifiers.org/kegg.drug/"}
+,
+{"iris":["urn:miriam:kegg.glycan","http://identifiers.org/kegg.glycan/","http://www.genome.jp/kegg/glycan/"],"dbValueVariants":["KEGG Glycan","kegg.glycan"],"pattern":"^G\\d+$","identifiersIri":"http://identifiers.org/kegg.glycan/"}
+,
+{"iris":["urn:miriam:wormbase","http://identifiers.org/wormbase/","http://bio2rdf.org/wormbase","http://www.wormbase.org/"],"dbValueVariants":["WormBase","wormbase"],"pattern":"^(WBGene\\d{8}|([A-Z_a-z0-9]+(\\.)?(t)?(\\d+)?([a-z])?))$","identifiersIri":"http://identifiers.org/wormbase/"}
+,
+{"iris":["urn:miriam:pfam","http://identifiers.org/pfam/","http://pfam.org/"],"dbValueVariants":["Pfam","Protein Family Database","pfam"],"pattern":"^PF\\d{5}$","identifiersIri":"http://identifiers.org/pfam/"}
+,
+{"iris":["urn:miriam:insdc","http://identifiers.org/insdc/","http://www.insdc.org/"],"dbValueVariants":["Nucleotide Sequence Database","International Nucleotide Sequence Database Collaboration","INSDC","insdc"],"pattern":"^([A-Z]\\d{5}|[A-Z]{2}\\d{6}|[A-Z]{4}\\d{8}|[A-J][A-Z]{2}\\d{5})(\\.\\d+)?$","identifiersIri":"http://identifiers.org/insdc/"}
+,
+{"iris":["urn:miriam:flybase","http://identifiers.org/flybase/","http://www.flybase.org/"],"dbValueVariants":["FlyBase","flybase"],"pattern":"^FB\\w{2}\\d{7}$","identifiersIri":"http://identifiers.org/flybase/"}
+,
+{"iris":["urn:miriam:wormpep","http://identifiers.org/wormpep/","http://www.wormpep.org/"],"dbValueVariants":["Wormpep","wormpep"],"pattern":"^CE\\d{5}$","identifiersIri":"http://identifiers.org/wormpep/"}
+,
+{"iris":["urn:miriam:prosite","http://identifiers.org/prosite/","http://www.prosite.org/"],"dbValueVariants":["PROSITE","prosite"],"pattern":"^PS\\d{5}$","identifiersIri":"http://identifiers.org/prosite/"}
+,
+{"iris":["urn:miriam:pubchem.substance","http://identifiers.org/pubchem.substance/","http://www.pubchem.gov/substance/"],"dbValueVariants":["PubChem-substance","PubChem Substance","PubChem SID","pubchem.substance"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pubchem.substance/"}
+,
+{"iris":["urn:miriam:pubchem.compound","http://identifiers.org/pubchem.compound/","http://www.pubchem.gov/compound/"],"dbValueVariants":["PubChem-compound","PubChem Compound","PubChem CID","pubchem.compound"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pubchem.compound/"}
+,
+{"iris":["urn:miriam:arxiv","http://identifiers.org/arxiv/","urn:oai:arXiv.org","http://arxiv.org/"],"dbValueVariants":["arXiv","arxiv"],"pattern":"^(\\w+(\\-\\w+)?(\\.\\w+)?/)?\\d{4,7}(\\.\\d{4}(v\\d+)?)?$","identifiersIri":"http://identifiers.org/arxiv/"}
+,
+{"iris":["urn:miriam:arrayexpress","http://identifiers.org/arrayexpress/","http://arrayexpress.org/"],"dbValueVariants":["ArrayExpress","arrayexpress"],"pattern":"^[AEP]-\\w{4}-\\d+$","identifiersIri":"http://identifiers.org/arrayexpress/"}
+,
+{"iris":["urn:miriam:mgd","http://identifiers.org/mgd/","http://bio2rdf.org/mgi:","http://mousegenome.org/"],"dbValueVariants":["Mouse Genome Database","MGD","MGI","Mouse Genome Informatics","mgd"],"pattern":"^MGI:\\d+$","identifiersIri":"http://identifiers.org/mgd/"}
+,
+{"iris":["urn:miriam:sabiork.reaction","http://identifiers.org/sabiork.reaction/","http://sabio.villa-bosch.de/reaction/"],"dbValueVariants":["SABIO-RK Reaction","sabiork.reaction"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sabiork.reaction/"}
+,
+{"iris":["urn:miriam:refseq","http://identifiers.org/refseq/"],"dbValueVariants":["RefSeq","refseq"],"pattern":"^((AC|AP|NC|NG|NM|NP|NR|NT|NW|XM|XP|XR|YP|ZP)_\\d+|(NZ\\_[A-Z]{4}\\d+))(\\.\\d+)?$","identifiersIri":"http://identifiers.org/refseq/"}
+,
+{"iris":["urn:miriam:tcdb","http://identifiers.org/tcdb/"],"dbValueVariants":["Transport Classification Database","TCDB","tcdb"],"pattern":"^\\d+\\.[A-Z]\\.\\d+\\.\\d+\\.\\d+$","identifiersIri":"http://identifiers.org/tcdb/"}
+,
+{"iris":["urn:miriam:uniparc","http://identifiers.org/uniparc/"],"dbValueVariants":["UniParc","uniparc"],"pattern":"^UPI[A-F0-9]{10}$","identifiersIri":"http://identifiers.org/uniparc/"}
+,
+{"iris":["urn:miriam:mint","http://identifiers.org/mint/"],"dbValueVariants":["MINT","mint"],"pattern":"^MINT\\-\\d{1,7}$","identifiersIri":"http://identifiers.org/mint/"}
+,
+{"iris":["urn:miriam:ipi","http://identifiers.org/ipi/"],"dbValueVariants":["IPI","International Protein Index","ipi"],"pattern":"^IPI\\d{8}$","identifiersIri":"http://identifiers.org/ipi/"}
+,
+{"iris":["urn:miriam:dip","http://identifiers.org/dip/"],"dbValueVariants":["Database of Interacting Proteins","DIP","dip"],"pattern":"^DIP(\\:)?\\-\\d{1,}[ENXS]$","identifiersIri":"http://identifiers.org/dip/"}
+,
+{"iris":["urn:miriam:signaling-gateway","http://identifiers.org/signaling-gateway/"],"dbValueVariants":["Signaling Gateway","SGMP","Signaling Gateway Molecule Pages","AfCS","UCSD Signaling Gateway Molecule Pages","UCSD - Molecule Pages","signaling-gateway"],"pattern":"A\\d{6}$","identifiersIri":"http://identifiers.org/signaling-gateway/"}
+,
+{"iris":["urn:miriam:resid","http://identifiers.org/resid/"],"dbValueVariants":["RESID","resid"],"pattern":"^AA\\d{4}$","identifiersIri":"http://identifiers.org/resid/"}
+,
+{"iris":["urn:miriam:rgd","http://identifiers.org/rgd/"],"dbValueVariants":["Rat Genome Database","RGD","rgd"],"pattern":"^\\d{4,7}$","identifiersIri":"http://identifiers.org/rgd/"}
+,
+{"iris":["urn:miriam:tair.protein","http://identifiers.org/tair.protein/"],"dbValueVariants":["TAIR Protein","tair.protein"],"pattern":"^AASequence:\\d{10}$","identifiersIri":"http://identifiers.org/tair.protein/"}
+,
+{"iris":["urn:miriam:tair.gene","http://identifiers.org/tair.gene/"],"dbValueVariants":["TAIR Gene","tair.gene"],"pattern":"^Gene:\\d{7}$","identifiersIri":"http://identifiers.org/tair.gene/"}
+,
+{"iris":["urn:miriam:tair.locus","http://identifiers.org/tair.locus/"],"dbValueVariants":["TAIR Locus","tair.locus"],"pattern":"^AT[1-5]G\\d{5}$","identifiersIri":"http://identifiers.org/tair.locus/"}
+,
+{"iris":["urn:miriam:hmdb","http://identifiers.org/hmdb/","http://www.hmdb.ca/"],"dbValueVariants":["HMDB","Human Metabolome Database","hmdb"],"pattern":"^HMDB\\d{5}$","identifiersIri":"http://identifiers.org/hmdb/"}
+,
+{"iris":["urn:miriam:lipidmaps","http://identifiers.org/lipidmaps/"],"dbValueVariants":["LIPID MAPS","LMSD","lipidmaps"],"pattern":"^LM(FA|GL|GP|SP|ST|PR|SL|PK)[0-9]{4}([0-9a-zA-Z]{4,6})?$","identifiersIri":"http://identifiers.org/lipidmaps/"}
+,
+{"iris":["urn:miriam:peptideatlas","http://identifiers.org/peptideatlas/"],"dbValueVariants":["PeptideAtlas","peptideatlas"],"pattern":"^PAp[0-9]{8}$","identifiersIri":"http://identifiers.org/peptideatlas/"}
+,
+{"iris":["urn:miriam:geo","http://identifiers.org/geo/"],"dbValueVariants":["GEO","Gene Expression Omnibus","geo"],"pattern":"^GDS\\d+$","identifiersIri":"http://identifiers.org/geo/"}
+,
+{"iris":["urn:miriam:eco","http://identifiers.org/eco/","urn:miriam:obo.eco","http://identifiers.org/obo.eco/"],"dbValueVariants":["Evidence Code Ontology","ECO","eco"],"pattern":"ECO:\\d{7}$","identifiersIri":"http://identifiers.org/eco/"}
+,
+{"iris":["urn:miriam:psimod","http://identifiers.org/psimod/","urn:miriam:obo.psi-mod","http://identifiers.org/obo.psi-mod/"],"dbValueVariants":["Protein Modification Ontology","PSI-MOD","MOD","psimod"],"pattern":"^MOD:\\d{5}","identifiersIri":"http://identifiers.org/psimod/"}
+,
+{"iris":["urn:miriam:sgd.pathways","http://identifiers.org/sgd.pathways/"],"dbValueVariants":["Saccharomyces genome database pathways","sgd.pathways"],"pattern":"^PWY\\w{2}\\-\\d{3}$","identifiersIri":"http://identifiers.org/sgd.pathways/"}
+,
+{"iris":["urn:miriam:biogrid","http://identifiers.org/biogrid/"],"dbValueVariants":["BioGRID","biogrid"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/biogrid/"}
+,
+{"iris":["urn:miriam:merops","http://identifiers.org/merops/"],"dbValueVariants":["MEROPS","merops"],"pattern":"^[SCTAGMNU]\\d{2}\\.\\d{3}$","identifiersIri":"http://identifiers.org/merops/"}
+,
+{"iris":["urn:miriam:panther.family","http://identifiers.org/panther.family/","urn:miriam:panther"],"dbValueVariants":["PANTHER Family","panther.family"],"pattern":"^PTHR\\d{5}(\\:SF\\d{1,3})?$","identifiersIri":"http://identifiers.org/panther.family/"}
+,
+{"iris":["urn:miriam:sprint","http://identifiers.org/sprint/"],"dbValueVariants":["SPRINT","sprint"],"pattern":"^PR\\d{5}$","identifiersIri":"http://identifiers.org/sprint/"}
+,
+{"iris":["urn:miriam:ligandexpo","http://identifiers.org/ligandexpo/"],"dbValueVariants":["Ligand Expo","Ligand Depot","ligandexpo"],"pattern":"^(\\w){3}$","identifiersIri":"http://identifiers.org/ligandexpo/"}
+,
+{"iris":["urn:miriam:aclame","http://identifiers.org/aclame/"],"dbValueVariants":["Aclame","aclame"],"pattern":"^mge:\\d+$","identifiersIri":"http://identifiers.org/aclame/"}
+,
+{"iris":["urn:miriam:isbn","http://identifiers.org/isbn/"],"dbValueVariants":["ISBN","isbn"],"pattern":"^(ISBN)?(-13|-10)?[:]?[ ]?(\\d{2,3}[ -]?)?\\d{1,5}[ -]?\\d{1,7}[ -]?\\d{1,6}[ -]?(\\d|X)$","identifiersIri":"http://identifiers.org/isbn/"}
+,
+{"iris":["urn:miriam:pride","http://identifiers.org/pride/"],"dbValueVariants":["PRIDE","pride"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pride/"}
+,
+{"iris":["urn:miriam:3dmet","http://identifiers.org/3dmet/"],"dbValueVariants":["3DMET","3dmet"],"pattern":"^B\\d{5}$","identifiersIri":"http://identifiers.org/3dmet/"}
+,
+{"iris":["urn:miriam:fma","http://identifiers.org/fma/","urn:miriam:obo.fma","http://identifiers.org/obo.fma/"],"dbValueVariants":["FMA","Foundational Model of Anatomy Ontology","fma"],"pattern":"^FMA:\\d+$","identifiersIri":"http://identifiers.org/fma/"}
+,
+{"iris":["urn:miriam:matrixdb.association","http://identifiers.org/matrixdb.association/"],"dbValueVariants":["MatrixDB","matrixdb.association"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])_.*|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9]_.*)|(GAG_.*)|(MULT_.*)|(PFRAG_.*)|(LIP_.*)|(CAT_.*)$","identifiersIri":"http://identifiers.org/matrixdb.association/"}
+,
+{"iris":["urn:miriam:ncbigene","http://identifiers.org/ncbigene/","http://bio2rdf.org/ncbigene","urn:miriam:ncbi.gene","urn:miriam:entrez.gene"],"dbValueVariants":["NCBI Gene","Entrez Gene","ncbigene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/ncbigene/"}
+,
+{"iris":["urn:miriam:kegg.genes","http://identifiers.org/kegg.genes/","http://www.genome.jp/kegg/genes/"],"dbValueVariants":["KEGG Genes","kegg.genes"],"pattern":"^\\w+:[\\w\\d\\.-]*$","identifiersIri":"http://identifiers.org/kegg.genes/"}
+,
+{"iris":["urn:miriam:brenda","http://identifiers.org/brenda/"],"dbValueVariants":["BRENDA","brenda"],"pattern":"^((\\d+\\.-\\.-\\.-)|(\\d+\\.\\d+\\.-\\.-)|(\\d+\\.\\d+\\.\\d+\\.-)|(\\d+\\.\\d+\\.\\d+\\.\\d+))$","identifiersIri":"http://identifiers.org/brenda/"}
+,
+{"iris":["urn:miriam:pubchem.bioassay","http://identifiers.org/pubchem.bioassay/"],"dbValueVariants":["PubChem-bioassay","pubchem.bioassay"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pubchem.bioassay/"}
+,
+{"iris":["urn:miriam:pathwaycommons","http://identifiers.org/pathwaycommons/"],"dbValueVariants":["Pathway Commons","pathwaycommons"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pathwaycommons/"}
+,
+{"iris":["urn:miriam:hovergen","http://identifiers.org/hovergen/"],"dbValueVariants":["HOVERGEN","hovergen"],"pattern":"^HBG\\d+$","identifiersIri":"http://identifiers.org/hovergen/"}
+,
+{"iris":["urn:miriam:mmmp:biomaps","http://identifiers.org/biomaps/"],"dbValueVariants":["Melanoma Molecular Map Project Biomaps","MMMP Biomaps","biomaps"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/biomaps/"}
+,
+{"iris":["urn:miriam:wikipathways","http://identifiers.org/wikipathways/"],"dbValueVariants":["WikiPathways","wikipathways"],"pattern":"WP\\d{1,5}(\\_r\\d+)?$","identifiersIri":"http://identifiers.org/wikipathways/"}
+,
+{"iris":["urn:miriam:macie","http://identifiers.org/macie/"],"dbValueVariants":["MACiE","macie"],"pattern":"^M\\d{4}$","identifiersIri":"http://identifiers.org/macie/"}
+,
+{"iris":["urn:miriam:mirbase","http://identifiers.org/mirbase/"],"dbValueVariants":["miRBase Sequence","mirbase"],"pattern":"MI\\d{7}","identifiersIri":"http://identifiers.org/mirbase/"}
+,
+{"iris":["urn:miriam:zfin","http://identifiers.org/zfin/"],"dbValueVariants":["ZFIN Gene","zfin"],"pattern":"ZDB\\-GENE\\-\\d+\\-\\d+","identifiersIri":"http://identifiers.org/zfin/"}
+,
+{"iris":["urn:miriam:hgnc","http://identifiers.org/hgnc/","http://bio2rdf.org/hgnc"],"dbValueVariants":["HGNC","HUGO Gene Nomenclature Committee","hgnc"],"pattern":"^((HGNC|hgnc):)?\\d{1,5}$","identifiersIri":"http://identifiers.org/hgnc/"}
+,
+{"iris":["urn:miriam:so","http://identifiers.org/so/","urn:miriam:obo.so","http://identifiers.org/obo.so/"],"dbValueVariants":["Sequence Ontology","SO","Sequence Types and Features","so"],"pattern":"^SO:\\d{7}$","identifiersIri":"http://identifiers.org/so/"}
+,
+{"iris":["urn:miriam:rhea","http://identifiers.org/rhea/"],"dbValueVariants":["Rhea","rhea"],"pattern":"^\\d{5}$","identifiersIri":"http://identifiers.org/rhea/"}
+,
+{"iris":["urn:miriam:unipathway","http://identifiers.org/unipathway/"],"dbValueVariants":["Unipathway","unipathway"],"pattern":"^UPA\\d{5}$","identifiersIri":"http://identifiers.org/unipathway/"}
+,
+{"iris":["urn:miriam:chembl.compound","http://identifiers.org/chembl.compound/","http://bio2rdf.org/chembl"],"dbValueVariants":["ChEMBL compound","chembl.compound"],"pattern":"^CHEMBL\\d+$","identifiersIri":"http://identifiers.org/chembl.compound/"}
+,
+{"iris":["urn:miriam:chembl.target","http://identifiers.org/chembl.target/"],"dbValueVariants":["ChEMBL target","chembl.target"],"pattern":"^CHEMBL\\d+$","identifiersIri":"http://identifiers.org/chembl.target/"}
+,
+{"iris":["urn:miriam:sabiork.kineticrecord","http://identifiers.org/sabiork.kineticrecord/"],"dbValueVariants":["SABIO-RK Kinetic Record","sabiork.kineticrecord"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sabiork.kineticrecord/"}
+,
+{"iris":["urn:miriam:lgic","http://identifiers.org/lgic/"],"dbValueVariants":["Ligand-Gated Ion Channel database","LGICdb","lgic"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/lgic/"}
+,
+{"iris":["urn:miriam:atc","http://identifiers.org/atc/"],"dbValueVariants":["Anatomical Therapeutic Chemical","ATC","atc"],"pattern":"^\\w(\\d+)?(\\w{1,2})?(\\d+)?$","identifiersIri":"http://identifiers.org/atc/"}
+,
+{"iris":["urn:miriam:pharmgkb.pathways","http://identifiers.org/pharmgkb.pathways/"],"dbValueVariants":["PharmGKB Pathways","pharmgkb.pathways"],"pattern":"^PA\\d+$","identifiersIri":"http://identifiers.org/pharmgkb.pathways/"}
+,
+{"iris":["urn:miriam:pharmgkb.disease","http://identifiers.org/pharmgkb.disease/"],"dbValueVariants":["PharmGKB Disease","pharmgkb.disease"],"pattern":"^PA\\d+$","identifiersIri":"http://identifiers.org/pharmgkb.disease/"}
+,
+{"iris":["urn:miriam:pharmgkb.drug","http://identifiers.org/pharmgkb.drug/"],"dbValueVariants":["PharmGKB Drug","pharmgkb.drug"],"pattern":"^PA\\d+$","identifiersIri":"http://identifiers.org/pharmgkb.drug/"}
+,
+{"iris":["urn:miriam:ttd.drug","http://identifiers.org/ttd.drug/"],"dbValueVariants":["TTD Drug","Therapeutic Target Database","ttd.drug"],"pattern":"^DAP\\d+$","identifiersIri":"http://identifiers.org/ttd.drug/"}
+,
+{"iris":["urn:miriam:ttd.target","http://identifiers.org/ttd.target/"],"dbValueVariants":["TTD Target","ttd.target"],"pattern":"^TTDS\\d+$","identifiersIri":"http://identifiers.org/ttd.target/"}
+,
+{"iris":["urn:miriam:neurondb","http://identifiers.org/neurondb/"],"dbValueVariants":["NeuronDB","neurondb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/neurondb/"}
+,
+{"iris":["urn:miriam:neuromorpho","http://identifiers.org/neuromorpho/"],"dbValueVariants":["NeuroMorpho","neuromorpho"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/neuromorpho/"}
+,
+{"iris":["urn:miriam:chemidplus","http://identifiers.org/chemidplus/"],"dbValueVariants":["ChemIDplus","chemidplus"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/chemidplus/"}
+,
+{"iris":["urn:miriam:biosystems","http://identifiers.org/biosystems/"],"dbValueVariants":["BioSystems","biosystems"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/biosystems/"}
+,
+{"iris":["urn:miriam:ctd.chemical","http://identifiers.org/ctd.chemical/"],"dbValueVariants":["CTD Chemical","ctd.chemical"],"pattern":"^D\\d+$","identifiersIri":"http://identifiers.org/ctd.chemical/"}
+,
+{"iris":["urn:miriam:ctd.disease","http://identifiers.org/ctd.disease/"],"dbValueVariants":["CTD Disease","ctd.disease"],"pattern":"^D\\d+$","identifiersIri":"http://identifiers.org/ctd.disease/"}
+,
+{"iris":["urn:miriam:ctd.gene","http://identifiers.org/ctd.gene/"],"dbValueVariants":["CTD Gene","ctd.gene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/ctd.gene/"}
+,
+{"iris":["urn:miriam:bionumbers","http://identifiers.org/bionumbers/"],"dbValueVariants":["BioNumbers","bionumbers"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bionumbers/"}
+,
+{"iris":["urn:miriam:drugbank","http://identifiers.org/drugbank/","http://bio2rdf.org/drugbank"],"dbValueVariants":["DrugBank","drugbank"],"pattern":"^DB\\d{5}$","identifiersIri":"http://identifiers.org/drugbank/"}
+,
+{"iris":["urn:miriam:t3db","http://identifiers.org/t3db/"],"dbValueVariants":["T3DB","Toxin and Toxin Target Database","t3db"],"pattern":"^T3D\\d+$","identifiersIri":"http://identifiers.org/t3db/"}
+,
+{"iris":["urn:miriam:smpdb","http://identifiers.org/smpdb/"],"dbValueVariants":["Small Molecule Pathway Database","SMPDB","smpdb"],"pattern":"^SMP\\d{5}$","identifiersIri":"http://identifiers.org/smpdb/"}
+,
+{"iris":["urn:miriam:phosphosite.protein","http://identifiers.org/phosphosite.protein/","urn:miriam:phosphosite"],"dbValueVariants":["PhosphoSite Protein","PhosphoSitePlus","phosphosite.protein"],"pattern":"^\\d{5}$","identifiersIri":"http://identifiers.org/phosphosite.protein/"}
+,
+{"iris":["urn:miriam:genedb","http://identifiers.org/genedb/"],"dbValueVariants":["GeneDB","genedb"],"pattern":"^[\\w\\d\\.-]*$","identifiersIri":"http://identifiers.org/genedb/"}
+,
+{"iris":["urn:miriam:biomodels.teddy","http://identifiers.org/biomodels.teddy/","urn:miriam:teddy"],"dbValueVariants":["TEDDY","biomodels.teddy"],"pattern":"^TEDDY_\\d{7}$","identifiersIri":"http://identifiers.org/biomodels.teddy/"}
+,
+{"iris":["urn:miriam:biomodels.kisao","http://identifiers.org/biomodels.kisao/"],"dbValueVariants":["KiSAO","Kinetic Simulation Algorithm Ontology","biomodels.kisao"],"pattern":"^KISAO_\\d+$","identifiersIri":"http://identifiers.org/biomodels.kisao/"}
+,
+{"iris":["urn:miriam:psimi","http://identifiers.org/psimi/","urn:miriam:obo.mi","http://identifiers.org/obo.mi/"],"dbValueVariants":["Molecular Interactions Ontology","MI","psimi"],"pattern":"^MI:\\d{4}$","identifiersIri":"http://identifiers.org/psimi/"}
+,
+{"iris":["urn:miriam:cl","http://identifiers.org/cl/","urn:miriam:obo.clo","http://identifiers.org/obo.clo/"],"dbValueVariants":["Cell Type Ontology","Cell Ontology","CL","cl"],"pattern":"^CL:\\d{7}$","identifiersIri":"http://identifiers.org/cl/"}
+,
+{"iris":["urn:miriam:bto","http://identifiers.org/bto/","urn:miriam:obo.bto","http://identifiers.org/obo.bto/"],"dbValueVariants":["Brenda Tissue Ontology","BTO","bto"],"pattern":"^BTO:\\d{7}$","identifiersIri":"http://identifiers.org/bto/"}
+,
+{"iris":["urn:miriam:pato","http://identifiers.org/pato/","urn:miriam:obo.pato","http://identifiers.org/obo.pato/"],"dbValueVariants":["PATO","pato"],"pattern":"^PATO:\\d{7}$","identifiersIri":"http://identifiers.org/pato/"}
+,
+{"iris":["urn:miriam:pdb-ccd","http://identifiers.org/pdb-ccd/"],"dbValueVariants":["Chemical Component Dictionary","PDBeChem","PDB-CCD","pdb-ccd"],"pattern":"^\\w{3}$","identifiersIri":"http://identifiers.org/pdb-ccd/"}
+,
+{"iris":["urn:miriam:glycomedb","http://identifiers.org/glycomedb/"],"dbValueVariants":["GlycomeDB","glycomedb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/glycomedb/"}
+,
+{"iris":["urn:miriam:lipidbank","http://identifiers.org/lipidbank/"],"dbValueVariants":["LipidBank","lipidbank"],"pattern":"^\\w+\\d+$","identifiersIri":"http://identifiers.org/lipidbank/"}
+,
+{"iris":["urn:miriam:kegg.orthology","http://identifiers.org/kegg.orthology/"],"dbValueVariants":["KEGG Orthology","kegg.orthology"],"pattern":"^K\\d+$","identifiersIri":"http://identifiers.org/kegg.orthology/"}
+,
+{"iris":["urn:miriam:prodom","http://identifiers.org/prodom/"],"dbValueVariants":["ProDom","prodom"],"pattern":"^PD\\d+$","identifiersIri":"http://identifiers.org/prodom/"}
+,
+{"iris":["urn:miriam:smart","http://identifiers.org/smart/"],"dbValueVariants":["SMART","smart"],"pattern":"^SM\\d{5}$","identifiersIri":"http://identifiers.org/smart/"}
+,
+{"iris":["urn:miriam:cdd","http://identifiers.org/cdd/"],"dbValueVariants":["Conserved Domain Database","CDD","cdd"],"pattern":"^(cd)?\\d{5}$","identifiersIri":"http://identifiers.org/cdd/"}
+,
+{"iris":["urn:miriam:ro","http://identifiers.org/ro/","urn:miriam:obo.ro","http://identifiers.org/obo.ro/"],"dbValueVariants":["Relation Ontology","ro"],"pattern":"^OBO_REL:\\w+$","identifiersIri":"http://identifiers.org/ro/"}
+,
+{"iris":["urn:miriam:mmdb","http://identifiers.org/mmdb/"],"dbValueVariants":["Molecular Modeling Database","MMDB","Entrez Structure","mmdb"],"pattern":"^\\d{1,5}$","identifiersIri":"http://identifiers.org/mmdb/"}
+,
+{"iris":["urn:miriam:imex","http://identifiers.org/imex/"],"dbValueVariants":["IMEx","imex"],"pattern":"^IM-\\d+(-?)(\\d+?)$","identifiersIri":"http://identifiers.org/imex/"}
+,
+{"iris":["urn:miriam:irefweb","http://identifiers.org/irefweb/"],"dbValueVariants":["iRefWeb","irefweb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/irefweb/"}
+,
+{"iris":["urn:miriam:mpid","http://identifiers.org/mpid/"],"dbValueVariants":["Microbial Protein Interaction Database","MPID","mpid"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/mpid/"}
+,
+{"iris":["urn:miriam:phosphosite.residue","http://identifiers.org/phosphosite.residue/"],"dbValueVariants":["PhosphoSite Residue","phosphosite.residue"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/phosphosite.residue/"}
+,
+{"iris":["urn:miriam:neurolex","http://identifiers.org/neurolex/"],"dbValueVariants":["NeuroLex","BIRNLex","NIFSTD","neurolex"],"pattern":"^([Bb]irnlex_|Sao|nlx_|GO_|CogPO|HDO|nifext_)\\d+$","identifiersIri":"http://identifiers.org/neurolex/"}
+,
+{"iris":["urn:miriam:obi","http://identifiers.org/obi/","urn:miriam:obo.obi","http://identifiers.org/obo.obi/"],"dbValueVariants":["Ontology for Biomedical Investigations","OBI","obi"],"pattern":"^OBI_\\d{7}$","identifiersIri":"http://identifiers.org/obi/"}
+,
+{"iris":["urn:miriam:sabiork.ec","http://identifiers.org/sabiork.ec/"],"dbValueVariants":["SABIO-RK EC Record","SABIO-RK Enzyme Classification Record","sabiork.ec"],"pattern":"^((\\d+)|(\\d+\\.\\d+)|(\\d+\\.\\d+\\.\\d+)|(\\d+\\.\\d+\\.\\d+\\.\\d+))$","identifiersIri":"http://identifiers.org/sabiork.ec/"}
+,
+{"iris":["urn:miriam:opb","http://identifiers.org/opb/"],"dbValueVariants":["Ontology of Physics for Biology","OPB","opb"],"pattern":"^OPB_\\d+$","identifiersIri":"http://identifiers.org/opb/"}
+,
+{"iris":["urn:miriam:jws","http://identifiers.org/jws/"],"dbValueVariants":["JWS Online","JWS","jws"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/jws/"}
+,
+{"iris":["urn:miriam:modeldb","http://identifiers.org/modeldb/"],"dbValueVariants":["ModelDB","modeldb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/modeldb/"}
+,
+{"iris":["urn:miriam:subtiwiki","http://identifiers.org/subtiwiki/"],"dbValueVariants":["SubtiWiki","subtiwiki"],"pattern":"^BSU\\d{5}$","identifiersIri":"http://identifiers.org/subtiwiki/"}
+,
+{"iris":["urn:miriam:pid.pathway","http://identifiers.org/pid.pathway/"],"dbValueVariants":["NCI Pathway Interaction Database: Pathway","NCI_Nature","PID","Pathway Interaction Database NCI-Nature Curated Data","NCI-Nature PID","NCI-Nature Pathway Interaction Database","NCI_Nature curated","pid.pathway"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/pid.pathway/"}
+,
+{"iris":["urn:miriam:doqcs.model","http://identifiers.org/doqcs.model/"],"dbValueVariants":["Database of Quantitative Cellular Signaling: Model","DOQCS Model","doqcs.model"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/doqcs.model/"}
+,
+{"iris":["urn:miriam:doqcs.pathway","http://identifiers.org/doqcs.pathway/"],"dbValueVariants":["Database of Quantitative Cellular Signaling: Pathway","DOQCS Pathway","doqcs.pathway"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/doqcs.pathway/"}
+,
+{"iris":["urn:miriam:unit","http://identifiers.org/unit/","urn:miriam:obo.unit","http://identifiers.org/obo.unit/"],"dbValueVariants":["Unit Ontology","UO","unit"],"pattern":"^UO:\\d{7}?","identifiersIri":"http://identifiers.org/unit/"}
+,
+{"iris":["urn:miriam:clinicaltrials","http://identifiers.org/clinicaltrials/","http://bio2rdf.org/clinicaltrials"],"dbValueVariants":["ClinicalTrials.gov","NCT","clinicaltrials"],"pattern":"^NCT\\d{8}$","identifiersIri":"http://identifiers.org/clinicaltrials/"}
+,
+{"iris":["urn:miriam:chemspider","http://identifiers.org/chemspider/"],"dbValueVariants":["ChemSpider","chemspider"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/chemspider/"}
+,
+{"iris":["urn:miriam:ncit","http://identifiers.org/ncit/"],"dbValueVariants":["NCIt","NCI thesaurus","National Cancer Institute Thesaurus","ncit"],"pattern":"^C\\d+$","identifiersIri":"http://identifiers.org/ncit/"}
+,
+{"iris":["urn:miriam:biocatalogue.service","http://identifiers.org/biocatalogue.service/"],"dbValueVariants":["BioCatalogue","biocatalogue.service"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/biocatalogue.service/"}
+,
+{"iris":["urn:miriam:pr","http://identifiers.org/pr/","urn:miriam:obo.pr","http://identifiers.org/obo.pr/"],"dbValueVariants":["Protein Ontology","pr"],"pattern":"^PR\\:\\d+$","identifiersIri":"http://identifiers.org/pr/"}
+,
+{"iris":["urn:miriam:omia","http://identifiers.org/omia/"],"dbValueVariants":["OMIA","Online Mendelian Inheritance in Animals","omia"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/omia/"}
+,
+{"iris":["urn:miriam:chembank","http://identifiers.org/chembank/"],"dbValueVariants":["ChemBank","chembank"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/chembank/"}
+,
+{"iris":["urn:miriam:csa","http://identifiers.org/csa/"],"dbValueVariants":["CSA","Catalytic Site Atlas","csa"],"pattern":"^[0-9][A-Za-z0-9]{3}$","identifiersIri":"http://identifiers.org/csa/"}
+,
+{"iris":["urn:miriam:cgd","http://identifiers.org/cgd/"],"dbValueVariants":["Candida Genome Database","CGD","cgd"],"pattern":"^CAL\\d{7}$","identifiersIri":"http://identifiers.org/cgd/"}
+,
+{"iris":["urn:miriam:antweb","http://identifiers.org/antweb/"],"dbValueVariants":["AntWeb","antweb"],"pattern":"^casent\\d+(\\-D\\d+)?$","identifiersIri":"http://identifiers.org/antweb/"}
+,
+{"iris":["urn:miriam:pmc","http://identifiers.org/pmc/"],"dbValueVariants":["PMC International","PubMed Central","PMCI","pmc"],"pattern":"PMC\\d+","identifiersIri":"http://identifiers.org/pmc/"}
+,
+{"iris":["urn:miriam:amoebadb","http://identifiers.org/amoebadb/"],"dbValueVariants":["AmoebaDB","amoebadb"],"pattern":"^EDI_\\d+$","identifiersIri":"http://identifiers.org/amoebadb/"}
+,
+{"iris":["urn:miriam:cryptodb","http://identifiers.org/cryptodb/"],"dbValueVariants":["CryptoDB","cryptodb"],"pattern":"^\\w+","identifiersIri":"http://identifiers.org/cryptodb/"}
+,
+{"iris":["urn:miriam:plasmodb","http://identifiers.org/plasmodb/"],"dbValueVariants":["PlasmoDB","plasmodb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/plasmodb/"}
+,
+{"iris":["urn:miriam:giardiadb","http://identifiers.org/giardiadb/"],"dbValueVariants":["GiardiaDB","giardiadb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/giardiadb/"}
+,
+{"iris":["urn:miriam:microsporidia","http://identifiers.org/microsporidia/"],"dbValueVariants":["MicrosporidiaDB","microsporidia"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/microsporidia/"}
+,
+{"iris":["urn:miriam:toxoplasma","http://identifiers.org/toxoplasma/"],"dbValueVariants":["ToxoDB","toxoplasma"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/toxoplasma/"}
+,
+{"iris":["urn:miriam:trichdb","http://identifiers.org/trichdb/"],"dbValueVariants":["TrichDB","trichdb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/trichdb/"}
+,
+{"iris":["urn:miriam:tritrypdb","http://identifiers.org/tritrypdb/"],"dbValueVariants":["TriTrypDB","Kinetoplastid Genomics Resource","tritrypdb"],"pattern":"^\\w+(\\.)?\\w+(\\.)?\\w+","identifiersIri":"http://identifiers.org/tritrypdb/"}
+,
+{"iris":["urn:miriam:bdgp.insertion","http://identifiers.org/bdgp.insertion/"],"dbValueVariants":["BDGP insertion DB","BDGP gene disruption","bdgp.insertion"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/bdgp.insertion/"}
+,
+{"iris":["urn:miriam:beetlebase","http://identifiers.org/beetlebase/"],"dbValueVariants":["BeetleBase","beetlebase"],"pattern":"^TC\\d+$","identifiersIri":"http://identifiers.org/beetlebase/"}
+,
+{"iris":["urn:miriam:bold.taxonomy","http://identifiers.org/bold.taxonomy/"],"dbValueVariants":["BOLD Taxonomy","bold.taxonomy"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bold.taxonomy/"}
+,
+{"iris":["urn:miriam:dbest","http://identifiers.org/dbest/"],"dbValueVariants":["dbEST","Database of Expressed Sequence Tags","dbest"],"pattern":"^[A-Z]\\d+(\\.\\d+)?$","identifiersIri":"http://identifiers.org/dbest/"}
+,
+{"iris":["urn:miriam:dbprobe","http://identifiers.org/dbprobe/"],"dbValueVariants":["dbProbe","dbprobe"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/dbprobe/"}
+,
+{"iris":["urn:miriam:dbsnp","http://identifiers.org/dbsnp/"],"dbValueVariants":["dbSNP","dbsnp"],"pattern":"^rs\\d+$","identifiersIri":"http://identifiers.org/dbsnp/"}
+,
+{"iris":["urn:miriam:unists","http://identifiers.org/unists/"],"dbValueVariants":["UniSTS","dbSTS","unists"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/unists/"}
+,
+{"iris":["urn:miriam:ecogene","http://identifiers.org/ecogene/"],"dbValueVariants":["EcoGene","ecogene"],"pattern":"^EG\\d+$","identifiersIri":"http://identifiers.org/ecogene/"}
+,
+{"iris":["urn:miriam:gabi","http://identifiers.org/gabi/"],"dbValueVariants":["GABI","GABI PD","gabi"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/gabi/"}
+,
+{"iris":["urn:miriam:greengenes","http://identifiers.org/greengenes/"],"dbValueVariants":["GreenGenes","greengenes"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/greengenes/"}
+,
+{"iris":["urn:miriam:grin.taxonomy","http://identifiers.org/grin.taxonomy/"],"dbValueVariants":["GRIN Plant Taxonomy","GRIN Taxonomy for Plants","Germplasm Resources Information Network Plant Taxonomy","grin.taxonomy"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/grin.taxonomy/"}
+,
+{"iris":["urn:miriam:hinv.locus","http://identifiers.org/hinv.locus/"],"dbValueVariants":["H-InvDb Locus","hinv.locus"],"pattern":"^HIX\\d{7}(\\.\\d+)?$","identifiersIri":"http://identifiers.org/hinv.locus/"}
+,
+{"iris":["urn:miriam:hinv.transcript","http://identifiers.org/hinv.transcript/"],"dbValueVariants":["H-InvDb Transcript","hinv.transcript"],"pattern":"^HIT\\d{9}(\\.\\d+)?$","identifiersIri":"http://identifiers.org/hinv.transcript/"}
+,
+{"iris":["urn:miriam:hinv.protein","http://identifiers.org/hinv.protein/"],"dbValueVariants":["H-InvDb Protein","hinv.protein"],"pattern":"^HIP\\d{9}(\\.\\d+)?$","identifiersIri":"http://identifiers.org/hinv.protein/"}
+,
+{"iris":["urn:miriam:homd.seq","http://identifiers.org/homd.seq/"],"dbValueVariants":["HOMD Sequence Metainformation","Human Oral Microbiome Database","homd.seq"],"pattern":"^SEQF\\d+$","identifiersIri":"http://identifiers.org/homd.seq/"}
+,
+{"iris":["urn:miriam:homd.taxon","http://identifiers.org/homd.taxon/"],"dbValueVariants":["HOMD Taxonomy","homd.taxon"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/homd.taxon/"}
+,
+{"iris":["urn:miriam:ird.segment","http://identifiers.org/ird.segment/"],"dbValueVariants":["IRD Segment Sequence","Influenza Research Database Segment","ird.segment"],"pattern":"^\\w+(\\_)?\\d+(\\.\\d+)?$","identifiersIri":"http://identifiers.org/ird.segment/"}
+,
+{"iris":["urn:miriam:isfinder","http://identifiers.org/isfinder/"],"dbValueVariants":["ISFinder","Insertion Sequence Finder","isfinder"],"pattern":"^IS\\w+(\\-\\d)?$","identifiersIri":"http://identifiers.org/isfinder/"}
+,
+{"iris":["urn:miriam:jcm","http://identifiers.org/jcm/"],"dbValueVariants":["Japan Collection of Microorganisms","JCM","jcm"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/jcm/"}
+,
+{"iris":["urn:miriam:img.taxon","http://identifiers.org/img.taxon/"],"dbValueVariants":["Integrated Microbial Genomes Taxon","IMG Taxon","img.taxon"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/img.taxon/"}
+,
+{"iris":["urn:miriam:img.gene","http://identifiers.org/img.gene/"],"dbValueVariants":["Integrated Microbial Genomes Gene","img.gene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/img.gene/"}
+,
+{"iris":["urn:miriam:maizegdb.locus","http://identifiers.org/maizegdb.locus/"],"dbValueVariants":["MaizeGDB Locus","maizegdb.locus"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/maizegdb.locus/"}
+,
+{"iris":["urn:miriam:mycobank","http://identifiers.org/mycobank/"],"dbValueVariants":["MycoBank","mycobank"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/mycobank/"}
+,
+{"iris":["urn:miriam:nbrc","http://identifiers.org/nbrc/"],"dbValueVariants":["NITE Biological Research Center Catalogue","NBRC Catalogue","nbrc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/nbrc/"}
+,
+{"iris":["urn:miriam:pseudomonas","http://identifiers.org/pseudomonas/"],"dbValueVariants":["Pseudomonas Genome Database","PGD","Pseudocap","pseudomonas"],"pattern":"^P\\w+$","identifiersIri":"http://identifiers.org/pseudomonas/"}
+,
+{"iris":["urn:miriam:gramene.protein","http://identifiers.org/gramene.protein/"],"dbValueVariants":["Gramene protein","gramene.protein"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/gramene.protein/"}
+,
+{"iris":["urn:miriam:gramene.gene","http://identifiers.org/gramene.gene/"],"dbValueVariants":["Gramene genes","gramene.gene"],"pattern":"^GR\\:\\d+$","identifiersIri":"http://identifiers.org/gramene.gene/"}
+,
+{"iris":["urn:miriam:gramene.taxonomy","http://identifiers.org/gramene.taxonomy/"],"dbValueVariants":["Gramene Taxonomy","gramene.taxonomy"],"pattern":"^GR\\_tax\\:\\d+$","identifiersIri":"http://identifiers.org/gramene.taxonomy/"}
+,
+{"iris":["urn:miriam:gramene.qtl","http://identifiers.org/gramene.qtl/"],"dbValueVariants":["Gramene QTL","gramene.qtl"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/gramene.qtl/"}
+,
+{"iris":["urn:miriam:sgn","http://identifiers.org/sgn/"],"dbValueVariants":["Sol Genomics Network","SGN","sgn"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sgn/"}
+,
+{"iris":["urn:miriam:xenbase","http://identifiers.org/xenbase/"],"dbValueVariants":["Xenbase","xenbase"],"pattern":"^(XB-GENE-)?\\d+$","identifiersIri":"http://identifiers.org/xenbase/"}
+,
+{"iris":["urn:miriam:bioportal","http://identifiers.org/bioportal/"],"dbValueVariants":["BioPortal","bioportal"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bioportal/"}
+,
+{"iris":["urn:miriam:miriam.resource","http://identifiers.org/miriam.resource/"],"dbValueVariants":["MIRIAM Registry resource","miriam.resource"],"pattern":"^MIR:001\\d{5}$","identifiersIri":"http://identifiers.org/miriam.resource/"}
+,
+{"iris":["urn:miriam:edam","http://identifiers.org/edam/","http://edamontology.org/"],"dbValueVariants":["EDAM Ontology","EMBRACE Data and Methods Ontology","edam"],"pattern":"^(data|topic|operation|format)\\_\\d{4}$","identifiersIri":"http://identifiers.org/edam/"}
+,
+{"iris":["urn:miriam:pmdb","http://identifiers.org/pmdb/"],"dbValueVariants":["Protein Model Database","PMDB","pmdb"],"pattern":"^PM\\d{7}","identifiersIri":"http://identifiers.org/pmdb/"}
+,
+{"iris":["urn:miriam:2d-page.protein","http://identifiers.org/2d-page.protein/"],"dbValueVariants":["2D-PAGE protein","2D-PAGE E. coli","2d-page.protein"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/2d-page.protein/"}
+,
+{"iris":["urn:miriam:agd","http://identifiers.org/agd/"],"dbValueVariants":["AGD","Ashbya Genome Database","agd"],"pattern":"^AGR\\w+$","identifiersIri":"http://identifiers.org/agd/"}
+,
+{"iris":["urn:miriam:arachnoserver","http://identifiers.org/arachnoserver/"],"dbValueVariants":["ArachnoServer","arachnoserver"],"pattern":"^AS\\d{6}$","identifiersIri":"http://identifiers.org/arachnoserver/"}
+,
+{"iris":["urn:miriam:biocyc","http://identifiers.org/biocyc/"],"dbValueVariants":["BioCyc","biocyc"],"pattern":"^[A-Z-0-9]+(?<!CHEBI)(\\:)?[A-Za-z0-9+_.%-]+$","identifiersIri":"http://identifiers.org/biocyc/"}
+,
+{"iris":["urn:miriam:cazy","http://identifiers.org/cazy/"],"dbValueVariants":["CAZy","Carbohydrate-Active enzYmes","cazy"],"pattern":"^(GT|GH|PL|CE|CBM)\\d+(\\_\\d+)?$","identifiersIri":"http://identifiers.org/cazy/"}
+,
+{"iris":["urn:miriam:goa","http://identifiers.org/goa/"],"dbValueVariants":["GOA","Gene Ontology Annotation","UniProtKB-GOA","goa"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/goa/"}
+,
+{"iris":["urn:miriam:paleodb","http://identifiers.org/paleodb/"],"dbValueVariants":["PaleoDB","Paleobiology database","paleodb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/paleodb/"}
+,
+{"iris":["urn:miriam:compulyeast","http://identifiers.org/compulyeast/"],"dbValueVariants":["Compulyeast","Compluyeast-2D-DB","compulyeast"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/compulyeast/"}
+,
+{"iris":["urn:miriam:disprot","http://identifiers.org/disprot/"],"dbValueVariants":["DisProt","disprot"],"pattern":"^DP\\d{5}$","identifiersIri":"http://identifiers.org/disprot/"}
+,
+{"iris":["urn:miriam:echobase","http://identifiers.org/echobase/"],"dbValueVariants":["EchoBASE","echobase"],"pattern":"^EB\\d+$","identifiersIri":"http://identifiers.org/echobase/"}
+,
+{"iris":["urn:miriam:eggnog","http://identifiers.org/eggnog/"],"dbValueVariants":["eggNOG","eggnog"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/eggnog/"}
+,
+{"iris":["urn:miriam:ensembl.bacteria","http://identifiers.org/ensembl.bacteria/"],"dbValueVariants":["Ensembl Bacteria","Ensembl Genomes Bacteria","ensembl.bacteria"],"pattern":"^((EB\\w+)|([A-Z0-9]+\\_[A-Z0-9]+))$","identifiersIri":"http://identifiers.org/ensembl.bacteria/"}
+,
+{"iris":["urn:miriam:ensembl.protist","http://identifiers.org/ensembl.protist/"],"dbValueVariants":["Ensembl Protists","Ensembl Genomes Protists","ensembl.protist"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/ensembl.protist/"}
+,
+{"iris":["urn:miriam:ensembl.metazoa","http://identifiers.org/ensembl.metazoa/"],"dbValueVariants":["Ensembl Metazoa","Ensembl Genomes Metazoa","ensembl.metazoa"],"pattern":"^\\w+(\\.)?\\d+$","identifiersIri":"http://identifiers.org/ensembl.metazoa/"}
+,
+{"iris":["urn:miriam:ensembl.plant","http://identifiers.org/ensembl.plant/"],"dbValueVariants":["Ensembl Plants","Ensembl Genomes Plants","ensembl.plant"],"pattern":"^\\w+(\\.\\d+)?(\\.\\d+)?$","identifiersIri":"http://identifiers.org/ensembl.plant/"}
+,
+{"iris":["urn:miriam:ensembl.fungi","http://identifiers.org/ensembl.fungi/"],"dbValueVariants":["Ensembl Fungi","Ensembl Genomes Fungi","ensembl.fungi"],"pattern":"^[A-Z-a-z0-9]+$","identifiersIri":"http://identifiers.org/ensembl.fungi/"}
+,
+{"iris":["urn:miriam:hcvdb","http://identifiers.org/hcvdb/"],"dbValueVariants":["HCVDB","euHCVDB","hcvdb"],"pattern":"^M\\d{5}$","identifiersIri":"http://identifiers.org/hcvdb/"}
+,
+{"iris":["urn:miriam:genatlas","http://identifiers.org/genatlas/"],"dbValueVariants":["Genatlas","genatlas"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/genatlas/"}
+,
+{"iris":["urn:miriam:cath.superfamily","http://identifiers.org/cath.superfamily/"],"dbValueVariants":["CATH superfamily","cath.superfamily"],"pattern":"^\\d+(\\.\\d+(\\.\\d+(\\.\\d+)?)?)?$","identifiersIri":"http://identifiers.org/cath.superfamily/"}
+,
+{"iris":["urn:miriam:cath.domain","http://identifiers.org/cath.domain/"],"dbValueVariants":["CATH domain","cath.domain"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/cath.domain/"}
+,
+{"iris":["urn:miriam:genefarm","http://identifiers.org/genefarm/"],"dbValueVariants":["GeneFarm","genefarm"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/genefarm/"}
+,
+{"iris":["urn:miriam:gpcrdb","http://identifiers.org/gpcrdb/"],"dbValueVariants":["GPCRDB","G protein-coupled receptor database","gpcrdb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/gpcrdb/"}
+,
+{"iris":["urn:miriam:hogenom","http://identifiers.org/hogenom/"],"dbValueVariants":["HOGENOM","hogenom"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/hogenom/"}
+,
+{"iris":["urn:miriam:genetree","http://identifiers.org/genetree/"],"dbValueVariants":["GeneTree","Ensembl GeneTree","genetree"],"pattern":"^ENSGT\\d+$","identifiersIri":"http://identifiers.org/genetree/"}
+,
+{"iris":["urn:miriam:hssp","http://identifiers.org/hssp/"],"dbValueVariants":["HSSP","Homology-derived Structure of Proteins","hssp"],"pattern":"^\\w{4}$","identifiersIri":"http://identifiers.org/hssp/"}
+,
+{"iris":["urn:miriam:myco.tuber","http://identifiers.org/myco.tuber/"],"dbValueVariants":["MycoBrowser tuberculosis","TubercuList","myco.tuber"],"pattern":"^Rv\\d{4}(A|B|c)?$","identifiersIri":"http://identifiers.org/myco.tuber/"}
+,
+{"iris":["urn:miriam:myco.lepra","http://identifiers.org/myco.lepra/"],"dbValueVariants":["MycoBrowser leprae","Leproma","myco.lepra"],"pattern":"^ML\\w+$","identifiersIri":"http://identifiers.org/myco.lepra/"}
+,
+{"iris":["urn:miriam:myco.marinum","http://identifiers.org/myco.marinum/"],"dbValueVariants":["MycoBrowser marinum","marinolist","myco.marinum"],"pattern":"^MMAR\\_\\d+$","identifiersIri":"http://identifiers.org/myco.marinum/"}
+,
+{"iris":["urn:miriam:myco.smeg","http://identifiers.org/myco.smeg/"],"dbValueVariants":["MycoBrowser smegmatis","smegmalist","myco.smeg"],"pattern":"^MSMEG\\w+$","identifiersIri":"http://identifiers.org/myco.smeg/"}
+,
+{"iris":["urn:miriam:orphanet","http://identifiers.org/orphanet/","http://bio2rdf.org/orphanet"],"dbValueVariants":["Orphanet","Orpha","orphanet"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/orphanet/"}
+,
+{"iris":["urn:miriam:orthodb","http://identifiers.org/orthodb/"],"dbValueVariants":["OrthoDB","orthodb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/orthodb/"}
+,
+{"iris":["urn:miriam:peroxibase","http://identifiers.org/peroxibase/"],"dbValueVariants":["Peroxibase","peroxibase"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/peroxibase/"}
+,
+{"iris":["urn:miriam:phylomedb","http://identifiers.org/phylomedb/"],"dbValueVariants":["PhylomeDB","phylomedb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/phylomedb/"}
+,
+{"iris":["urn:miriam:pmap.substratedb","http://identifiers.org/pmap.substratedb/"],"dbValueVariants":["SubstrateDB","PMAP substrateDB","pmap.substratedb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pmap.substratedb/"}
+,
+{"iris":["urn:miriam:pmap.cutdb","http://identifiers.org/pmap.cutdb/"],"dbValueVariants":["CutDB","PMAP cutDB","pmap.cutdb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pmap.cutdb/"}
+,
+{"iris":["urn:miriam:protclustdb","http://identifiers.org/protclustdb/"],"dbValueVariants":["ProtClustDB","Protein Clusters Database","Entrez ProtClustDB","protclustdb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/protclustdb/"}
+,
+{"iris":["urn:miriam:pmp","http://identifiers.org/pmp/"],"dbValueVariants":["PMP","Protein Model Portal","pmp"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/pmp/"}
+,
+{"iris":["urn:miriam:protonet.proteincard","http://identifiers.org/protonet.proteincard/"],"dbValueVariants":["ProtoNet ProteinCard","protonet.proteincard"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/protonet.proteincard/"}
+,
+{"iris":["urn:miriam:protonet.cluster","http://identifiers.org/protonet.cluster/"],"dbValueVariants":["ProtoNet Cluster","protonet.cluster"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/protonet.cluster/"}
+,
+{"iris":["urn:miriam:rebase","http://identifiers.org/rebase/"],"dbValueVariants":["REBASE","Restriction Enzyme Database","rebase"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/rebase/"}
+,
+{"iris":["urn:miriam:swiss-model","http://identifiers.org/swiss-model/"],"dbValueVariants":["SWISS-MODEL","swiss-model"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/swiss-model/"}
+,
+{"iris":["urn:miriam:vectorbase","http://identifiers.org/vectorbase/"],"dbValueVariants":["VectorBase","vectorbase"],"pattern":"^\\D{4}\\d{6}(\\-\\D{2})?$","identifiersIri":"http://identifiers.org/vectorbase/"}
+,
+{"iris":["urn:miriam:doid","http://identifiers.org/doid/","urn:miriam:obo.do","http://identifiers.org/obo.do/"],"dbValueVariants":["Human Disease Ontology","DO","doid"],"pattern":"^DOID\\:\\d+$","identifiersIri":"http://identifiers.org/doid/"}
+,
+{"iris":["urn:miriam:cco","http://identifiers.org/cco/"],"dbValueVariants":["Cell Cycle Ontology","cco"],"pattern":"^CCO\\:\\w+$","identifiersIri":"http://identifiers.org/cco/"}
+,
+{"iris":["urn:miriam:mirbase.mature","http://identifiers.org/mirbase.mature/"],"dbValueVariants":["miRBase mature sequence","mirbase.mature"],"pattern":"MIMAT\\d{7}","identifiersIri":"http://identifiers.org/mirbase.mature/"}
+,
+{"iris":["urn:miriam:nextprot","http://identifiers.org/nextprot/"],"dbValueVariants":["nextProt","nextprot"],"pattern":"^NX_\\w+","identifiersIri":"http://identifiers.org/nextprot/"}
+,
+{"iris":["urn:miriam:cas","http://identifiers.org/cas/"],"dbValueVariants":["CAS","Chemical Abstracts Service","CAS Registry Number","CAS Number","CASRN","cas"],"pattern":"^\\d{1,7}\\-\\d{2}\\-\\d$","identifiersIri":"http://identifiers.org/cas/"}
+,
+{"iris":["urn:miriam:kegg.genome","http://identifiers.org/kegg.genome/"],"dbValueVariants":["KEGG Genome","KEGG Organism","kegg.genome"],"pattern":"^(T0\\d+|\\w{3,5})$","identifiersIri":"http://identifiers.org/kegg.genome/"}
+,
+{"iris":["urn:miriam:kegg.metagenome","http://identifiers.org/kegg.metagenome/"],"dbValueVariants":["KEGG Metagenome","kegg.metagenome"],"pattern":"^T3\\d+$","identifiersIri":"http://identifiers.org/kegg.metagenome/"}
+,
+{"iris":["urn:miriam:narcis","http://identifiers.org/narcis/"],"dbValueVariants":["NARCIS","National Academic Research and Collaborations Information System","narcis"],"pattern":"^oai\\:cwi\\.nl\\:\\d+$","identifiersIri":"http://identifiers.org/narcis/"}
+,
+{"iris":["urn:miriam:jcsd","http://identifiers.org/jcsd/"],"dbValueVariants":["Japan Chemical Substance Dictionary","jcsd"],"pattern":"^J\\d{1,3}(\\.\\d{3})?(\\.\\d{1,3})?[A-Za-z]$","identifiersIri":"http://identifiers.org/jcsd/"}
+,
+{"iris":["urn:miriam:pw","http://identifiers.org/pw/","urn:miriam:obo.pw","http://identifiers.org/obo.pw/"],"dbValueVariants":["Pathway Ontology","pw"],"pattern":"^PW:\\d{7}$","identifiersIri":"http://identifiers.org/pw/"}
+,
+{"iris":["urn:miriam:insdc.sra","http://identifiers.org/insdc.sra/"],"dbValueVariants":["Sequence Read Archive","insdc.sra"],"pattern":"^[SED]R[APRSXZ]\\d{6}","identifiersIri":"http://identifiers.org/insdc.sra/"}
+,
+{"iris":["urn:miriam:scretf","http://identifiers.org/scretf/"],"dbValueVariants":["ScerTF","scretf"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/scretf/"}
+,
+{"iris":["urn:miriam:pharmgkb.gene","http://identifiers.org/pharmgkb.gene/"],"dbValueVariants":["PharmGKB Gene","pharmgkb.gene"],"pattern":"^PA\\w+$","identifiersIri":"http://identifiers.org/pharmgkb.gene/"}
+,
+{"iris":["urn:miriam:mirnest","http://identifiers.org/mirnest/"],"dbValueVariants":["miRNEST","mirnest"],"pattern":"^MNEST\\d+$","identifiersIri":"http://identifiers.org/mirnest/"}
+,
+{"iris":["urn:miriam:napp","http://identifiers.org/napp/"],"dbValueVariants":["NAPP","Nucleic Acid Phylogenetic Profiling","napp"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/napp/"}
+,
+{"iris":["urn:miriam:noncodev3","http://identifiers.org/noncodev3/","urn:miriam:noncode","http://identifiers.org/noncode/"],"dbValueVariants":["NONCODE v3","noncodev3"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/noncodev3/"}
+,
+{"iris":["urn:miriam:virsirna","http://identifiers.org/virsirna/"],"dbValueVariants":["VIRsiRNA","Virus siRNA database","VIRsiRNAdb","virsirna"],"pattern":"^virsi\\d+$","identifiersIri":"http://identifiers.org/virsirna/"}
+,
+{"iris":["urn:miriam:elm","http://identifiers.org/elm/"],"dbValueVariants":["ELM","Eukaryotic Linear Motifs","elm"],"pattern":"^[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/elm/"}
+,
+{"iris":["urn:miriam:mimodb","http://identifiers.org/mimodb/"],"dbValueVariants":["MimoDB","Mimotope Database","mimodb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/mimodb/"}
+,
+{"iris":["urn:miriam:sitex","http://identifiers.org/sitex/"],"dbValueVariants":["SitEx","sitex"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sitex/"}
+,
+{"iris":["urn:miriam:bykdb","http://identifiers.org/bykdb/"],"dbValueVariants":["BYKdb","Bacterial protein tYrosine Kinase database","bykdb"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/bykdb/"}
+,
+{"iris":["urn:miriam:conoserver","http://identifiers.org/conoserver/"],"dbValueVariants":["Conoserver","conoserver"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/conoserver/"}
+,
+{"iris":["urn:miriam:topfind","http://identifiers.org/topfind/"],"dbValueVariants":["TopFind","topfind"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/topfind/"}
+,
+{"iris":["urn:miriam:mipmod","http://identifiers.org/mipmod/"],"dbValueVariants":["MIPModDB","mipmod"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/mipmod/"}
+,
+{"iris":["urn:miriam:cellimage","http://identifiers.org/cellimage/"],"dbValueVariants":["Cell Image Library","CIL","The Cell: An Image Library-CCDB","The Cell: An Image Library-Cell Centered Database","cellimage"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/cellimage/"}
+,
+{"iris":["urn:miriam:combine.specifications","http://identifiers.org/combine.specifications/"],"dbValueVariants":["COMBINE specifications","combine.specifications"],"pattern":"^\\w+(\\-|\\.|\\w)*$","identifiersIri":"http://identifiers.org/combine.specifications/"}
+,
+{"iris":["urn:miriam:zfin.phenotype","http://identifiers.org/zfin.phenotype/"],"dbValueVariants":["ZFIN Phenotype","zfin.phenotype"],"pattern":"^ZDB\\-GEN0\\-\\d+\\-\\d+$","identifiersIri":"http://identifiers.org/zfin.phenotype/"}
+,
+{"iris":["urn:miriam:zfin.expression","http://identifiers.org/zfin.expression/"],"dbValueVariants":["ZFIN Expression","zfin.expression"],"pattern":"^ZDB\\-GEN0\\-\\d+\\-\\d+$","identifiersIri":"http://identifiers.org/zfin.expression/"}
+,
+{"iris":["urn:miriam:cabri","http://identifiers.org/cabri/"],"dbValueVariants":["CABRI","cabri"],"pattern":"^([A-Za-z]+)?(\\_)?([A-Za-z-]+)\\:([A-Za-z0-9 ]+)$","identifiersIri":"http://identifiers.org/cabri/"}
+,
+{"iris":["urn:miriam:cygd","http://identifiers.org/cygd/"],"dbValueVariants":["CYGD","cygd"],"pattern":"^\\w{2,3}\\d{2,4}(\\w)?$","identifiersIri":"http://identifiers.org/cygd/"}
+,
+{"iris":["urn:miriam:huge","http://identifiers.org/huge/"],"dbValueVariants":["HUGE","huge"],"pattern":"^KIAA\\d{4}$","identifiersIri":"http://identifiers.org/huge/"}
+,
+{"iris":["urn:miriam:bindingDB","http://identifiers.org/bindingDB/"],"dbValueVariants":["BindingDB","bindingDB"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bindingDB/"}
+,
+{"iris":["urn:miriam:string","http://identifiers.org/string/"],"dbValueVariants":["STRING","Search Tool for Retrieval of Interacting Genes/Proteins","string"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3})$","identifiersIri":"http://identifiers.org/string/"}
+,
+{"iris":["urn:miriam:stitch","http://identifiers.org/stitch/"],"dbValueVariants":["STITCH","stitch"],"pattern":"^\\w{14}$","identifiersIri":"http://identifiers.org/stitch/"}
+,
+{"iris":["urn:miriam:atcvet","http://identifiers.org/atcvet/"],"dbValueVariants":["Anatomical Therapeutic Chemical Vetinary","atcvet"],"pattern":"^Q[A-Z0-9]+$","identifiersIri":"http://identifiers.org/atcvet/"}
+,
+{"iris":["urn:miriam:phenolexplorer","http://identifiers.org/phenolexplorer/"],"dbValueVariants":["Phenol-Explorer","phenolexplorer"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/phenolexplorer/"}
+,
+{"iris":["urn:miriam:snomedct","http://identifiers.org/snomedct/"],"dbValueVariants":["SNOMED CT","snomedct"],"pattern":"^(\\w+)?\\d+$","identifiersIri":"http://identifiers.org/snomedct/"}
+,
+{"iris":["urn:miriam:mesh.2012","http://identifiers.org/mesh.2012/","urn:miriam:mesh","http://identifiers.org/mesh/"],"dbValueVariants":["MeSH 2012","Medical Subject Headings 2012","mesh.2012"],"pattern":"^[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/mesh.2012/"}
+,
+{"iris":["urn:miriam:knapsack","http://identifiers.org/knapsack/"],"dbValueVariants":["KnapSack","knapsack"],"pattern":"^C\\d{8}","identifiersIri":"http://identifiers.org/knapsack/"}
+,
+{"iris":["urn:miriam:cdpd","http://identifiers.org/cdpd/"],"dbValueVariants":["Canadian Drug Product Database","DPD","cdpd"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/cdpd/"}
+,
+{"iris":["urn:miriam:massbank","http://identifiers.org/massbank/"],"dbValueVariants":["MassBank","massbank"],"pattern":"^[A-Z]{2}[A-Z0-9][0-9]{5}$","identifiersIri":"http://identifiers.org/massbank/"}
+,
+{"iris":["urn:miriam:gmd","http://identifiers.org/gmd/"],"dbValueVariants":["Golm Metabolome Database","GMD","gmd"],"pattern":"^([0-9a-fA-F]){8}(-([0-9a-fA-F]){4}){3}-([0-9a-fA-F]){12}$","identifiersIri":"http://identifiers.org/gmd/"}
+,
+{"iris":["urn:miriam:homologene","http://identifiers.org/homologene/","http://bio2rdf.org/homologene"],"dbValueVariants":["HomoloGene","homologene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/homologene/"}
+,
+{"iris":["urn:miriam:umbbd.compound","http://identifiers.org/umbbd.compound/"],"dbValueVariants":["UM-BBD Compound","University of Minnesota Biocatalysis/Biodegradation Database (Compound)","umbbd.compound"],"pattern":"^c\\d+$","identifiersIri":"http://identifiers.org/umbbd.compound/"}
+,
+{"iris":["urn:miriam:abs","http://identifiers.org/abs/"],"dbValueVariants":["ABS","Annotated regulatory Binding Sites database","abs"],"pattern":"^A\\d+$","identifiersIri":"http://identifiers.org/abs/"}
+,
+{"iris":["urn:miriam:apd","http://identifiers.org/apd/"],"dbValueVariants":["APD","Antimicrobial Peptide Database","apd"],"pattern":"^\\d{5}$","identifiersIri":"http://identifiers.org/apd/"}
+,
+{"iris":["urn:miriam:chemdb","http://identifiers.org/chemdb/"],"dbValueVariants":["ChemDB","chemdb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/chemdb/"}
+,
+{"iris":["urn:miriam:dpv","http://identifiers.org/dpv/"],"dbValueVariants":["DPV","Description of Plant Viruses","DPVweb","dpv"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/dpv/"}
+,
+{"iris":["urn:miriam:iuphar.receptor","http://identifiers.org/iuphar.receptor/"],"dbValueVariants":["IUPHAR receptor","International Union  of Basic and Clinical Pharmacology","IUPHAR-DB","iuphar.receptor"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/iuphar.receptor/"}
+,
+{"iris":["urn:miriam:aceview.worm","http://identifiers.org/aceview.worm/"],"dbValueVariants":["Aceview Worm","AceView WormGenes","aceview.worm"],"pattern":"^[a-z0-9-]+$","identifiersIri":"http://identifiers.org/aceview.worm/"}
+,
+{"iris":["urn:miriam:asap","http://identifiers.org/asap/"],"dbValueVariants":["ASAP","asap"],"pattern":"^[A-Za-z0-9-]+$","identifiersIri":"http://identifiers.org/asap/"}
+,
+{"iris":["urn:miriam:atcc","http://identifiers.org/atcc/"],"dbValueVariants":["ATCC","American Type Culture Collection","atcc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/atcc/"}
+,
+{"iris":["urn:miriam:bdgp.est","http://identifiers.org/bdgp.est/"],"dbValueVariants":["BDGP EST","Berkeley Drosophila Genome Project EST","bdgp.est"],"pattern":"^\\w+(\\.)?(\\d+)?$","identifiersIri":"http://identifiers.org/bdgp.est/"}
+,
+{"iris":["urn:miriam:dictybase.gene","http://identifiers.org/dictybase.gene/"],"dbValueVariants":["Dictybase Gene","dictybase.gene"],"pattern":"^DDB_G\\d+$","identifiersIri":"http://identifiers.org/dictybase.gene/"}
+,
+{"iris":["urn:miriam:imgt.ligm","http://identifiers.org/imgt.ligm/"],"dbValueVariants":["IMGT LIGM","IMGT/LIGM-DB","imgt.ligm"],"pattern":"^M\\d+$","identifiersIri":"http://identifiers.org/imgt.ligm/"}
+,
+{"iris":["urn:miriam:worfdb","http://identifiers.org/worfdb/"],"dbValueVariants":["Worfdb","Worm Orf DB","worfdb"],"pattern":"^\\w+(\\.\\d+)?","identifiersIri":"http://identifiers.org/worfdb/"}
+,
+{"iris":["urn:miriam:nextdb","http://identifiers.org/nextdb/"],"dbValueVariants":["NEXTDB","Nematode Expression Pattern Database","nextdb"],"pattern":"^[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/nextdb/"}
+,
+{"iris":["urn:miriam:pgn","http://identifiers.org/pgn/"],"dbValueVariants":["Plant Genome Network","pgn"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pgn/"}
+,
+{"iris":["urn:miriam:soybase","http://identifiers.org/soybase/"],"dbValueVariants":["SoyBase","soybase"],"pattern":"^\\w+(\\-)?\\w+(\\-)?\\w+$","identifiersIri":"http://identifiers.org/soybase/"}
+,
+{"iris":["urn:miriam:hamap","http://identifiers.org/hamap/"],"dbValueVariants":["HAMAP","High-quality Automated and Manual Annotation of microbial Proteomes","hamap"],"pattern":"^MF_\\d+$","identifiersIri":"http://identifiers.org/hamap/"}
+,
+{"iris":["urn:miriam:rouge","http://identifiers.org/rouge/"],"dbValueVariants":["Rouge","Rodent Unidentified Gene-Encoded Large Proteins","rouge"],"pattern":"^m\\w+$","identifiersIri":"http://identifiers.org/rouge/"}
+,
+{"iris":["urn:miriam:arrayexpress.platform","http://identifiers.org/arrayexpress.platform/"],"dbValueVariants":["ArrayExpress Platform","arrayexpress.platform"],"pattern":"^[AEP]-\\w{4}-\\d+$","identifiersIri":"http://identifiers.org/arrayexpress.platform/"}
+,
+{"iris":["urn:miriam:cgsc","http://identifiers.org/cgsc/"],"dbValueVariants":["CGSC Strain","Coli Genetic Stock Center","cgsc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/cgsc/"}
+,
+{"iris":["urn:miriam:cogs","http://identifiers.org/cogs/"],"dbValueVariants":["COGs","Clusters of Orthologous Groups","cogs"],"pattern":"^COG\\d+$","identifiersIri":"http://identifiers.org/cogs/"}
+,
+{"iris":["urn:miriam:dragondb.dna","http://identifiers.org/dragondb.dna/"],"dbValueVariants":["DragonDB DNA","dragondb.dna"],"pattern":"^\\d\\w+$","identifiersIri":"http://identifiers.org/dragondb.dna/"}
+,
+{"iris":["urn:miriam:dragondb.protein","http://identifiers.org/dragondb.protein/"],"dbValueVariants":["DragonDB Protein","dragondb.protein"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/dragondb.protein/"}
+,
+{"iris":["urn:miriam:dragondb.locus","http://identifiers.org/dragondb.locus/"],"dbValueVariants":["DragonDB Locus","dragondb.locus"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/dragondb.locus/"}
+,
+{"iris":["urn:miriam:dragondb.allele","http://identifiers.org/dragondb.allele/"],"dbValueVariants":["DragonDB Allele","dragondb.allele"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/dragondb.allele/"}
+,
+{"iris":["urn:miriam:issn","http://identifiers.org/issn/"],"dbValueVariants":["ISSN","issn"],"pattern":"^\\d{4}\\-\\d{4}$","identifiersIri":"http://identifiers.org/issn/"}
+,
+{"iris":["urn:miriam:merops.family","http://identifiers.org/merops.family/"],"dbValueVariants":["MEROPS Family","merops.family"],"pattern":"^[SCTAGMNU]\\d+$","identifiersIri":"http://identifiers.org/merops.family/"}
+,
+{"iris":["urn:miriam:mo","http://identifiers.org/mo/"],"dbValueVariants":["MGED Ontology","MO","mo"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/mo/"}
+,
+{"iris":["urn:miriam:nasc","http://identifiers.org/nasc/"],"dbValueVariants":["NASC code","The Nottingham Arabidopsis Stock Centre","nasc"],"pattern":"^(\\w+)?\\d+$","identifiersIri":"http://identifiers.org/nasc/"}
+,
+{"iris":["urn:miriam:niaest","http://identifiers.org/niaest/"],"dbValueVariants":["NIAEST","niaest"],"pattern":"^\\w\\d{4}\\w\\d{2}(\\-[35])?$","identifiersIri":"http://identifiers.org/niaest/"}
+,
+{"iris":["urn:miriam:pazar","http://identifiers.org/pazar/"],"dbValueVariants":["Pazar Transcription Factor","Pazar Database","pazar"],"pattern":"^TF\\w+$","identifiersIri":"http://identifiers.org/pazar/"}
+,
+{"iris":["urn:miriam:po","http://identifiers.org/po/","urn:miriam:obo.po","http://identifiers.org/obo.po/"],"dbValueVariants":["Plant Ontology","PO","po"],"pattern":"^PO\\:\\d+$","identifiersIri":"http://identifiers.org/po/"}
+,
+{"iris":["urn:miriam:rnamods","http://identifiers.org/rnamods/"],"dbValueVariants":["RNA Modification Database","RNAmods","rnamods"],"pattern":"^\\d{3}$","identifiersIri":"http://identifiers.org/rnamods/"}
+,
+{"iris":["urn:miriam:sciencesignaling.pic","http://identifiers.org/sciencesignaling.pic/"],"dbValueVariants":["Science Signaling Pathway-Independent Component","sciencesignaling.pic"],"pattern":"^CMC_\\d+$","identifiersIri":"http://identifiers.org/sciencesignaling.pic/"}
+,
+{"iris":["urn:miriam:sciencesignaling.pdc","http://identifiers.org/sciencesignaling.pdc/"],"dbValueVariants":["Science Signaling Pathway-Dependent Component","sciencesignaling.pdc"],"pattern":"^CMN_\\d+$","identifiersIri":"http://identifiers.org/sciencesignaling.pdc/"}
+,
+{"iris":["urn:miriam:sciencesignaling.path","http://identifiers.org/sciencesignaling.path/"],"dbValueVariants":["Science Signaling Pathway","sciencesignaling.path"],"pattern":"^CMP_\\d+$","identifiersIri":"http://identifiers.org/sciencesignaling.path/"}
+,
+{"iris":["urn:miriam:treebase","http://identifiers.org/treebase/"],"dbValueVariants":["TreeBASE","treebase"],"pattern":"^TB[1,2]?:[A-Z][a-z]?\\d+$","identifiersIri":"http://identifiers.org/treebase/"}
+,
+{"iris":["urn:miriam:tgd","http://identifiers.org/tgd/"],"dbValueVariants":["Tetrahymena Genome Database","TGD","tgd"],"pattern":"^TTHERM\\_\\d+$","identifiersIri":"http://identifiers.org/tgd/"}
+,
+{"iris":["urn:miriam:cmr.gene","http://identifiers.org/cmr.gene/"],"dbValueVariants":["CMR Gene","Comprehensive Microbial Resource Gene Page","cmr.gene"],"pattern":"^\\w+(\\_)?\\w+$","identifiersIri":"http://identifiers.org/cmr.gene/"}
+,
+{"iris":["urn:miriam:tigrfam","http://identifiers.org/tigrfam/"],"dbValueVariants":["TIGRFAMS","tigrfam"],"pattern":"^TIGR\\d+$","identifiersIri":"http://identifiers.org/tigrfam/"}
+,
+{"iris":["urn:miriam:atfdb.family","http://identifiers.org/atfdb.family/"],"dbValueVariants":["Animal TFDB Family","Animal Transcription Factor Database","atfdb.family"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/atfdb.family/"}
+,
+{"iris":["urn:miriam:iuphar.family","http://identifiers.org/iuphar.family/"],"dbValueVariants":["IUPHAR family","iuphar.family"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/iuphar.family/"}
+,
+{"iris":["urn:miriam:dbg2introns","http://identifiers.org/dbg2introns/"],"dbValueVariants":["DBG2 Introns","Database for Bacterial Group II Introns","dbg2introns"],"pattern":"^\\w{1,2}\\.(\\w{1,2}\\.)?[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/dbg2introns/"}
+,
+{"iris":["urn:miriam:sdbs","http://identifiers.org/sdbs/"],"dbValueVariants":["Spectral Database for Organic Compounds","SDBS","sdbs"],"pattern":"\\d+$","identifiersIri":"http://identifiers.org/sdbs/"}
+,
+{"iris":["urn:miriam:vbase2","http://identifiers.org/vbase2/"],"dbValueVariants":["Vbase2","vbase2"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/vbase2/"}
+,
+{"iris":["urn:miriam:spike.map","http://identifiers.org/spike.map/"],"dbValueVariants":["SPIKE Map","Signaling Pathways Integrated Knowledge Engine","spike.map"],"pattern":"^spike\\d{5}$","identifiersIri":"http://identifiers.org/spike.map/"}
+,
+{"iris":["urn:miriam:metlin","http://identifiers.org/metlin/"],"dbValueVariants":["METLIN","Metabolite and Tandem Mass Spectrometry Database","metlin"],"pattern":"^\\d{4}$","identifiersIri":"http://identifiers.org/metlin/"}
+,
+{"iris":["urn:miriam:genecards","http://identifiers.org/genecards/"],"dbValueVariants":["GeneCards","genecards"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/genecards/"}
+,
+{"iris":["urn:miriam:mmrrc","http://identifiers.org/mmrrc/"],"dbValueVariants":["MMRRC","Mutant Mouse Regional Resource Centers","mmrrc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/mmrrc/"}
+,
+{"iris":["urn:miriam:umbbd.reaction","http://identifiers.org/umbbd.reaction/"],"dbValueVariants":["UM-BBD Reaction","University of Minnesota Biocatalysis/Biodegradation Database (Reaction)","umbbd.reaction"],"pattern":"^r\\d+$","identifiersIri":"http://identifiers.org/umbbd.reaction/"}
+,
+{"iris":["urn:miriam:umbbd.enzyme","http://identifiers.org/umbbd.enzyme/"],"dbValueVariants":["UM-BBD Enzyme","University of Minnesota Biocatalysis/Biodegradation Database (Enzyme)","umbbd.enzyme"],"pattern":"^e\\d+$","identifiersIri":"http://identifiers.org/umbbd.enzyme/"}
+,
+{"iris":["urn:miriam:umbbd.pathway","http://identifiers.org/umbbd.pathway/"],"dbValueVariants":["UM-BBD Pathway","University of Minnesota Biocatalysis/Biodegradation Database (Pathway)","umbbd.pathway"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/umbbd.pathway/"}
+,
+{"iris":["urn:miriam:umbbd.rule","http://identifiers.org/umbbd.rule/"],"dbValueVariants":["UM-BBD Biotransformation Rule","umbbd.rule"],"pattern":"^bt\\d+$","identifiersIri":"http://identifiers.org/umbbd.rule/"}
+,
+{"iris":["urn:miriam:mirex","http://identifiers.org/mirex/"],"dbValueVariants":["mirEX","mirex"],"pattern":"^\\d+(\\w+)?$","identifiersIri":"http://identifiers.org/mirex/"}
+,
+{"iris":["urn:miriam:dictybase.est","http://identifiers.org/dictybase.est/"],"dbValueVariants":["Dictybase EST","dictybase.est"],"pattern":"^DDB\\d+$","identifiersIri":"http://identifiers.org/dictybase.est/"}
+,
+{"iris":["urn:miriam:imgt.hla","http://identifiers.org/imgt.hla/"],"dbValueVariants":["IMGT HLA","IPD IMGT/HLA","imgt.hla"],"pattern":"^[A-Z0-9*:]+$","identifiersIri":"http://identifiers.org/imgt.hla/"}
+,
+{"iris":["urn:miriam:flystock","http://identifiers.org/flystock/"],"dbValueVariants":["Flystock","Bloomington Drosophila Stock Center at Indiana University","flystock"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/flystock/"}
+,
+{"iris":["urn:miriam:opm","http://identifiers.org/opm/"],"dbValueVariants":["OPM","Orientations of Proteins in Membranes","opm"],"pattern":"^[0-9][A-Za-z0-9]{3}$","identifiersIri":"http://identifiers.org/opm/"}
+,
+{"iris":["urn:miriam:allergome","http://identifiers.org/allergome/"],"dbValueVariants":["Allergome","allergome"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/allergome/"}
+,
+{"iris":["urn:miriam:pombase","http://identifiers.org/pombase/"],"dbValueVariants":["PomBase","pombase"],"pattern":"^S\\w+(\\.)?\\w+(\\.)?$","identifiersIri":"http://identifiers.org/pombase/"}
+,
+{"iris":["urn:miriam:hpa","http://identifiers.org/hpa/"],"dbValueVariants":["HPA","Human Protein Atlas","hpa"],"pattern":"^ENSG\\d{11}$","identifiersIri":"http://identifiers.org/hpa/"}
+,
+{"iris":["urn:miriam:jaxmice","http://identifiers.org/jaxmice/"],"dbValueVariants":["JAX Mice","jaxmice"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/jaxmice/"}
+,
+{"iris":["urn:miriam:ubio.namebank","http://identifiers.org/ubio.namebank/"],"dbValueVariants":["uBio NameBank","Universal Biological Indexer and Organizer (NameBank)","ubio.namebank"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/ubio.namebank/"}
+,
+{"iris":["urn:miriam:yetfasco","http://identifiers.org/yetfasco/"],"dbValueVariants":["YeTFasCo","Yeast Transcription Factor Specificity Compendium","yetfasco"],"pattern":"^\\w+\\_\\d+(\\.\\d+)?$","identifiersIri":"http://identifiers.org/yetfasco/"}
+,
+{"iris":["urn:miriam:tarbase","http://identifiers.org/tarbase/"],"dbValueVariants":["TarBase","tarbase"],"pattern":"^\\w+\\-\\w+\\-\\w+","identifiersIri":"http://identifiers.org/tarbase/"}
+,
+{"iris":["urn:miriam:charprot","http://identifiers.org/charprot/"],"dbValueVariants":["CharProt","charprot"],"pattern":"^CH_\\d+$","identifiersIri":"http://identifiers.org/charprot/"}
+,
+{"iris":["urn:miriam:oma.protein","http://identifiers.org/oma.protein/"],"dbValueVariants":["OMA Protein","Orthologous MAtrix","oma.protein"],"pattern":"^[A-Z0-9]{5}\\d+$","identifiersIri":"http://identifiers.org/oma.protein/"}
+,
+{"iris":["urn:miriam:oma.grp","http://identifiers.org/oma.grp/"],"dbValueVariants":["OMA Group","oma.grp"],"pattern":"^[A-Z]+$","identifiersIri":"http://identifiers.org/oma.grp/"}
+,
+{"iris":["urn:miriam:ncbiprotein","http://identifiers.org/ncbiprotein/"],"dbValueVariants":["NCBI Protein","ncbiprotein"],"pattern":"^(\\w+\\d+(\\.\\d+)?)|(NP_\\d+)$","identifiersIri":"http://identifiers.org/ncbiprotein/"}
+,
+{"iris":["urn:miriam:genpept","http://identifiers.org/genpept/"],"dbValueVariants":["GenPept","protein genbank identifier","genpept"],"pattern":"^\\w{3}\\d{5}(\\.\\d+)?$","identifiersIri":"http://identifiers.org/genpept/"}
+,
+{"iris":["urn:miriam:unigene","http://identifiers.org/unigene/"],"dbValueVariants":["UniGene","unigene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/unigene/"}
+,
+{"iris":["urn:miriam:bitterdb.rec","http://identifiers.org/bitterdb.rec/"],"dbValueVariants":["BitterDB Receptor","bitterdb.rec"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bitterdb.rec/"}
+,
+{"iris":["urn:miriam:bitterdb.cpd","http://identifiers.org/bitterdb.cpd/"],"dbValueVariants":["BitterDB Compound","bitterdb.cpd"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bitterdb.cpd/"}
+,
+{"iris":["urn:miriam:bioproject","http://identifiers.org/bioproject/"],"dbValueVariants":["BioProject","bioproject"],"pattern":"^PRJ[DEN][A-Z]\\d+$","identifiersIri":"http://identifiers.org/bioproject/"}
+,
+{"iris":["urn:miriam:biosample","http://identifiers.org/biosample/"],"dbValueVariants":["BioSample","BioSDe","BioSdn","biosample"],"pattern":"^\\w{3}[NE](\\w)?\\d+$","identifiersIri":"http://identifiers.org/biosample/"}
+,
+{"iris":["urn:miriam:piroplasma","http://identifiers.org/piroplasma/"],"dbValueVariants":["PiroplasmaDB","piroplasma"],"pattern":"^TA\\d+$","identifiersIri":"http://identifiers.org/piroplasma/"}
+,
+{"iris":["urn:miriam:unite","http://identifiers.org/unite/"],"dbValueVariants":["Unite","unite"],"pattern":"^UDB\\d{6}$","identifiersIri":"http://identifiers.org/unite/"}
+,
+{"iris":["urn:miriam:ncim","http://identifiers.org/ncim/"],"dbValueVariants":["NCIm","National Cancer Institute Metathesaurus","NCI metathesaurus","ncim"],"pattern":"^C\\d+$","identifiersIri":"http://identifiers.org/ncim/"}
+,
+{"iris":["urn:miriam:proglyc","http://identifiers.org/proglyc/"],"dbValueVariants":["ProGlycProt","proglyc"],"pattern":"^[A-Z]C\\d{1,3}$","identifiersIri":"http://identifiers.org/proglyc/"}
+,
+{"iris":["urn:miriam:polbase","http://identifiers.org/polbase/"],"dbValueVariants":["PolBase","polbase"],"pattern":"^[A-Za-z-0-9]+$","identifiersIri":"http://identifiers.org/polbase/"}
+,
+{"iris":["urn:miriam:nuclearbd","http://identifiers.org/nuclearbd/"],"dbValueVariants":["NucleaRDB","nuclearbd"],"pattern":"^\\w+\\_\\w+$","identifiersIri":"http://identifiers.org/nuclearbd/"}
+,
+{"iris":["urn:miriam:supfam","http://identifiers.org/supfam/"],"dbValueVariants":["SUPFAM","SUPERFAMILY","supfam"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/supfam/"}
+,
+{"iris":["urn:miriam:ricegap","http://identifiers.org/ricegap/"],"dbValueVariants":["Rice Genome Annotation Project","ricegap"],"pattern":"^LOC\\_Os\\d{1,2}g\\d{5}$","identifiersIri":"http://identifiers.org/ricegap/"}
+,
+{"iris":["urn:miriam:pina","http://identifiers.org/pina/"],"dbValueVariants":["PINA","Protein Interaction Network Analysis","pina"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$","identifiersIri":"http://identifiers.org/pina/"}
+,
+{"iris":["urn:miriam:tissuelist","http://identifiers.org/tissuelist/"],"dbValueVariants":["Tissue List","tissuelist"],"pattern":"^TS-\\d{4}$","identifiersIri":"http://identifiers.org/tissuelist/"}
+,
+{"iris":["urn:miriam:bacmap.biog","http://identifiers.org/bacmap.biog/"],"dbValueVariants":["BacMap Biography","bacmap.biog"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bacmap.biog/"}
+,
+{"iris":["urn:miriam:hgnc.symbol","http://identifiers.org/hgnc.symbol/"],"dbValueVariants":["HGNC Symbol","HUGO Gene Nomenclature Committee Symbol","hgnc.symbol"],"pattern":"^[A-Za-z-0-9_]+(\\@)?$","identifiersIri":"http://identifiers.org/hgnc.symbol/"}
+,
+{"iris":["urn:miriam:panther.pathway","http://identifiers.org/panther.pathway/"],"dbValueVariants":["PANTHER Pathway","panther.pathway"],"pattern":"^P\\d{5}$","identifiersIri":"http://identifiers.org/panther.pathway/"}
+,
+{"iris":["urn:miriam:biosharing","http://identifiers.org/biosharing/"],"dbValueVariants":["BioSharing","biosharing"],"pattern":"^bsg-\\d{6}$","identifiersIri":"http://identifiers.org/biosharing/"}
+,
+{"iris":["urn:miriam:fungidb","http://identifiers.org/fungidb/"],"dbValueVariants":["FungiDB","fungidb"],"pattern":"^[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/fungidb/"}
+,
+{"iris":["urn:miriam:darc","http://identifiers.org/darc/"],"dbValueVariants":["DARC","Database of Aligned Ribosomal Complexes","darc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/darc/"}
+,
+{"iris":["urn:miriam:drsc","http://identifiers.org/drsc/"],"dbValueVariants":["DRSC","FlyRNAi","Drosophila RNAi Screening Cente","drsc"],"pattern":"^DRSC\\d+$","identifiersIri":"http://identifiers.org/drsc/"}
+,
+{"iris":["urn:miriam:oridb.schizo","http://identifiers.org/oridb.schizo/"],"dbValueVariants":["OriDB Schizosaccharomyces","oridb.schizo"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oridb.schizo/"}
+,
+{"iris":["urn:miriam:oridb.sacch","http://identifiers.org/oridb.sacch/"],"dbValueVariants":["OriDB Saccharomyces","oridb.sacch"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oridb.sacch/"}
+,
+{"iris":["urn:miriam:pscdb","http://identifiers.org/pscdb/"],"dbValueVariants":["PSCDB","Protein Structural Change DataBase","pscdb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pscdb/"}
+,
+{"iris":["urn:miriam:scop","http://identifiers.org/scop/"],"dbValueVariants":["SCOP","Structural Classification of Proteins","scop"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/scop/"}
+,
+{"iris":["urn:miriam:ena.embl","http://identifiers.org/ena.embl/"],"dbValueVariants":["ENA","European Nucleotide Archive","Embl-Bank","ena.embl"],"pattern":"^[A-Z]+[0-9]+$","identifiersIri":"http://identifiers.org/ena.embl/"}
+,
+{"iris":["urn:miriam:dommino","http://identifiers.org/dommino/"],"dbValueVariants":["DOMMINO","Database of Macromolecular Interactions","dommino"],"pattern":"^[0-9][A-Za-z0-9]{3}$","identifiersIri":"http://identifiers.org/dommino/"}
+,
+{"iris":["urn:miriam:panther.node","http://identifiers.org/panther.node/"],"dbValueVariants":["PANTHER Node","panther.node"],"pattern":"^PTN\\d{9}$","identifiersIri":"http://identifiers.org/panther.node/"}
+,
+{"iris":["urn:miriam:ccds","http://identifiers.org/ccds/"],"dbValueVariants":["Consensus CDS","CCDS","ccds"],"pattern":"^CCDS\\d+\\.\\d+$","identifiersIri":"http://identifiers.org/ccds/"}
+,
+{"iris":["urn:miriam:lrg","http://identifiers.org/lrg/"],"dbValueVariants":["Locus Reference Genomic","LRG","lrg"],"pattern":"^LRG_\\d+$","identifiersIri":"http://identifiers.org/lrg/"}
+,
+{"iris":["urn:miriam:hprd","http://identifiers.org/hprd/"],"dbValueVariants":["HPRD","Human Protein Reference Database","hprd"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/hprd/"}
+,
+{"iris":["urn:miriam:gxa.gene","http://identifiers.org/gxa.gene/"],"dbValueVariants":["GXA Gene","Gene Expression Atlas Gene","gxa.gene"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/gxa.gene/"}
+,
+{"iris":["urn:miriam:gxa.expt","http://identifiers.org/gxa.expt/"],"dbValueVariants":["GXA Expt","Gene Expression Atlas Experiment","gxa.expt"],"pattern":"^[AEP]-\\w{4}-\\d+$","identifiersIri":"http://identifiers.org/gxa.expt/"}
+,
+{"iris":["urn:miriam:metabolights","http://identifiers.org/metabolights/"],"dbValueVariants":["MetaboLights","metabolights"],"pattern":"^MTBLS\\d+$","identifiersIri":"http://identifiers.org/metabolights/"}
+,
+{"iris":["urn:miriam:nbn","http://identifiers.org/nbn/"],"dbValueVariants":["National Bibliography Number","NBN","nbn"],"pattern":"^urn\\:nbn\\:[A-Za-z_0-9]+\\:([A-Za-z_0-9]+\\:)?[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/nbn/"}
+,
+{"iris":["urn:miriam:orcid","http://identifiers.org/orcid/"],"dbValueVariants":["ORCID","Open Researcher and Contributor ID","orcid"],"pattern":"^\\d{4}-\\d{4}-\\d{4}-\\d{3}(\\d|X)$","identifiersIri":"http://identifiers.org/orcid/"}
+,
+{"iris":["urn:miriam:inchi","http://identifiers.org/inchi/"],"dbValueVariants":["InChI","IUPAC International Chemical Identifier","inchi"],"pattern":"^InChI\\=1S\\/[A-Za-z0-9]+(\\/[cnpqbtmsih][A-Za-z0-9\\-\\+\\(\\)\\,]+)+$","identifiersIri":"http://identifiers.org/inchi/"}
+,
+{"iris":["urn:miriam:wikipedia.en","http://identifiers.org/wikipedia.en/"],"dbValueVariants":["Wikipedia (En)","wikipedia.en"],"pattern":"^[A-Za-z-0-9_]+$","identifiersIri":"http://identifiers.org/wikipedia.en/"}
+,
+{"iris":["urn:miriam:phosphopoint.kinase","http://identifiers.org/phosphopoint.kinase/"],"dbValueVariants":["PhosphoPoint Kinase","phosphopoint.kinase"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/phosphopoint.kinase/"}
+,
+{"iris":["urn:miriam:phosphopoint.protein","http://identifiers.org/phosphopoint.protein/"],"dbValueVariants":["PhosphoPoint Phosphoprotein","phosphopoint.protein"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/phosphopoint.protein/"}
+,
+{"iris":["urn:miriam:inchikey","http://identifiers.org/inchikey/"],"dbValueVariants":["InChIKey","hashed InChI","inchikey"],"pattern":"^[A-Z]{14}\\-[A-Z]{10}(\\-[A-N])?","identifiersIri":"http://identifiers.org/inchikey/"}
+,
+{"iris":["urn:miriam:uniprot.isoform","http://identifiers.org/uniprot.isoform/"],"dbValueVariants":["UniProt Isoform","UniProtKB Isoform","uniprot.isoform"],"pattern":"^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\-\\d+)$","identifiersIri":"http://identifiers.org/uniprot.isoform/"}
+,
+{"iris":["urn:miriam:kegg.environ","http://identifiers.org/kegg.environ/"],"dbValueVariants":["KEGG Environ","kegg.environ"],"pattern":"^ev\\:E\\d+$","identifiersIri":"http://identifiers.org/kegg.environ/"}
+,
+{"iris":["urn:miriam:cldb","http://identifiers.org/cldb/"],"dbValueVariants":["CLDB","Cell Line Data Base","cldb"],"pattern":"^cl\\d+$","identifiersIri":"http://identifiers.org/cldb/"}
+,
+{"iris":["urn:miriam:efo","http://identifiers.org/efo/"],"dbValueVariants":["Experimental Factor Ontology","EFO","efo"],"pattern":"^\\d{7}$","identifiersIri":"http://identifiers.org/efo/"}
+,
+{"iris":["urn:miriam:hgmd","http://identifiers.org/hgmd/"],"dbValueVariants":["HGMD","Human Gene Mutation Database","hgmd"],"pattern":"^[A-Z_0-9]+$","identifiersIri":"http://identifiers.org/hgmd/"}
+,
+{"iris":["urn:miriam:aphidbase.transcript","http://identifiers.org/aphidbase.transcript/"],"dbValueVariants":["AphidBase Transcript","aphidbase.transcript"],"pattern":"^ACYPI\\d{6}(-RA)?$","identifiersIri":"http://identifiers.org/aphidbase.transcript/"}
+,
+{"iris":["urn:miriam:affy.probeset","http://identifiers.org/affy.probeset/","http://bio2rdf.org/affymetrix"],"dbValueVariants":["Affymetrix Probeset","affy.probeset"],"pattern":"\\d{4,}((_[asx])?_at)?","identifiersIri":"http://identifiers.org/affy.probeset/"}
+,
+{"iris":["urn:miriam:treefam","http://identifiers.org/treefam/"],"dbValueVariants":["TreeFam","treefam"],"pattern":"^\\w{1,2}\\d+$","identifiersIri":"http://identifiers.org/treefam/"}
+,
+{"iris":["urn:miriam:caps","http://identifiers.org/caps/"],"dbValueVariants":["CAPS-DB","caps"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/caps/"}
+,
+{"iris":["urn:miriam:cubedb","http://identifiers.org/cubedb/"],"dbValueVariants":["Cube db","cubedb"],"pattern":"^[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/cubedb/"}
+,
+{"iris":["urn:miriam:ideal","http://identifiers.org/ideal/"],"dbValueVariants":["IDEAL","Intrinsically Disordered proteins with Extensive Annotations and Literature","ideal"],"pattern":"^IID\\d+$","identifiersIri":"http://identifiers.org/ideal/"}
+,
+{"iris":["urn:miriam:stap","http://identifiers.org/stap/"],"dbValueVariants":["STAP","Statistical Torsional Angles Potentials of NMR","stap"],"pattern":"^[0-9][A-Za-z0-9]{3}$","identifiersIri":"http://identifiers.org/stap/"}
+,
+{"iris":["urn:miriam:pocketome","http://identifiers.org/pocketome/"],"dbValueVariants":["Pocketome","pocketome"],"pattern":"^[A-Za-z_0-9]+","identifiersIri":"http://identifiers.org/pocketome/"}
+,
+{"iris":["urn:miriam:gold.genome","http://identifiers.org/gold.genome/"],"dbValueVariants":["GOLD genome","gold.genome"],"pattern":"^[Gi|Gc]\\d+$","identifiersIri":"http://identifiers.org/gold.genome/"}
+,
+{"iris":["urn:miriam:gold.meta","http://identifiers.org/gold.meta/"],"dbValueVariants":["GOLD metadata","gold.meta"],"pattern":"^Gm\\d+$","identifiersIri":"http://identifiers.org/gold.meta/"}
+,
+{"iris":["urn:miriam:bugbase.protocol","http://identifiers.org/bugbase.protocol/"],"dbValueVariants":["BugBase Protocol","bugbase.protocol"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bugbase.protocol/"}
+,
+{"iris":["urn:miriam:bugbase.expt","http://identifiers.org/bugbase.expt/"],"dbValueVariants":["BugBase Expt","bugbase.expt"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/bugbase.expt/"}
+,
+{"iris":["urn:miriam:tol","http://identifiers.org/tol/"],"dbValueVariants":["Tree of Life","tol"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/tol/"}
+,
+{"iris":["urn:miriam:vario","http://identifiers.org/vario/"],"dbValueVariants":["VariO","Variation Ontology","vario"],"pattern":"^VariO:\\d+$","identifiersIri":"http://identifiers.org/vario/"}
+,
+{"iris":["urn:miriam:vipr","http://identifiers.org/vipr/"],"dbValueVariants":["ViPR Strain","Virus Pathogen Resource Strain","vipr"],"pattern":"^[A-Za-z 0-9]+$","identifiersIri":"http://identifiers.org/vipr/"}
+,
+{"iris":["urn:miriam:epd","http://identifiers.org/epd/"],"dbValueVariants":["EPD","Eukaryotic Promoter Database","epd"],"pattern":"^[A-Z-_0-9]+$","identifiersIri":"http://identifiers.org/epd/"}
+,
+{"iris":["urn:miriam:rfam","http://identifiers.org/rfam/"],"dbValueVariants":["RFAM","RNA Family Database","rfam"],"pattern":"^RF\\d{5}$","identifiersIri":"http://identifiers.org/rfam/"}
+,
+{"iris":["urn:miriam:fbol","http://identifiers.org/fbol/"],"dbValueVariants":["Fungal Barcode","International Fungal Working Group","FBOL","Fungal Barcode of Life","fbol"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/fbol/"}
+,
+{"iris":["urn:miriam:aftol.taxonomy","http://identifiers.org/aftol.taxonomy/"],"dbValueVariants":["AFTOL","Assembling the Fungal Tree of Life","aftol.taxonomy"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/aftol.taxonomy/"}
+,
+{"iris":["urn:miriam:aspgd.locus","http://identifiers.org/aspgd.locus/"],"dbValueVariants":["AspGD Locus","Aspergillus Genome Database Locus","aspgd.locus"],"pattern":"^[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/aspgd.locus/"}
+,
+{"iris":["urn:miriam:aspgd.protein","http://identifiers.org/aspgd.protein/"],"dbValueVariants":["AspGD Protein","aspgd.protein"],"pattern":"^[A-Za-z_0-9]+$","identifiersIri":"http://identifiers.org/aspgd.protein/"}
+,
+{"iris":["urn:miriam:drugbank.target","http://identifiers.org/drugbank.target/"],"dbValueVariants":["DrugBank Target v3","drugbank.target"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/drugbank.target/"}
+,
+{"iris":["urn:miriam:autdb","http://identifiers.org/autdb/"],"dbValueVariants":["AutDB","Autism Database","autdb"],"pattern":"^[A-Z]+[A-Z-0-9]{2,}$","identifiersIri":"http://identifiers.org/autdb/"}
+,
+{"iris":["urn:miriam:bacmap.map","http://identifiers.org/bacmap.map/"],"dbValueVariants":["BacMap Map","bacmap.map"],"pattern":"^\\w+(\\_)?\\d+(\\.\\d+)?$","identifiersIri":"http://identifiers.org/bacmap.map/"}
+,
+{"iris":["urn:miriam:bgee.family","http://identifiers.org/bgee.family/"],"dbValueVariants":["Bgee family","bgee.family"],"pattern":"^(ENSFM|ENSGTV:)\\d+$","identifiersIri":"http://identifiers.org/bgee.family/"}
+,
+{"iris":["urn:miriam:bgee.gene","http://identifiers.org/bgee.gene/"],"dbValueVariants":["Bgee gene","bgee.gene"],"pattern":"^(ENS|FBgn)\\w+$","identifiersIri":"http://identifiers.org/bgee.gene/"}
+,
+{"iris":["urn:miriam:bgee.stage","http://identifiers.org/bgee.stage/"],"dbValueVariants":["Bgee stage","bgee.stage"],"pattern":"^(FBvd|XtroDO|HsapDO|MmusDO)\\:\\d+$","identifiersIri":"http://identifiers.org/bgee.stage/"}
+,
+{"iris":["urn:miriam:bgee.organ","http://identifiers.org/bgee.organ/"],"dbValueVariants":["Bgee organ","bgee.organ"],"pattern":"^(XAO|ZFA|EHDAA|EMAPA|EV|MA)\\:\\d+$","identifiersIri":"http://identifiers.org/bgee.organ/"}
+,
+{"iris":["urn:miriam:biocarta.pathway","http://identifiers.org/biocarta.pathway/"],"dbValueVariants":["BioCarta Pathway","biocarta.pathway"],"pattern":"^([hm]\\_)?\\w+Pathway$","identifiersIri":"http://identifiers.org/biocarta.pathway/"}
+,
+{"iris":["urn:miriam:panther.pthcmp","http://identifiers.org/panther.pthcmp/"],"dbValueVariants":["PANTHER Pathway Component","panther.pthcmp"],"pattern":"^G|P|U|C|S\\d{5}$","identifiersIri":"http://identifiers.org/panther.pthcmp/"}
+,
+{"iris":["urn:miriam:gmd.profile","http://identifiers.org/gmd.profile/"],"dbValueVariants":["Golm Metabolome Database Profile","gmd.profile"],"pattern":"^([0-9a-fA-F]){8}(-([0-9a-fA-F]){4}){3}-([0-9a-fA-F]){12}$","identifiersIri":"http://identifiers.org/gmd.profile/"}
+,
+{"iris":["urn:miriam:gmd.gcms","http://identifiers.org/gmd.gcms/"],"dbValueVariants":["Golm Metabolome Database GC-MS spectra","gmd.gcms"],"pattern":"^([0-9a-fA-F]){8}(-([0-9a-fA-F]){4}){3}-([0-9a-fA-F]){12}$","identifiersIri":"http://identifiers.org/gmd.gcms/"}
+,
+{"iris":["urn:miriam:gmd.ref","http://identifiers.org/gmd.ref/"],"dbValueVariants":["Golm Metabolome Database Reference Substance","gmd.ref"],"pattern":"^([0-9a-fA-F]){8}(-([0-9a-fA-F]){4}){3}-([0-9a-fA-F]){12}$","identifiersIri":"http://identifiers.org/gmd.ref/"}
+,
+{"iris":["urn:miriam:gmd.analyte","http://identifiers.org/gmd.analyte/"],"dbValueVariants":["Golm Metabolome Database Analyte","gmd.analyte"],"pattern":"^([0-9a-fA-F]){8}(-([0-9a-fA-F]){4}){3}-([0-9a-fA-F]){12}$","identifiersIri":"http://identifiers.org/gmd.analyte/"}
+,
+{"iris":["urn:miriam:intact.molecule","http://identifiers.org/intact.molecule/"],"dbValueVariants":["IntAct Molecule","intact.molecule"],"pattern":"^EBI\\-[0-9]+$","identifiersIri":"http://identifiers.org/intact.molecule/"}
+,
+{"iris":["urn:miriam:depod","http://identifiers.org/depod/"],"dbValueVariants":["DEPOD","human DEPhOsphorylation Database","depod"],"pattern":"^[A-Z0-9]+$","identifiersIri":"http://identifiers.org/depod/"}
+,
+{"iris":["urn:miriam:cst","http://identifiers.org/cst/"],"dbValueVariants":["Cell Signaling Technology Pathways","cst"],"pattern":"^[A-Za-z0-9_-]+$","identifiersIri":"http://identifiers.org/cst/"}
+,
+{"iris":["urn:miriam:cst.ab","http://identifiers.org/cst.ab/"],"dbValueVariants":["Cell Signaling Technology Antibody","cst.ab"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/cst.ab/"}
+,
+{"iris":["urn:miriam:ndc","http://identifiers.org/ndc/","http://bio2rdf.org/ndc"],"dbValueVariants":["National Drug Code","NDC","ndc"],"pattern":"^\\d+\\-\\d+\\-\\d+","identifiersIri":"http://identifiers.org/ndc/"}
+,
+{"iris":["urn:miriam:phytozome.locus","http://identifiers.org/phytozome.locus/"],"dbValueVariants":["Phytozome Locus","phytozome.locus"],"pattern":"^[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/phytozome.locus/"}
+,
+{"iris":["urn:miriam:subtilist","http://identifiers.org/subtilist/"],"dbValueVariants":["SubtiList","subtilist"],"pattern":"^BG\\d+$","identifiersIri":"http://identifiers.org/subtilist/"}
+,
+{"iris":["urn:miriam:dailymed","http://identifiers.org/dailymed/"],"dbValueVariants":["DailyMed","dailymed"],"pattern":"^[A-Za-z0-9-]+","identifiersIri":"http://identifiers.org/dailymed/"}
+,
+{"iris":["urn:miriam:sider.drug","http://identifiers.org/sider.drug/"],"dbValueVariants":["SIDER Drug","Side Effect Resource","sider.drug"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sider.drug/"}
+,
+{"iris":["urn:miriam:sider.effect","http://identifiers.org/sider.effect/"],"dbValueVariants":["SIDER Side Effect","sider.effect"],"pattern":"^C\\d+$","identifiersIri":"http://identifiers.org/sider.effect/"}
+,
+{"iris":["urn:miriam:wikigenes","http://identifiers.org/wikigenes/"],"dbValueVariants":["WikiGenes","wikigenes"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/wikigenes/"}
+,
+{"iris":["urn:miriam:broad","http://identifiers.org/broad/"],"dbValueVariants":["Broad Fungal Genome Initiative","Magnaporthe comparative genomics database","broad"],"pattern":"^S\\d+$","identifiersIri":"http://identifiers.org/broad/"}
+,
+{"iris":["urn:miriam:coriell","http://identifiers.org/coriell/"],"dbValueVariants":["Coriell Cell Repositories","coriell"],"pattern":"^[A-Z]{2}\\d+$","identifiersIri":"http://identifiers.org/coriell/"}
+,
+{"iris":["urn:miriam:corum","http://identifiers.org/corum/"],"dbValueVariants":["CORUM","corum"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/corum/"}
+,
+{"iris":["urn:miriam:cogs.function","http://identifiers.org/cogs.function/"],"dbValueVariants":["COGs Function","Clusters of Orthologous Groups Function","cogs.function"],"pattern":"^[A-Z]$","identifiersIri":"http://identifiers.org/cogs.function/"}
+,
+{"iris":["urn:miriam:ecoliwiki","http://identifiers.org/ecoliwiki/"],"dbValueVariants":["EcoliWiki","ecoliwiki"],"pattern":"^[A-Za-z0-9-]+$","identifiersIri":"http://identifiers.org/ecoliwiki/"}
+,
+{"iris":["urn:miriam:genprop","http://identifiers.org/genprop/"],"dbValueVariants":["Genome Properties","genprop"],"pattern":"^GenProp\\d+$","identifiersIri":"http://identifiers.org/genprop/"}
+,
+{"iris":["urn:miriam:jstor","http://identifiers.org/jstor/"],"dbValueVariants":["JSTOR","Journal Storage","jstor"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/jstor/"}
+,
+{"iris":["urn:miriam:ma","http://identifiers.org/ma/"],"dbValueVariants":["Mouse Adult Gross Anatomy","ma"],"pattern":"^MA:\\d+$","identifiersIri":"http://identifiers.org/ma/"}
+,
+{"iris":["urn:miriam:uberon","http://identifiers.org/uberon/"],"dbValueVariants":["UBERON","Uber Anatomy Ontology","uberon"],"pattern":"^UBERON\\:\\d+$","identifiersIri":"http://identifiers.org/uberon/"}
+,
+{"iris":["urn:miriam:unimod","http://identifiers.org/unimod/"],"dbValueVariants":["Unimod","unimod"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/unimod/"}
+,
+{"iris":["urn:miriam:vbrc","http://identifiers.org/vbrc/"],"dbValueVariants":["VBRC","Viral Bioinformatics Resource Center","vbrc"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/vbrc/"}
+,
+{"iris":["urn:miriam:viralzone","http://identifiers.org/viralzone/"],"dbValueVariants":["ViralZone","viralzone"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/viralzone/"}
+,
+{"iris":["urn:miriam:go.ref","http://identifiers.org/go.ref/"],"dbValueVariants":["Gene Ontology Reference","GO reference collection","go.ref"],"pattern":"^GO_REF:\\d{7}$","identifiersIri":"http://identifiers.org/go.ref/"}
+,
+{"iris":["urn:miriam:rgd.qtl","http://identifiers.org/rgd.qtl/"],"dbValueVariants":["Rat Genome Database qTL","rgd.qtl"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/rgd.qtl/"}
+,
+{"iris":["urn:miriam:rgd.strain","http://identifiers.org/rgd.strain/"],"dbValueVariants":["Rat Genome Database strain","rgd.strain"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/rgd.strain/"}
+,
+{"iris":["urn:miriam:door","http://identifiers.org/door/"],"dbValueVariants":["DOOR","Database for prOkaryotic OpeRons","door"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/door/"}
+,
+{"iris":["urn:miriam:degradome","http://identifiers.org/degradome/"],"dbValueVariants":["Degradome Database","degradome"],"pattern":"^[AMCST][0-9x][0-9]$","identifiersIri":"http://identifiers.org/degradome/"}
+,
+{"iris":["urn:miriam:dbd","http://identifiers.org/dbd/"],"dbValueVariants":["DBD","Transcription Factor Database","dbd"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/dbd/"}
+,
+{"iris":["urn:miriam:datf","http://identifiers.org/datf/"],"dbValueVariants":["DATF","Database of Arabidopsis transcription factors","datf"],"pattern":"^AT[1-5]G\\d{5}(\\.\\d+)?$","identifiersIri":"http://identifiers.org/datf/"}
+,
+{"iris":["urn:miriam:iuphar.ligand","http://identifiers.org/iuphar.ligand/"],"dbValueVariants":["IUPHAR ligand","iuphar.ligand"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/iuphar.ligand/"}
+,
+{"iris":["urn:miriam:molbase","http://identifiers.org/molbase/"],"dbValueVariants":["Molbase","molbase"],"pattern":"^(\\d{1,7}\\-\\d{2}\\-\\d)|([A-Za-z0-9\\+\\-\\_]+)$","identifiersIri":"http://identifiers.org/molbase/"}
+,
+{"iris":["urn:miriam:yrcpdr","http://identifiers.org/yrcpdr/"],"dbValueVariants":["YRC PDR","Yeast Resource Center Public Data Repository","yrcpdr"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/yrcpdr/"}
+,
+{"iris":["urn:miriam:yid","http://identifiers.org/yid/"],"dbValueVariants":["Yeast Intron Database v3","yid"],"pattern":"^[A-Z0-9]+$","identifiersIri":"http://identifiers.org/yid/"}
+,
+{"iris":["urn:miriam:funcbase.fly","http://identifiers.org/funcbase.fly/"],"dbValueVariants":["FuncBase Fly","funcbase.fly"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/funcbase.fly/"}
+,
+{"iris":["urn:miriam:funcbase.human","http://identifiers.org/funcbase.human/"],"dbValueVariants":["FuncBase Human","funcbase.human"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/funcbase.human/"}
+,
+{"iris":["urn:miriam:funcbase.mouse","http://identifiers.org/funcbase.mouse/"],"dbValueVariants":["FuncBase Mouse","funcbase.mouse"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/funcbase.mouse/"}
+,
+{"iris":["urn:miriam:funcbase.yeast","http://identifiers.org/funcbase.yeast/"],"dbValueVariants":["FuncBase Yeast","funcbase.yeast"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/funcbase.yeast/"}
+,
+{"iris":["urn:miriam:ydpm","http://identifiers.org/ydpm/"],"dbValueVariants":["YDPM","Yeast Deletion Project and Proteomics of Mitochondria Database","ydpm"],"pattern":"^Y[A-Z]{2}\\d+[CW]$","identifiersIri":"http://identifiers.org/ydpm/"}
+,
+{"iris":["urn:miriam:wormbase.rnai","http://identifiers.org/wormbase.rnai/"],"dbValueVariants":["WormBase RNAi","wormbase.rnai"],"pattern":"^WBRNAi\\d{8}$","identifiersIri":"http://identifiers.org/wormbase.rnai/"}
+,
+{"iris":["urn:miriam:funcat","http://identifiers.org/funcat/"],"dbValueVariants":["FunCat","MIPS Functional Catalogue Database","funcat"],"pattern":"^\\d{2}|\\d{2}\\.\\d{2}|\\d{2}\\.\\d{2}\\.\\d{2}|\\d{2}\\.\\d{2}\\.\\d{2}\\d{2}$","identifiersIri":"http://identifiers.org/funcat/"}
+,
+{"iris":["urn:miriam:pass2","http://identifiers.org/pass2/"],"dbValueVariants":["PASS2","Protein Alignments organised as Structural Superfamilies","pass2"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pass2/"}
+,
+{"iris":["urn:miriam:iceberg.element","http://identifiers.org/iceberg.element/"],"dbValueVariants":["ICEberg element","iceberg.element"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/iceberg.element/"}
+,
+{"iris":["urn:miriam:iceberg.family","http://identifiers.org/iceberg.family/"],"dbValueVariants":["ICEberg family","iceberg.family"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/iceberg.family/"}
+,
+{"iris":["urn:miriam:vfdb.genus","http://identifiers.org/vfdb.genus/"],"dbValueVariants":["VFDB Genus","Virulence Factor Database genus","vfdb.genus"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/vfdb.genus/"}
+,
+{"iris":["urn:miriam:vfdb.gene","http://identifiers.org/vfdb.gene/"],"dbValueVariants":["VFDB Gene","vfdb.gene"],"pattern":"^\\w+$","identifiersIri":"http://identifiers.org/vfdb.gene/"}
+,
+{"iris":["urn:miriam:mesh.2013","http://identifiers.org/mesh.2013/"],"dbValueVariants":["MeSH 2013","mesh.2013"],"pattern":"^[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/mesh.2013/"}
+,
+{"iris":["urn:miriam:kegg.module","http://identifiers.org/kegg.module/"],"dbValueVariants":["KEGG Module","kegg.module"],"pattern":"^([a-z]{3,5}_)?M\\d{5}$","identifiersIri":"http://identifiers.org/kegg.module/"}
+,
+{"iris":["urn:miriam:kegg.disease","http://identifiers.org/kegg.disease/"],"dbValueVariants":["KEGG Disease","kegg.disease"],"pattern":"^H\\d+$","identifiersIri":"http://identifiers.org/kegg.disease/"}
+,
+{"iris":["urn:miriam:medlineplus","http://identifiers.org/medlineplus/"],"dbValueVariants":["MedlinePlus","medlineplus"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/medlineplus/"}
+,
+{"iris":["urn:miriam:ligandbox","http://identifiers.org/ligandbox/"],"dbValueVariants":["LigandBox","ligandbox"],"pattern":"^D\\d{5}","identifiersIri":"http://identifiers.org/ligandbox/"}
+,
+{"iris":["urn:miriam:glycoepitope","http://identifiers.org/glycoepitope/"],"dbValueVariants":["GlycoEpitope","glycoepitope"],"pattern":"^EP\\d{4}$","identifiersIri":"http://identifiers.org/glycoepitope/"}
+,
+{"iris":["urn:miriam:jcggdb","http://identifiers.org/jcggdb/"],"dbValueVariants":["JCGGDB","Japan Consortium for Glycobiology and Glycotechnology DataBase","jcggdb"],"pattern":"^JCGG-STR\\d{6}$","identifiersIri":"http://identifiers.org/jcggdb/"}
+,
+{"iris":["urn:miriam:noncodev4.gene","http://identifiers.org/noncodev4.gene/"],"dbValueVariants":["NONCODE v4 Gene","noncodev4.gene"],"pattern":"^NONHSAG\\d{5}$","identifiersIri":"http://identifiers.org/noncodev4.gene/"}
+,
+{"iris":["urn:miriam:noncodev4.rna","http://identifiers.org/noncodev4.rna/"],"dbValueVariants":["NONCODE v4 Transcript","noncodev4.rna"],"pattern":"^NONHSAT\\d{6}$","identifiersIri":"http://identifiers.org/noncodev4.rna/"}
+,
+{"iris":["urn:miriam:oryzabase.gene","http://identifiers.org/oryzabase.gene/"],"dbValueVariants":["Oryzabase Gene","oryzabase.gene"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oryzabase.gene/"}
+,
+{"iris":["urn:miriam:oryzabase.mutant","http://identifiers.org/oryzabase.mutant/"],"dbValueVariants":["Oryzabase Mutant","oryzabase.mutant"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oryzabase.mutant/"}
+,
+{"iris":["urn:miriam:oryzabase.strain","http://identifiers.org/oryzabase.strain/"],"dbValueVariants":["Oryzabase Strain","oryzabase.strain"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oryzabase.strain/"}
+,
+{"iris":["urn:miriam:oryzabase.stage","http://identifiers.org/oryzabase.stage/"],"dbValueVariants":["Oryzabase Stage","oryzabase.stage"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/oryzabase.stage/"}
+,
+{"iris":["urn:miriam:otl","http://identifiers.org/otl/"],"dbValueVariants":["Oryza Tag Line","OTL","otl"],"pattern":"^A[A-Z]+\\d+$","identifiersIri":"http://identifiers.org/otl/"}
+,
+{"iris":["urn:miriam:genewiki","http://identifiers.org/genewiki/"],"dbValueVariants":["Gene Wiki","genewiki"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/genewiki/"}
+,
+{"iris":["urn:miriam:paxdb.organism","http://identifiers.org/paxdb.organism/"],"dbValueVariants":["PaxDb Organism","paxdb.organism"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/paxdb.organism/"}
+,
+{"iris":["urn:miriam:paxdb.protein","http://identifiers.org/paxdb.protein/"],"dbValueVariants":["PaxDb Protein","paxdb.protein"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/paxdb.protein/"}
+,
+{"iris":["urn:miriam:pdb.ligand","http://identifiers.org/pdb.ligand/"],"dbValueVariants":["Protein Data Bank Ligand","pdb.ligand"],"pattern":"^[A-Za-z0-9]+$","identifiersIri":"http://identifiers.org/pdb.ligand/"}
+,
+{"iris":["urn:miriam:merops.inhibitor","http://identifiers.org/merops.inhibitor/"],"dbValueVariants":["MEROPS Inhibitor","merops.inhibitor"],"pattern":"^I\\d{2}\\.\\d{3}$","identifiersIri":"http://identifiers.org/merops.inhibitor/"}
+,
+{"iris":["urn:miriam:adw","http://identifiers.org/adw/"],"dbValueVariants":["Animal Diversity Web","adw"],"pattern":"^[A-Z_a-z]+$","identifiersIri":"http://identifiers.org/adw/"}
+,
+{"iris":["urn:miriam:glida.gpcr","http://identifiers.org/glida.gpcr/"],"dbValueVariants":["GLIDA GPCR","GPCR-LIgand DAtabase GPCR","glida.gpcr"],"pattern":"^[A-Z-_0-9]+$","identifiersIri":"http://identifiers.org/glida.gpcr/"}
+,
+{"iris":["urn:miriam:glida.ligand","http://identifiers.org/glida.ligand/"],"dbValueVariants":["GLIDA Ligand","GPCR-LIgand DAtabase Ligand","glida.ligand"],"pattern":"^L\\d+$","identifiersIri":"http://identifiers.org/glida.ligand/"}
+,
+{"iris":["urn:miriam:grsdb","http://identifiers.org/grsdb/"],"dbValueVariants":["GRSDB","G-Rich Sequences DataBase","grsdb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/grsdb/"}
+,
+{"iris":["urn:miriam:fsnp","http://identifiers.org/fsnp/"],"dbValueVariants":["F-SNP","Functional Single Nucleotide Polymorphism","fsnp"],"pattern":"^rs\\d+$","identifiersIri":"http://identifiers.org/fsnp/"}
+,
+{"iris":["urn:miriam:hdr","http://identifiers.org/hdr/"],"dbValueVariants":["Homeodomain Research","hdr"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/hdr/"}
+,
+{"iris":["urn:miriam:norine","http://identifiers.org/norine/"],"dbValueVariants":["NORINE","norine"],"pattern":"^NOR\\d+$","identifiersIri":"http://identifiers.org/norine/"}
+,
+{"iris":["urn:miriam:ordb","http://identifiers.org/ordb/"],"dbValueVariants":["Olfactory Receptor Database","OrDB","ordb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/ordb/"}
+,
+{"iris":["urn:miriam:odor","http://identifiers.org/odor/"],"dbValueVariants":["Odor Molecules DataBase","OdorDB","odor"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/odor/"}
+,
+{"iris":["urn:miriam:p3db.protein","http://identifiers.org/p3db.protein/"],"dbValueVariants":["P3DB Protein","p3db.protein"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/p3db.protein/"}
+,
+{"iris":["urn:miriam:p3db.site","http://identifiers.org/p3db.site/"],"dbValueVariants":["P3DB Site","p3db.site"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/p3db.site/"}
+,
+{"iris":["urn:miriam:topdb","http://identifiers.org/topdb/"],"dbValueVariants":["TOPDB","topdb"],"pattern":"^[A-Z0-9]+$","identifiersIri":"http://identifiers.org/topdb/"}
+,
+{"iris":["urn:miriam:cattleqtldb","http://identifiers.org/cattleqtldb/"],"dbValueVariants":["Animal Genome Cattle QTL","cattleqtldb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/cattleqtldb/"}
+,
+{"iris":["urn:miriam:chickenqtldb","http://identifiers.org/chickenqtldb/"],"dbValueVariants":["Animal Genome Chicken QTL","chickenqtldb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/chickenqtldb/"}
+,
+{"iris":["urn:miriam:pigqtldb","http://identifiers.org/pigqtldb/"],"dbValueVariants":["Animal Genome Pig QTL","pigqtldb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/pigqtldb/"}
+,
+{"iris":["urn:miriam:sheepqtldb","http://identifiers.org/sheepqtldb/"],"dbValueVariants":["Animal Genome Sheep QTL","sheepqtldb"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/sheepqtldb/"}
+,
+{"iris":["urn:miriam:gramene.growthstage","http://identifiers.org/gramene.growthstage/"],"dbValueVariants":["Gramene Growth Stage Ontology","gramene.growthstage"],"pattern":"^GRO\\:\\d+$","identifiersIri":"http://identifiers.org/gramene.growthstage/"}
+,
+{"iris":["urn:miriam:ncbigi","http://identifiers.org/ncbigi/"],"dbValueVariants":["NCBI GI","ncbigi"],"pattern":"^(GI|gi)\\:\\d+$","identifiersIri":"http://identifiers.org/ncbigi/"}
+,
+{"iris":["urn:miriam:ebimetagenomics","http://identifiers.org/ebimetagenomics/"],"dbValueVariants":["EBI Metagenomics","ebimetagenomics"],"pattern":"^[A-Z]+[0-9]+$","identifiersIri":"http://identifiers.org/ebimetagenomics/"}
+,
+{"iris":["urn:miriam:ega.study","http://identifiers.org/ega.study/"],"dbValueVariants":["European Genome-phenome Archive Study","EGA Study","ega.study"],"pattern":"^EGAS\\d{11}$","identifiersIri":"http://identifiers.org/ega.study/"}
+,
+{"iris":["urn:miriam:ega.dataset","http://identifiers.org/ega.dataset/"],"dbValueVariants":["European Genome-phenome Archive Dataset","EGA Dataset","ega.dataset"],"pattern":"^EGAD\\d{11}$","identifiersIri":"http://identifiers.org/ega.dataset/"}
+,
+{"iris":["urn:miriam:proteomexchange","http://identifiers.org/proteomexchange/"],"dbValueVariants":["ProteomeXchange","proteomexchange"],"pattern":"^(R)?PXD\\d+{6}$","identifiersIri":"http://identifiers.org/proteomexchange/"}
+,
+{"iris":["urn:miriam:biomodels.vocabulary","http://identifiers.org/biomodels.vocabulary/"],"dbValueVariants":["SBML RDF Vocabulary","biomodels.vocabulary"],"pattern":"^[A-Za-z]+$","identifiersIri":"http://identifiers.org/biomodels.vocabulary/"}
+,
+{"iris":["urn:miriam:pride.project","http://identifiers.org/pride.project/"],"dbValueVariants":["PRIDE Project","pride.project"],"pattern":"^P(X|R)D\\d+{6}$","identifiersIri":"http://identifiers.org/pride.project/"}
+,
+{"iris":["urn:miriam:antibodyregistry","http://identifiers.org/antibodyregistry/"],"dbValueVariants":["Antibody Registry","antibodyregistry"],"pattern":"^\\d+{6}$","identifiersIri":"http://identifiers.org/antibodyregistry/"}
+,
+{"iris":["urn:miriam:mamo","http://identifiers.org/mamo/"],"dbValueVariants":["Mathematical Modelling Ontology","MAMO","mamo"],"pattern":"^MAMO_\\d{7}$","identifiersIri":"http://identifiers.org/mamo/"}
+,
+{"iris":["urn:miriam:peo","http://identifiers.org/peo/"],"dbValueVariants":["Plant Environment Ontology","Plant Environment Conditions","peo"],"pattern":"^[EP]O\\:\\d{7}$","identifiersIri":"http://identifiers.org/peo/"}
+,
+{"iris":["urn:miriam:idot","http://identifiers.org/idot/"],"dbValueVariants":["Identifiers.org Terms","IdoT","idot"],"pattern":"^[A-Za-z]+$","identifiersIri":"http://identifiers.org/idot/"}
+,
+{"iris":["urn:miriam:hgnc.family","http://identifiers.org/hgnc.family/"],"dbValueVariants":["HGNC Family","hgnc.family"],"pattern":"^[A-Z0-9-]+(#[A-Z0-9-]+)?$","identifiersIri":"http://identifiers.org/hgnc.family/"}
+,
+{"iris":["urn:miriam:yeastintron","http://identifiers.org/yeastintron/"],"dbValueVariants":["Yeast Intron Database v4.3","yeastintron"],"pattern":"^[A-Z0-9]+$","identifiersIri":"http://identifiers.org/yeastintron/"}
+,
+{"iris":["urn:miriam:ardb","http://identifiers.org/ardb/"],"dbValueVariants":["Antibiotic Resistance Genes Database","ARDB","ardb"],"pattern":"^[A-Z_]{3}[0-9]{4,}$","identifiersIri":"http://identifiers.org/ardb/"}
+,
+{"iris":["urn:miriam:pathema","http://identifiers.org/pathema/"],"dbValueVariants":["Pathema","pathema"],"pattern":"^.+$","identifiersIri":"http://identifiers.org/pathema/"}
+,
+{"iris":["urn:miriam:proteomicsdb.protein","http://identifiers.org/proteomicsdb.protein/"],"dbValueVariants":["ProteomicsDB Protein","proteomicsdb.protein"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/proteomicsdb.protein/"}
+,
+{"iris":["urn:miriam:proteomicsdb.peptide","http://identifiers.org/proteomicsdb.peptide/"],"dbValueVariants":["ProteomicsDB Peptide","proteomicsdb.peptide"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/proteomicsdb.peptide/"}
+,
+{"iris":["urn:miriam:hpm.protein","http://identifiers.org/hpm.protein/"],"dbValueVariants":["Human Proteome Map Protein","HPM","hpm.protein"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/hpm.protein/"}
+,
+{"iris":["urn:miriam:hpm.peptide","http://identifiers.org/hpm.peptide/"],"dbValueVariants":["Human Proteome Map Peptide","hpm.peptide"],"pattern":"^\\d+$","identifiersIri":"http://identifiers.org/hpm.peptide/"}
+,
+{"iris":["urn:miriam:drugbankv4.target","http://identifiers.org/drugbankv4.target/"],"dbValueVariants":["DrugBank Target v4","drugbankv4.target"],"pattern":"^BE\\d{7}$","identifiersIri":"http://identifiers.org/drugbankv4.target/"}
+,
+{"iris":["urn:miriam:zinc","http://identifiers.org/zinc/"],"dbValueVariants":["ZINC","zinc"],"pattern":"^(ZINC)?\\d+$","identifiersIri":"http://identifiers.org/zinc/"}
+,
+{"iris":["urn:miriam:foodb.compound","http://identifiers.org/foodb.compound/"],"dbValueVariants":["FooDB Compound","foodb.compound"],"pattern":"^FDB\\d+$","identifiersIri":"http://identifiers.org/foodb.compound/"}
+,
+{"iris":["urn:miriam:unii","http://identifiers.org/unii/"],"dbValueVariants":["UNII","Substance Registration System","Unique ingredient identifier","unii"],"pattern":"^[A-Z0-9]+$","identifiersIri":"http://identifiers.org/unii/"}
