@@ -31,7 +31,7 @@ var bridgedb3 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
   inputContext: {
-    'db': {
+    'Database': {
       '@id': 'http://www.biopax.org/release/biopax-level3.owl#db',
       '@type': 'xsd:string'
     },
@@ -43,7 +43,7 @@ var bridgedb3 = Bridgedb({
 });
 
 bridgedb3.compactInput({
-  'db': 'Entrez Gene',
+  'Database': 'Entrez Gene',
   'id': '4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 })
