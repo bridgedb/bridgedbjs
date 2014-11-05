@@ -39,6 +39,16 @@ var bridgedb3 = Bridgedb({
       '@id': 'http://www.biopax.org/release/biopax-level3.owl#id',
       '@type': 'xsd:string'
     }
+  },
+  outputContext: {
+    'db': {
+      '@id': 'http://www.biopax.org/release/biopax-level3.owl#db',
+      '@type': 'xsd:string'
+    },
+    'identifier': {
+      '@id': 'http://www.biopax.org/release/biopax-level3.owl#id',
+      '@type': 'xsd:string'
+    }
   }
 });
 
@@ -49,8 +59,10 @@ bridgedb3.compactInput({
 })
 .flatMap(bridgedb3.compactOutput)
 .each(function(result) {
+  /*
   console.log('result');
   console.log(result);
+  //*/
 });
 
 //bridgedb3.compactOutput(internal);

@@ -1,4 +1,9 @@
 {
+  "@vocab": "http://www.example.org/bridgedb/input-vocab/",
+  "bridgedbInput": {
+    "@id":"http://www.example.org/bridgedb/input-vocab/",
+    "@type":"@id"
+  },
   "biopax": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
@@ -30,10 +35,6 @@
   "identifierPattern": {
     "@id": "idot:identifierPattern",
     "@type": "xsd:string"
-  },
-  "bridgedbInput": {
-    "@id":"http://www.example.org/bridgedb/input-vocab/",
-    "@type":"@id"
   },
   "preferredPrefix": {
     "@id": "idot:preferredPrefix",
