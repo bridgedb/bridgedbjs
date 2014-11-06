@@ -1,12 +1,12 @@
 {
   "@vocab": "http://www.example.org/bridgedb/input-vocab/",
-  "bridgedbInput": {
-    "@id":"http://www.example.org/bridgedb/input-vocab/",
-    "@type":"@id"
-  },
   "biopax": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
+  },
+  "bridgedbInput": {
+    "@id":"http://www.example.org/bridgedb/input-vocab/",
+    "@type":"@id"
   },
   "db": {
     "@id": "biopax:db",
@@ -28,13 +28,17 @@
     "@id": "biopax:id",
     "@type": "xsd:string"
   },
+  "identifierPattern": {
+    "@id": "idot:identifierPattern",
+    "@type": "xsd:string"
+  },
   "idot": {
     "@id": "http://identifiers.org/idot/",
     "@type": "@id"
   },
-  "identifierPattern": {
-    "@id": "idot:identifierPattern",
-    "@type": "xsd:string"
+  "owl": {
+    "@id": "http://www.w3.org/2002/07/owl#",
+    "@type": "@id"
   },
   "preferredPrefix": {
     "@id": "idot:preferredPrefix",
