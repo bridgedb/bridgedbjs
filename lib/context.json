@@ -1,5 +1,9 @@
 {
   "@vocab": "http://www.example.org/bridgedb/input-vocab/",
+  "alternatePrefix": {
+    "@id": "idot:alternatePrefix",
+    "@type": "xsd:string"
+  },
   "biopax": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
