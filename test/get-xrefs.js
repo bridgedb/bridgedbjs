@@ -4,6 +4,7 @@ var bridgedb1 = Bridgedb({
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
+//*
 bridgedb1.xrefService.get({
   id: 'http://identifiers.org/ncbigene/4292'
   //bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
@@ -11,3 +12,17 @@ bridgedb1.xrefService.get({
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
+//*/
+
+/*
+bridgedb1.xrefService.get({
+    //id: 'http://identifiers.org/ncbigene/4292'
+    bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+  },
+  {
+    format:'display'
+}).each(function(xrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292, formatted for display');
+  console.log(JSON.stringify(xrefs, null, '\t'));
+});
+//*/
