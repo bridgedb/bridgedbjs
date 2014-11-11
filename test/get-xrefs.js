@@ -17,6 +17,19 @@ bridgedb1.xrefService.get({
 //*/
 
 //*
+bridgedb1.xrefService.get({
+    //id: 'http://identifiers.org/ncbigene/4292'
+    bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+  },
+  {
+    format:'display'
+}).each(function(xrefs) {
+  console.log('xrefs for http://identifiers.org/ncbigene/4292, formatted for display');
+  console.log(JSON.stringify(xrefs, null, '\t'));
+});
+//*/
+
+//*
 var bridgedb2 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
@@ -24,8 +37,7 @@ var bridgedb2 = Bridgedb({
 //*/
 
 //*
-//bridgedb2.xrefService.get({
-bridgedb1.xrefService.get({
+bridgedb2.xrefService.get({
     //id: 'http://identifiers.org/ncbigene/4292'
     bridgedbUri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   },
