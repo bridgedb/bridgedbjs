@@ -10,6 +10,14 @@ bridgedb1.entityReferenceService.searchByAttribute({
   attribute: 'Nfkb1',
   organism: 'Mouse'
 }).each(function(searchResults) {
-  console.log('searchResults332');
+  console.log('Results for Nfkb1');
+  console.log(searchResults);
+});
+
+bridgedb1.entityReferenceService.searchByAttribute({
+  attribute: 'Agt',
+  organism: 'Mouse'
+}).each(function(searchResults) {
+  console.log('Results for Agt');
   console.log(searchResults);
 });
