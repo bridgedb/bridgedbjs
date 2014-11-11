@@ -18,6 +18,6 @@ gulp.task('build', function() {
   //gulp.src(['./lib/*.js'])
     .pipe(jsdoc.parser())
     .pipe(jsdoc.generator('./docs', {
-      path: './node_modules/jaguarjs-jsdoc/tmpl'
+      path: './node_modules/jaguarjs-jsdoc/'
     }));
 });
