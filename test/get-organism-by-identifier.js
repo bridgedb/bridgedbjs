@@ -9,9 +9,8 @@ var bridgedb2 = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-//var bridgedb2 = Bridgedb();
 
-/*
+//*
 bridgedb1.organismService.getByIri('http://identifiers.org/ncbigene/4292').each(function(organism) {
   console.log('identifier1 organism name should be Homo sapiens');
   console.log(JSON.stringify(organism, null, '\t'));
