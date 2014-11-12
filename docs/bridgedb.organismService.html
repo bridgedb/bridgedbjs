@@ -96,7 +96,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.entityReferenceService~addIdentifiersIri"><a href="bridgedb.entityReferenceService.html#addIdentifiersIri">addIdentifiersIri</a></li>
+                <li data-name="bridgedb.entityReferenceService~createBridgedbXrefsUrlAdderStream"><a href="bridgedb.entityReferenceService.html#createBridgedbXrefsUrlAdderStream">createBridgedbXrefsUrlAdderStream</a></li>
             
                 <li data-name="bridgedb.entityReferenceService~enrich"><a href="bridgedb.entityReferenceService.html#enrich">enrich</a></li>
             
@@ -129,13 +129,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.organismService~convertEntityReferenceIriToOrganismName"><a href="bridgedb.organismService.html#convertEntityReferenceIriToOrganismName">convertEntityReferenceIriToOrganismName</a></li>
+                <li data-name="bridgedb.organismService~createEntityReferenceToOrganismTransformationStream"><a href="bridgedb.organismService.html#createEntityReferenceToOrganismTransformationStream">createEntityReferenceToOrganismTransformationStream</a></li>
             
                 <li data-name="bridgedb.organismService~getAvailable"><a href="bridgedb.organismService.html#getAvailable">getAvailable</a></li>
             
                 <li data-name="bridgedb.organismService~getByEntityReference"><a href="bridgedb.organismService.html#getByEntityReference">getByEntityReference</a></li>
-            
-                <li data-name="bridgedb.organismService~getByIri"><a href="bridgedb.organismService.html#getByIri">getByIri</a></li>
             
                 <li data-name="bridgedb.organismService~normalize"><a href="bridgedb.organismService.html#normalize">normalize</a></li>
             
@@ -324,14 +322,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="convertEntityReferenceIriToOrganismName">
+        <h4 class="name" id="createEntityReferenceToOrganismTransformationStream">
             
-            <span class="type-signature ">inner</span>convertEntityReferenceIriToOrganismName<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;string>}</span>
+            <span class="type-signature ">inner</span>createEntityReferenceToOrganismTransformationStream<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line166">line 166</a>
+            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line29">line 29</a>
         </div>
         
     </div>
@@ -341,136 +339,16 @@
 <dd>
     
     
+    <div class="description">
+        <p>Create a Node.js/Highland stream through which entity references
+can be piped to return their associated organism.</p>
+    </div>
+    
 
     
     
     
     
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>args</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                
-                
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>iri</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                    
-                    
-                        
-                    
-                
-                <p>IRI for an entity reference, e.g. http://identifiers.org/ncbigene/1234</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>language</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                    
-                        <span class="optional">optional</span>
-                    
-                    
-                        
-                    
-                
-                <p>Default &quot;latin&quot;, but user can specify &quot;english&quot;.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-            </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
     
     
     
@@ -508,44 +386,9 @@
     
     
     
-    <h5>Returns:</h5>
+    
     
 
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>organismName</code></td>
-            <td class="type">
-            
-                        Stream.&lt;string>
-                        
-                    
-            </td>
-            <td class="description last">Organism name in specified language</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code></code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
 
     
     
@@ -563,7 +406,7 @@
     
         
         <div class="tag-source">
-            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line30">line 30</a>
+            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line43">line 43</a>
         </div>
         
     </div>
@@ -713,7 +556,7 @@
     
         
         <div class="tag-source">
-            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line107">line 107</a>
+            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line123">line 123</a>
         </div>
         
     </div>
@@ -722,6 +565,12 @@
 </dt>
 <dd>
     
+    
+    <div class="description">
+        <p>Identifies the organism for the provided entity reference and returns all
+the data BridgeDB has about that organism, which currently is the Latin name
+and, when available, the English name.</p>
+    </div>
     
 
     
@@ -954,190 +803,6 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="getByIri">
-            
-            <span class="type-signature ">inner</span>getByIri<span class="signature">(iri)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line132">line 132</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Gets all available information about the organism, including the name in multiple languages.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>iri</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>organism</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>english</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">English name, when available</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>latin</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">Latin name</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="normalize">
             
             <span class="type-signature ">inner</span>normalize<span class="signature">(input)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;string>}</span>
@@ -1145,7 +810,7 @@
     
         
         <div class="tag-source">
-            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line181">line 181</a>
+            <a href="organism-service.js.html">organism-service.js</a>, <a href="organism-service.js.html#line153">line 153</a>
         </div>
         
     </div>
@@ -1313,7 +978,7 @@
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Nov 11 2014 16:16:52 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 12 2014 13:55:18 GMT-0800 (PST)
         </footer>
     </div>
 </div>
