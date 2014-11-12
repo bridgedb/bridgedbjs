@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: entity-reference-service.js</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"bridgedbjs","disqus":"true","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":false};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">bridgedbjs</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Bridgedb">
+            <span class="title">
+                <a href="Bridgedb.html">Bridgedb</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="bridgedb.databaseService">
+            <span class="title">
+                <a href="bridgedb.databaseService.html">bridgedb.databaseService</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="bridgedb.entityReferenceService">
+            <span class="title">
+                <a href="bridgedb.entityReferenceService.html">bridgedb.entityReferenceService</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="bridgedb.entityReferenceService~addIdentifiersIri"><a href="bridgedb.entityReferenceService.html#addIdentifiersIri">addIdentifiersIri</a></li>
+            
+                <li data-name="bridgedb.entityReferenceService~enrich"><a href="bridgedb.entityReferenceService.html#enrich">enrich</a></li>
+            
+                <li data-name="bridgedb.entityReferenceService~exists"><a href="bridgedb.entityReferenceService.html#exists">exists</a></li>
+            
+                <li data-name="bridgedb.entityReferenceService~map"><a href="bridgedb.entityReferenceService.html#map">map</a></li>
+            
+                <li data-name="bridgedb.entityReferenceService~normalize"><a href="bridgedb.entityReferenceService.html#normalize">normalize</a></li>
+            
+                <li data-name="bridgedb.entityReferenceService~searchByAttribute"><a href="bridgedb.entityReferenceService.html#searchByAttribute">searchByAttribute</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="bridgedb.organismService">
+            <span class="title">
+                <a href="bridgedb.organismService.html">bridgedb.organismService</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="bridgedb.organismService~convertEntityReferenceIriToOrganismName"><a href="bridgedb.organismService.html#convertEntityReferenceIriToOrganismName">convertEntityReferenceIriToOrganismName</a></li>
+            
+                <li data-name="bridgedb.organismService~getAvailable"><a href="bridgedb.organismService.html#getAvailable">getAvailable</a></li>
+            
+                <li data-name="bridgedb.organismService~getByEntityReference"><a href="bridgedb.organismService.html#getByEntityReference">getByEntityReference</a></li>
+            
+                <li data-name="bridgedb.organismService~getByIri"><a href="bridgedb.organismService.html#getByIri">getByIri</a></li>
+            
+                <li data-name="bridgedb.organismService~normalize"><a href="bridgedb.organismService.html#normalize">normalize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="bridgedb.xrefService">
+            <span class="title">
+                <a href="bridgedb.xrefService.html">bridgedb.xrefService</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="bridgedb.xrefService~createStream"><a href="bridgedb.xrefService.html#createStream">createStream</a></li>
+            
+                <li data-name="bridgedb.xrefService~get"><a href="bridgedb.xrefService.html#get">get</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="entity-reference-service.js.html">Source: entity-reference-service.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>/* @module EntityReferenceService */
+
+var _ = require('lodash');
+var config = require('./config.js');
+var highland = require('highland');
+var httpErrors = require('./http-errors.js');
+var request = require('request');
+var csv = require('csv-streamify');
+var csvOptions = {objectMode: true, delimiter: '\t'};
+var Utilities = require('./utilities.js');
+
+/**
+ * Used internally to create a new EntityReferenceService instance
+ * @class
+ * @protected
+ * @alias entityReferenceService
+ * @memberof bridgedb
+ * @param instance
+ */
+var EntityReferenceService = function(instance) {
+  'use strict';
+
+  /**
+   * Add an IRI (JSON-LD "@id") to semantically identify the provided entity reference, replacing previous one, if present.
+   *
+   * @param {object} entityReference
+   * @param {string} entityReference.preferredPrefix Example: "ncbigene"
+   * @param {string} entityReference.identifier Example: "1234"
+   * @return {object} entityReference
+   * @return {string} entityReference['@id'] Example: "http://identifiers.org/ncbigene/1234".
+   * @return {Array&lt;string>} entityReference['owl:sameAs'] Only if a previous, non-identifiers.org IRI was present. Example: "http://bio2rdf.org/ncbigene/1234".
+   */
+  function addIdentifiersIri(entityReference) {
+    if (!entityReference.preferredPrefix || !entityReference.identifier) {
+      console.warn('Could not add an identifiers.org IRI, because the provided entity reference was missing preferredPrefix and/or identifier.');
+      console.log(entityReference);
+      return entityReference;
+    }
+
+    if (!!entityReference['@id'] &amp;&amp; entityReference['@id'].indexOf('identifiers.org') === -1) {
+      if (!entityReference['owl:sameAs']) {
+        entityReference['owl:sameAs'] = [];
+      }
+      entityReference['owl:sameAs'].push(entityReference['@id']);
+    }
+
+    entityReference['@id'] = 'http://identifiers.org/' + entityReference.preferredPrefix + '/' + entityReference.identifier;
+    return entityReference;
+  }
+
+  /**
+   * Enrich entity reference as much as possible from BridgeDB, with the exception of not getting xrefs.
+   *
+   * @param {object} entityReference
+   * @param {object} [databases]
+   * @return {Stream&lt;object>} entityReference Entity reference with as many as possible of the properties listed below.
+   * @return {string} entityReference['@context'] JSON-LD context. You can ignore this if you don't care about semantics.
+   * @return {string} entityReference['@id'] JSON-LD IRI. You can also ignore this.
+   * @return {string} entityReference.displayName
+   * @return {string} entityReference.standardName
+   * @return {string} entityReference.db
+   * @return {string} entityReference.preferredPrefix
+   * @return {Array&lt;string>} entityReference.alternatePrefix
+   * @return {string} entityReference.identifier
+   * @return {string} entityReference.gpmlType
+   * @return {string} entityReference.biopaxType
+   */
+  var enrich = function(entityReference, databases) {
+    return enrichWithDatabaseMetadata(entityReference, databases)
+    .flatMap(function(entityReference) {
+      // TODO add method to set organism, if it's specified, so we don't need to run this method below
+      return highland([entityReference])
+      .flatMap(instance.organismService.getByEntityReference)
+      .map(function(organism) {
+        entityReference.organism = organism.latin;
+        return entityReference;
+      });
+    });
+  };
+
+  /**
+   * @private
+   *
+   * Enrich provided entity reference with all data possible using the databases metadata
+   * from datasources.txt.
+   *
+   * @param {object} entityReference
+   * @param {object} [databases]
+   * @return {Stream&lt;object>} entityReference Entity reference enriched with database metadata
+   */
+  function enrichWithDatabaseMetadata(entityReference, databases) {
+    var databasesStream;
+    if (!!databases) {
+      databasesStream = highland([ databases ]);
+    } else {
+      databasesStream = instance.databaseService.getByEntityReference(entityReference);
+    }
+
+    var propertiesToAdd = [
+      'gpmlType',
+      'biopaxType',
+      'db',
+      'priority',
+      'preferredPrefix',
+      'alternatePrefix'
+    ];
+
+    return databasesStream.map(function(database) {
+      propertiesToAdd.forEach(function(propertyKey) {
+        var propertyValue = database[propertyKey];
+        if (!!propertyValue) {
+          entityReference[propertyKey] = propertyValue;
+        }
+      });
+      entityReference.db = entityReference.db[0];
+      return entityReference;
+    })
+    .map(addIdentifiersIri);
+  }
+
+  /**
+   * Check whether an entity reference with the specified identifier is known by the specified database.
+   *
+   * @param {string} bridgedbSystemCode
+   * @param {string} identifier
+   * @param {string} organism In English or Latin
+   * @return {Stream&lt;boolean>} entityReferenceExists
+   * @return {boolean}
+   */
+  function exists(bridgedbSystemCode, identifier, organism) {
+    var path = '/' + encodeURIComponent(organism) + '/xrefExists/' + bridgedbSystemCode + '/' + identifier;
+    var source = instance.config.apiUrlStub + path;
+
+    return highland(request({
+      url: source,
+      withCredentials: false
+    })).map(function(str) {
+      return str.toString() === 'true';
+    });
+  }
+
+  /**
+   * @private
+   * Parse provided object or string to return a normalized entity reference in the form of a JS object.
+   * Uses only provided input -- no external data lookups.
+   * Any provided names/values will be retained as-is, even if doing so prevents
+   * other methods in this library from being able to access the data they require,
+   * bridgedbjs does not clean or transform the input.
+   *
+   * @param {object|string} entityReference @see bridgedb.entityReferenceService.get for details on what constitutes a usable entityReference
+   * @return {Stream&lt;object>} entityReference Entity reference converted to object, if required, and normalized
+   * @return {string} entityReference.identifier
+   * @return {string} entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE
+   */
+  function expand(entityReference) {
+    if (!_.isPlainObject(entityReference)) {
+      if (typeof entityReference === 'string') {
+        // Convert input from string to object
+        entityReference = {entityReference: entityReference};
+      } else {
+        throw new Error('Not enough data provided to identify the specified entity reference: "' + JSON.stringify(entityReference) + '"');
+      }
+    }
+
+    // Check for existence of and attempt to parse identifiers.org IRI or BridgeDB Xref URL.
+    // TODO this code might have duplication in looping (normalizing pairs),
+    // which could be refactored to normalize just once to speed things up.
+
+    _(iriParserPairs).map(function(iriParserPair) {
+      var iriPattern = new RegExp(iriParserPair[0]);
+      var iri = _.find(entityReference, function(value) {
+        var valueNormalized = String(value).toLowerCase();
+        return iriPattern.test(valueNormalized);
+      });
+
+      if (!_.isEmpty(iri)) {
+        _.defaults(entityReference, iriParserPair[1](iri));
+      }
+    });
+
+    return entityReference;
+  }
+
+  /**
+   * @private
+   * @param {object|string} entityReference Entity reference must have an identifier
+   * (e.g. ENSG00000160791) and means for identifying the database
+   *    Acceptable entityReference input arguments:
+   *      1. BridgeDB xrefs URL or identifiers.org IRI as string
+   *      2. Object with at least one of these properties:
+   *        a. { '@id': identifiers.org IRI }
+   *        b. { bridgedbUrl: BridgeDB xrefs URL }
+   *        c. { bridgedbUri: BridgeDB xrefs URL }
+   *        d. { xrefs: [
+   *            BridgeDB xrefs URL
+   *            ...
+   *          ]
+   *        }
+   *      3. Object with both of these properties:
+   *        {
+   *          db: database name as specified in datasources.txt
+   *          identifier: entity reference identifier, such as ChEBI:1234
+   *        }
+   *   
+   *    Example of BridgeDB xrefs URL: http://webservice.bridgedb.org/Human/xrefs/L/1234
+   *    Example of identifiers.org IRI: http://identifiers.org/ncbigene/1234
+   *
+   * @return {Stream&lt;object>} entityReference Entity reference, enriched with
+   *                          databases metadata and organism
+   * @return {string} entityReference.identifier
+   * @return {string} entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE
+   */
+  function get(args) {
+    var entityReference = expand(args);
+
+    var entityReferenceKeys = _.keys(entityReference);
+
+    // if any one of these are provided, we can deduce the identity of the specified database
+    var validMeansForIdentifyingDb = [
+      'db',
+      'preferredPrefix',
+      'alternatePrefix',
+      'bridgedbSystemCode',
+    ];
+
+    if (_.isEmpty(_.intersection(validMeansForIdentifyingDb, entityReferenceKeys)) || typeof entityReference.identifier === 'undefined') {
+      throw new Error('Not enough data provided to identify the specified entity reference: "' + JSON.stringify(entityReference) + '"');
+    }
+
+    return enrich(entityReference);
+  }
+
+  // We only support identifiers.org and BridgeDB IRIs in this library.
+  var iriParsers = {
+    'identifiers.org': function(iri) {
+      var iriComponents = iri.split('identifiers.org');
+      var iriPath = iriComponents[iriComponents.length - 1];
+
+      var iriPathComponents = iriPath.split('/');
+      var preferredPrefix = iriPathComponents[1];
+      var identifier = iriPathComponents[2];
+
+      return {
+        preferredPrefix: preferredPrefix,
+        identifier: identifier,
+        '@id': iri
+      };
+    },
+    /* this is an alternative. which is better?
+    'identifiers.org': function(iri) {
+      return {
+        preferredPrefix: iri.match(/(identifiers.org\/)(.*)(?=\/.*)/)[2],
+        identifier: iri.match(/(identifiers.org\/.*\/)(.*)$/)[2],
+        id: iri
+      };
+    },
+    //*/
+    'bridgedb.org': function(iri) {
+      return {
+        organism: iri.match(/(bridgedb.org\/)(.*)(?=\/xrefs)/)[2],
+        bridgedbSystemCode: iri.match(/(bridgedb.org\/.*\/xrefs\/)(\w+)(?=\/.*)/)[2],
+        identifier: iri.match(/(bridgedb.org\/.*\/xrefs\/\w+\/)(.*)$/)[2],
+        bridgedbUrl: iri
+      };
+    }
+  };
+  var iriParserPairs = _.pairs(iriParsers);
+  
+  /**
+   * @param {object} args
+   * @param {string} args.targetPreferredPrefix The Miriam namespace / identifiers.org preferredPrefix.
+   * @param {string|object} args.sourceEntityReference @see bridgedbjs.entityReferenceService.get
+   *                        method for what constitutes a usable entityReference
+   * @return {Stream&lt;array>} entityReferences One or more entity references with the target preferredPrefix.
+   * @return {object[]} entityReference
+   */
+  function map(args) {
+    var targetPreferredPrefix = args.targetPreferredPrefix;
+    if (!targetPreferredPrefix) {
+      throw new Error('targetPreferredPrefix missing');
+    }
+
+    return instance.xrefService.get(args.sourceEntityReference)
+    .filter(function(entityReferenceXref) {
+      return entityReferenceXref.preferredPrefix === targetPreferredPrefix;
+    });
+  }
+
+  /**
+   * Normalize object properties
+   *
+   * @param {string|object} entityReference
+   * @return {Stream&lt;object>} entityReference Normalized entity reference
+   * @return {string} entityReference.identifier
+   * @return {string} entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE
+   */
+  function normalize(entityReference) {
+    entityReference = expand(entityReference);
+
+    var organism = entityReference.organism;
+    if (!!organism) {
+      return highland([entityReference])
+      .flatMap(function(entityReference) {
+        return instance.organismService.normalize(organism)
+        .map(function(organism) {
+          entityReference.organism = organism;
+          return entityReference;
+        });
+      });
+    } else {
+      return highland([entityReference]);
+    }
+    // TODO normalize db, identifier, etc.
+  }
+
+  /**
+   * Get potential matches for a desired entity reference when provided a name as a search term.
+   *
+   * @param {object} args
+   * @param {string} args.attribute - Attribute value to be used as search term
+   * @param {string} args.organism - Organism name. Currently only accepting Latin and English.
+   * @param {string} [args.type] - Entity reference type, such as Protein, Dna, SmallMolecule, etc.
+   *                               Not currently being used, but we might use it in the future to
+   *                               help narrow down the search results.
+   * @param {string} [args.db] - Desired database name, such as Ensembl or Uniprot
+   * @return {Stream&lt;object>} entityReferenceStream If there is one or more matching entity references,
+   *                           they will be returned as objects, as described below.
+   * @return {object} entityReferenceStream.entityReference Entity reference, enriched with databases metadata and organism
+   */
+  function searchByAttribute(args) {
+    var attributeValue = args.attribute;
+    var type = args.type;
+    var organism = args.organism;
+
+    if (!organism) {
+      throw new Error('Missing argument "organism"');
+    }
+
+    return highland([organism])//.flatMap(instance.organismService.normalize)
+    // get the BridgeDB path
+    .map(function(organism) {
+      instance.organismService.set(organism);
+      var path = '/' + encodeURIComponent(organism) + '/attributeSearch/' + encodeURIComponent(attributeValue);
+      return instance.config.apiUrlStub + path;
+    })
+    .flatMap(function(source) {
+      return highland(request({
+        url: source,
+        withCredentials: false
+      })
+      .pipe(csv(csvOptions)));
+    })
+    .map(function(array) {
+      return array;
+    })
+    .errors(function (err, push) {
+      console.log(err);
+      console.log('in entityReferenceService.searchByAttribute()');
+    })
+    .map(function(array) {
+      return {
+        identifier: array[0],
+        db: array[1],
+        displayName: array[2]
+      };
+    })
+    .map(function(searchResult) {
+
+      // remove empty properties
+
+      searchResult = _.omit(searchResult, function(value) {
+        // Note: I intentionally used 'null' as
+        // a string, not a native value, because
+        // BridgeDB returns the string value
+        return value === 'null';
+      });
+
+      return searchResult;
+    })
+    .flatMap(enrichWithDatabaseMetadata)
+    .map(instance.addContext);
+  }
+
+  return {
+    enrich:enrich,
+    exists:exists,
+    expand:expand,
+    // TODO I don't think "get" should be part of the public API
+    get:get,
+    map:map,
+    normalize:normalize,
+    searchByAttribute:searchByAttribute
+  };
+};
+
+exports = module.exports = EntityReferenceService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+        <!-- disqus code -->
+        <div id="disqus_thread"></div>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <!-- // disqus code -->
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Nov 11 2014 16:16:52 GMT-0800 (PST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
