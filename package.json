@@ -1,14 +1,14 @@
 {
   "name": "bridgedbjs",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "JS client for BridgeDB JS client for BridgeDB.org id mapping framework webservices",
-  "main": "bridgedb.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wikipathways/bridgedbjs.git"
+    "url": "https://github.com/bridgedb/bridgedbjs.git"
   },
   "keywords": [
     "bridgedb",
@@ -17,9 +17,9 @@
   "author": "BridgeDB team",
   "license": "Apache 2",
   "bugs": {
-    "url": "https://github.com/wikipathways/bridgedbjs/issues"
+    "url": "https://github.com/bridgedb/bridgedbjs/issues"
   },
-  "homepage": "https://github.com/wikipathways/bridgedbjs",
+  "homepage": "https://bridgedb.github.io/bridgedbjs/docs/Bridgedb.html",
   "dependencies": {
     "lodash": "~2.4.1",
     "highland": "~2.0.0",
