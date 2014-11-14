@@ -10,7 +10,7 @@
 			"outputSourceFiles" : true
 		},
 		"applicationName": "bridgedbjs",
-		"disqus": "true",
+		"disqus": "false",
 		"googleAnalytics": "",
 		"openGraph": {
 			"title": "",

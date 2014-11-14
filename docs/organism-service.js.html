@@ -26,7 +26,7 @@
     
     
     <script>
-    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"bridgedbjs","disqus":"true","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":false};
+    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"bridgedbjs","disqus":"false","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":false};
     </script>
     
 
@@ -62,9 +62,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgedb.databaseService">
+        <li class="item" data-name="bridgedb.databaseMetadataService">
             <span class="title">
-                <a href="bridgedb.databaseService.html">bridgedb.databaseService</a>
+                <a href="bridgedb.databaseMetadataService.html">bridgedb.databaseMetadataService</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -96,7 +96,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.entityReferenceService~createBridgedbXrefsUrlAdderStream"><a href="bridgedb.entityReferenceService.html#createBridgedbXrefsUrlAdderStream">createBridgedbXrefsUrlAdderStream</a></li>
+                <li data-name="bridgedb.entityReferenceService~createEnrichmentStream"><a href="bridgedb.entityReferenceService.html#createEnrichmentStream">createEnrichmentStream</a></li>
             
                 <li data-name="bridgedb.entityReferenceService~enrich"><a href="bridgedb.entityReferenceService.html#enrich">enrich</a></li>
             
@@ -195,7 +195,7 @@ var Utilities = require('./utilities.js');
  * @protected
  * @alias organismService
  * @memberof bridgedb
- * @param instance
+ * @param {object} instance
  */
 var OrganismService = function(instance) {
   'use strict';
@@ -221,7 +221,8 @@ var OrganismService = function(instance) {
    * @return {string} availableOrganisms.availableOrganism.latin Latin name
    */
   var getAvailable = function() {
-    return Utilities.runOnce('availableOrganisms', getAvailableFromRemoteSource);
+    return Utilities.runOnce('availableOrganisms',
+        getAvailableFromRemoteSource);
   };
 
   var getAvailableFromRemoteSource = function() {
@@ -270,8 +271,10 @@ var OrganismService = function(instance) {
    * @return {string} organismStream.organism.english English name, when available
    * @return {string} organismStream.organism.latin Latin name
    */
-  var getByBridgedbSystemCodeAndIdentifierByCheckingAvailableOrganisms = function(bridgedbSystemCode, identifier) {
-    var exists = highland.curry(instance.entityReferenceService.exists, bridgedbSystemCode, identifier);
+  var getByBridgedbSystemCodeAndIdentifierByCheckingAvailableOrganisms =
+    function(bridgedbSystemCode, identifier) {
+    var exists = highland.curry(instance.entityReferenceService.exists,
+        bridgedbSystemCode, identifier);
 
     var initMethod = function() {
       return getAvailable()
@@ -307,18 +310,28 @@ var OrganismService = function(instance) {
     // to get a listing of which datasources go with which species.
     // Save that data as a JSON file.
     // Then use those limitations in this query.
-    var bridgedbSystemCode = entityReference.alternatePrefix[0];
-    var identifier = entityReference.identifier;
 
-    return instance.databaseService.getByEntityReference(entityReference)
-    .flatMap(function(database) {
-      var organism = database.organism;
+    return instance.databaseMetadataService.getByEntityReference(
+      entityReference
+    )
+    .flatMap(function(databaseMetadata) {
+      var organism = databaseMetadata.organism;
       if (!!organism) {
         return highland([organism]);
       }
 
+      var bridgedbSystemCode = databaseMetadata.bridgedbSystemCode ||
+        _.isArray(entityReference.alternatePrefix) &amp;&amp;
+        entityReference.alternatePrefix[0];
+
+      var identifier = entityReference.identifier;
+
       if (!!bridgedbSystemCode &amp;&amp; !!identifier) {
-        return getByBridgedbSystemCodeAndIdentifierByCheckingAvailableOrganisms(bridgedbSystemCode, identifier);
+        return getByBridgedbSystemCodeAndIdentifierByCheckingAvailableOrganisms(
+          bridgedbSystemCode, identifier);
+      } else {
+        console.warn('Cannot get organism by entityReference.');
+        return entityReference;
       }
     });
   }
@@ -336,7 +349,8 @@ var OrganismService = function(instance) {
     .find(function(organism) {
       var latinName = organism.latin;
       var latinNameComponents = organism.latin.split(' ');
-      var latinNameAbbreviated = latinNameComponents[0][0] + latinNameComponents[1];
+      var latinNameAbbreviated = latinNameComponents[0][0] +
+        latinNameComponents[1];
       var englishName = organism.english;
       return Utilities.normalizeText(latinName) === normalizedInput ||
         Utilities.normalizeText(latinNameAbbreviated) === normalizedInput ||
@@ -362,7 +376,8 @@ var OrganismService = function(instance) {
   }
 
   return {
-    createEntityReferenceToOrganismTransformationStream:createEntityReferenceToOrganismTransformationStream,
+    createEntityReferenceToOrganismTransformationStream:
+      createEntityReferenceToOrganismTransformationStream,
     getAvailable:getAvailable,
     getByEntityReference:getByEntityReference,
     normalize:normalize,
@@ -389,7 +404,7 @@ exports = module.exports = OrganismService;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 12 2014 13:55:18 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Thu Nov 13 2014 16:38:13 GMT-0800 (PST)
         </footer>
     </div>
 </div>
