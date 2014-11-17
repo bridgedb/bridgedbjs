@@ -1,11 +1,11 @@
-var browserify = require('gulp-browserify');
-var exorcist = require('exorcist');
-var concat = require('gulp-concat');
+var browserify = require('browserify');
+var buffer = require('vinyl-buffer');
 var gulp = require('gulp');
 var jsdoc = require('gulp-jsdoc');
 var jsdocOptions = require('./jsdoc-conf.json');
 var rename = require('gulp-rename');
-var transform = require('vinyl-transform');
+var source = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
 gulp.task('build', ['browserify', 'build-docs']);
@@ -24,21 +24,32 @@ gulp.task('build-docs', function() {
   //*/
 });
 
-// TODO refactor this to not run browserify twice.
-gulp.task('browserify', function() {
-  gulp
-    .src('index.js')
-    .pipe(browserify({debug: true}))
-    .pipe(transform(function() { return exorcist('dist/bridgedb.map'); }))
-    .pipe(concat('bridgedb.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist'));
+var getBundleName = function() {
+  var version = require('./package.json').version;
+  var name = require('./package.json').name;
+  return version + '.' + name + '.' + 'min';
+};
 
-  gulp
-    .src('index.js')
-    .pipe(browserify())
-    .pipe(rename('bridgedb.js'))
-    .pipe(gulp.dest('./dist'));
+gulp.task('browserify', function() {
+
+  var bundler = browserify({
+    entries: ['./index.js'],
+    debug: true
+  });
+
+  var bundle = function() {
+    return bundler
+      .bundle()
+      .pipe(source(getBundleName() + '.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./dist/'));
+  };
+
+  return bundle();
 });
 
 gulp.task('default', ['build']);

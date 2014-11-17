@@ -28,7 +28,6 @@
     "jsonld": "~0.3.4"
   },
   "devDependencies": {
-    "gulp-browserify": "~0.5.0",
     "deep-diff": "~0.2.0",
     "gulp-uglify": "~1.0.1",
     "sax": "~0.6.1",
@@ -36,9 +35,10 @@
     "gulp-jsdoc": "~0.1.4",
     "jaguarjs-jsdoc": "0.0.1",
     "jscs": "~1.7.3",
-    "vinyl-transform": "0.0.1",
-    "exorcist": "~0.1.6",
-    "gulp-concat": "~2.4.1",
-    "gulp-rename": "~1.2.0"
+    "gulp-rename": "~1.2.0",
+    "vinyl-source-stream": "~1.0.0",
+    "vinyl-buffer": "~1.0.0",
+    "gulp-sourcemaps": "~1.2.8",
+    "browserify": "~6.3.2"
   }
 }
