@@ -1,5 +1,5 @@
-bridgedbjs
-==========
+bridgedbjs (v2.2.2)
+===================
 
 JS client for the [BridgeDB](http://bridgedb.org) id mapping framework [webservices](http://bridgedb.org/wiki/BridgeWebservice/).
 Not all the functionality of the BridgeDB webservices are exposed by this library yet, but pull requests are welcomed.
@@ -9,17 +9,17 @@ Not all the functionality of the BridgeDB webservices are exposed by this librar
 ## Installation
 Browser
 ```html
-<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb.min.js"></script>
+<script src="https://bridgedb.github.io/bridgedbjs/dist/2.2.2.bridgedb.min.js"></script>
 ```
 
 Node.js
 ```
-npm install bridgedbjs
+npm install bridgedb
 ```
 
 ## Example
 ```js
-Bridgedb = require('bridgedbjs'); // Omit this line if using in browser
+Bridgedb = require('bridgedb'); // Omit this line if using in browser
 
 var myBridgedbInstance = Bridgedb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
