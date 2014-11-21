@@ -111,7 +111,7 @@ gulp.task('bump-readme', ['bump-metadata-files'], function() {
 });
 
 // get version type
-gulp.task('get-version-type', function(callback) {
+gulp.task('get-version-type', ['verify-git-status'], function(callback) {
   highland(createPromptStream({
     type: 'list',
     name: 'versionType',
@@ -134,6 +134,21 @@ gulp.task('get-version-type', function(callback) {
   .each(function(res) {
     versionType = res.versionType;
     return callback(null, versionType);
+  });
+});
+
+// verify git is ready
+gulp.task('verify-git-status', function verifyGitStatus(callback) {
+  //var desiredBranch = args.branch;
+  var desiredBranch = 'master';
+  git.status({}, function(err, stdout) {
+    // if (err) ...
+    var inDesiredBranch = stdout.indexOf('On branch ' + desiredBranch) > -1;
+    var nothingToCommit = stdout.indexOf('nothing to commit') > -1;
+    var isReady = inDesiredBranch && nothingToCommit;
+    console.log('isReady');
+    console.log(isReady);
+    return callback(null, isReady);
   });
 });
 
@@ -162,12 +177,3 @@ var getBundleName = function() {
   var name = newPackageJson.name;
   return name + '-' + version + '.' + 'min';
 };
-
-// verify git is ready
-function verifyGitStatus(args, callback) {
-  var desiredBranch = args.branch;
-  git.status({}, function(err, stdout) {
-    // if (err) ...
-    console.log(stdout.indexOf('On branch ' + desiredBranch));
-  });
-}
