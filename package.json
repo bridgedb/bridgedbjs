@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "2.2.40",
+  "version": "2.2.60",
   "description": "JS client for BridgeDB JS client for BridgeDB.org id mapping framework webservices",
   "main": "index.js",
   "scripts": {
@@ -45,6 +45,7 @@
     "gulp-regex-replace": "~0.2.3",
     "inquirer": "~0.8.0",
     "vinyl-fs": "~0.3.13",
-    "vinyl": "~0.4.5"
+    "vinyl": "~0.4.5",
+    "gulp-git": "~0.5.4"
   }
 }
