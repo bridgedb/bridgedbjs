@@ -3,6 +3,7 @@ var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var File = require('vinyl');
 var fs = require('vinyl-fs');
+var git = require('gulp-git');
 var gulp = require('gulp');
 var bump = require('gulp-bump');
 var highland = require('highland');
@@ -20,38 +21,13 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-var packageAtStart = require('./package.json');
+var oldPackageJson = require('./package.json');
+var newPackageJson;
+var versionType;
 
-function getCurrentPackage() {
-  return JSON.parse(nodeFs.readFileSync('./package.json', {
-    encoding: 'utf8'
-  }));
-}
+gulp.task('default', ['build']);
 
-gulp.task('build', ['browserify', 'build-docs']);
-
-// I don't think gulp-jsdoc is currently able to use an external conf.json.
-// Until it does, we need to keep this task disabled
-// and use the following command from the command line:
-// jsdoc -t './node_modules/jaguarjs-jsdoc/' -c './jsdoc-conf.json' './lib/' -r './README.md' -d './docs/'
-gulp.task('build-docs', function() {
-  /*
-  gulp.src(['./lib/*.js', 'README.md'])
-    .pipe(jsdoc.parser())
-    .pipe(jsdoc.generator('./docs', {
-      path: './node_modules/jaguarjs-jsdoc/'
-    }, jsdocOptions));
-  //*/
-});
-
-var getBundleName = function() {
-  var currentPackage = getCurrentPackage();
-  var version = currentPackage.version;
-  var name = currentPackage.name;
-  return name + '-' + version + '.' + 'min';
-};
-
-gulp.task('browserify', function() {
+gulp.task('browserify', ['bump'], function() {
 
   var bundler = browserify({
     entries: ['./index.js'],
@@ -73,13 +49,74 @@ gulp.task('browserify', function() {
   return bundle();
 });
 
+gulp.task('build', ['browserify', 'build-docs']);
+
+// I don't think gulp-jsdoc is currently able to use an external conf.json.
+// Until it does, we need to keep this task disabled
+// and use the following command from the command line:
+// jsdoc -t './node_modules/jaguarjs-jsdoc/' -c './jsdoc-conf.json' './lib/' -r './README.md' -d './docs/'
+gulp.task('build-docs', ['bump'], function() {
+  /*
+  gulp.src(['./lib/*.js', 'README.md'])
+    .pipe(jsdoc.parser())
+    .pipe(jsdoc.generator('./docs', {
+      path: './node_modules/jaguarjs-jsdoc/'
+    }, jsdocOptions));
+  //*/
+});
+
+gulp.task('bump', [
+  'get-version-type',
+  'bump-metadata-files',
+  'bump-readme'
+], function(callback) {
+  return callback();
+});
+
 // Update bower, component, npm at once:
-gulp.task('bumpMetadataFiles', function(callback) {
+gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
+  gulp.src([
+    './bower.json',
+    './component.json',
+    './package.json'
+  ])
+  .pipe(bump({type: versionType}))
+  .pipe(gulp.dest('./'))
+  .pipe(highland.pipeline(function(s) {
+    return s.map(function(file) {
+      return file.contents;
+      // TODO we should be able to use something like this
+      // to make this code simpler, but it's not working:
+      //return file.pipe(JSONStream.parse('*'));
+    })
+    .pipe(JSONStream.parse())
+    // This is needed to turn the stream into a highland stream
+    .pipe(highland.pipeline())
+    .each(function(json) {
+      // TODO this might not work if we have more than just the
+      // package.json file. What happens if we add a bower.json file?
+      newPackageJson = json;
+      return callback(null, json);
+    });
+  }));
+});
+
+gulp.task('bump-readme', ['bump-metadata-files'], function() {
+  return gulp.src('README.md')
+    .pipe(replace({
+      regex: oldPackageJson.version,
+      replace: newPackageJson.version
+    }))
+    .pipe(gulp.dest('./'));
+});
+
+// get version type
+gulp.task('get-version-type', function(callback) {
   highland(createPromptStream({
     type: 'list',
     name: 'versionType',
     message: 'Choose a version type below.',
-    choices: ['patch', 'minor', 'major']
+    choices: ['patch', 'minor', 'major', 'prerelease']
   }))
   .errors(function(err, push) {
     // inquirer.prompt doesn't follow the node callback style convention
@@ -93,86 +130,15 @@ gulp.task('bumpMetadataFiles', function(callback) {
       push(err);
     }
   })
+  .head()
   .each(function(res) {
-    gulp.src([
-      './bower.json',
-      './component.json',
-      './package.json'
-    ])
-    .pipe(bump({type: res.versionType}))
-    .pipe(gulp.dest('./'))
-    /*
-    var tap = require('gulp-tap');
-    .pipe(tap(function(file, t) {
-      return t;
-    }))
-    //*/
-    .pipe(highland.pipeline(function(s) {
-      console.log('s1');
-      console.log(s);
-      return s.map(function(file) {
-        console.log('file');
-        console.log(file);
-        //return file.pipe(JSONStream.parse('*'));
-        return file.contents;
-      })
-      .pipe(JSONStream.parse('version'))
-      .pipe(highland.pipeline(function(s) {
-        console.log('s2');
-        console.log(s);
-        return s.head();
-        /*
-        return s.map(function(json) {
-          console.log('json');
-          console.log(json);
-          return json;
-        });
-        //*/
-      }))
-      .each(function(json) {
-        console.log('json');
-        console.log(json);
-        return json;
-      });
-    }));
-    /*
-    .pipe(highland.pipeline(function(s) {
-      return s.map(function(buf) {
-        console.log('buf');
-        console.log(buf);
-        console.log(Buffer.isBuffer(buf));
-        console.log(buf.toString('utf-8'));
-        return buf;
-      })
-      .through(JSONStream.parse('*'))
-      // You can remove collect() here if you don't care about
-      // when one CSV file ends and the next begins.
-      // Without collect(), the rows of data, parsed as JSON,
-      // will flow through, one by one, on a single stream.
-      // With collect(), the parsed rows from each CSV file
-      // will be collected into a JSON array before being
-      // passed along, one array per file.
-      .collect()
-      .each(function(buf) {
-        callback();
-      });
-    }));
-    //*/
+    versionType = res.versionType;
+    return callback(null, versionType);
   });
-  //*/
-});
-
-gulp.task('bumpReadMe', ['bumpMetadataFiles'], function() {
-  return gulp.src('README.md')
-    .pipe(replace({
-      regex: packageAtStart.version,
-      replace: getCurrentPackage().version
-    }))
-    .pipe(gulp.dest('./'));
 });
 
 // steps for publishing new release
-// 1. Need to be in master branch
+// 1. Need to be in master branch with no changes to commit.
 // 1. Bump version in package.json (major/minor/patch)
 //      major: Totally redid everything.
 //      minor: Added functionality without breaking backwards compatibility.
@@ -191,4 +157,17 @@ gulp.task('bumpReadMe', ['bumpMetadataFiles'], function() {
 // 3. git checkout master
 // 3. npm publish
 
-gulp.task('default', ['bumpMetadataFiles', 'bumpReadMe', 'build']);
+var getBundleName = function() {
+  var version = newPackageJson.version;
+  var name = newPackageJson.name;
+  return name + '-' + version + '.' + 'min';
+};
+
+// verify git is ready
+function verifyGitStatus(args, callback) {
+  var desiredBranch = args.branch;
+  git.status({}, function(err, stdout) {
+    // if (err) ...
+    console.log(stdout.indexOf('On branch ' + desiredBranch));
+  });
+}
