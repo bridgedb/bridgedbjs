@@ -1,16 +1,14 @@
 var _ = require('lodash');
 var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
+var exec = require('child_process').exec;
 var File = require('vinyl');
 var fs = require('vinyl-fs');
 var git = require('gulp-git');
 var gulp = require('gulp');
 var bump = require('gulp-bump');
 var highland = require('highland');
-
 var inquirer = require('inquirer');
-var createPromptStream = highland.wrapCallback(inquirer.prompt);
-
 var jsdoc = require('gulp-jsdoc');
 var jsdocOptions = require('./jsdoc-conf.json');
 var JSONStream = require('JSONStream');
@@ -21,13 +19,23 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+var createGitPushStream = highland.wrapCallback(git.push);
+var createGitTagStream = highland.wrapCallback(git.tag);
+var createPromptStream = highland.wrapCallback(inquirer.prompt);
+
 var oldPackageJson = require('./package.json');
 var newPackageJson;
 var versionType;
 
+var metadataFiles = [
+  './bower.json',
+  './component.json',
+  './package.json'
+];
+
 gulp.task('default', ['build']);
 
-gulp.task('browserify', ['bump'], function() {
+gulp.task('browserify', ['bump-metadata-files'], function() {
 
   var bundler = browserify({
     entries: ['./index.js'],
@@ -49,13 +57,17 @@ gulp.task('browserify', ['bump'], function() {
   return bundle();
 });
 
-gulp.task('build', ['browserify', 'build-docs']);
+gulp.task('build', [
+  'browserify',
+  'build-docs'
+], function(callback) {
+  return callback();
+});
 
-// I don't think gulp-jsdoc is currently able to use an external conf.json.
-// Until it does, we need to keep this task disabled
-// and use the following command from the command line:
-// jsdoc -t './node_modules/jaguarjs-jsdoc/' -c './jsdoc-conf.json' './lib/' -r './README.md' -d './docs/'
-gulp.task('build-docs', ['bump'], function() {
+gulp.task('build-docs', ['bump-readme'], function(callback) {
+  // I think gulp-jsdoc currently cannot use an external conf.json.
+  // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
+  // and use exec to run the command at the command line.
   /*
   gulp.src(['./lib/*.js', 'README.md'])
     .pipe(jsdoc.parser())
@@ -63,23 +75,43 @@ gulp.task('build-docs', ['bump'], function() {
       path: './node_modules/jaguarjs-jsdoc/'
     }, jsdocOptions));
   //*/
+
+  exec('jsdoc -t "./node_modules/jaguarjs-jsdoc/" -c ' +
+    '"./jsdoc-conf.json" "./lib/" -r "./README.md" -d "./docs/"',
+    function(err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      return callback(err, stdout);
+      // TODO why does using @private give an error?
+      // We can't use stderr as err until we handle that.
+      //return callback(err || stderr, stdout);
+    });
 });
 
 gulp.task('bump', [
-  'get-version-type',
-  'bump-metadata-files',
-  'bump-readme'
+  'bump-git'
 ], function(callback) {
   return callback();
 });
 
+// bump git
+gulp.task('bump-git', ['build'], function bumpGit(callback) {
+  // TODO remove gulpfile.js when done testing this
+  gulp.src(['./dist/*', './docs/*', 'gulpfile.js'].concat(metadataFiles))
+  .pipe(git.add())
+  .pipe(git.commit('Bump version and build.'))
+  .pipe(createGitTagStream('v' + newPackageJson.version,
+          'Version ' + newPackageJson.version))
+  .pipe(createGitPushStream('origin', 'master'))
+  .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
+  .each(function(data) {
+    return callback(null, data);
+  });
+});
+
 // Update bower, component, npm at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
-  gulp.src([
-    './bower.json',
-    './component.json',
-    './package.json'
-  ])
+  gulp.src(metadataFiles)
   .pipe(bump({type: versionType}))
   .pipe(gulp.dest('./'))
   .pipe(highland.pipeline(function(s) {
@@ -137,19 +169,132 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
   });
 });
 
+// release on github. publish to github pages and npm.
+gulp.task('publish', ['verify-git-status'], function publish(callback) {
+  highland([{}])
+  .flatMap(highland.wrapCallback(
+    // TODO can this be refactored to be cleaner?
+    function(data, callback) {
+      git.tag('v' + newPackageJson.version,
+        'Version ' + newPackageJson.version,
+        function(err, stdout) {
+          if (err) {
+            throw err;
+          }
+          return callback(null, stdout);
+        });
+    }
+  ))
+  .map(function(stdout) {
+    var gitStatusOk = (stdout === '');
+    if (!gitStatusOk) {
+      var message = 'Problem with creating local tag.';
+      throw new Error(message);
+    }
+    return gitStatusOk;
+  })
+  .errors(killStream)
+  .each(function(gitStatusOk) {
+    console.log('gitStatusOk140');
+    console.log(gitStatusOk);
+    return callback(null, gitStatusOk);
+  });
+
+  /*
+  git.push('origin', 'v' + newPackageJson.version, function(err) {
+    //if (err) ...
+  });
+
+  // TODO make the following work async
+
+  git.push('origin', 'master', function(err) {
+    //if (err) ...
+  });
+
+  git.checkout('gh-pages', function(err) {
+    //if (err) ...
+  });
+
+  git.merge('master', function(err) {
+    //if (err) ...
+  });
+
+  git.push('origin', 'gh-pages', function(err) {
+    //if (err) ...
+  });
+
+  git.checkout('master', function(err) {
+    //if (err) ...
+  });
+
+  // TODO change this to publish to npm
+  exec('echo "hello"', function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+  //*/
+});
+
+gulp.task('test-exec', function(cb) {
+  exec('echo "hello"', function(err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
+
 // verify git is ready
 gulp.task('verify-git-status', function verifyGitStatus(callback) {
-  //var desiredBranch = args.branch;
   var desiredBranch = 'master';
-  git.status({}, function(err, stdout) {
-    // if (err) ...
+
+  highland([{}])
+  .flatMap(highland.wrapCallback(git.status))
+  .errors(killStream)
+  .map(function(stdout) {
     var inDesiredBranch = stdout.indexOf('On branch ' + desiredBranch) > -1;
     var nothingToCommit = stdout.indexOf('nothing to commit') > -1;
-    var isReady = inDesiredBranch && nothingToCommit;
-    console.log('isReady');
-    console.log(isReady);
-    return callback(null, isReady);
+    var gitStatusOk = inDesiredBranch && nothingToCommit;
+    if (!gitStatusOk) {
+      var message = 'Please checkout master and ' +
+        'commit all changes before bumping.';
+      throw new Error(message);
+    }
+    return stdout;
+  })
+  .errors(killStream)
+  .flatMap(highland.wrapCallback(
+    // TODO why does this run before git.status, unless I use this
+    // extra function?
+    function(data, callback) {
+      git.exec({args : 'diff master origin/master'}, function(err, stdout) {
+        return callback(null, stdout);
+      });
+    }
+  ))
+  .map(function(stdout) {
+    var gitStatusOk = (stdout === '');
+    if (!gitStatusOk) {
+      var message = 'local/master is ahead of and/or behind origin/master.' +
+        ' Please push/pull before bumping.';
+      throw new Error(message);
+    }
+    return gitStatusOk;
+  })
+  .errors(killStream)
+  .each(function(gitStatusOk) {
+    console.log('gitStatusOk1043');
+    console.log(gitStatusOk);
+    return callback(null, gitStatusOk);
   });
+
+  /*
+  // TODO what if there are merge conflicts?
+  git.pull('origin', 'master', function(err) {
+    //if (err) ...
+    return callback(null, gitStatusOk);
+  });
+  //*/
 });
 
 // steps for publishing new release
@@ -177,3 +322,28 @@ var getBundleName = function() {
   var name = newPackageJson.name;
   return name + '-' + version + '.' + 'min';
 };
+
+function killStream(err, push) {
+  console.error(err);
+  if (_.isString(err)) {
+    // err is not of the JS type "error".
+    err = new Error(err);
+  } else if (_.isPlainObject(err)) {
+    // err is not of the JS type "error".
+    var jsError = new Error(err.msg || err.message || 'Error');
+    _.assign(jsError, err);
+    err = jsError;
+  }
+
+  // Using process.exit is a kludge to stop everything in this case.
+  process.exit(1);
+  // It would seem that Highland could kill the stream by
+  // using some combination of the commented-out options below,
+  // but in reality, at least with this version of Highland,
+  // none of those options stop the stream.
+  // Unless we use process.exit, the stream will continue, e.g.,
+  // git diff below will still run.
+  //stream.destroy();
+  //push(err);
+  //throw err;
+}
