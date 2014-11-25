@@ -19,6 +19,7 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+var createGitCheckoutStream = highland.wrapCallback(git.checkout);
 var createGitPushStream = highland.wrapCallback(git.push);
 var createGitTagStream = highland.wrapCallback(git.tag);
 var createPromptStream = highland.wrapCallback(inquirer.prompt);
@@ -174,8 +175,12 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
 // publish to github repo, github pages and npm.
 gulp.task('publish', ['bump'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
+  .errors(killStream)
   .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
   .errors(killStream)
+  .pipe(createGitCheckoutStream('gh-pages'))
+  .pipe(createGitPushStream('origin', 'gh-pages'))
+  .pipe(createGitCheckoutStream('master'))
   .head()
   .each(function(data) {
     return callback(null, data);
