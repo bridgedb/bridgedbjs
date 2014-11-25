@@ -181,16 +181,12 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
 
 // publish to github repo, github pages and npm.
 gulp.task('publish', ['bump-git'], function publish(callback) {
-//gulp.task('publish', function publish(callback) {
-  //*
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
-  //.pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
-  .flatMap(createGitPushStream('origin', 'v1.0.15'))
+  .flatMap(createGitPushStream('origin', 'v' + newPackageJson.version))
+  //.flatMap(createGitPushStream('origin', 'v1.0.15'))
   .errors(killStream)
   .flatMap(createGitCheckoutStream('gh-pages'))
-  //*/
-  //highland(createGitCheckoutStream('gh-pages'))
   .flatMap(createGitMergeStream('master'))
   .flatMap(createGitPushStream('origin', 'gh-pages'))
   .flatMap(createGitCheckoutStream('master'))
