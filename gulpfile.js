@@ -99,7 +99,12 @@ gulp.task('bump', [
 // bump git
 gulp.task('bump-git', ['build'], function bumpGit(callback) {
   // TODO remove gulpfile.js when done testing this
-  gulp.src(['./dist/*', './docs/*', 'gulpfile.js'].concat(metadataFiles))
+  gulp.src(['./dist/*',
+            './docs/*',
+            'README.md',
+            'gulpfile.js']
+            .concat(metadataFiles)
+  )
   .pipe(git.add())
   .pipe(git.commit('Bump version and build.'))
   .pipe(createGitTagStream('v' + newPackageJson.version,
