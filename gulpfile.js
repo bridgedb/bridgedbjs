@@ -169,9 +169,18 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
   });
 });
 
-// release on github. publish to github pages and npm.
-gulp.task('publish', ['verify-git-status'], function publish(callback) {
+// publish to github repo, github pages and npm.
+gulp.task('publish', ['bump'], function publish(callback) {
   highland([{}])
+  .pipe(createGitTagStream('v' + newPackageJson.version,
+          'Version ' + newPackageJson.version))
+  .pipe(createGitPushStream('origin', 'master'))
+  .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
+  .errors(killStream)
+  .each(function(data) {
+    return callback(null, data);
+  });
+  /*
   .flatMap(highland.wrapCallback(
     // TODO can this be refactored to be cleaner?
     function(data, callback) {
@@ -200,7 +209,6 @@ gulp.task('publish', ['verify-git-status'], function publish(callback) {
     return callback(null, gitStatusOk);
   });
 
-  /*
   git.push('origin', 'v' + newPackageJson.version, function(err) {
     //if (err) ...
   });
