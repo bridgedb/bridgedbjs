@@ -180,8 +180,8 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
 });
 
 // publish to github repo, github pages and npm.
-//gulp.task('publish', ['bump-git'], function publish(callback) {
-gulp.task('publish', function publish(callback) {
+gulp.task('publish', ['bump-git'], function publish(callback) {
+//gulp.task('publish', function publish(callback) {
   //*
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
