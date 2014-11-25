@@ -3,14 +3,14 @@ var BridgeDb = require('../index.js');
 
 var bridgedb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasourcesUrl:
+  dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
 var bridgedb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasourcesUrl:
+  dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 //*/
@@ -24,7 +24,7 @@ highland([
     bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   }
 ])
-.pipe(bridgedb1.entityReferenceService.createEnrichmentStream())
+.pipe(bridgedb1.entityReference.createEnrichmentStream())
 .each(function(entityReferenceXrefs) {
   console.log('bridgedb1: enriched entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
@@ -32,14 +32,14 @@ highland([
 //*/
 
 //*
-bridgedb2.entityReferenceService.enrich([
+bridgedb2.entityReference.enrich([
   {
     '@id': 'http://identifiers.org/ncbigene/4292'
   }
 ], {
   bridgedbXrefsUrl: true,
   context: false,
-  databaseMetadata: true,
+  dataSource: true,
   organism: true
 })
 .each(function(entityReferenceXrefs) {
