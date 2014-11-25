@@ -28,9 +28,9 @@ var myBridgeDbInstance = BridgeDb({
 myBridgeDbInstance.entityReferenceService.searchByAttribute({
   attribute: 'Nfkb1',
   organism: 'Mouse'
-}).each(function(searchResults) {
+}).each(function(searchResult) {
   console.log('Result for Nfkb1');
-  console.log(searchResults);
+  console.log(searchResult);
 });
 ```
 
