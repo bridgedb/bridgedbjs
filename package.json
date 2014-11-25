@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "JS client for BridgeDB JS client for BridgeDB.org id mapping framework webservices",
   "main": "index.js",
   "scripts": {
