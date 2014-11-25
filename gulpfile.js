@@ -173,9 +173,7 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
 
 // publish to github repo, github pages and npm.
 gulp.task('publish', ['bump'], function publish(callback) {
-  highland(createGitTagStream('v' + newPackageJson.version,
-          'Version ' + newPackageJson.version))
-  .pipe(createGitPushStream('origin', 'master'))
+  highland(createGitPushStream('origin', 'master'))
   .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
   .errors(killStream)
   .head()
