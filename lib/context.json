@@ -24,6 +24,10 @@
     "@id": "biopax:db",
     "@type": "xsd:string"
   },
+  "exampleIdentifier": {
+    "@id": "idot:exampleIdentifier",
+    "@type": "xsd:string"
+  },
   "id": {
     "@id": "@id",
     "@type": "@id"

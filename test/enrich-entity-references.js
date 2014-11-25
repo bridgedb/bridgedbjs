@@ -1,14 +1,14 @@
 var highland = require('highland');
-var Bridgedb = require('../index.js');
+var BridgeDb = require('../index.js');
 
-var bridgedb1 = Bridgedb({
+var bridgedb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-var bridgedb2 = Bridgedb({
+var bridgedb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
