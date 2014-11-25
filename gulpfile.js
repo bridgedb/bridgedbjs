@@ -98,21 +98,15 @@ gulp.task('bump', [
 
 // bump git
 gulp.task('bump-git', ['build'], function bumpGit(callback) {
-  // TODO remove gulpfile.js when done testing this
   gulp.src(['./dist/*',
             './docs/*',
-            'README.md',
-            'gulpfile.js']
+            'README.md']
             .concat(metadataFiles)
   )
   .pipe(git.add())
-  .pipe(git.commit('Bump version and build.'))
+  .pipe(git.commit('Bump version to ' + newPackageJson.version + ' and build.'))
   .pipe(createGitTagStream('v' + newPackageJson.version,
           'Version ' + newPackageJson.version))
-  /*
-  .pipe(createGitPushStream('origin', 'master'))
-  .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
-  //*/
   .last()
   .each(function(data) {
     return callback(null, data);
@@ -184,81 +178,30 @@ gulp.task('publish', ['bump-git'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
   .flatMap(createGitPushStream('origin', 'v' + newPackageJson.version))
-  //.flatMap(createGitPushStream('origin', 'v1.0.15'))
   .errors(killStream)
   .flatMap(createGitCheckoutStream('gh-pages'))
   .flatMap(createGitMergeStream('master'))
   .flatMap(createGitPushStream('origin', 'gh-pages'))
   .flatMap(createGitCheckoutStream('master'))
+  //* TODO the following should look something like this, but I haven't tested it yet
+  .flatMap(highland.wrapCallback(
+    function(callback) {
+      exec('npm publish', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        callback(err);
+      });
+    }
+  ))
+  //*/
   .each(function(data) {
     console.log('data');
     console.log(data);
     return callback(null, data);
   });
-  /*
-  .flatMap(highland.wrapCallback(
-    // TODO can this be refactored to be cleaner?
-    function(data, callback) {
-      git.tag('v' + newPackageJson.version,
-        'Version ' + newPackageJson.version,
-        function(err, stdout) {
-          if (err) {
-            throw err;
-          }
-          return callback(null, stdout);
-        });
-    }
-  ))
-  .map(function(stdout) {
-    var gitStatusOk = (stdout === '');
-    if (!gitStatusOk) {
-      var message = 'Problem with creating local tag.';
-      throw new Error(message);
-    }
-    return gitStatusOk;
-  })
-  .errors(killStream)
-  .each(function(gitStatusOk) {
-    console.log('gitStatusOk140');
-    console.log(gitStatusOk);
-    return callback(null, gitStatusOk);
-  });
-
-  git.push('origin', 'v' + newPackageJson.version, function(err) {
-    //if (err) ...
-  });
-
-  // TODO make the following work async
-
-  git.push('origin', 'master', function(err) {
-    //if (err) ...
-  });
-
-  git.checkout('gh-pages', function(err) {
-    //if (err) ...
-  });
-
-  git.merge('master', function(err) {
-    //if (err) ...
-  });
-
-  git.push('origin', 'gh-pages', function(err) {
-    //if (err) ...
-  });
-
-  git.checkout('master', function(err) {
-    //if (err) ...
-  });
-
-  // TODO change this to publish to npm
-  exec('echo "hello"', function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
-  //*/
 });
 
+/*
 gulp.task('test-exec', function(cb) {
   exec('echo "hello"', function(err, stdout, stderr) {
     console.log(stdout);
@@ -266,6 +209,7 @@ gulp.task('test-exec', function(cb) {
     cb(err);
   });
 });
+//*/
 
 // verify git is ready
 gulp.task('verify-git-status', function verifyGitStatus(callback) {
@@ -311,26 +255,6 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
     return callback(null, gitStatusOk);
   });
 });
-
-// steps for publishing new release
-// 1. Need to be in master branch with no changes to commit.
-// 1. Bump version in package.json (major/minor/patch)
-//      major: Totally redid everything.
-//      minor: Added functionality without breaking backwards compatibility.
-//      patch: Fixed a bug.
-// 2. Update version for browser installation in README
-// 3. Build JS for dist
-// 3. Build documentation
-// 3. git add .
-// 3. git commit -a -m "Bump version and build."
-// 3. git tag -a v1.0.2 -m "Version message"
-// 3. git push origin v1.0.2
-// 3. git push origin master
-// 3. git checkout gh-pages
-// 3. git merge master
-// 3. git push origin gh-pages
-// 3. git checkout master
-// 3. npm publish
 
 var getBundleName = function() {
   var version = newPackageJson.version;
