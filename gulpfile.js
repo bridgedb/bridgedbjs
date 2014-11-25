@@ -20,6 +20,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
 var createGitCheckoutStream = highland.wrapCallback(git.checkout);
+var createGitMergeStream = highland.wrapCallback(git.merge);
 var createGitPushStream = highland.wrapCallback(git.push);
 var createGitTagStream = highland.wrapCallback(git.tag);
 var createPromptStream = highland.wrapCallback(inquirer.prompt);
@@ -179,6 +180,7 @@ gulp.task('publish', ['bump'], function publish(callback) {
   .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
   .errors(killStream)
   .pipe(createGitCheckoutStream('gh-pages'))
+  .pipe(createGitMergeStream('master'))
   .pipe(createGitPushStream('origin', 'gh-pages'))
   .pipe(createGitCheckoutStream('master'))
   .head()
