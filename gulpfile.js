@@ -182,7 +182,7 @@ gulp.task('publish', ['bump'], function publish(callback) {
   .errors(killStream)
   .pipe(createGitCheckoutStream('gh-pages'))
   //*/
-  highland([createGitCheckoutStream('gh-pages')])
+  highland(createGitCheckoutStream('gh-pages'))
   .pipe(createGitMergeStream('master'))
   .pipe(createGitPushStream('origin', 'gh-pages'))
   .pipe(createGitCheckoutStream('master'))
