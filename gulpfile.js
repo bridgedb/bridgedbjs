@@ -184,15 +184,14 @@ gulp.task('publish', ['bump-git'], function publish(callback) {
   .flatMap(createGitPushStream('origin', 'gh-pages'))
   .flatMap(createGitCheckoutStream('master'))
   //* TODO the following should look something like this, but I haven't tested it yet
-  .flatMap(highland.wrapCallback(
-    function(callback) {
-      exec('npm publish', function(err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        callback(err);
-      });
-    }
-  ))
+  .flatMap(function() {
+    return highland.wrapCallback(exec)('npm publish');
+  })
+  .map(function(stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    return stdout;
+  })
   //*/
   .each(function(data) {
     console.log('data');
