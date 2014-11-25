@@ -189,6 +189,8 @@ gulp.task('publish', function publish(callback) {
   .pipe(createGitCheckoutStream('master'))
   .head()
   .each(function(data) {
+    console.log('data');
+    console.log(data);
     return callback(null, data);
   });
   /*
