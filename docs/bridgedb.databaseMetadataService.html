@@ -43,9 +43,9 @@
     </div>
     <ul class="list">
     
-        <li class="item" data-name="Bridgedb">
+        <li class="item" data-name="BridgeDb">
             <span class="title">
-                <a href="Bridgedb.html">Bridgedb</a>
+                <a href="BridgeDb.html">BridgeDb</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -74,6 +74,10 @@
             
             </ul>
             <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="bridgedb.databaseMetadataService~get"><a href="bridgedb.databaseMetadataService.html#get">get</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -195,12 +199,12 @@
     <div class="nameContainer">
         <h4 class="name" id="databaseMetadataService">
             
-            <span class="type-signature ">protected</span>new bridgedb.databaseMetadataService<span class="signature">(instance)</span>
+            new bridgedb.databaseMetadataService<span class="signature">(instance)</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="database-metadata-service.js.html">database-metadata-service.js</a>, <a href="database-metadata-service.js.html#line20">line 20</a>
+            <a href="database-metadata-service.js.html">database-metadata-service.js</a>, <a href="database-metadata-service.js.html#line19">line 19</a>
         </div>
         
     </div>
@@ -321,6 +325,306 @@
     
     
     
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="get">
+            
+            <span class="type-signature ">inner</span>get<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;array>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database-metadata-service.js.html">database-metadata-service.js</a>, <a href="database-metadata-service.js.html#line139">line 139</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get all biological databases supported by BridgeDb, with all
+available metadata, largely as specified in
+<a href="https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt">datasources.txt</a>.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            <td class="name"><code>databaseMetadataStream</code></td>
+            <td class="type">
+            
+                        Stream.&lt;array>
+                        
+                    
+            </td>
+            <td class="description last">
+                
+
+
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            <td class="name"><code>databaseMetadataStream.databaseMetadata</code></td>
+            <td class="type">
+            
+                        Array.&lt;object>
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.db</code></td>
+            <td class="type">
+            
+                        Array.&lt;string>
+                        
+                    
+            </td>
+            <td class="description last">Database name. See
+                     <a href="http://www.biopax.org/release/biopax-level3.owl#db">biopax:db</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadataStream.databaseMetadata.website</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadataStream.databaseMetadata.linkoutPattern</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.exampleIdentifier</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">See
+                                            <a href="http://identifiers.org/idot/exampleIdentifier">idot:exampleIdentifier</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.bridgedbType</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Biological type, as used at BridgeDb. See
+   <a href="https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt">datasources.txt</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.gpmlType</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Biological type, as used in GPML at WikiPathways and in PathVisio-Java.
+                                                                 See <a href="http://vocabularies.wikipathways.org/gpml#Type">gpml:Type</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.biopaxType</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Biological type as used in Biopax. See the domain for
+                     <a href="http://www.biopax.org/release/biopax-level3.owl#entityReference">biopax:entityReference</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.priority</code></td>
+            <td class="type">
+            
+                        number
+                        
+                    
+            </td>
+            <td class="description last">1: primary/preferred source of identifiers.
+    0: secondary/alternate source of identifiers, or source for supplemental information about entity references.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.identifierPattern</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Regular expression for the identifiers from this database.
+                                                                 See <a href="http://identifiers.org/idot/identifierPattern">idot:identifierPattern</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.preferredPrefix</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Abbreviation as used by identifiers.org to identify a database.
+                                                                 See <a href="http://identifiers.org/idot/preferredPrefix">idot:preferredPrefix</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.alternatePrefix</code></td>
+            <td class="type">
+            
+                        Array.&lt;string>
+                        
+                    
+            </td>
+            <td class="description last">Abbreviation as used elsewhere to identify a database, such
+  as at BridgeDb (bridgedbSystemCode located both here and on its own). See <a href="http://identifiers.org/idot/alternatePrefix">idot:alternatePrefix</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.bridgedbSystemCode</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">See
+   <a href="https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt">datasources.txt</a>.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata.id</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last">Preferred <a href="http://www.w3.org/TR/json-ld/#iris">IRI</a>
+                                                                       (usually a persistent URL) for identifying a database.</td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>databaseMetadata[owl:sameAs]</code></td>
+            <td class="type">
+            
+                        Array.&lt;string>
+                        
+                    
+            </td>
+            <td class="description last">Alternate IRI for identifying a database.
+                                                       See <a href="http://www.w3.org/TR/owl-ref/#sameAs-def">owl:sameAs</a>.</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        </dl>
+    
     
     
     
@@ -342,7 +646,7 @@
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Nov 24 2014 18:10:22 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Nov 24 2014 20:20:23 GMT-0800 (PST)
         </footer>
     </div>
 </div>

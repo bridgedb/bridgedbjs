@@ -1,8 +1,8 @@
 bridgedbjs (v1.0.3)
 ===================
 
-JS client for the [BridgeDB](http://bridgedb.org) id mapping framework [webservices](http://bridgedb.org/wiki/BridgeWebservice/).
-Not all the functionality of the BridgeDB webservices are exposed by this library yet, but pull requests are welcomed.
+JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservices](http://bridgedb.org/wiki/BridgeWebservice/).
+Not all the functionality of the BridgeDb webservices are exposed by this library yet, but pull requests are welcomed.
 
 ##[API Documentation](https://bridgedb.github.io/bridgedbjs/docs/)
 
@@ -19,13 +19,13 @@ npm install bridgedb
 
 ## Example
 ```js
-Bridgedb = require('bridgedb'); // Omit this line if using in browser
+BridgeDb = require('bridgedb'); // Omit this line if using in browser
 
-var myBridgedbInstance = Bridgedb({
+var myBridgeDbInstance = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-myBridgedbInstance.entityReferenceService.searchByAttribute({
+myBridgeDbInstance.entityReferenceService.searchByAttribute({
   attribute: 'Nfkb1',
   organism: 'Mouse'
 }).each(function(searchResults) {

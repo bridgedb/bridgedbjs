@@ -43,9 +43,9 @@
     </div>
     <ul class="list">
     
-        <li class="item" data-name="Bridgedb">
+        <li class="item" data-name="BridgeDb">
             <span class="title">
-                <a href="Bridgedb.html">Bridgedb</a>
+                <a href="BridgeDb.html">BridgeDb</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -74,6 +74,10 @@
             
             </ul>
             <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="bridgedb.databaseMetadataService~get"><a href="bridgedb.databaseMetadataService.html#get">get</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -346,7 +350,7 @@
     
     <div class="description">
         <p>Create a Node.js/Highland stream through which entity references
-can be piped to enrich each one with data from BridgeDB.</p>
+can be piped to enrich each one with data from BridgeDb.</p>
     </div>
     
 
@@ -563,7 +567,7 @@ can be piped to enrich each one with data from BridgeDB.</p>
                         
                     
                 
-                <p>Enrich with URL for BridgeDB webservices
+                <p>Enrich with URL for BridgeDb webservices
                                        to enable getting xrefs for this entity reference.</p></td>
         </tr>
 	
@@ -633,7 +637,7 @@ can be piped to enrich each one with data from BridgeDB.</p>
     
         
         <div class="tag-source">
-            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line165">line 165</a>
+            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line166">line 166</a>
         </div>
         
     </div>
@@ -645,7 +649,7 @@ can be piped to enrich each one with data from BridgeDB.</p>
     
     <div class="description">
         <p>Enrich entity reference. Default is to enrich as much as possible as much as possible
-with data from BridgeDB, with the exception of not getting xrefs, but the data included
+with data from BridgeDb, with the exception of not getting xrefs, but the data included
 for enrichment can be controlled by setting options.include.</p>
     </div>
     
@@ -705,14 +709,14 @@ for enrichment can be controlled by setting options.include.</p>
                     
                 
                 <p>Entity reference(s). Each one must have an identifier
-(e.g. ENSG00000160791) and means for identifying the database
-   Acceptable entityReference input arguments:</p>
-<pre class="prettyprint source"><code> 1. BridgeDB xrefs URL or identifiers.org IRI as string
+(e.g. ENSG00000160791) and means for identifying the database.</p>
+<p>   Acceptable entityReference input arguments:</p>
+<pre class="prettyprint source"><code> 1. BridgeDb xrefs URL or identifiers.org IRI as string
  2. Object with at least one of these properties:
    a. { '@id': identifiers.org IRI }
-   b. { bridgedbXrefsUrl: BridgeDB xrefs URL }
+   b. { bridgedbXrefsUrl: BridgeDb xrefs URL }
    c. { xrefs: [
-       BridgeDB xrefs URL
+       BridgeDb xrefs URL
        ...
      ]
    }
@@ -720,7 +724,7 @@ for enrichment can be controlled by setting options.include.</p>
    {
      db: database name as specified in datasources.txt
      identifier: entity reference identifier, such as ChEBI:1234
-   }</code></pre><p>   Example of BridgeDB xrefs URL: http://webservice.bridgedb.org/Human/xrefs/L/1234
+   }</code></pre><p>   Example of BridgeDb xrefs URL: http://webservice.bridgedb.org/Human/xrefs/L/1234
    Example of identifiers.org IRI: http://identifiers.org/ncbigene/1234</p></td>
         </tr>
 	
@@ -914,7 +918,7 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
                 
-                <p>Enrich with URL for BridgeDB webservices
+                <p>Enrich with URL for BridgeDb webservices
                                        to enable getting xrefs for this entity reference.</p></td>
         </tr>
 	
@@ -1021,7 +1025,7 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
             </td>
-            <td class="description last"></td>
+            <td class="description last">See <a href="http://www.biopax.org/release/biopax-level3.owl#displayName">biopax:displayName</a></td>
         </tr>
     
         <tr>
@@ -1267,44 +1271,13 @@ for enrichment can be controlled by setting options.include.</p>
     
     
     
-    <h5>Returns:</h5>
+    
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReferenceExists</code></td>
-            <td class="type">
-            
-                        Stream.&lt;boolean>
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code></code></td>
-            <td class="type">
-            
-                        boolean
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
+<h5>Returns:</h5>
+true/false
+<br />
 
     
     
@@ -1322,7 +1295,7 @@ for enrichment can be controlled by setting options.include.</p>
     
         
         <div class="tag-source">
-            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line391">line 391</a>
+            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line393">line 393</a>
         </div>
         
     </div>
@@ -1441,7 +1414,7 @@ for enrichment can be controlled by setting options.include.</p>
             
             <td class="description last">
                 
-                <p>@see bridgedbjs.entityReferenceService.enrich()
+                <p>@see bridgedb.entityReferenceService.enrich()
                        method for what constitutes a usable entityReference</p></td>
         </tr>
 	
@@ -1524,7 +1497,46 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
             </td>
+            <td class="description last">
+                
+
+
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            <td class="name"><code>entityReference.identifier</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
             <td class="description last"></td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
     
     </tbody>
@@ -1546,7 +1558,7 @@ for enrichment can be controlled by setting options.include.</p>
     
         
         <div class="tag-source">
-            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line411">line 411</a>
+            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line413">line 413</a>
         </div>
         
     </div>
@@ -1733,7 +1745,7 @@ for enrichment can be controlled by setting options.include.</p>
     
         
         <div class="tag-source">
-            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line452">line 452</a>
+            <a href="entity-reference-service.js.html">entity-reference-service.js</a>, <a href="entity-reference-service.js.html#line455">line 455</a>
         </div>
         
     </div>
@@ -1996,18 +2008,46 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
             </td>
-            <td class="description last">Entity reference, enriched with database metadata and organism</td>
-        </tr>
+            <td class="description last">Entity reference, enriched with database metadata and organism
+                
+
+
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
     
         <tr>
-            <td class="name"><code></code></td>
+            <td class="name"><code>entityReference.identifier</code></td>
             <td class="type">
             
-                        object
+                        string
                         
                     
             </td>
             <td class="description last"></td>
+        </tr>
+    
+        <tr>
+            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
+            <td class="type">
+            
+                        string
+                        
+                    
+            </td>
+            <td class="description last"></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
     
     </tbody>
@@ -2020,12 +2060,12 @@ for enrichment can be controlled by setting options.include.</p>
         
 
     
-    <pre class="prettyprint"><code><p>myBridgedbInstance.entityReferenceService.searchByAttribute({
+    <pre class="prettyprint"><code><p>myBridgeDbInstance.entityReferenceService.searchByAttribute({
   attribute: 'Nfkb1',
   organism: 'Mouse'
-}).each(function(searchResults) {
+}).each(function(searchResult) {
   console.log('Result for Nfkb1');
-  console.log(searchResults);
+  console.log(searchResult);
 });</p></code></pre>
     
 
@@ -2055,7 +2095,7 @@ for enrichment can be controlled by setting options.include.</p>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Nov 24 2014 18:10:22 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Nov 24 2014 20:20:23 GMT-0800 (PST)
         </footer>
     </div>
 </div>

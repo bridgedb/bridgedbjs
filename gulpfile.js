@@ -310,14 +310,6 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
     console.log(gitStatusOk);
     return callback(null, gitStatusOk);
   });
-
-  /*
-  // TODO what if there are merge conflicts?
-  git.pull('origin', 'master', function(err) {
-    //if (err) ...
-    return callback(null, gitStatusOk);
-  });
-  //*/
 });
 
 // steps for publishing new release

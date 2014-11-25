@@ -1,7 +1,7 @@
 {
   "name": "bridgedb",
   "version": "1.0.3",
-  "description": "JS client for BridgeDB JS client for BridgeDB.org id mapping framework webservices",
+  "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "bridgedb",
     "biology"
   ],
-  "author": "BridgeDB team",
+  "author": "BridgeDb team",
   "license": "Apache 2",
   "bugs": {
     "url": "https://github.com/bridgedb/bridgedbjs/issues"
