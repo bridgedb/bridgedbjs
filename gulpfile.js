@@ -102,8 +102,10 @@ gulp.task('bump-git', ['build'], function bumpGit(callback) {
   .pipe(git.commit('Bump version and build.'))
   .pipe(createGitTagStream('v' + newPackageJson.version,
           'Version ' + newPackageJson.version))
+  /*
   .pipe(createGitPushStream('origin', 'master'))
   .pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
+  //*/
   .each(function(data) {
     return callback(null, data);
   });
