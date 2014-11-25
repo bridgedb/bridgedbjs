@@ -185,7 +185,7 @@ gulp.task('publish', function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
   //.pipe(createGitPushStream('origin', 'v' + newPackageJson.version))
-  .pipe(createGitPushStream('origin', 'v1.1.15'))
+  .pipe(createGitPushStream('origin', 'v1.1.14'))
   .errors(killStream)
   .pipe(createGitCheckoutStream('gh-pages'))
   //*/
