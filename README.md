@@ -1,4 +1,4 @@
-bridgedbjs (v1.0.8)
+bridgedbjs (v1.0.9)
 ===================
 
 JS client for the [BridgeDB](http://bridgedb.org) id mapping framework [webservices](http://bridgedb.org/wiki/BridgeWebservice/).
@@ -9,7 +9,7 @@ Not all the functionality of the BridgeDB webservices are exposed by this librar
 ## Installation
 Browser
 ```html
-<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-1.0.8.min.js"></script>
+<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-1.0.9.min.js"></script>
 ```
 
 Node.js
