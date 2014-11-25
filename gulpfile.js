@@ -172,7 +172,7 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
       push(err);
     }
   })
-  .head()
+  .last()
   .each(function(res) {
     versionType = res.versionType;
     return callback(null, versionType);
@@ -192,8 +192,11 @@ gulp.task('publish', ['bump-git'], function publish(callback) {
   //*/
   //highland(createGitCheckoutStream('gh-pages'))
   .pipe(createGitMergeStream('master'))
+  .last()
   .pipe(createGitPushStream('origin', 'gh-pages'))
+  .last()
   .pipe(createGitCheckoutStream('master'))
+  .last()
   //.head()
   .each(function(data) {
     console.log('data');
