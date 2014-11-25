@@ -193,7 +193,7 @@ gulp.task('publish', function publish(callback) {
   .pipe(createGitMergeStream('master'))
   .pipe(createGitPushStream('origin', 'gh-pages'))
   .pipe(createGitCheckoutStream('master'))
-  .head()
+  //.head()
   .each(function(data) {
     console.log('data');
     console.log(data);
