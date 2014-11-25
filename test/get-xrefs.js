@@ -3,12 +3,12 @@ var BridgeDb = require('../index.js');
 
 var bridgedb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasourcesUrl:
+  dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-bridgedb1.xrefService.get({
+bridgedb1.xref.get({
   '@id': 'http://identifiers.org/ncbigene/4292'
 }).each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
@@ -17,7 +17,7 @@ bridgedb1.xrefService.get({
 //*/
 
 //*
-bridgedb1.xrefService.get({
+bridgedb1.xref.get({
     bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   },
   {
@@ -32,13 +32,13 @@ bridgedb1.xrefService.get({
 //*
 var bridgedb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasourcesUrl:
+  dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 //*/
 
 //*
-bridgedb2.xrefService.get({
+bridgedb2.xref.get({
     bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   },
   {
@@ -59,7 +59,7 @@ highland([
     bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   }
 ])
-.pipe(bridgedb1.xrefService.createStream())
+.pipe(bridgedb1.xref.createStream())
 .each(function(entityReferenceXrefs) {
   console.log('xrefs for provided entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
@@ -67,7 +67,7 @@ highland([
 //*/
 
 //*
-bridgedb2.xrefService.get([
+bridgedb2.xref.get([
   {
     '@id': 'http://identifiers.org/ncbigene/4292'
   },
