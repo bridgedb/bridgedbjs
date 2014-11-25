@@ -192,12 +192,8 @@ gulp.task('publish', ['bump-git'], function publish(callback) {
   //*/
   //highland(createGitCheckoutStream('gh-pages'))
   .flatMap(createGitMergeStream('master'))
-  .last()
   .flatMap(createGitPushStream('origin', 'gh-pages'))
-  .last()
   .flatMap(createGitCheckoutStream('master'))
-  .last()
-  //.head()
   .each(function(data) {
     console.log('data');
     console.log(data);
