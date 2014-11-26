@@ -29,13 +29,13 @@ Nashorn tutorials:
 
 ## Example
 ```js
-BridgeDb = require('bridgedb'); // Omit this line you're using Node.js
+BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
 
 var myBridgeDbInstance = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-myBridgeDbInstance.entityReferenceService.freeSearch({
+myBridgeDbInstance.entityReference.freeSearch({
   attribute: 'Nfkb1',
   organism: 'Mouse'
 }).each(function(searchResult) {
