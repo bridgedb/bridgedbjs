@@ -25,7 +25,8 @@
     "highland": "~2.0.0",
     "request": "~2.45.0",
     "csv-streamify": "~1.0.0",
-    "jsonld": "~0.3.4"
+    "jsonld": "~0.3.4",
+    "gulp": "~3.8.10"
   },
   "devDependencies": {
     "deep-diff": "~0.2.0",
