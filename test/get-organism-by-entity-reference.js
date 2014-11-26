@@ -14,6 +14,14 @@ var bridgedb2 = BridgeDb({
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
+//*
+bridgedb1.organism.getByEntityReference('http://identifiers.org/ncbigene/4292')
+.each(function(organism) {
+  console.log('organism name should be Homo sapiens');
+  console.log(JSON.stringify(organism, null, '\t'));
+});
+//*/
+
 /*
 bridgedb1.entityReference.enrich('http://identifiers.org/ncbigene/4292')
 .flatMap(bridgedb1.organism.getByEntityReference)
@@ -40,12 +48,10 @@ bridgedb2.organism.getAll().each(function(organisms) {
 //*/
 
 //*
-bridgedb2.organism.get(
+bridgedb2.organism.getByEntityReference(
     {
-      entityReference: {
-        bridgeDbSystemCode: 'L',
-        identifier: '174034'
-      }
+      bridgeDbSystemCode: 'L',
+      identifier: '174034'
     }
 )
 .each(function(organism) {
@@ -67,6 +73,7 @@ bridgedb2.organism.getByEntityReference(
 });
 //*/
 
+// These below don't work at present.
 /*
 bridgedb2.entityReference.enrich(
     'http://identifiers.org/ncbigene/174034')
