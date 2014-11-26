@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Class: organism</title>
+    <title>Class: xref</title>
     
     
     
@@ -175,7 +175,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="bridgeDb.organism.html">Class: organism</h1>
+        <h1 class="page-title" data-filename="bridgeDb.xref.html">Class: xref</h1>
         
 
 
@@ -184,7 +184,7 @@
     
 <header>
     <h2>
-    organism
+    xref
     </h2>
     
 </header>  
@@ -197,14 +197,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="organism">
+        <h4 class="name" id="xref">
             
-            <span class="type-signature ">protected</span>new bridgeDb.organism<span class="signature">(instance)</span>
+            <span class="type-signature ">protected</span>new bridgeDb.xref<span class="signature">(instance)</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="organism.js.html">organism.js</a>, <a href="organism.js.html#line20">line 20</a>
+            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line20">line 20</a>
         </div>
         
     </div>
@@ -215,7 +215,7 @@
     
     
     <div class="description">
-        <p>Used internally to create a new Organism instance</p>
+        <p>Used internally to create a new Xref instance</p>
     </div>
     
 
@@ -331,14 +331,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="createEntityReferenceToOrganismTransformationStream">
+        <h4 class="name" id="createStream">
             
-            <span class="type-signature ">inner</span>createEntityReferenceToOrganismTransformationStream<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream}</span>
+            <span class="type-signature ">inner</span>createStream<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="organism.js.html">organism.js</a>, <a href="organism.js.html#line29">line 29</a>
+            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line58">line 58</a>
         </div>
         
     </div>
@@ -350,7 +350,7 @@
     
     <div class="description">
         <p>Create a Node.js/Highland stream through which entity references
-can be piped to return their associated organism.</p>
+can be piped to return all the xrefs available for each entity reference.</p>
     </div>
     
 
@@ -408,14 +408,14 @@ can be piped to return their associated organism.</p>
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="getAll">
+        <h4 class="name" id="get">
             
-            <span class="type-signature ">inner</span>getAll<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
+            <span class="type-signature ">inner</span>get<span class="signature">(input, <span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>|Stream.&lt;array>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="organism.js.html">organism.js</a>, <a href="organism.js.html#line45">line 45</a>
+            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line38">line 38</a>
         </div>
         
     </div>
@@ -426,171 +426,9 @@ can be piped to return their associated organism.</p>
     
     
     <div class="description">
-        <p>Get all organisms currently supported by BridgeDb.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>organism</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>organism['@context']</code></td>
-            <td class="type">
-            
-                        object
-                        
-                    
-            </td>
-            <td class="description last">JSON-LD context. You can ignore this if
-                                                 you don't care about semantics.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>organism.name</code></td>
-            <td class="type">
-            
-                        Array.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>en</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">English name, when available.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>la</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">Unabbreviated Latin name.</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="getByEntityReference">
-            
-            <span class="type-signature ">inner</span>getByEntityReference<span class="signature">(entityReference)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="organism.js.html">organism.js</a>, <a href="organism.js.html#line137">line 137</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Identifies the organism for the provided entity reference and returns all
-the data BridgeDb has about that organism, which currently is the Latin name
-and, when available, the English name.</p>
+        <p>Get all xrefs available from BridgeDb for the provided entity reference.
+Currently limited to biopax:UnificationXrefs and biopax:RelationshipXrefs,
+returned as biopax:EntityReferences.</p>
     </div>
     
 
@@ -621,203 +459,7 @@ and, when available, the English name.</p>
 	
         <tr>
             
-                <td class="name"><code>entityReference</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>See bridgeDb.entityReference.enrich for information
-                                 on acceptable entity reference inputs.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>organism</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>organism.name</code></td>
-            <td class="type">
-            
-                        Array.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>name.en</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">English name, when available.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>name.la</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">Unabbreviated Latin name.</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="normalize">
-            
-            <span class="type-signature ">inner</span>normalize<span class="signature">(organism)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="organism.js.html">organism.js</a>, <a href="organism.js.html#line219">line 219</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Normalize organism.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>organism</code></td>
+                <td class="name"><code>input</code></td>
             
             
             <td class="type">
@@ -827,6 +469,9 @@ and, when available, the English name.</p>
 |
 
 <span class="param-type">object</span>
+|
+
+<span class="param-type">stream</span>
 
 
             
@@ -836,8 +481,94 @@ and, when available, the English name.</p>
             
             <td class="description last">
                 
-                <p>Can be name in Latin (full like &quot;Escherichia coli&quot;
-     or abbreviated like &quot;E. coli&quot;) or English. In the future, we might include IRIs for organisms.</p></td>
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Can be set equal to &quot;display&quot;</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
         </tr>
 	
 	
@@ -895,14 +626,20 @@ and, when available, the English name.</p>
     <tbody>
     
         <tr>
-            <td class="name"><code>organism</code></td>
+            <td class="name"><code>entityReference</code></td>
             <td class="type">
             
                         Stream.&lt;object>
+                         | 
+                    
+                        Stream.&lt;array>
                         
                     
             </td>
-            <td class="description last">
+            <td class="description last">When options.format is not set, returns
+                         entity reference as formatted by bridgeDb.entityReference.enrich().
+                         When options.format is set to &quot;display,&quot; returns a set of entity references
+                         as formatted by bridgeDb.xref.formatAllForDisplay().
                 
 
 
@@ -917,10 +654,10 @@ and, when available, the English name.</p>
     <tbody>
     
         <tr>
-            <td class="name"><code>organism.name</code></td>
+            <td class="name"><code>entityReference.identifier</code></td>
             <td class="type">
             
-                        Array.&lt;object>
+                        string
                         
                     
             </td>
@@ -928,25 +665,14 @@ and, when available, the English name.</p>
         </tr>
     
         <tr>
-            <td class="name"><code>name.en</code></td>
+            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
             <td class="type">
             
                         string
                         
                     
             </td>
-            <td class="description last">English name, when available.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>name.la</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">Unabbreviated Latin name.</td>
+            <td class="description last"></td>
         </tr>
     
     </tbody>
@@ -986,7 +712,7 @@ and, when available, the English name.</p>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 26 2014 00:13:59 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 26 2014 00:21:06 GMT-0800 (PST)
         </footer>
     </div>
 </div>
