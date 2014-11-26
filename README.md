@@ -20,7 +20,7 @@ npm install bridgedb
 
 **Java/JVM**
 
-To use with Java/JVM, try [Nashorn (Java 8+)](http://openjdk.java.net/projects/nashorn/), [Rhino (Java <8)](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino) or [DynJS](http://dynjs.org/).
+Use BridgeDb-Java instead. If you really want to use this, you can try [Nashorn (Java 8+)](http://openjdk.java.net/projects/nashorn/), [Rhino (Java <8)](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino) or [DynJS](http://dynjs.org/).
 
 Nashorn tutorials:
 * http://www.oracle.com/technetwork/articles/java/jf14-nashorn-2126515.html
@@ -29,13 +29,13 @@ Nashorn tutorials:
 
 ## Example
 ```js
-BridgeDb = require('bridgedb'); // Omit this line if using in browser
+BridgeDb = require('bridgedb'); // Omit this line you're using Node.js
 
 var myBridgeDbInstance = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-myBridgeDbInstance.entityReferenceService.searchByAttribute({
+myBridgeDbInstance.entityReferenceService.freeSearch({
   attribute: 'Nfkb1',
   organism: 'Mouse'
 }).each(function(searchResult) {
