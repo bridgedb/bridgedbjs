@@ -2,37 +2,37 @@ var _ = require('lodash');
 var highland = require('highland');
 var BridgeDb = require('../index.js');
 
-var bridgedb1 = BridgeDb({
+var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
-bridgedb1.entityReference.searchByAttribute({
+bridgeDb1.entityReference.freeSearch({
   attribute: 'Nfkb1',
   organism: 'Mouse'
 }).each(function(searchResults) {
   console.log('Result for Nfkb1');
-  console.log(searchResults);
+  console.log(JSON.stringify(searchResults, null, '\t'));
 });
 
-bridgedb1.entityReference.searchByAttribute({
+bridgeDb1.entityReference.freeSearch({
   attribute: 'Agt',
   organism: 'Mouse'
 }).each(function(searchResults) {
-  console.log('bridgedb1: Result for Agt');
-  console.log(searchResults);
+  console.log('bridgeDb1: Result for Agt');
+  console.log(JSON.stringify(searchResults, null, '\t'));
 });
 
-var bridgedb2 = BridgeDb({
+var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
-bridgedb2.entityReference.searchByAttribute({
+bridgeDb2.entityReference.freeSearch({
   attribute: 'Agt',
   organism: 'Mouse'
 }).each(function(searchResults) {
-  console.log('bridgedb2: Result for Agt');
-  console.log(searchResults);
+  console.log('bridgeDb2: Result for Agt');
+  console.log(JSON.stringify(searchResults, null, '\t'));
 });

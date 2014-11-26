@@ -62,9 +62,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgedb.databaseMetadataService">
+        <li class="item" data-name="bridgeDb.dataSource">
             <span class="title">
-                <a href="bridgedb.databaseMetadataService.html">bridgedb.databaseMetadataService</a>
+                <a href="bridgeDb.dataSource.html">bridgeDb.dataSource</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -77,7 +77,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.databaseMetadataService~get"><a href="bridgedb.databaseMetadataService.html#get">get</a></li>
+                <li data-name="bridgeDb.dataSource~getAll"><a href="bridgeDb.dataSource.html#getAll">getAll</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -85,9 +85,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgedb.entityReferenceService">
+        <li class="item" data-name="bridgeDb.entityReference">
             <span class="title">
-                <a href="bridgedb.entityReferenceService.html">bridgedb.entityReferenceService</a>
+                <a href="bridgeDb.entityReference.html">bridgeDb.entityReference</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -100,17 +100,17 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.entityReferenceService~createEnrichmentStream"><a href="bridgedb.entityReferenceService.html#createEnrichmentStream">createEnrichmentStream</a></li>
+                <li data-name="bridgeDb.entityReference~createEnrichmentStream"><a href="bridgeDb.entityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
             
-                <li data-name="bridgedb.entityReferenceService~enrich"><a href="bridgedb.entityReferenceService.html#enrich">enrich</a></li>
+                <li data-name="bridgeDb.entityReference~enrich"><a href="bridgeDb.entityReference.html#enrich">enrich</a></li>
             
-                <li data-name="bridgedb.entityReferenceService~exists"><a href="bridgedb.entityReferenceService.html#exists">exists</a></li>
+                <li data-name="bridgeDb.entityReference~exists"><a href="bridgeDb.entityReference.html#exists">exists</a></li>
             
-                <li data-name="bridgedb.entityReferenceService~map"><a href="bridgedb.entityReferenceService.html#map">map</a></li>
+                <li data-name="bridgeDb.entityReference~freeSearch"><a href="bridgeDb.entityReference.html#freeSearch">freeSearch</a></li>
             
-                <li data-name="bridgedb.entityReferenceService~normalize"><a href="bridgedb.entityReferenceService.html#normalize">normalize</a></li>
+                <li data-name="bridgeDb.entityReference~map"><a href="bridgeDb.entityReference.html#map">map</a></li>
             
-                <li data-name="bridgedb.entityReferenceService~searchByAttribute"><a href="bridgedb.entityReferenceService.html#searchByAttribute">searchByAttribute</a></li>
+                <li data-name="bridgeDb.entityReference~normalize"><a href="bridgeDb.entityReference.html#normalize">normalize</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -118,9 +118,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgedb.organismService">
+        <li class="item" data-name="bridgeDb.organism">
             <span class="title">
-                <a href="bridgedb.organismService.html">bridgedb.organismService</a>
+                <a href="bridgeDb.organism.html">bridgeDb.organism</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -133,13 +133,13 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.organismService~createEntityReferenceToOrganismTransformationStream"><a href="bridgedb.organismService.html#createEntityReferenceToOrganismTransformationStream">createEntityReferenceToOrganismTransformationStream</a></li>
+                <li data-name="bridgeDb.organism~createEntityReferenceToOrganismTransformationStream"><a href="bridgeDb.organism.html#createEntityReferenceToOrganismTransformationStream">createEntityReferenceToOrganismTransformationStream</a></li>
             
-                <li data-name="bridgedb.organismService~getAvailable"><a href="bridgedb.organismService.html#getAvailable">getAvailable</a></li>
+                <li data-name="bridgeDb.organism~getAll"><a href="bridgeDb.organism.html#getAll">getAll</a></li>
             
-                <li data-name="bridgedb.organismService~getByEntityReference"><a href="bridgedb.organismService.html#getByEntityReference">getByEntityReference</a></li>
+                <li data-name="bridgeDb.organism~getByEntityReference"><a href="bridgeDb.organism.html#getByEntityReference">getByEntityReference</a></li>
             
-                <li data-name="bridgedb.organismService~normalize"><a href="bridgedb.organismService.html#normalize">normalize</a></li>
+                <li data-name="bridgeDb.organism~normalize"><a href="bridgeDb.organism.html#normalize">normalize</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -147,9 +147,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgedb.xrefService">
+        <li class="item" data-name="bridgeDb.xref">
             <span class="title">
-                <a href="bridgedb.xrefService.html">bridgedb.xrefService</a>
+                <a href="bridgeDb.xref.html">bridgeDb.xref</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -162,9 +162,9 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgedb.xrefService~createStream"><a href="bridgedb.xrefService.html#createStream">createStream</a></li>
+                <li data-name="bridgeDb.xref~createStream"><a href="bridgeDb.xref.html#createStream">createStream</a></li>
             
-                <li data-name="bridgedb.xrefService~get"><a href="bridgedb.xrefService.html#get">get</a></li>
+                <li data-name="bridgeDb.xref~get"><a href="bridgeDb.xref.html#get">get</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -184,12 +184,12 @@
         <article>
             <pre class="prettyprint source "><code>var _ = require('lodash');
 var config = require('./config.js');
-var EntityReferenceService = require('./entity-reference-service.js');
+var EntityReference = require('./entity-reference.js');
 var internalContext = require('./context.json');
-var DatabaseMetadataService = require('./database-metadata-service.js');
-var OrganismService = require('./organism-service.js');
+var DataSource = require('./data-source.js');
+var Organism = require('./organism.js');
 var Utilities = require('./utilities.js');
-var XrefService = require('./xref-service.js');
+var Xref = require('./xref.js');
 
 /**
  * Creates a new BridgeDb instance.
@@ -200,38 +200,46 @@ var XrefService = require('./xref-service.js');
  * BridgeDb = require('bridgedb'); // Only needed if using Node.js.
  * var myBridgeDbInstance = BridgeDb({
  *   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
- *   datasourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+ *   dataSourcesUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
  * });
  *
- * @param {object} [options] Overwrite any or all of the properties in [config.js]{@link config}
+ * @param {object} [options] Overwrite any or all of the defaults in [config.js]{@link config}
+ * @param {string} [options.apiUrlStub='http://webservice.bridgedb.org'] Base URL for your BridgeDb webservices. One use
+ *                can be for defining a CORS proxy to handle in-browser usage.
+ * @param {string} [options.dataSourcesUrl='https://raw.githubusercontent.com/bridgedb/BridgeDb/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt'] Location of the datasources.txt file.
+ * @param {string} [options.organism] Full name in Latin. Each instance has an organism associated with it. Specifying it here will result in faster responses.
  */
 var BridgeDb = function(options) {
-  var bridgedbInstance = {};
+  var instance = {};
   options = options || {};
-  bridgedbInstance.config = Object.create(config);
-  bridgedbInstance.config =
-    Utilities.defaultsDeep(options, bridgedbInstance.config);
+  instance.config = Object.create(config);
+  instance.config =
+    Utilities.defaultsDeep(options, instance.config);
 
-  bridgedbInstance.addContext = function(inputDoc) {
+  instance.addContext = function(inputDoc) {
     // it would be better to reference the context with a URL
     var context = inputDoc['@context'] || [];
     context = _.isArray(context) ? context : [context];
-    context.push(internalContext);
+    context = context.concat(internalContext);
     var outputDoc = {
       '@context':context
     };
     return _.defaults(outputDoc, inputDoc);
   };
 
-  bridgedbInstance.entityReferenceService =
-    Object.create(EntityReferenceService(bridgedbInstance));
-  bridgedbInstance.organismService =
-    Object.create(OrganismService(bridgedbInstance));
-  bridgedbInstance.databaseMetadataService =
-    Object.create(DatabaseMetadataService(bridgedbInstance));
-  bridgedbInstance.xrefService = Object.create(XrefService(bridgedbInstance));
+  instance.entityReference =
+    Object.create(EntityReference(instance));
+  instance.organism =
+    Object.create(Organism(instance));
+  if (!!options.organism) {
+    instance.organism.setInstanceOrganismName(options.organism);
+  }
 
-  return bridgedbInstance;
+  instance.dataSource =
+    Object.create(DataSource(instance));
+  instance.xref = Object.create(Xref(instance));
+
+  return instance;
 };
 
 (function() {
@@ -268,7 +276,7 @@ var BridgeDb = function(options) {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Nov 24 2014 20:45:10 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Nov 25 2014 23:58:08 GMT-0800 (PST)
         </footer>
     </div>
 </div>

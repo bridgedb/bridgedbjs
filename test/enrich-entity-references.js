@@ -1,14 +1,14 @@
 var highland = require('highland');
 var BridgeDb = require('../index.js');
 
-var bridgedb1 = BridgeDb({
+var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-var bridgedb2 = BridgeDb({
+var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
@@ -25,15 +25,15 @@ highland([
     bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   }
 ])
-.pipe(bridgedb1.entityReference.createEnrichmentStream())
+.pipe(bridgeDb1.entityReference.createEnrichmentStream())
 .each(function(entityReferenceXrefs) {
-  console.log('bridgedb1: enriched entity reference');
+  console.log('bridgeDb1: enriched entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
 //*/
 
 //*
-bridgedb2.entityReference.enrich([
+bridgeDb2.entityReference.enrich([
   {
     '@id': 'http://identifiers.org/ncbigene/4292'
   }
@@ -44,7 +44,7 @@ bridgedb2.entityReference.enrich([
   organism: true
 })
 .each(function(entityReferenceXrefs) {
-  console.log('bridgedb2: enriched entity reference');
+  console.log('bridgeDb2: enriched entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
 });
 //*/
