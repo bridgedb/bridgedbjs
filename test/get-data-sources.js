@@ -1,13 +1,13 @@
 var BridgeDb = require('../index.js');
 
-var bridgedb1 = BridgeDb({
+var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-bridgedb1.dataSource.getAll()
+bridgeDb1.dataSource.getAll()
 .each(function(dataSource) {
   console.log('Database metadata');
   console.log(JSON.stringify(dataSource, null, '\t'));
@@ -15,7 +15,7 @@ bridgedb1.dataSource.getAll()
 //*/
 
 //*
-var bridgedb2 = BridgeDb({
+var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
@@ -23,7 +23,7 @@ var bridgedb2 = BridgeDb({
 //*/
 
 //*
-bridgedb2.dataSource.getAll()
+bridgeDb2.dataSource.getAll()
 .each(function(dataSource) {
   console.log('Database metadata');
   console.log(JSON.stringify(dataSource, null, '\t'));
@@ -31,7 +31,7 @@ bridgedb2.dataSource.getAll()
 //*/
 
 //*
-bridgedb2.dataSource.getAll()
+bridgeDb2.dataSource.getAll()
 .each(function(dataSource) {
   console.log('Database metadata');
   console.log(JSON.stringify(dataSource, null, '\t'));

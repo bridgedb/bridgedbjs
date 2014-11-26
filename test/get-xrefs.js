@@ -1,14 +1,14 @@
 var highland = require('highland');
 var BridgeDb = require('../index.js');
 
-var bridgedb1 = BridgeDb({
+var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-bridgedb1.xref.get({
+bridgeDb1.xref.get({
   '@id': 'http://identifiers.org/ncbigene/4292'
 }).each(function(entityReferenceXrefs) {
   console.log('xrefs for http://identifiers.org/ncbigene/4292');
@@ -17,8 +17,8 @@ bridgedb1.xref.get({
 //*/
 
 //*
-bridgedb1.xref.get({
-    bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+bridgeDb1.xref.get({
+    bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   },
   {
     format:'display'
@@ -30,7 +30,7 @@ bridgedb1.xref.get({
 //*/
 
 //*
-var bridgedb2 = BridgeDb({
+var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
   dataSourcesUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
@@ -38,8 +38,8 @@ var bridgedb2 = BridgeDb({
 //*/
 
 //*
-bridgedb2.xref.get({
-    bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+bridgeDb2.xref.get({
+    bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   },
   {
     format:'display'
@@ -56,10 +56,10 @@ highland([
     '@id': 'http://identifiers.org/ncbigene/4292'
   },
   {
-    bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+    bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   }
 ])
-.pipe(bridgedb1.xref.createStream())
+.pipe(bridgeDb1.xref.createStream())
 .each(function(entityReferenceXrefs) {
   console.log('xrefs for provided entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
@@ -67,12 +67,12 @@ highland([
 //*/
 
 //*
-bridgedb2.xref.get([
+bridgeDb2.xref.get([
   {
     '@id': 'http://identifiers.org/ncbigene/4292'
   },
   {
-    bridgedbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+    bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
   }
 ])
 .each(function(entityReferenceXrefs) {
