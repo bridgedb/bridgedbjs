@@ -14,7 +14,7 @@ var bridgedb2 = BridgeDb({
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
-//*
+/*
 bridgedb1.entityReference.enrich('http://identifiers.org/ncbigene/4292')
 .flatMap(bridgedb1.organism.getByEntityReference)
 .each(function(organism) {
@@ -40,6 +40,34 @@ bridgedb2.organism.getAll().each(function(organisms) {
 //*/
 
 //*
+bridgedb2.organism.get(
+    {
+      entityReference: {
+        bridgeDbSystemCode: 'L',
+        identifier: '174034'
+      }
+    }
+)
+.each(function(organism) {
+  console.log('organism name should be Caenorhabditis elegans');
+  console.log(JSON.stringify(organism, null, '\t'));
+});
+//*/
+
+//*
+bridgedb2.organism.getByEntityReference(
+    {
+      bridgeDbSystemCode: 'L',
+      identifier: '4292'
+    }
+)
+.each(function(organism) {
+  console.log('organism name should be Homo sapiens');
+  console.log(JSON.stringify(organism, null, '\t'));
+});
+//*/
+
+/*
 bridgedb2.entityReference.enrich(
     'http://identifiers.org/ncbigene/174034')
 .flatMap(bridgedb2.organism.getByEntityReference)
@@ -49,7 +77,7 @@ bridgedb2.entityReference.enrich(
 });
 //*/
 
-//*
+/*
 highland([
   'http://identifiers.org/ncbigene/174034'
 ])
