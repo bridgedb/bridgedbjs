@@ -46,7 +46,8 @@ describe('myBridgeDbInstance.xref', function() {
     bridgeDbInstance = BridgeDb({
       apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
       dataSourcesUrl:
-        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:4522/datasources.txt'
     });
 
     var xrefStream = bridgeDbInstance.xref.get({
