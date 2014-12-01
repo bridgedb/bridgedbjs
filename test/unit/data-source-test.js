@@ -50,24 +50,16 @@ describe('myBridgeDbInstance.dataSource', function() {
     bridgeDbInstance = BridgeDb({
       apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
       dataSourcesUrl:
-        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        // TODO Using the mock server doesn't work. Why?
-        // Is it the lack of being gzipped?
-        // Is it because of the single chunk instead of multiple returned?
-        // Is it actually the same in JSON terms but not string terms?
-        //'http://localhost:4522/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:4522/datasources.txt'
     });
     var dataSourceStream = bridgeDbInstance.dataSource.getAll()
     .collect()
     .map(function(currentDataSources) {
-      console.log('currentDataSources');
-      console.log(currentDataSources);
       var currentDataSourcesAsString = JSON.stringify(currentDataSources);
       if (!updateExpectedJson) {
         expect(lkgDataSourcesAsString).to.equal(currentDataSourcesAsString);
       } else {
-        console.log('currentDataSourcesAsString');
-        console.log(currentDataSourcesAsString);
         expect(1).to.equal(1);
       }
       return currentDataSourcesAsString;
