@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var BridgeDb = require('../index.js');
+var BridgeDb = require('../../index.js');
 var highland = require('highland');
 
 var bridgeDb1 = BridgeDb({
