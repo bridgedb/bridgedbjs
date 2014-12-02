@@ -25,7 +25,9 @@ describe('myBridgeDbInstance.xref.get', function() {
 
   before(function(done) {
     // TODO get a free port instead of just using 4522
-    http.createServer(mockserver('../input-data/')).listen(4522);
+    server = http.createServer(
+      mockserver(__dirname + '/../input-data/')
+    ).listen(4522);
     done();
   });
 
@@ -38,7 +40,7 @@ describe('myBridgeDbInstance.xref.get', function() {
   });
 
   after(function(done) {
-    done();
+    server.close(done);
   });
 
   //*
