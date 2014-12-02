@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+true
