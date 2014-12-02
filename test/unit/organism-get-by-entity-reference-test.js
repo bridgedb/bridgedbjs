@@ -25,7 +25,7 @@ describe('myBridgeDbInstance.organism.getByEntityReference', function() {
 
   before(function(done) {
     // TODO get a free port instead of just using 4522
-    http.createServer(
+    server = http.createServer(
       mockserver(__dirname + '/../input-data/')
     ).listen(4522);
     done();
@@ -40,7 +40,7 @@ describe('myBridgeDbInstance.organism.getByEntityReference', function() {
   });
 
   after(function(done) {
-    done();
+    server.close(done);
   });
 
   //*

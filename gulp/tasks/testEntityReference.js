@@ -12,34 +12,28 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-function testDev() {
-  return gulp.src(['./test/tests/dev.js'], {read: false}).pipe(mocha({
+gulp.task('testEntityReference', function(done) {
+  gulp.src(
+    ['./test/unit/entity-reference-exists-test.js'],
+    {read: false}
+  )
+  .pipe(mocha({
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 4000,
+    timeout: 2000,
     // enable colors
     c: true,
-    debug: true
+    //debug: true
   }))
-  .on('error', console.warn.bind(console));
-}
-
-gulp.task('testDev', function() {
-  return testDev()
-  .on('error', function(e) {
+  .on('error', console.warn.bind(console))
+  .on('error', function(err) {
     console.log('Error');
-    console.log(e);
-    //throw e;
+    console.log(err);
+    //throw err;
   })
   .on('end', function() {
     console.log('End of test');
+    return done();
   });
 });
-
-/*
-gulp.task('default', function () {
-  gulp.watch('{lib,test}/*', test);
-  test();
-});
-//*/
