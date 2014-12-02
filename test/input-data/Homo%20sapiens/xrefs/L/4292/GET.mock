@@ -1,0 +1,115 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+4292	Entrez Gene
+C4PFY8	Uniprot-TrEMBL
+202520_s_at	Affy
+H0Y4N0	Uniprot-TrEMBL
+4292	WikiGenes
+11756036_x_at	Affy
+11760865_at	Affy
+Q0ZAJ6	Uniprot-TrEMBL
+E9PF25	Uniprot-TrEMBL
+ILMN_1788363	Illumina
+uc003cgl.3	UCSC Genome Browser
+GO:0007140	GeneOntology
+uc003cgn.4	UCSC Genome Browser
+GO:0006298	GeneOntology
+E7EUC9	Uniprot-TrEMBL
+GO:0007283	GeneOntology
+GO:0048477	GeneOntology
+GO:0045132	GeneOntology
+GO:0006200	GeneOntology
+GO:0000793	GeneOntology
+GO:0000794	GeneOntology
+GO:0000795	GeneOntology
+C9JZ54	Uniprot-TrEMBL
+NP_000240	RefSeq
+GO:0003697	GeneOntology
+GO:0000712	GeneOntology
+GO:0016446	GeneOntology
+GO:0016447	GeneOntology
+GO:0001673	GeneOntology
+GO:0005712	GeneOntology
+GO:0006281	GeneOntology
+3RBN	PDB
+GO:0005515	GeneOntology
+0001400064	Illumina
+A_14_P110897	Agilent
+1850_at	Affy
+GO:0006303	GeneOntology
+NM_001167619	RefSeq
+NP_001161091	RefSeq
+NM_001167617	RefSeq
+NP_001161090	RefSeq
+NM_001167618	RefSeq
+uc010hgn.3	UCSC Genome Browser
+609310	OMIM
+158320	OMIM
+GO:0002204	GeneOntology
+NP_001161089	RefSeq
+E9PCU2	Uniprot-TrEMBL
+GO:0051257	GeneOntology
+MLH1	HGNC
+AF001359_f_at	Affy
+GO:0007126	GeneOntology
+GO:0007129	GeneOntology
+11717635_a_at	Affy
+GO:0005524	GeneOntology
+GO:0032390	GeneOntology
+Q5GJ64	Uniprot-TrEMBL
+11760916_at	Affy
+GO:0043060	GeneOntology
+U07418_at	Affy
+GO:0007131	GeneOntology
+NM_000249	RefSeq
+GO:0032389	GeneOntology
+Q16335	Uniprot-TrEMBL
+GO:0045190	GeneOntology
+GO:0032407	GeneOntology
+F2Z298	Uniprot-TrEMBL
+A_14_P106016	Agilent
+GO:0032300	GeneOntology
+GO:0005634	GeneOntology
+Hs.195364	UniGene
+H0Y806	Uniprot-TrEMBL
+uc010hge.3	UCSC Genome Browser
+608089	OMIM
+uc011ayc.2	UCSC Genome Browser
+A8W2I7	Uniprot-TrEMBL
+ENSG00000076242	Ensembl
+GO:0043566	GeneOntology
+GO:0006974	GeneOntology
+NP_001245200	RefSeq
+NP_001245202	RefSeq
+NP_001245203	RefSeq
+uc011ayd.2	UCSC Genome Browser
+GO:0008630	GeneOntology
+NM_001258274	RefSeq
+NM_001258273	RefSeq
+P40692	Uniprot-TrEMBL
+NM_001258271	RefSeq
+4292	Gene Wiki
+GO:0000239	GeneOntology
+uc003cgo.3	UCSC Genome Browser
+uc011aye.2	UCSC Genome Browser
+GO:0030983	GeneOntology
+GO:0000289	GeneOntology
+uc010hgo.3	UCSC Genome Browser
+276300	OMIM
+GO:0032137	GeneOntology
+GO:0007060	GeneOntology
+GO:0016887	GeneOntology
+GO:0045950	GeneOntology
+A_14_P105437	Agilent
+8078544	Affy
+120436	OMIM
+GO:0005694	GeneOntology
+A_33_P3419720	Agilent
+B7Z821	Uniprot-TrEMBL
+3NA3	PDB
+A_23_P69058	Agilent

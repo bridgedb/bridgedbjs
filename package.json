@@ -67,6 +67,7 @@
     "chai": "~1.10.0",
     "chai-as-promised": "~4.1.1",
     "sinon": "~1.12.1",
-    "mockserver": "git://github.com/ariutta/mockserver"
+    "mockserver": "git://github.com/ariutta/mockserver",
+    "gulp-run": "~1.6.4"
   }
 }
