@@ -1,3 +1,7 @@
+// This is just copy-pasted from another library.
+// It hasn't been updated to work for bridgedbjs.
+// TODO get it working for bridgedbjs.
+
 /* launchSelenium task
    ---------------
 */

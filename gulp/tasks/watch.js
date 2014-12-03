@@ -1,3 +1,7 @@
+// The commented-out code was just copy-pasted from another library.
+// It hasn't been updated to work for bridgedbjs.
+// TODO get it working for bridgedbjs and/or delete it.
+
 var gulp = require('gulp');
 
 //gulp.task('watch', ['setWatch', 'browserSync'], function() {

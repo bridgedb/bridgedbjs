@@ -1,3 +1,7 @@
+// This is just copy-pasted from another library.
+// It hasn't been updated to work for bridgedbjs.
+// TODO get it working for bridgedbjs.
+
 // see the wd example for how to build this: https://github.com/admc/wd/blob/master/gulpfile.js
 var gulp = require('gulp')
   , _ = require('lodash')

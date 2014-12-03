@@ -1,3 +1,6 @@
+// This is just copy-pasted from another library.
+// TODO See whether we can delete it.
+
 var gulp = require('gulp');
 
 /*
