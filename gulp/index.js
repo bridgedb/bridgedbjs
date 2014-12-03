@@ -57,7 +57,7 @@ gulp.task('build', [
 gulp.task('build-docs', ['bump-readme'], function(callback) {
   // I think gulp-jsdoc currently cannot use an external conf.json.
   // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
-  // and use exec to run the command at the command line.
+  // and use exec instead to run the command at the command line.
   /*
   gulp.src(['./lib/*.js', 'README.md'])
     .pipe(jsdoc.parser())
@@ -104,7 +104,7 @@ gulp.task('bump-git', ['build'], function bumpGit(callback) {
 //*/
 
 /*
-// Update bower, component, npm at once:
+// Update bower, component, npm all at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
   gulp.src(metadataFiles)
   .pipe(bump({type: versionType}))
