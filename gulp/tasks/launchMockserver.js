@@ -1,19 +1,15 @@
 var freeport = require('freeport');
 var gulp = require('gulp');
 var highland = require('highland');
+var http    =  require('http');
+var mockserver  =  require('mockserver');
 
 function getPort(callback) {
-  console.log('process.env.MOCKSERVER_PORT');
-  console.log(process.env.MOCKSERVER_PORT);
   if (typeof process.env.MOCKSERVER_PORT !== 'undefined') {
     return callback(null, process.env.MOCKSERVER_PORT);
   }
 
   freeport(function(err, port) {
-    console.log('err');
-    console.log(err);
-    console.log('port');
-    console.log(port);
     if (err) {
       throw err;
     }
@@ -21,27 +17,31 @@ function getPort(callback) {
   });
 }
 
+var createFreePortStream = highland.wrapCallback(getPort);
+
+// TODO there must be a better way to do this.
+// I want to close the server when any/all tests are complete.
+function gracefullyCloseServer(server) {
+  setTimeout(function() {
+    var connectionCount = server._connections;
+    if (connectionCount > 0) {
+      return gracefullyCloseServer(server);
+    }
+
+    return server.close();
+  }, 1000);
+}
+
 gulp.task('launchMockserver', function(done) {
-  gulp.src(
-    ['./test/unit/data-source-test.js']
-    //['']
-  )
-  .pipe(highland.pipeline(function(s) {
-    return s.map(highland.wrapCallback(getPort()))
-    .map(function(port) {
-      console.log('port');
-      console.log(port);
-      return port;
-    });
-  }))
-  .on('error', console.warn.bind(console))
-  .on('error', function(err) {
-    console.log('Error');
-    console.log(err);
-    //throw err;
+  highland(createFreePortStream())
+  .map(function(port) {
+    process.env.MOCKSERVER_PORT = port;
+    return http.createServer(
+      mockserver(__dirname + '/../../test/input-data/')
+    ).listen(port);
   })
-  .on('end', function() {
-    console.log('Mock server launched.');
+  .each(function(server) {
+    gracefullyCloseServer(server);
     return done();
   });
 });

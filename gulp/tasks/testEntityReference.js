@@ -12,7 +12,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testEntityReference', function(done) {
+gulp.task('testEntityReference', ['launchMockserver'], function(done) {
   gulp.src(
     ['./test/unit/entity-reference-exists-test.js'],
     {read: false}

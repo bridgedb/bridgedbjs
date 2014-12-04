@@ -21,17 +21,13 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('myBridgeDbInstance.dataSource', function() {
   var allPassed = true;
-  var server;
 
   before(function(done) {
-    // TODO get a free port instead of just using 4522
-    server = http.createServer(
-      mockserver(__dirname + '/../input-data/')
-    ).listen(4522);
     done();
   });
 
-  beforeEach(function() {
+  beforeEach(function(done) {
+    done();
   });
 
   afterEach(function(done) {
@@ -40,7 +36,7 @@ describe('myBridgeDbInstance.dataSource', function() {
   });
 
   after(function(done) {
-    server.close(done);
+    done();
   });
 
   it('should get all data sources available from BridgeDb', function(done) {
@@ -55,10 +51,10 @@ describe('myBridgeDbInstance.dataSource', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.dataSource.getAll()

@@ -12,7 +12,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testOrganism', function(done) {
+gulp.task('testOrganism', ['launchMockserver'], function(done) {
   gulp.src(
     ['./test/unit/organism-get-by-entity-reference-test.js'],
     {read: false}

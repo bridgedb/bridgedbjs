@@ -21,13 +21,11 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('myBridgeDbInstance.xref.get', function() {
   var allPassed = true;
-  var server;
+  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
+  // if we want to update the expected JSON result
+  var updateExpectedJson = false;
 
   before(function(done) {
-    // TODO get a free port instead of just using 4522
-    server = http.createServer(
-      mockserver(__dirname + '/../input-data/')
-    ).listen(4522);
     done();
   });
 
@@ -40,7 +38,7 @@ describe('myBridgeDbInstance.xref.get', function() {
   });
 
   after(function(done) {
-    server.close(done);
+    done();
   });
 
   //*
@@ -52,15 +50,12 @@ describe('myBridgeDbInstance.xref.get', function() {
       encoding: 'utf8'
     });
 
-    // if we want to update the expected JSON result
-    var updateExpectedJson = false;
-
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     var xrefStream = bridgeDbInstance.xref.get({
@@ -72,7 +67,11 @@ describe('myBridgeDbInstance.xref.get', function() {
     })
     .collect()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs);
+      return JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          standardBridgeDbApiUrlStub
+        );
     })
     .pipe(highland.pipeline(function(s) {
       if (updateExpectedJson) {
@@ -106,15 +105,12 @@ describe('myBridgeDbInstance.xref.get', function() {
       encoding: 'utf8'
     });
 
-    // if we want to update the expected JSON result
-    var updateExpectedJson = false;
-
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     var xrefStream = bridgeDbInstance.xref.get({
@@ -128,7 +124,11 @@ describe('myBridgeDbInstance.xref.get', function() {
     })
     .collect()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs);
+      return JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          standardBridgeDbApiUrlStub
+        );
     })
     .pipe(highland.pipeline(function(s) {
       if (updateExpectedJson) {
@@ -161,15 +161,12 @@ describe('myBridgeDbInstance.xref.get', function() {
       encoding: 'utf8'
     });
 
-    // if we want to update the expected JSON result
-    var updateExpectedJson = false;
-
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     highland([
@@ -186,7 +183,11 @@ describe('myBridgeDbInstance.xref.get', function() {
     })
     .collect()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs);
+      return JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          standardBridgeDbApiUrlStub
+        );
     })
     .pipe(highland.pipeline(function(s) {
       if (updateExpectedJson) {
@@ -219,15 +220,12 @@ describe('myBridgeDbInstance.xref.get', function() {
       encoding: 'utf8'
     });
 
-    // if we want to update the expected JSON result
-    var updateExpectedJson = false;
-
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.xref.get([
@@ -243,7 +241,11 @@ describe('myBridgeDbInstance.xref.get', function() {
     })
     .collect()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs);
+      return JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          standardBridgeDbApiUrlStub
+        );
     })
     .pipe(highland.pipeline(function(s) {
       if (updateExpectedJson) {

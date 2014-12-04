@@ -19,4 +19,3 @@ gulp.task('launchSelenium', function() {
     return selenium;
   });
 });
-

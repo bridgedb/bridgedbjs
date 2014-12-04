@@ -12,7 +12,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testXref', function(done) {
+gulp.task('testXref', ['launchMockserver'], function(done) {
   gulp.src(
     ['./test/unit/xref-get-test.js'],
     {read: false}
