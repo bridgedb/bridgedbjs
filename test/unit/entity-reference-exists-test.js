@@ -21,13 +21,11 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('myBridgeDbInstance.entityReference.exists', function() {
   var allPassed = true;
-  var server;
+  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
+  // if we want to update the expected JSON result
+  var updateExpectedJson = false;
 
   before(function(done) {
-    // TODO get a free port instead of just using 4522
-    server = http.createServer(
-      mockserver(__dirname + '/../input-data/')
-    ).listen(4522);
     done();
   });
 
@@ -40,7 +38,7 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
   });
 
   after(function(done) {
-    server.close(done);
+    done();
   });
 
   //*
@@ -49,9 +47,10 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
-        'http://localhost:4522/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.entityReference.exists(
@@ -74,9 +73,10 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
-        'http://localhost:4522/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.entityReference.exists(
@@ -99,9 +99,10 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
-        'http://localhost:4522/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.entityReference.exists(
@@ -124,9 +125,10 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
-        'http://localhost:4522/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.entityReference.exists(

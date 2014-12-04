@@ -21,13 +21,11 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('myBridgeDbInstance.organism.getByEntityReference', function() {
   var allPassed = true;
-  var server;
+  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
+  // if we want to update the expected JSON result
+  var updateExpectedJson = false;
 
   before(function(done) {
-    // TODO get a free port instead of just using 4522
-    server = http.createServer(
-      mockserver(__dirname + '/../input-data/')
-    ).listen(4522);
     done();
   });
 
@@ -40,7 +38,7 @@ describe('myBridgeDbInstance.organism.getByEntityReference', function() {
   });
 
   after(function(done) {
-    server.close(done);
+    done();
   });
 
   //*
@@ -57,10 +55,10 @@ describe('myBridgeDbInstance.organism.getByEntityReference', function() {
 
     var bridgeDbInstance = BridgeDb({
       //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:4522',
+      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
       dataSourcesUrl:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:4522/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.organism
