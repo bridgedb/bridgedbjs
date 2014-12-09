@@ -15,6 +15,7 @@
     },
     "db": {
       "@id": "biopax:db",
+      "@container": "@set",
       "@type": "xsd:string"
     },
     "exampleIdentifier": {
