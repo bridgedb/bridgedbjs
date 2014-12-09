@@ -39,7 +39,7 @@ bridgeDb2.dataSource.getAll()
 //bridgeDb2.dataSource.getOne({'db', ['Entrez Gene']})
 //bridgeDb2.dataSource.getOne({'db', 'Entrez Gene'})
 bridgeDb2.dataSource.getOne({
-  'db': ['Entrez Gene'],
+  'db': ['EntrezGene'],
   'identifier': '1234'
 })
 //*/
