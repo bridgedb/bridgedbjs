@@ -36,15 +36,35 @@ bridgeDb2.dataSource.getAll()
 });
 //*/
 
-//bridgeDb2.dataSource.getOne({'db', ['Entrez Gene']})
-//bridgeDb2.dataSource.getOne({'db', 'Entrez Gene'})
-bridgeDb2.dataSource.getOne({
-  'db': ['EntrezGene'],
-  'identifier': '1234'
+//*
+bridgeDb1.dataSource.find({
+  'name': 'EntrezGene',
+  //'name': ['Entrez Gene'],
+  'exampleIdentifier': '1234'
 })
-//*/
 .each(function(dataSource) {
-  console.log('returned dataSource1234');
+  console.log('1) returned data set should be named "Entrez Gene"');
+  console.log(JSON.stringify(dataSource, null, '\t'));
+});
+//*/
+
+/*
+bridgeDb2.dataSource.getOne({'name': ['Entrez Gene']})
+//bridgeDb2.dataSource.getOne({'name': 'Entrez Gene'})
+//bridgeDb2.dataSource.getOne({
+.each(function(dataSource) {
+  console.log('2) returned data set should be named "Entrez Gene"');
+  console.log(JSON.stringify(dataSource, null, '\t'));
+});
+//*/
+
+/*
+bridgeDb2.dataSource.getOne({
+  '@id': 'http://identifiers.org/ncbigene/1234',
+  'name': 'EntrezGene'
+})
+.each(function(dataSource) {
+  console.log('3) returned data set should be named "Entrez Gene"');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/

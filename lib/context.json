@@ -1,59 +1,72 @@
-[
-  {
-    "@vocab": "http://www.example.org/bridgedb/input-vocab/",
-    "alternatePrefix": {
-      "@id": "idot:alternatePrefix",
-      "@type": "xsd:string"
-    },
-    "biopax": {
-      "@id": "http://www.biopax.org/release/biopax-level3.owl#",
-      "@type": "@id"
-    },
-    "bridgeDbInput": {
-      "@id":"http://www.example.org/bridgedb/input-vocab/",
-      "@type":"@id"
-    },
-    "db": {
-      "@id": "biopax:db",
-      "@container": "@set",
-      "@type": "xsd:string"
-    },
-    "exampleIdentifier": {
-      "@id": "idot:exampleIdentifier",
-      "@type": "xsd:string"
-    },
-    "gpml": {
-      "@id": "http://vocabularies.wikipathways.org/gpml#",
-      "@type": "@id"
-    },
-    "identifier": {
-      "@id": "biopax:id",
-      "@type": "xsd:string"
-    },
-    "identifierPattern": {
-      "@id": "idot:identifierPattern",
-      "@type": "xsd:string"
-    },
-    "idot": {
-      "@id": "http://identifiers.org/idot/",
-      "@type": "@id"
-    },
-    "organism": {
-      "@id": "biopax:organism",
-      "@type": "@id"
-    },
-    "owl": {
-      "@id": "http://www.w3.org/2002/07/owl#",
-      "@type": "@id"
-    },
-    "preferredPrefix": {
-      "@id": "idot:preferredPrefix",
-      "@type": "xsd:string"
-    },
-    "xref": {
-      "@id": "biopax:xref",
-      "@type": "@id"
-    }
+{
+  "@vocab": "http://www.example.org/bridgedb/input-vocab/",
+  "alternatePrefix": {
+    "@id": "idot:alternatePrefix",
+    "@type": "xsd:string"
   },
-  "http://test2.wikipathways.org/v2/contexts/organism.jsonld"
-]
+  "biopax": {
+    "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+    "@type": "@id"
+  },
+  "bridgeDbInput": {
+    "@id":"http://www.example.org/bridgedb/input-vocab/",
+    "@type":"@id"
+  },
+  "db": {
+    "@id": "biopax:db",
+    "@container": "@set",
+    "@type": "xsd:string"
+  },
+  "exampleIdentifier": {
+    "@id": "idot:exampleIdentifier",
+    "@type": "xsd:string"
+  },
+  "gpml": {
+    "@id": "http://vocabularies.wikipathways.org/gpml#",
+    "@type": "@id"
+  },
+  "identifier": {
+    "@id": "biopax:id",
+    "@type": "xsd:string"
+  },
+  "identifierPattern": {
+    "@id": "idot:identifierPattern",
+    "@type": "xsd:string"
+  },
+  "inDataset": {
+    "@id": "void:inDataset",
+    "@type": "@id"
+  },
+  "idot": {
+    "@id": "http://identifiers.org/idot/",
+    "@type": "@id"
+  },
+  "schema": {
+    "@id": "http://schema.org/",
+    "@type": "@id"
+  },
+  "name": {
+    "@id": "schema:name",
+    "@type": "xsd:string"
+  },
+  "organism": {
+    "@id": "biopax:organism",
+    "@type": "@id"
+  },
+  "owl": {
+    "@id": "http://www.w3.org/2002/07/owl#",
+    "@type": "@id"
+  },
+  "preferredPrefix": {
+    "@id": "idot:preferredPrefix",
+    "@type": "xsd:string"
+  },
+  "void": {
+    "@id": "http://rdfs.org/ns/void#",
+    "@type": "@id"
+  },
+  "xref": {
+    "@id": "biopax:xref",
+    "@type": "@id"
+  }
+}
