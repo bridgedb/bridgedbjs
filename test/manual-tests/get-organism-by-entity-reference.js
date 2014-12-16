@@ -15,9 +15,18 @@ var bridgeDb2 = BridgeDb({
 });
 
 //*
+bridgeDb1.organism.getAll()
+.collect()
+.each(function(organism) {
+  console.log('organism:');
+  console.log(JSON.stringify(organism, null, '\t'));
+});
+//*/
+
+/*
 bridgeDb1.organism.getByEntityReference('http://identifiers.org/ncbigene/4292')
 .each(function(organism) {
-  console.log('organism name should be Homo sapiens');
+  console.log('organism name should be Homo sapiens 802yes');
   console.log(JSON.stringify(organism, null, '\t'));
 });
 //*/
@@ -31,7 +40,16 @@ bridgeDb1.entityReference.enrich('http://identifiers.org/ncbigene/4292')
 });
 //*/
 
-//*
+/*
+bridgeDb2.organism.getAll()
+.each(function(organism) {
+  console.log('available organism');
+  console.log(organism);
+  //console.log(JSON.stringify(organisms, null, '\t'));
+});
+//*/
+
+/*
 bridgeDb2.organism.getAll().each(function(organisms) {
   console.log('available organisms');
   console.log(organisms.length);
@@ -39,15 +57,7 @@ bridgeDb2.organism.getAll().each(function(organisms) {
 });
 //*/
 
-//*
-bridgeDb2.organism.getAll().each(function(organisms) {
-  console.log('available organisms');
-  console.log(organisms.length);
-  //console.log(JSON.stringify(organisms, null, '\t'));
-});
-//*/
-
-//*
+/*
 bridgeDb2.organism.getByEntityReference(
     {
       bridgeDbSystemCode: 'L',
@@ -60,7 +70,7 @@ bridgeDb2.organism.getByEntityReference(
 });
 //*/
 
-//*
+/*
 bridgeDb2.organism.getByEntityReference(
     {
       bridgeDbSystemCode: 'L',
