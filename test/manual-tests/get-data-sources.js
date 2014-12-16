@@ -50,9 +50,9 @@ bridgeDb1.dataSource.find({
 
 //*
 bridgeDb1.dataSource.find({
-  'name': 'EntrezGene',
+  //'name': 'EntrezGene',
   //'name': ['Entrez Gene'],
-  //'exampleIdentifier': '1234'
+  'exampleIdentifier': '1234'
 })
 .each(function(dataSource) {
   console.log('1) returned data set should be named "Entrez Gene"');
