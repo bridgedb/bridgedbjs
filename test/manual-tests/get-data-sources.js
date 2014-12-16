@@ -36,11 +36,23 @@ bridgeDb2.dataSource.getAll()
 });
 //*/
 
+/*
+bridgeDb1.dataSource.find({
+  'name': 'Ensembl',
+  //'name': ['Entrez Gene'],
+  'exampleIdentifier': 'ENSG00000139618'
+})
+.each(function(dataSource) {
+  console.log('1) returned data set should be named "Ensembl"');
+  console.log(JSON.stringify(dataSource, null, '\t'));
+});
+//*/
+
 //*
 bridgeDb1.dataSource.find({
   'name': 'EntrezGene',
   //'name': ['Entrez Gene'],
-  'exampleIdentifier': '1234'
+  //'exampleIdentifier': '1234'
 })
 .each(function(dataSource) {
   console.log('1) returned data set should be named "Entrez Gene"');
