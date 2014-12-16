@@ -33,6 +33,12 @@ highland([
 });
 //*/
 
+/*
+bridgeDb2.entityReference._expand({
+  '@id': 'http://identifiers.org/ncbigene/4292'
+});
+//*/
+
 //*
 bridgeDb2.entityReference.enrich([
   {
@@ -42,7 +48,7 @@ bridgeDb2.entityReference.enrich([
   bridgeDbXrefsUrl: true,
   context: false,
   dataSource: true,
-  organism: true
+  organism: false
 })
 .each(function(entityReferenceXrefs) {
   console.log('bridgeDb2: enriched entity reference');

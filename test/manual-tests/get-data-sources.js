@@ -6,10 +6,11 @@ var bridgeDb1 = BridgeDb({
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
-/*
+//*
 bridgeDb1.dataSource.getAll()
+.collect()
 .each(function(dataSource) {
-  console.log('Database metadata');
+  console.log('Data sets:');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
@@ -23,7 +24,7 @@ var bridgeDb2 = BridgeDb({
 /*
 bridgeDb2.dataSource.getAll()
 .each(function(dataSource) {
-  console.log('Database metadata');
+  console.log('Data set');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
@@ -31,7 +32,7 @@ bridgeDb2.dataSource.getAll()
 /*
 bridgeDb2.dataSource.getAll()
 .each(function(dataSource) {
-  console.log('Database metadata');
+  console.log('Data set');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
@@ -39,44 +40,53 @@ bridgeDb2.dataSource.getAll()
 /*
 bridgeDb1.dataSource.find({
   'name': 'Ensembl',
-  //'name': ['Entrez Gene'],
   'exampleIdentifier': 'ENSG00000139618'
 })
 .each(function(dataSource) {
-  console.log('1) returned data set should be named "Ensembl"');
+  console.log('45) returned data set should be named "Ensembl"');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
 
-//*
+/*
 bridgeDb1.dataSource.find({
   //'name': 'EntrezGene',
   //'name': ['Entrez Gene'],
   'exampleIdentifier': '1234'
 })
 .each(function(dataSource) {
-  console.log('1) returned data set should be named "Entrez Gene"');
+  console.log('58) returned data set should be named "Entrez Gene"');
+  console.log(JSON.stringify(dataSource, null, '\t'));
+});
+//*/
+
+/*
+bridgeDb2.dataSource.find({
+  'name': 'EntrezGene',
+  //'name': ['Entrez Gene'],
+  //'exampleIdentifier': '1234'
+})
+.each(function(dataSource) {
+  console.log('70) returned data set should be named "Entrez Gene"');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
 
 /*
 bridgeDb2.dataSource.getOne({'name': ['Entrez Gene']})
-//bridgeDb2.dataSource.getOne({'name': 'Entrez Gene'})
-//bridgeDb2.dataSource.getOne({
 .each(function(dataSource) {
-  console.log('2) returned data set should be named "Entrez Gene"');
+  console.log('78) returned data set should be named "Entrez Gene"');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
 
 /*
 bridgeDb2.dataSource.getOne({
-  '@id': 'http://identifiers.org/ncbigene/1234',
+  '@id': 'http://identifiers.org/ncbigene',
   'name': 'EntrezGene'
 })
 .each(function(dataSource) {
-  console.log('3) returned data set should be named "Entrez Gene"');
+  console.log('90) returned data set should be named "Entrez Gene"');
   console.log(JSON.stringify(dataSource, null, '\t'));
 });
 //*/
