@@ -62,9 +62,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.dataSource">
+        <li class="item" data-name="BridgeDb.Dataset">
             <span class="title">
-                <a href="bridgeDb.dataSource.html">bridgeDb.dataSource</a>
+                <a href="BridgeDb.Dataset.html">BridgeDb.Dataset</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -77,7 +77,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.dataSource~getAll"><a href="bridgeDb.dataSource.html#getAll">getAll</a></li>
+                <li data-name="BridgeDb.Dataset~find"><a href="BridgeDb.Dataset.html#find">find</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getAll"><a href="BridgeDb.Dataset.html#getAll">getAll</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getOne"><a href="BridgeDb.Dataset.html#getOne">getOne</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -85,9 +89,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.entityReference">
+        <li class="item" data-name="BridgeDb.EntityReference">
             <span class="title">
-                <a href="bridgeDb.entityReference.html">bridgeDb.entityReference</a>
+                <a href="BridgeDb.EntityReference.html">BridgeDb.EntityReference</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -100,17 +104,17 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.entityReference~createEnrichmentStream"><a href="bridgeDb.entityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
+                <li data-name="BridgeDb.EntityReference~createEnrichmentStream"><a href="BridgeDb.EntityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
             
-                <li data-name="bridgeDb.entityReference~enrich"><a href="bridgeDb.entityReference.html#enrich">enrich</a></li>
+                <li data-name="BridgeDb.EntityReference~enrich"><a href="BridgeDb.EntityReference.html#enrich">enrich</a></li>
             
-                <li data-name="bridgeDb.entityReference~exists"><a href="bridgeDb.entityReference.html#exists">exists</a></li>
+                <li data-name="BridgeDb.EntityReference~exists"><a href="BridgeDb.EntityReference.html#exists">exists</a></li>
             
-                <li data-name="bridgeDb.entityReference~freeSearch"><a href="bridgeDb.entityReference.html#freeSearch">freeSearch</a></li>
+                <li data-name="BridgeDb.EntityReference~freeSearch"><a href="BridgeDb.EntityReference.html#freeSearch">freeSearch</a></li>
             
-                <li data-name="bridgeDb.entityReference~map"><a href="bridgeDb.entityReference.html#map">map</a></li>
+                <li data-name="BridgeDb.EntityReference~map"><a href="BridgeDb.EntityReference.html#map">map</a></li>
             
-                <li data-name="bridgeDb.entityReference~normalize"><a href="bridgeDb.entityReference.html#normalize">normalize</a></li>
+                <li data-name="BridgeDb.EntityReference~normalize"><a href="BridgeDb.EntityReference.html#normalize">normalize</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -139,8 +143,6 @@
             
                 <li data-name="bridgeDb.organism~getByEntityReference"><a href="bridgeDb.organism.html#getByEntityReference">getByEntityReference</a></li>
             
-                <li data-name="bridgeDb.organism~normalize"><a href="bridgeDb.organism.html#normalize">normalize</a></li>
-            
             </ul>
             <ul class="events itemMembers">
             
@@ -161,8 +163,6 @@
             <ul class="methods itemMembers">
             
             <span class="subtitle">Methods</span>
-            
-                <li data-name="bridgeDb.xref~createStream"><a href="bridgeDb.xref.html#createStream">createStream</a></li>
             
                 <li data-name="bridgeDb.xref~get"><a href="bridgeDb.xref.html#get">get</a></li>
             
@@ -191,7 +191,7 @@ var jsonLdContext = require('./context.json');
 var request = require('request');
 var csv = require('csv-streamify');
 var csvOptions = {objectMode: true, delimiter: '\t'};
-var Utilities = require('./utilities.js');
+var Utils = require('./utils.js');
 
 /**
  * Used internally to create a new Xref instance
@@ -215,7 +215,7 @@ var Xref = function(instance) {
    * @return {Stream&lt;object>|Stream&lt;array>} entityReference When options.format is not set, returns
    *                          entity reference as formatted by bridgeDb.entityReference.enrich().
    *                          When options.format is set to "display," returns a set of entity references
-   *                          as formatted by bridgeDb.xref.formatAllForDisplay().
+   *                          as formatted by bridgeDb.xref._formatAllForDisplay().
    * @return {string} entityReference.identifier
    * @return {string} entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE
    */
@@ -234,12 +234,14 @@ var Xref = function(instance) {
   }
 
   /**
+   * @private
+   *
    * Create a Node.js/Highland stream through which entity references
    * can be piped to return all the xrefs available for each entity reference.
    *
    * @return {Stream} entityReferenceToXrefsSetTransformationStream
    */
-  var createStream = function() {
+  function createStream() {
     return highland.pipeline(function(sourceStream) {
       var options = instance.options || {};
       var specifiedEntityReference;
@@ -253,21 +255,21 @@ var Xref = function(instance) {
         specifiedEntityReference = normalizedEntityReference;
         return normalizedEntityReference;
       })
-      // enrich and format the xrefs
+      // The rest of this function enriches and formats the xrefs
       .flatMap(function(normalizedEntityReference) {
-        var source = getBridgeDbUrlByEntityReference(specifiedEntityReference);
-        return highland(request({
-          url: source,
-          withCredentials: false
-        })
-        .pipe(csv(csvOptions)));
-      })
-      .map(function(array) {
-        return array;
+        var source =
+            _getBridgeDbUrlByEntityReference(normalizedEntityReference);
+        return highland(
+          request({
+            url: source,
+            withCredentials: false
+          })
+          .pipe(csv(csvOptions))
+        );
       })
       .errors(function(err, push) {
-        console.log(err);
-        console.log('in xref.get()');
+        console.log(err.toString());
+        console.log('in xref.createStream()');
         // TODO what happens if BridgeDb webservices are down?
         // We should just return the data the user provided.
         //return specifiedEntityReference;
@@ -279,11 +281,16 @@ var Xref = function(instance) {
           db: array[1]
         };
       })
+      // Strange that we need to do this collect/sequence, but
+      // if we don't, the stream never ends, meaning we can't
+      // do the collect after the enrich step.
+      .collect()
+      .sequence()
       .flatMap(instance.entityReference.enrich)
       .collect()
       .flatMap(function(entityReferences) {
         if (options.format === 'display') {
-          return formatAllForDisplay({
+          return _formatAllForDisplay({
             specifiedEntityReference: specifiedEntityReference,
             label: options.label,
             description: options.description,
@@ -294,19 +301,19 @@ var Xref = function(instance) {
         return entityReferences.map(instance.addContext);
       });
     });
-  };
+  }
 
   /**
    * @private
    *
    * @param {object} entityReference
    * @param {string} entityReference.organism Organism name in Latin or English
-   * @param {Array&lt;string>} entityReference.alternatePrefix The first element must be the BridgeDb systemCode
+   * @param {Array&lt;string>} entityReference.inDataset.alternatePrefix The first element must be the BridgeDb systemCode
    * @param {string} entityReference.identifier
    * @return {string} url URL for getting Xrefs from BridgeDb webservices
    */
-  function getBridgeDbUrlByEntityReference(entityReference) {
-    var bridgeDbSystemCode = entityReference.alternatePrefix[0];
+  function _getBridgeDbUrlByEntityReference(entityReference) {
+    var bridgeDbSystemCode = entityReference.inDataset.alternatePrefix[0];
     var path = '/' + encodeURIComponent(entityReference.organism) + '/xrefs/' +
       encodeURIComponent(bridgeDbSystemCode) + '/' +
       encodeURIComponent(entityReference.identifier);
@@ -314,8 +321,9 @@ var Xref = function(instance) {
   }
 
   /**
-   * formatAllForDisplay
    * @private
+   *
+   * Format Xrefs for display in a details panel.
    *
    * @param {object} args
    * @param {array} args.entityReferences
@@ -332,14 +340,14 @@ var Xref = function(instance) {
    * @return {boolean} xrefsStream.entityReference.listItem.isPrimary
    * @return {string} xrefsStream.entityReference.listItem.uri when available
    */
-  function formatAllForDisplay(args) {
+  function _formatAllForDisplay(args) {
     var entityReferenceStream = highland(args.entityReferences);
     var specifiedEntityReference = args.specifiedEntityReference;
     var label = args.label;
     var description = args.description;
     return entityReferenceStream.errors(function(err, push) {
       console.log(err);
-      console.log('in xref.formatAllForDisplay()');
+      console.log('in xref._formatAllForDisplay()');
       //For unannotated nodes, without db or identifier
       return {
         'header': label,
@@ -384,7 +392,8 @@ var Xref = function(instance) {
     })
     .map(function(listItems) {
       // TODO is this needed? It seems as if it should be handled before this stage.
-      // handle case where either 0 or 1 result is returned by BridgeDb webservice. This would most likely happen if BridgeDb is down.
+      //
+      // Here we handle case where either 0 or 1 result is returned by BridgeDb webservice. This would most likely happen if BridgeDb is down.
       if (listItems.length &lt; 2) {
         var uri = '';
         if (specifiedEntityReference.hasOwnProperty('urlPattern')) {
@@ -424,7 +433,7 @@ var Xref = function(instance) {
 
   return {
     createStream:createStream,
-    getBridgeDbUrlByEntityReference:getBridgeDbUrlByEntityReference,
+    _getBridgeDbUrlByEntityReference:_getBridgeDbUrlByEntityReference,
     get:get
   };
 };
@@ -448,7 +457,7 @@ exports = module.exports = Xref;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 26 2014 00:21:06 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Dec 16 2014 22:57:01 GMT-0800 (PST)
         </footer>
     </div>
 </div>

@@ -62,9 +62,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.dataSource">
+        <li class="item" data-name="BridgeDb.Dataset">
             <span class="title">
-                <a href="bridgeDb.dataSource.html">bridgeDb.dataSource</a>
+                <a href="BridgeDb.Dataset.html">BridgeDb.Dataset</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -77,7 +77,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.dataSource~getAll"><a href="bridgeDb.dataSource.html#getAll">getAll</a></li>
+                <li data-name="BridgeDb.Dataset~find"><a href="BridgeDb.Dataset.html#find">find</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getAll"><a href="BridgeDb.Dataset.html#getAll">getAll</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getOne"><a href="BridgeDb.Dataset.html#getOne">getOne</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -85,9 +89,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.entityReference">
+        <li class="item" data-name="BridgeDb.EntityReference">
             <span class="title">
-                <a href="bridgeDb.entityReference.html">bridgeDb.entityReference</a>
+                <a href="BridgeDb.EntityReference.html">BridgeDb.EntityReference</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -100,17 +104,17 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.entityReference~createEnrichmentStream"><a href="bridgeDb.entityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
+                <li data-name="BridgeDb.EntityReference~createEnrichmentStream"><a href="BridgeDb.EntityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
             
-                <li data-name="bridgeDb.entityReference~enrich"><a href="bridgeDb.entityReference.html#enrich">enrich</a></li>
+                <li data-name="BridgeDb.EntityReference~enrich"><a href="BridgeDb.EntityReference.html#enrich">enrich</a></li>
             
-                <li data-name="bridgeDb.entityReference~exists"><a href="bridgeDb.entityReference.html#exists">exists</a></li>
+                <li data-name="BridgeDb.EntityReference~exists"><a href="BridgeDb.EntityReference.html#exists">exists</a></li>
             
-                <li data-name="bridgeDb.entityReference~freeSearch"><a href="bridgeDb.entityReference.html#freeSearch">freeSearch</a></li>
+                <li data-name="BridgeDb.EntityReference~freeSearch"><a href="BridgeDb.EntityReference.html#freeSearch">freeSearch</a></li>
             
-                <li data-name="bridgeDb.entityReference~map"><a href="bridgeDb.entityReference.html#map">map</a></li>
+                <li data-name="BridgeDb.EntityReference~map"><a href="BridgeDb.EntityReference.html#map">map</a></li>
             
-                <li data-name="bridgeDb.entityReference~normalize"><a href="bridgeDb.entityReference.html#normalize">normalize</a></li>
+                <li data-name="BridgeDb.EntityReference~normalize"><a href="BridgeDb.EntityReference.html#normalize">normalize</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -139,8 +143,6 @@
             
                 <li data-name="bridgeDb.organism~getByEntityReference"><a href="bridgeDb.organism.html#getByEntityReference">getByEntityReference</a></li>
             
-                <li data-name="bridgeDb.organism~normalize"><a href="bridgeDb.organism.html#normalize">normalize</a></li>
-            
             </ul>
             <ul class="events itemMembers">
             
@@ -161,8 +163,6 @@
             <ul class="methods itemMembers">
             
             <span class="subtitle">Methods</span>
-            
-                <li data-name="bridgeDb.xref~createStream"><a href="bridgeDb.xref.html#createStream">createStream</a></li>
             
                 <li data-name="bridgeDb.xref~get"><a href="bridgeDb.xref.html#get">get</a></li>
             
@@ -191,7 +191,8 @@ var jsonLdContext = require('./context.json');
 var request = require('request');
 var csv = require('csv-streamify');
 var csvOptions = {objectMode: true, delimiter: '\t'};
-var Utilities = require('./utilities.js');
+var JsonldMatcher = require('./jsonld-matcher.js');
+var Utils = require('./utils.js');
 
 /**
  * Used internally to create a new Organism instance
@@ -220,55 +221,51 @@ var Organism = function(instance) {
    * Get all organisms currently supported by BridgeDb.
    *
    * @return {Stream&lt;object>} organism
-   * @return {object} organism['@context'] JSON-LD context. You can ignore this if
-   *                                                  you don't care about semantics.
+   * @return {object} organism['@context'] JSON-LD context. You can ignore this.
    * @return {object[]} organism.name
    * @return {string} organism.name.en English name, when available.
-   * @return {string} organism.name.la Unabbreviated Latin name.
+   * @return {string} organism.name.la Full Latin name.
    */
   var getAll = function() {
-    return Utilities.runOnce('organisms',
-        getAllFromRemoteSource);
-  };
+    function init() {
+      var path = '/contents';
+      var source = instance.config.apiUrlStub + path;
 
-  var getAllFromRemoteSource = function() {
-    var path = '/contents';
-    var source = instance.config.apiUrlStub + path;
+      return highland(request({
+        url: source,
+        withCredentials: false
+      })
+      .pipe(csv(csvOptions)))
+      .map(function(array) {
+        var names = {};
+        var englishName = array[0];
+        var latinName = array[1];
 
-    return highland(request({
-      url: source,
-      withCredentials: false
-    })
-    .pipe(csv(csvOptions)))
-    .map(function(array) {
-      var names = {};
-      var englishName = array[0];
-      var latinName = array[1];
+        // Note: I intentionally used 'null' as a string, not a native value,
+        // because BridgeDb returns the string value
+        if (englishName !== 'null') {
+          names.en = englishName;
+        }
+        if (latinName !== 'null') {
+          names.la = latinName;
+        }
 
-      // Note: I intentionally used 'null' as
-      // a string, not a native value, because
-      // BridgeDb returns the string value
-      if (englishName !== 'null') {
-        names.en = englishName;
-      }
-      if (latinName !== 'null') {
-        names.la = latinName;
-      }
+        return {
+          '@context': [
+            {
+              name: {
+                '@id': 'biopax:name',
+                '@container': '@language'
+              }
+            },
+            'http://test2.wikipathways.org/v2/contexts/organism.jsonld'
+          ],
+          name: names
+        };
+      });
+    }
 
-      return {
-        '@context': [
-          {
-            name: {
-              '@id': 'biopax:name',
-              '@container': '@language'
-            }
-          },
-          'http://test2.wikipathways.org/v2/contexts/organism.jsonld'
-        ],
-        name: names
-      };
-    })
-    .collect();
+    return Utils._runOnceGlobal('organisms', init);
   };
 
   /**
@@ -287,23 +284,19 @@ var Organism = function(instance) {
    * @return {Stream&lt;object>} organism
    * @return {object[]} organism.name
    * @return {string} organism.name.en English name, when available.
-   * @return {string} organism.name.la Unabbreviated Latin name.
+   * @return {string} organism.name.la Full Latin name.
    */
-  var getByBridgeDbSystemCodeAndIdentifier =
+  var _getByBridgeDbSystemCodeAndIdentifier =
     function(bridgeDbSystemCode, identifier) {
     var exists = highland.curry(instance.entityReference.exists,
         bridgeDbSystemCode, identifier);
 
     return getAll()
     // TODO sort organisms by number of pathways at WikiPathways. Get that data as part of build step for this library.
-    .sequence()
     .flatFilter(function(organism) {
       return exists(organism.name.la);
     })
-    .head()
-    .map(function(organism) {
-      return organism;
-    });
+    .head();
   };
 
   /**
@@ -316,34 +309,35 @@ var Organism = function(instance) {
    * @return {Stream&lt;object>} organism
    * @return {object[]} organism.name
    * @return {string} organism.name.en English name, when available.
-   * @return {string} organism.name.la Unabbreviated Latin name.
+   * @return {string} organism.name.la Full Latin name.
    */
   function getByEntityReference(entityReference) {
     // TODO as part of the build process, query all species like this:
     // http://webservice.bridgedb.org/Human/sourceDataSources
     // http://webservice.bridgedb.org/Human/targetDataSources
-    // to get a listing of which data sources go with which species.
+    // to get a listing of which datasets go with which species.
     // Save that data as a JSON file.
     // Then use those limitations in this query.
 
     return instance.entityReference.enrich(entityReference, {
-      organism: false,
-      dataSource: true
+      bridgeDbXrefsUrl: false,
+      dataset: true,
+      organism: false
     })
     .flatMap(function(entityReference) {
       var organism = entityReference.organism;
       if (!!organism) {
-        return highland([organism]).map(normalize);
+        return highland([organism]).map(_normalize);
       }
 
-      var bridgeDbSystemCode = entityReference.bridgeDbSystemCode ||
+      var bridgeDbSystemCode = entityReference.inDataset.bridgeDbSystemCode ||
         _.isArray(entityReference.alternatePrefix) &amp;&amp;
         entityReference.alternatePrefix[0];
 
       var identifier = entityReference.identifier;
 
       if (!!bridgeDbSystemCode &amp;&amp; !!identifier) {
-        return getByBridgeDbSystemCodeAndIdentifier(
+        return _getByBridgeDbSystemCodeAndIdentifier(
           bridgeDbSystemCode, identifier);
       } else {
         console.warn('Cannot get organism by entityReference.');
@@ -360,18 +354,13 @@ var Organism = function(instance) {
    *
    * @param {object|string} input
    * @param {object} [inputType='Organism']
-   * @return {Stream&lt;string>} organismName Unabbreviated Latin name.
+   * @return {Stream&lt;string>} organismNameNormalized Full Latin name.
    * @return {string}
    */
-  function getInstanceOrganismName(input, inputType) {
+  function _getInstanceOrganismName(input, inputType) {
     function initMethod() {
-      inputType = inputType || 'Organism';
-      if (inputType === 'Organism') {
-        return convertToLatinName(input)
-        .map(function(organismLatinName) {
-          setInstanceOrganismName(organismLatinName);
-          return organismLatinName;
-        });
+      if (!_.isEmpty(instance.organismNameNonNormalized)) {
+        return _setInstanceOrganismName(instance.organismNameNonNormalized);
       } else if (inputType === 'EntityReference') {
         return getByEntityReference(input)
         .map(function(organism) {
@@ -383,14 +372,16 @@ var Organism = function(instance) {
       }
     }
 
-    return Utilities.runOncePerInstance(
+    return Utils._runOncePerInstance(
         instance,
-        'organismName',
+        'organismNameNormalized',
         initMethod
     );
   }
 
   /**
+   * @private
+   *
    * Normalize organism.
    *
    * @param {string|object} organism - Can be name in Latin (full like "Escherichia coli"
@@ -398,9 +389,9 @@ var Organism = function(instance) {
    * @return {Stream&lt;object>} organism
    * @return {object[]} organism.name
    * @return {string} organism.name.en English name, when available.
-   * @return {string} organism.name.la Unabbreviated Latin name.
+   * @return {string} organism.name.la Full Latin name.
    */
-  function normalize(organism) {
+  function _normalize(organism) {
     var organismIdentifier;
     if (_.isString(organism)) {
       organismIdentifier = organism;
@@ -414,8 +405,9 @@ var Organism = function(instance) {
     }
 
     var normalizedOrganismIdentifier =
-      Utilities.normalizeText(organismIdentifier);
-    return getAll().sequence()
+      JsonldMatcher._normalizeText(organismIdentifier);
+
+    return getAll()
     .find(function(organism) {
       var names = organism.name;
       var latinName = names.la;
@@ -423,11 +415,12 @@ var Organism = function(instance) {
       var latinNameAbbreviated = latinNameComponents[0][0] +
         latinNameComponents[1];
       var englishName = names.en;
-      return Utilities.normalizeText(latinName) ===
+      return JsonldMatcher._normalizeText(latinName) ===
         normalizedOrganismIdentifier ||
-        Utilities.normalizeText(latinNameAbbreviated) ===
+        JsonldMatcher._normalizeText(latinNameAbbreviated) ===
           normalizedOrganismIdentifier ||
-        Utilities.normalizeText(englishName) === normalizedOrganismIdentifier;
+        JsonldMatcher._normalizeText(englishName) ===
+          normalizedOrganismIdentifier;
     })
     .head();
   }
@@ -439,11 +432,11 @@ var Organism = function(instance) {
    *
    * @param {string} organismIdentifier - Can be name in Latin (full like "Escherichia coli"
    *      or abbreviated like "E. coli") or English. In the future, we might include IRIs for organisms.
-   * @return {Stream&lt;string>} organismName Full name in Latin
+   * @return {Stream&lt;string>} organismLatinName Full name in Latin
    * @return {string}
    */
-  function convertToLatinName(organismIdentifier) {
-    return normalize(organismIdentifier).map(function(organism) {
+  function _convertToLatinName(organismIdentifier) {
+    return _normalize(organismIdentifier).map(function(organism) {
       // returns either the organism name or false
       return !!organism.name &amp;&amp; !!organism.name.la &amp;&amp; organism.name.la;
     });
@@ -454,10 +447,35 @@ var Organism = function(instance) {
    *
    * Set the current organism for this instance so we don't have to look it up every time.
    *
-   * @param {string} organismLatinName Organism name.
+   * @param {string|object} organism The single organism for this bridgedbjs instance. It is
+   *                                 preferably the full Latin name. If you need to work
+   *                                 with another organism, create another bridgedbjs instance.
+   * @param {boolean} normalize Normalize the provided organism to ensure it matches what
+   *                                 the BridgeDb API expects.
+   * @return {Stream&lt;string>} Normalized organism name. Note that if args.normalize is set to false,
+   *                          the returned value will be whatever was provided as args.organism.
    */
-  function setInstanceOrganismName(organismLatinName) {
-    instance.organismName = organismLatinName;
+  function _setInstanceOrganismName(organism, normalize) {
+    console.log('organism');
+    console.log(organism);
+    normalize = normalize || true;
+
+    if (normalize) {
+      var initMethod = highland.partial(_convertToLatinName, organism);
+      return Utils._runOncePerInstance(
+          instance,
+          // TODO why can't I set this to instanceOrganismName?
+          // There appears to be a conflict with having the same name
+          // here and in _getInstanceOrganismName(), so for now, I'm
+          // setting this to _setInstanceOrganismName, but I don't know
+          // why I need to.
+          'setInstanceOrganismName',
+          initMethod
+      );
+    } else {
+      instance.organismNameNonNormalized = organism;
+      return highland([organism]);
+    }
   }
 
   return {
@@ -465,8 +483,8 @@ var Organism = function(instance) {
       createEntityReferenceToOrganismTransformationStream,
     getAll:getAll,
     getByEntityReference:getByEntityReference,
-    getInstanceOrganismName:getInstanceOrganismName,
-    setInstanceOrganismName:setInstanceOrganismName
+    _getInstanceOrganismName:_getInstanceOrganismName,
+    _setInstanceOrganismName:_setInstanceOrganismName
   };
 };
 
@@ -489,7 +507,7 @@ exports = module.exports = Organism;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 26 2014 00:21:06 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Dec 16 2014 22:57:01 GMT-0800 (PST)
         </footer>
     </div>
 </div>

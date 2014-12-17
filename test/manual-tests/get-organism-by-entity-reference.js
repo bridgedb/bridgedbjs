@@ -4,28 +4,28 @@ var highland = require('highland');
 
 var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  dataSourcesUrl:
+  datasetsUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  dataSourcesUrl:
+  datasetsUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 function runGetAll(runNumber, timeout, expectedIterationCount) {
   bridgeDb1.organism.getAll()
   .collect()
-  .each(function(dataSource) {
+  .each(function(organisms) {
     if (runNumber === 1) {
       console.log('***************************************************');
       console.log('expected iteration count: ' + expectedIterationCount);
       console.log('***************************************************');
     }
     console.log('  #' + runNumber + ' ======================');
-    console.log('     Count: ' + dataSource.length);
-    if (dataSource.length !== 31) {
+    console.log('     Count: ' + organisms.length);
+    if (organisms.length !== 31) {
       console.log('********************************************************');
       console.log('********************************************************');
       console.log('********************************************************');
@@ -145,7 +145,7 @@ highland([
 ])
 .pipe(bridgeDb2.entityReference.createEnrichmentStream(
   {
-    dataSource: true
+    dataset: true
   }
 ))
 .pipe(

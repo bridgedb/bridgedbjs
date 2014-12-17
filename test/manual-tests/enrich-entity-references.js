@@ -3,14 +3,14 @@ var BridgeDb = require('../../index.js');
 
 var bridgeDb1 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  dataSourcesUrl:
+  datasetsUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
 var bridgeDb2 = BridgeDb({
   apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  dataSourcesUrl:
+  datasetsUrl:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
   organism: 'Homo sapiens'
 });
@@ -47,7 +47,7 @@ bridgeDb2.entityReference.enrich([
 ], {
   bridgeDbXrefsUrl: true,
   context: false,
-  dataSource: true,
+  dataset: true,
   organism: false
 })
 .each(function(entityReferenceXrefs) {

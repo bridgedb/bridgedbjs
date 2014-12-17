@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Class: xref</title>
+    <title>Class: Dataset</title>
     
     
     
@@ -175,7 +175,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="bridgeDb.xref.html">Class: xref</h1>
+        <h1 class="page-title" data-filename="BridgeDb.Dataset.html">Class: Dataset</h1>
         
 
 
@@ -184,7 +184,9 @@
     
 <header>
     <h2>
-    xref
+        <span class="ancestors"><a href="BridgeDb.html">BridgeDb</a>.</span>
+    
+    Dataset
     </h2>
     
 </header>  
@@ -197,14 +199,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="xref">
+        <h4 class="name" id="Dataset">
             
-            <span class="type-signature ">protected</span>new bridgeDb.xref<span class="signature">(instance)</span>
+            new BridgeDb.Dataset<span class="signature">(instance)</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line20">line 20</a>
+            <a href="dataset.js.html">dataset.js</a>, <a href="dataset.js.html#line21">line 21</a>
         </div>
         
     </div>
@@ -215,7 +217,9 @@
     
     
     <div class="description">
-        <p>Used internally to create a new Xref instance</p>
+        <p>Used internally to create a new Dataset instance. See related
+<a href="http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.html">DataSource</a>
+from BridgeDb-Java.</p>
     </div>
     
 
@@ -252,7 +256,7 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -331,14 +335,14 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="get">
+        <h4 class="name" id="find">
             
-            <span class="type-signature ">inner</span>get<span class="signature">(input, <span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;object>|<a href="global.html#Stream">Stream</a>.&lt;array>}</span>
+            <span class="type-signature ">inner</span>find<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#Dataset">Dataset</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line38">line 38</a>
+            <a href="dataset.js.html">dataset.js</a>, <a href="dataset.js.html#line187">line 187</a>
         </div>
         
     </div>
@@ -349,9 +353,7 @@
     
     
     <div class="description">
-        <p>Get all xrefs available from BridgeDb for the provided entity reference.
-Currently limited to biopax:UnificationXrefs and biopax:RelationshipXrefs,
-returned as biopax:EntityReferences.</p>
+        <p>Find the datasets that match at least one of the provided argument(s).</p>
     </div>
     
 
@@ -382,19 +384,13 @@ returned as biopax:EntityReferences.</p>
 	
         <tr>
             
-                <td class="name"><code>input</code></td>
+                <td class="name"><code>args</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">string</span>
-|
-
-<span class="param-type">object</span>
-|
-
-<span class="param-type">stream</span>
+<span class="param-type"><a href="global.html#DatasetArgs">DatasetArgs</a></span>
 
 
             
@@ -403,95 +399,8 @@ returned as biopax:EntityReferences.</p>
             
             
             <td class="description last">
-                
-                    
-                    
-                        
-                    
                 
                 </td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                    
-                        <span class="optional">optional</span>
-                    
-                    
-                        
-                    
-                
-                
-                
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>format</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                    
-                        <span class="optional">optional</span>
-                    
-                    
-                        
-                    
-                
-                <p>Can be set equal to &quot;display&quot;</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-            </td>
         </tr>
 	
 	
@@ -534,78 +443,208 @@ returned as biopax:EntityReferences.</p>
     
     
     
-    <h5>Returns:</h5>
+    
     
 
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getAll">
+            
+            <span class="type-signature ">inner</span>getAll<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#Dataset">Dataset</a>>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="dataset.js.html">dataset.js</a>, <a href="dataset.js.html#line74">line 74</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get all biological datasets supported by BridgeDb, with all
+available metadata, largely as specified in
+<a href="https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt">datasources.txt</a>.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getOne">
+            
+            <span class="type-signature ">inner</span>getOne<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#Dataset">Dataset</a>>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="dataset.js.html">dataset.js</a>, <a href="dataset.js.html#line177">line 177</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get the first dataset that matches at least one of the provided argument(s).</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
 
 <table class="params">
     <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
         <tr>
-            <td class="name"><code>entityReference</code></td>
+            
+                <td class="name"><code>args</code></td>
+            
+            
             <td class="type">
             
-                        <a href="global.html#Stream">Stream</a>.&lt;object>
-                         | 
-                    
-                        <a href="global.html#Stream">Stream</a>.&lt;array>
-                        
-                    
-            </td>
-            <td class="description last">When options.format is not set, returns
-                         entity reference as formatted by bridgeDb.entityReference.enrich().
-                         When options.format is set to &quot;display,&quot; returns a set of entity references
-                         as formatted by bridgeDb.xref._formatAllForDisplay().
                 
+<span class="param-type"><a href="global.html#DatasetArgs">DatasetArgs</a></span>
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference.identifier</code></td>
-            <td class="type">
             
-                        string
-                        
-                    
             </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
-            <td class="type">
             
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
+            
+            
+            <td class="description last">
+                
+                </td>
         </tr>
-    
-    </tbody>
+	
+	
+	</tbody>
 </table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
-            </td>
-        </tr>
     
-    </tbody>
-</table>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
 
     
     

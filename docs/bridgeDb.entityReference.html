@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Class: entityReference</title>
+    <title>Class: EntityReference</title>
     
     
     
@@ -62,9 +62,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.dataSource">
+        <li class="item" data-name="BridgeDb.Dataset">
             <span class="title">
-                <a href="bridgeDb.dataSource.html">bridgeDb.dataSource</a>
+                <a href="BridgeDb.Dataset.html">BridgeDb.Dataset</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -77,7 +77,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.dataSource~getAll"><a href="bridgeDb.dataSource.html#getAll">getAll</a></li>
+                <li data-name="BridgeDb.Dataset~find"><a href="BridgeDb.Dataset.html#find">find</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getAll"><a href="BridgeDb.Dataset.html#getAll">getAll</a></li>
+            
+                <li data-name="BridgeDb.Dataset~getOne"><a href="BridgeDb.Dataset.html#getOne">getOne</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -85,9 +89,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="bridgeDb.entityReference">
+        <li class="item" data-name="BridgeDb.EntityReference">
             <span class="title">
-                <a href="bridgeDb.entityReference.html">bridgeDb.entityReference</a>
+                <a href="BridgeDb.EntityReference.html">BridgeDb.EntityReference</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -100,17 +104,17 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.entityReference~createEnrichmentStream"><a href="bridgeDb.entityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
+                <li data-name="BridgeDb.EntityReference~createEnrichmentStream"><a href="BridgeDb.EntityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
             
-                <li data-name="bridgeDb.entityReference~enrich"><a href="bridgeDb.entityReference.html#enrich">enrich</a></li>
+                <li data-name="BridgeDb.EntityReference~enrich"><a href="BridgeDb.EntityReference.html#enrich">enrich</a></li>
             
-                <li data-name="bridgeDb.entityReference~exists"><a href="bridgeDb.entityReference.html#exists">exists</a></li>
+                <li data-name="BridgeDb.EntityReference~exists"><a href="BridgeDb.EntityReference.html#exists">exists</a></li>
             
-                <li data-name="bridgeDb.entityReference~freeSearch"><a href="bridgeDb.entityReference.html#freeSearch">freeSearch</a></li>
+                <li data-name="BridgeDb.EntityReference~freeSearch"><a href="BridgeDb.EntityReference.html#freeSearch">freeSearch</a></li>
             
-                <li data-name="bridgeDb.entityReference~map"><a href="bridgeDb.entityReference.html#map">map</a></li>
+                <li data-name="BridgeDb.EntityReference~map"><a href="BridgeDb.EntityReference.html#map">map</a></li>
             
-                <li data-name="bridgeDb.entityReference~normalize"><a href="bridgeDb.entityReference.html#normalize">normalize</a></li>
+                <li data-name="BridgeDb.EntityReference~normalize"><a href="BridgeDb.EntityReference.html#normalize">normalize</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -139,8 +143,6 @@
             
                 <li data-name="bridgeDb.organism~getByEntityReference"><a href="bridgeDb.organism.html#getByEntityReference">getByEntityReference</a></li>
             
-                <li data-name="bridgeDb.organism~normalize"><a href="bridgeDb.organism.html#normalize">normalize</a></li>
-            
             </ul>
             <ul class="events itemMembers">
             
@@ -162,8 +164,6 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="bridgeDb.xref~createStream"><a href="bridgeDb.xref.html#createStream">createStream</a></li>
-            
                 <li data-name="bridgeDb.xref~get"><a href="bridgeDb.xref.html#get">get</a></li>
             
             </ul>
@@ -175,7 +175,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="bridgeDb.entityReference.html">Class: entityReference</h1>
+        <h1 class="page-title" data-filename="BridgeDb.EntityReference.html">Class: EntityReference</h1>
         
 
 
@@ -184,7 +184,9 @@
     
 <header>
     <h2>
-    entityReference
+        <span class="ancestors"><a href="BridgeDb.html">BridgeDb</a>.</span>
+    
+    EntityReference
     </h2>
     
 </header>  
@@ -197,14 +199,14 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="entityReference">
+        <h4 class="name" id="EntityReference">
             
-            <span class="type-signature ">protected</span>new bridgeDb.entityReference<span class="signature">(instance)</span>
+            <span class="type-signature ">protected</span>new BridgeDb.EntityReference<span class="signature">(instance)</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line20">line 20</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line19">line 19</a>
         </div>
         
     </div>
@@ -252,7 +254,7 @@
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -333,12 +335,12 @@
     <div class="nameContainer">
         <h4 class="name" id="createEnrichmentStream">
             
-            <span class="type-signature ">inner</span>createEnrichmentStream<span class="signature">(<span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream}</span>
+            <span class="type-signature ">inner</span>createEnrichmentStream<span class="signature">(<span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line107">line 107</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line126">line 126</a>
         </div>
         
     </div>
@@ -387,7 +389,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -435,7 +437,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -471,7 +473,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -501,13 +503,13 @@ can be piped to enrich each one with data from BridgeDb.</p>
 	
         <tr>
             
-                <td class="name"><code>dataSource</code></td>
+                <td class="name"><code>dataset</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -530,8 +532,8 @@ can be piped to enrich each one with data from BridgeDb.</p>
                         
                     
                 
-                <p>Enrich with database metadata
-                        (metadata about biological databases from datasources.txt).</p></td>
+                <p>Enrich from data-sources.txt
+                        (metadata about biological datasets).</p></td>
         </tr>
 	
 	
@@ -544,7 +546,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -632,12 +634,12 @@ can be piped to enrich each one with data from BridgeDb.</p>
     <div class="nameContainer">
         <h4 class="name" id="enrich">
             
-            <span class="type-signature ">inner</span>enrich<span class="signature">(input, <span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
+            <span class="type-signature ">inner</span>enrich<span class="signature">(input, <span class="optional">options</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line166">line 166</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line174">line 174</a>
         </div>
         
     </div>
@@ -687,13 +689,13 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 |
 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 |
 
-<span class="param-type">stream</span>
+<span class="param-type"><a href="global.html#Stream">Stream</a></span>
 
 
             
@@ -709,7 +711,7 @@ for enrichment can be controlled by setting options.include.</p>
                     
                 
                 <p>Entity reference(s). Each one must have an identifier
-(e.g. ENSG00000160791) and means for identifying the database.</p>
+(e.g. ENSG00000160791) and means for identifying the dataset.</p>
 <p>   Acceptable entityReference input arguments:</p>
 <pre class="prettyprint source"><code> 1. BridgeDb xrefs URL or identifiers.org IRI as string
  2. Object with at least one of these properties:
@@ -738,7 +740,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -786,7 +788,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -822,7 +824,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -852,13 +854,13 @@ for enrichment can be controlled by setting options.include.</p>
 	
         <tr>
             
-                <td class="name"><code>dataSource</code></td>
+                <td class="name"><code>dataset</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -881,8 +883,8 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
                 
-                <p>Enrich with database metadata
-                        (metadata about biological databases from datasources.txt).</p></td>
+                <p>Enrich from data-sources.txt
+                        (metadata about biological datasets).</p></td>
         </tr>
 	
 	
@@ -895,7 +897,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -968,125 +970,14 @@ for enrichment can be controlled by setting options.include.</p>
     
     
     
-    <h5>Returns:</h5>
+    
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">Entity reference with as many as possible of
-                                         the properties listed below.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference['@context']</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">JSON-LD context. You can ignore this if you
-                                             don't care about semantics.
-                                           See <a href="http://www.w3.org/TR/json-ld/#the-context">JSON-LD documentation</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference['@id']</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">JSON-LD IRI. You can also ignore this.
-                                           See <a href="http://www.w3.org/TR/json-ld/#iris">JSON-LD documentation</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.displayName</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">See <a href="http://www.biopax.org/release/biopax-level3.owl#displayName">biopax:displayName</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.db</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">See <a href="http://www.biopax.org/release/biopax-level3.owl#db">biopax:db</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.preferredPrefix</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">See <a href="http://identifiers.org/idot/preferredPrefix">idot:preferredPrefix</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.alternatePrefix</code></td>
-            <td class="type">
-            
-                        Array.&lt;string>
-                        
-                    
-            </td>
-            <td class="description last">See <a href="http://identifiers.org/idot/alternatePrefix">idot:alternatePrefix</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.identifier</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">See <a href="http://www.biopax.org/release/biopax-level3.owl#id">biopax:id</a></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference['@type']</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last">Biological type. See <a href="http://www.w3.org/TR/json-ld/#dfn-node-type">JSON-LD documentation</a></td>
-        </tr>
-    
-    </tbody>
-</table>
+<h5>Returns:</h5>
+<a href="global.html#EntityReference"><code>EntityReference</code></a> with as many properties
+                                 as possible added.
+<br />
 
     
     
@@ -1099,12 +990,12 @@ for enrichment can be controlled by setting options.include.</p>
     <div class="nameContainer">
         <h4 class="name" id="exists">
             
-            <span class="type-signature ">inner</span>exists<span class="signature">(bridgeDbSystemCode, identifier, organism)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;boolean>}</span>
+            <span class="type-signature ">inner</span>exists<span class="signature">(bridgeDbSystemCode, identifier, organism)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;Boolean>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line293">line 293</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line278">line 278</a>
         </div>
         
     </div>
@@ -1115,7 +1006,7 @@ for enrichment can be controlled by setting options.include.</p>
     
     
     <div class="description">
-        <p>Check whether an entity reference with the specified identifier is known by the specified database.</p>
+        <p>Check whether an entity reference with the specified identifier is known by the specified dataset.</p>
     </div>
     
 
@@ -1152,7 +1043,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1175,7 +1066,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1198,7 +1089,7 @@ for enrichment can be controlled by setting options.include.</p>
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1270,7 +1161,7 @@ Whether specified entity reference exists.
     <div class="nameContainer">
         <h4 class="name" id="freeSearch">
             
-            <span class="type-signature ">inner</span>freeSearch<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
+            <span class="type-signature ">inner</span>freeSearch<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
         </h4>
     
         
@@ -1324,7 +1215,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1363,7 +1254,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1391,7 +1282,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1419,7 +1310,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1451,7 +1342,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1468,7 +1359,7 @@ Whether specified entity reference exists.
                         
                     
                 
-                <p>Desired database name, such as Ensembl or Uniprot</p></td>
+                <p>Desired dataset name, such as Ensembl or Uniprot</p></td>
         </tr>
 	
 	
@@ -1517,72 +1408,13 @@ Whether specified entity reference exists.
     
     
     
-    <h5>Returns:</h5>
+    
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">Entity reference, enriched with database metadata and organism
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference.identifier</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
+<h5>Returns:</h5>
+<a href="global.html#EntityReference"><code>EntityReference</code></a>, enriched from data-sources.txt and BridgeDb organism data.
+<br />
 
     
     
@@ -1609,12 +1441,12 @@ Whether specified entity reference exists.
     <div class="nameContainer">
         <h4 class="name" id="map">
             
-            <span class="type-signature ">inner</span>map<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;array>}</span>
+            <span class="type-signature ">inner</span>map<span class="signature">(args)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line481">line 481</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line483">line 483</a>
         </div>
         
     </div>
@@ -1658,7 +1490,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1697,7 +1529,7 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -1720,10 +1552,10 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 |
 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1783,83 +1615,13 @@ Whether specified entity reference exists.
     
     
     
-    <h5>Returns:</h5>
+    
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReferences</code></td>
-            <td class="type">
-            
-                        Stream.&lt;array>
-                        
-                    
-            </td>
-            <td class="description last">One or more entity references with the target preferredPrefix.</td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference</code></td>
-            <td class="type">
-            
-                        Array.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference.identifier</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
+<h5>Returns:</h5>
+One or more <a href="global.html#EntityReference"><code>entity references</code></a> with the target preferredPrefix.
+<br />
 
     
     
@@ -1872,12 +1634,12 @@ Whether specified entity reference exists.
     <div class="nameContainer">
         <h4 class="name" id="normalize">
             
-            <span class="type-signature ">inner</span>normalize<span class="signature">(entityReference)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Stream.&lt;object>}</span>
+            <span class="type-signature ">inner</span>normalize<span class="signature">(entityReference)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line501">line 501</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line502">line 502</a>
         </div>
         
     </div>
@@ -1925,10 +1687,10 @@ Whether specified entity reference exists.
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 |
 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1981,72 +1743,13 @@ Whether specified entity reference exists.
     
     
     
-    <h5>Returns:</h5>
+    
     
 
 
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference</code></td>
-            <td class="type">
-            
-                        Stream.&lt;object>
-                        
-                    
-            </td>
-            <td class="description last">Normalized entity reference
-                
-
-
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            <td class="name"><code>entityReference.identifier</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-        <tr>
-            <td class="name"><code>entityReference.PLUS_ALL_OTHER_PROPERTIES_AVAILABLE</code></td>
-            <td class="type">
-            
-                        string
-                        
-                    
-            </td>
-            <td class="description last"></td>
-        </tr>
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-    
-    </tbody>
-</table>
+<h5>Returns:</h5>
+<a href="global.html#EntityReference"><code>EntityReference</code></a>
+<br />
 
     
     
@@ -2076,7 +1779,7 @@ Whether specified entity reference exists.
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Wed Nov 26 2014 00:21:06 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Dec 16 2014 22:57:01 GMT-0800 (PST)
         </footer>
     </div>
 </div>

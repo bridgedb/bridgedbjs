@@ -66,6 +66,8 @@ gulp.task('build-docs', ['bump-readme'], function(callback) {
     }, jsdocOptions));
   //*/
 
+  //jsdoc -t "./node_modules/jaguarjs-jsdoc/" -c "./jsdoc-conf.json" "./lib/" -r "./README.md" -d "./docs/"
+
   exec('jsdoc -t "./node_modules/jaguarjs-jsdoc/" -c ' +
     '"./jsdoc-conf.json" "./lib/" -r "./README.md" -d "./docs/"',
     function(err, stdout, stderr) {
