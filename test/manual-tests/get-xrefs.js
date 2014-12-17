@@ -10,7 +10,8 @@ var bridgeDb1 = BridgeDb({
 
 /*
 var entityReference1 = {
-  '@id': 'http://identifiers.org/ncbigene/4292'
+  //'@id': 'http://identifiers.org/ncbigene/4292'
+  '@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 };
 bridgeDb1.xref.get(_.clone(entityReference1))
 .collect()
@@ -24,7 +25,8 @@ bridgeDb1.xref.get(_.clone(entityReference1))
 
 //*
 var entityReference2 = {
-  '@id': 'http://identifiers.org/ncbigene/4292'
+  //'@id': 'http://identifiers.org/ncbigene/4292'
+  '@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 };
 var options2 = {
   format:'display'

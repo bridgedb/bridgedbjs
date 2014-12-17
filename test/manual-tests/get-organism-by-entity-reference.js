@@ -14,11 +14,56 @@ var bridgeDb2 = BridgeDb({
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
+function runGetAll(runNumber, timeout, expectedIterationCount) {
+  bridgeDb1.organism.getAll()
+  .collect()
+  .each(function(dataSource) {
+    if (runNumber === 1) {
+      console.log('***************************************************');
+      console.log('expected iteration count: ' + expectedIterationCount);
+      console.log('***************************************************');
+    }
+    console.log('  #' + runNumber + ' ======================');
+    console.log('     Count: ' + dataSource.length);
+    if (dataSource.length !== 31) {
+      console.log('********************************************************');
+      console.log('********************************************************');
+      console.log('********************************************************');
+      console.log('********************************************************');
+      console.log('********************************************************');
+      console.log('********************************************************');
+      console.log('********************************************************');
+    }
+    console.log('     Timeout: ' + timeout + 'ms');
+  });
+}
+
+function getTimeout(index, start, step) {
+  return start + index * step;
+}
 //*
-bridgeDb1.organism.getAll()
-.collect()
+function runGetAllMultiple(start, step, expectedIterationCount) {
+  var runNumber = 0;
+  for (var i = 0; i < expectedIterationCount; i += 1) {
+    setTimeout(function() {
+      runNumber += 1;
+      var timeout = getTimeout(runNumber, start, step);
+      runGetAll(runNumber, timeout, expectedIterationCount);
+    },
+    getTimeout(i, start, step));
+  }
+}
+//*/
+// start, step, iterations
+runGetAllMultiple(0, 0, 3);
+runGetAllMultiple(60, 3, 75);
+runGetAllMultiple(1000, 0, 1);
+//*/
+
+/*
+bridgeDb1.organism.getByEntityReference('http://identifiers.org/ncbigene/4292')
 .each(function(organism) {
-  console.log('organism:');
+  console.log('organism name should be Homo sapiens 802yes');
   console.log(JSON.stringify(organism, null, '\t'));
 });
 //*/
