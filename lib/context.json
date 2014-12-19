@@ -4,6 +4,7 @@
     "@id": "idot:alternatePrefix",
     "@type": "xsd:string"
   },
+  "baseIri": "@base",
   "biopax": {
     "@id": "http://www.biopax.org/release/biopax-level3.owl#",
     "@type": "@id"
@@ -20,6 +21,14 @@
   "exampleIdentifier": {
     "@id": "idot:exampleIdentifier",
     "@type": "xsd:string"
+  },
+  "exampleResource": {
+    "@id": "void:exampleResource",
+    "@type": "@id"
+  },
+  "foaf": {
+    "@id": "http://xmlns.com/foaf/0.1/",
+    "@type": "@id"
   },
   "gpml": {
     "@id": "http://vocabularies.wikipathways.org/gpml#",
@@ -65,8 +74,16 @@
     "@id": "http://rdfs.org/ns/void#",
     "@type": "@id"
   },
+  "xsd": {
+    "@id": "http://www.w3.org/2001/XMLSchema#",
+    "@type": "@id"
+  },
   "xref": {
     "@id": "biopax:xref",
+    "@type": "@id"
+  },
+  "webPage": {
+    "@id": "foaf:page",
     "@type": "@id"
   }
 }
