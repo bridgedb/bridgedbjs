@@ -51,9 +51,9 @@ describe('myBridgeDbInstance.xref.get', function() {
     });
 
     var bridgeDbInstance = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
@@ -69,7 +69,7 @@ describe('myBridgeDbInstance.xref.get', function() {
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
-          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
         );
     })
@@ -106,9 +106,9 @@ describe('myBridgeDbInstance.xref.get', function() {
     });
 
     var bridgeDbInstance = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
@@ -126,7 +126,7 @@ describe('myBridgeDbInstance.xref.get', function() {
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
-          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
         );
     })
@@ -162,9 +162,9 @@ describe('myBridgeDbInstance.xref.get', function() {
     });
 
     var bridgeDbInstance = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
@@ -185,7 +185,7 @@ describe('myBridgeDbInstance.xref.get', function() {
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
-          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
         );
     })
@@ -221,9 +221,9 @@ describe('myBridgeDbInstance.xref.get', function() {
     });
 
     var bridgeDbInstance = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
@@ -243,7 +243,7 @@ describe('myBridgeDbInstance.xref.get', function() {
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
-          new RegExp(bridgeDbInstance.config.apiUrlStub, 'g'),
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
         );
     })

@@ -54,9 +54,9 @@ describe('myBridgeDbInstance.organism.getByEntityReference', function() {
     var updateExpectedJson = false;
 
     var bridgeDbInstance = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });

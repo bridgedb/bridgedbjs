@@ -1,8 +1,8 @@
 var BridgeDb = require('../../index.js');
 
 var bridgeDb1 = BridgeDb({
-  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl:
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 

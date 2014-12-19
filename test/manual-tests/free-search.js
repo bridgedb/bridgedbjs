@@ -3,8 +3,8 @@ var highland = require('highland');
 var BridgeDb = require('../../index.js');
 
 var bridgeDb1 = BridgeDb({
-  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl:
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 bridgeDb1.entityReference.freeSearch({
@@ -24,8 +24,8 @@ bridgeDb1.entityReference.freeSearch({
 });
 
 var bridgeDb2 = BridgeDb({
-  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl:
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 

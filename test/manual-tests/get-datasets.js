@@ -1,8 +1,8 @@
 var BridgeDb = require('../../index.js');
 
 var bridgeDb1 = BridgeDb({
-  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl:
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
@@ -55,8 +55,8 @@ runGetAllMultiple(1000, 0, 1);
 //*/
 
 var bridgeDb2 = BridgeDb({
-  apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl:
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
@@ -72,6 +72,30 @@ bridgeDb2.dataset.getAll()
 bridgeDb2.dataset.getAll()
 .each(function(dataset) {
   console.log('Data set');
+  console.log(JSON.stringify(dataset, null, '\t'));
+});
+//*/
+
+/*
+var input80 = {
+  'exampleResource': 'http://www.ncbi.nlm.nih.gov/gene/100010'
+};
+bridgeDb1.dataset.find(input80)
+.each(function(dataset) {
+  console.log('returned dataset for:');
+  console.log(JSON.stringify(input80, null, '\t'));
+  console.log(JSON.stringify(dataset, null, '\t'));
+});
+//*/
+
+//*
+var input92 = {
+  'exampleResource': 'http://www.ncbi.nlm.nih.gov/nuccore/NW_005785400.1'
+};
+bridgeDb1.dataset.find(input92)
+.each(function(dataset) {
+  console.log('returned dataset for:');
+  console.log(JSON.stringify(input92, null, '\t'));
   console.log(JSON.stringify(dataset, null, '\t'));
 });
 //*/

@@ -45,31 +45,31 @@ describe('BridgeDb', function() {
       function(done) {
 
     bridgeDbInstance1 = BridgeDb({
-      //apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      apiUrlStub: 'http://localhost:' + process.env.MOCKSERVER_PORT,
-      dataSourcesUrl:
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
       organism: 'Homo sapiens'
     });
 
-    expect(bridgeDbInstance1.config.apiUrlStub)
+    expect(bridgeDbInstance1.config.baseIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT);
-    expect(bridgeDbInstance1.config.dataSourcesUrl)
+    expect(bridgeDbInstance1.config.datasetsMetadataIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT +
         '/datasources.txt');
     expect(bridgeDbInstance1.organismLatinName)
       .to.equal('Homo sapiens');
 
     bridgeDbInstance2 = BridgeDb({
-      apiUrlStub: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      dataSourcesUrl:
+      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      datasetsMetadataIri:
         'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
     });
 
-    expect(bridgeDbInstance2.config.apiUrlStub)
+    expect(bridgeDbInstance2.config.baseIri)
       .to.equal('http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php');
-    expect(bridgeDbInstance2.config.dataSourcesUrl)
+    expect(bridgeDbInstance2.config.datasetsMetadataIri)
       .to.equal(
         'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php');
 
@@ -77,9 +77,9 @@ describe('BridgeDb', function() {
     .to.equal(undefined);
 
     // Check that the first instance is unchanged
-    expect(bridgeDbInstance1.config.apiUrlStub)
+    expect(bridgeDbInstance1.config.baseIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT);
-    expect(bridgeDbInstance1.config.dataSourcesUrl)
+    expect(bridgeDbInstance1.config.datasetsMetadataIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT +
         '/datasources.txt');
     expect(bridgeDbInstance1.organismLatinName)
