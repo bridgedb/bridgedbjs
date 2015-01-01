@@ -14,14 +14,14 @@ var highland = require('highland');
 
 gulp.task('testEntityReference', ['launchMockserver'], function(done) {
   gulp.src(
-    ['./test/unit/entity-reference-exists-test.js'],
+    ['./test/unit/entity-reference/*.js'],
     {read: false}
   )
   .pipe(mocha({
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 2000,
+    timeout: 3000,
     // enable colors
     c: true,
     //debug: true

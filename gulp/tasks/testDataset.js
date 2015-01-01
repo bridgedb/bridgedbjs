@@ -3,21 +3,12 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testOrganism', ['launchMockserver'], function(done) {
+gulp.task('testDataset', ['launchMockserver'], function(done) {
   gulp.src(
-    // TODO Tests fail when get.js is run first. There is
-    // probably something wrong with the runOnce and/or
-    // runOncePerInstance method(s).
-    /* This fails.
-    ['./test/unit/organism/*.js'],
-    //*/
-    /* This also fails.
-    ['./test/unit/organism/get.js',
-    './test/unit/organism/query.js'],
-    //*/
+    //['./test/unit/dataset/*.js'],
     //* This succeeds.
-    ['./test/unit/organism/query.js',
-    './test/unit/organism/get.js'],
+    ['./test/unit/dataset/query.js',
+    './test/unit/dataset/get.js'],
     //*/
     {read: false}
   )
@@ -25,7 +16,7 @@ gulp.task('testOrganism', ['launchMockserver'], function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 4000,
+    timeout: 1000,
     // enable colors
     c: true,
     //debug: true

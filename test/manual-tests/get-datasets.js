@@ -1,13 +1,13 @@
 var BridgeDb = require('../../index.js');
 
 var bridgeDb1 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 function runGetAll(runNumber, timeout, expectedIterationCount) {
-  bridgeDb1.dataset.getAll()
+  bridgeDb1.dataset.query()
   .collect()
   .each(function(dataset) {
     if (runNumber === 1) {
@@ -55,13 +55,13 @@ runGetAllMultiple(1000, 0, 1);
 //*/
 
 var bridgeDb2 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 /*
-bridgeDb2.dataset.getAll()
+bridgeDb2.dataset.query()
 .each(function(dataset) {
   console.log('Data set');
   console.log(JSON.stringify(dataset, null, '\t'));
@@ -69,7 +69,7 @@ bridgeDb2.dataset.getAll()
 //*/
 
 /*
-bridgeDb2.dataset.getAll()
+bridgeDb2.dataset.query()
 .each(function(dataset) {
   console.log('Data set');
   console.log(JSON.stringify(dataset, null, '\t'));
@@ -80,7 +80,7 @@ bridgeDb2.dataset.getAll()
 var input80 = {
   'exampleResource': 'http://www.ncbi.nlm.nih.gov/gene/100010'
 };
-bridgeDb1.dataset.find(input80)
+bridgeDb1.dataset.query(input80)
 .each(function(dataset) {
   console.log('returned dataset for:');
   console.log(JSON.stringify(input80, null, '\t'));
@@ -88,11 +88,11 @@ bridgeDb1.dataset.find(input80)
 });
 //*/
 
-//*
+/*
 var input92 = {
   'exampleResource': 'http://www.ncbi.nlm.nih.gov/nuccore/NW_005785400.1'
 };
-bridgeDb1.dataset.find(input92)
+bridgeDb1.dataset.query(input92)
 .each(function(dataset) {
   console.log('returned dataset for:');
   console.log(JSON.stringify(input92, null, '\t'));
@@ -101,7 +101,7 @@ bridgeDb1.dataset.find(input92)
 //*/
 
 /*
-bridgeDb1.dataset.find({
+bridgeDb1.dataset.query({
   'name': 'Ensembl',
   'exampleIdentifier': 'ENSG00000139618'
 })
@@ -112,7 +112,7 @@ bridgeDb1.dataset.find({
 //*/
 
 /*
-bridgeDb1.dataset.find({
+bridgeDb1.dataset.query({
   //'name': 'EntrezGene',
   //'name': ['Entrez Gene'],
   'exampleIdentifier': '1234'
@@ -124,7 +124,7 @@ bridgeDb1.dataset.find({
 //*/
 
 /*
-bridgeDb2.dataset.find({
+bridgeDb2.dataset.query({
   'name': 'EntrezGene',
   //'name': ['Entrez Gene'],
   //'exampleIdentifier': '1234'
@@ -136,7 +136,7 @@ bridgeDb2.dataset.find({
 //*/
 
 /*
-bridgeDb2.dataset.getOne({'name': ['Entrez Gene']})
+bridgeDb2.dataset.get({'name': ['Entrez Gene']})
 .each(function(dataset) {
   console.log('78) returned dataset should be named "Entrez Gene"');
   console.log(JSON.stringify(dataset, null, '\t'));
@@ -144,7 +144,7 @@ bridgeDb2.dataset.getOne({'name': ['Entrez Gene']})
 //*/
 
 /*
-bridgeDb2.dataset.getOne({
+bridgeDb2.dataset.get({
   '@id': 'http://identifiers.org/ncbigene',
   'name': 'EntrezGene'
 })

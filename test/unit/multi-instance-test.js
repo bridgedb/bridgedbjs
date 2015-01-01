@@ -45,8 +45,8 @@ describe('BridgeDb', function() {
       function(done) {
 
     bridgeDbInstance1 = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
@@ -54,36 +54,33 @@ describe('BridgeDb', function() {
     });
 
     expect(bridgeDbInstance1.config.baseIri)
-      .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT);
+      .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT + '/');
     expect(bridgeDbInstance1.config.datasetsMetadataIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT +
         '/datasources.txt');
-    expect(bridgeDbInstance1.organismLatinName)
-      .to.equal('Homo sapiens');
+    expect(bridgeDbInstance1.organismNameNormalizedAsSet).to.exist;
 
     bridgeDbInstance2 = BridgeDb({
-      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
+      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       datasetsMetadataIri:
         'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
     });
 
     expect(bridgeDbInstance2.config.baseIri)
-      .to.equal('http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php');
+      .to.equal('http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/');
     expect(bridgeDbInstance2.config.datasetsMetadataIri)
       .to.equal(
         'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php');
 
-    expect(bridgeDbInstance2.organismLatinName)
-    .to.equal(undefined);
+    expect(bridgeDbInstance2.organismNameNormalizedAsSet).to.be.undefined;
 
     // Check that the first instance is unchanged
     expect(bridgeDbInstance1.config.baseIri)
-      .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT);
+      .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT + '/');
     expect(bridgeDbInstance1.config.datasetsMetadataIri)
       .to.equal('http://localhost:' + process.env.MOCKSERVER_PORT +
         '/datasources.txt');
-    expect(bridgeDbInstance1.organismLatinName)
-      .to.equal('Homo sapiens');
+    expect(bridgeDbInstance1.organismNameNormalizedAsSet).to.exist;
 
     done();
   });

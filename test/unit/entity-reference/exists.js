@@ -1,4 +1,4 @@
-var BridgeDb = require('../../index.js');
+var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
@@ -19,17 +19,16 @@ chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('myBridgeDbInstance.entityReference.exists', function() {
+describe('BridgeDb.EntityReference.exists', function() {
   var allPassed = true;
-  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
-  // if we want to update the expected JSON result
-  var updateExpectedJson = false;
+  var standardBridgeDbApiBaseIri = 'http://webservice.bridgedb.org/';
 
   before(function(done) {
     done();
   });
 
-  beforeEach(function() {
+  beforeEach(function(done) {
+    done();
   });
 
   afterEach(function(done) {
@@ -42,12 +41,12 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
   });
 
   //*
-  it('should check existence of existing entity reference (Latin)',
+  it('should check existence of existent entity reference (Latin)',
       function(done) {
 
     var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
@@ -59,7 +58,7 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
       'Homo sapiens'
     )
     .map(function(exists) {
-      return expect(exists).to.equal(true);
+      return expect(exists).to.be.true;
     })
     .each(function() {
       return done();
@@ -68,12 +67,12 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of existing entity reference (English)',
+  it('should check existence of existent entity reference (English)',
       function(done) {
 
     var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
@@ -85,7 +84,7 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
       'Human'
     )
     .map(function(exists) {
-      return expect(exists).to.equal(true);
+      return expect(exists).to.be.true;
     })
     .each(function() {
       return done();
@@ -94,12 +93,12 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of non-existing entity reference (Latin)',
+  it('should check existence of non-existent entity reference (Latin)',
       function(done) {
 
     var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
@@ -111,7 +110,7 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
       'Mus musculus'
     )
     .map(function(exists) {
-      return expect(exists).to.equal(false);
+      return expect(exists).to.be.false;
     })
     .each(function() {
       return done();
@@ -120,12 +119,12 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of non-existing entity reference (English)',
+  it('should check existence of non-existent entity reference (English)',
       function(done) {
 
     var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT,
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
@@ -137,7 +136,7 @@ describe('myBridgeDbInstance.entityReference.exists', function() {
       'Mouse'
     )
     .map(function(exists) {
-      return expect(exists).to.equal(false);
+      return expect(exists).to.be.false;
     })
     .each(function() {
       return done();
