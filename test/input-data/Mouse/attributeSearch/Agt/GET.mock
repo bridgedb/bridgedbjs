@@ -1,0 +1,38 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+11610	Entrez Gene	Agtrap
+MGI:2159437	MGI	Agtpbp1
+ENSMUSG00000029007	Ensembl	Agtrap
+ENSMUSG00000032123	Ensembl	Dpagt1
+MGI:87963	MGI	Agt
+MGI:1339977	MGI	Agtrap
+ENSMUSG00000068122	Ensembl	Agtr2
+11609	Entrez Gene	Agtr2
+11608	Entrez Gene	Agtr1b
+11606	Entrez Gene	Agt
+P35374	Uniprot-TrEMBL	AGTR2_MOUSE
+11607	Entrez Gene	Agtr1a
+ENSMUSG00000031232	Ensembl	Magt1
+ENSMUSG00000054988	Ensembl	Agtr1b
+Q3UEG6	Uniprot-TrEMBL	AGT2_MOUSE
+P29754	Uniprot-TrEMBL	AGTRA_MOUSE
+P29755	Uniprot-TrEMBL	AGTRB_MOUSE
+67269	Entrez Gene	Agtpbp1
+ENSMUSG00000021557	Ensembl	Agtpbp1
+Q8VCV9	Uniprot-TrEMBL	NAGTA_MOUSE
+MGI:1914325	MGI	Magt1
+MGI:1196396	MGI	Dpagt1
+ENSMUSG00000049115	Ensembl	Agtr1a
+Q9CQY5	Uniprot-TrEMBL	MAGT1_MOUSE
+67075	Entrez Gene	Magt1
+MGI:87966	MGI	Agtr2
+MGI:87965	MGI	Agtr1b
+MGI:87964	MGI	Agtr1a
+13478	Entrez Gene	Dpagt1
+ENSMUSG00000031980	Ensembl	Agt
+Q3UN21	Uniprot-TrEMBL	NAGTC_MOUSE

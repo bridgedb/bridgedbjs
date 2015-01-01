@@ -8,6 +8,7 @@ tasks.forEach(function(task) {
 
 // TODO move content from here into separate files in ./tasks
 var _ = require('lodash');
+var argv = require('yargs').argv;
 var buffer = require('vinyl-buffer');
 var exec = require('child_process').exec;
 var File = require('vinyl');

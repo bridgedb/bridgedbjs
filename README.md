@@ -1,8 +1,8 @@
 bridgedbjs (v3.0.2)
 ===================
 
-JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservices](http://bridgedb.org/wiki/BridgeWebservice/).
-Not all the functionality of the BridgeDb webservices are exposed by this library yet, but pull requests are welcomed.
+JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://bridgedb.org/wiki/BridgeWebservice/).
+Not all the functionality of the BridgeDb webservice are exposed by this library yet. Pull requests are welcome!
 
 ##[API Documentation](https://bridgedb.github.io/bridgedbjs/docs/)
 
@@ -33,7 +33,7 @@ BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
 
 var myBridgeDbInstance = BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php',
-  datasetsUrl: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+  datasetsMetadataIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 myBridgeDbInstance.entityReference.freeSearch({
   attribute: 'Nfkb1',

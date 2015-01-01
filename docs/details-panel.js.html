@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: details-panel.js</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"bridgedbjs","disqus":"false","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":false};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">bridgedbjs</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="BridgeDb">
+            <span class="title">
+                <a href="BridgeDb.html">BridgeDb</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="BridgeDb.Dataset">
+            <span class="title">
+                <a href="BridgeDb.Dataset.html">BridgeDb.Dataset</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="BridgeDb.Dataset~get"><a href="BridgeDb.Dataset.html#get">get</a></li>
+            
+                <li data-name="BridgeDb.Dataset~query"><a href="BridgeDb.Dataset.html#query">query</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="BridgeDb.DetailsPanel">
+            <span class="title">
+                <a href="BridgeDb.DetailsPanel.html">BridgeDb.DetailsPanel</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="BridgeDb.EntityReference">
+            <span class="title">
+                <a href="BridgeDb.EntityReference.html">BridgeDb.EntityReference</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="BridgeDb.EntityReference~createEnrichmentStream"><a href="BridgeDb.EntityReference.html#createEnrichmentStream">createEnrichmentStream</a></li>
+            
+                <li data-name="BridgeDb.EntityReference~enrich"><a href="BridgeDb.EntityReference.html#enrich">enrich</a></li>
+            
+                <li data-name="BridgeDb.EntityReference~exists"><a href="BridgeDb.EntityReference.html#exists">exists</a></li>
+            
+                <li data-name="BridgeDb.EntityReference~freeSearch"><a href="BridgeDb.EntityReference.html#freeSearch">freeSearch</a></li>
+            
+                <li data-name="BridgeDb.EntityReference~map"><a href="BridgeDb.EntityReference.html#map">map</a></li>
+            
+                <li data-name="BridgeDb.EntityReference~normalize"><a href="BridgeDb.EntityReference.html#normalize">normalize</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="BridgeDb.Organism">
+            <span class="title">
+                <a href="BridgeDb.Organism.html">BridgeDb.Organism</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="BridgeDb.Organism~_getAll"><a href="BridgeDb.Organism.html#_getAll">_getAll</a></li>
+            
+                <li data-name="BridgeDb.Organism~_getByEntityReference"><a href="BridgeDb.Organism.html#_getByEntityReference">_getByEntityReference</a></li>
+            
+                <li data-name="BridgeDb.Organism~createEntityReferenceToOrganismTransformationStream"><a href="BridgeDb.Organism.html#createEntityReferenceToOrganismTransformationStream">createEntityReferenceToOrganismTransformationStream</a></li>
+            
+                <li data-name="BridgeDb.Organism~get"><a href="BridgeDb.Organism.html#get">get</a></li>
+            
+                <li data-name="BridgeDb.Organism~query"><a href="BridgeDb.Organism.html#query">query</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="BridgeDb.Xref">
+            <span class="title">
+                <a href="BridgeDb.Xref.html">BridgeDb.Xref</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="BridgeDb.Xref~get"><a href="BridgeDb.Xref.html#get">get</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="details-panel.js.html">Source: details-panel.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>/* @module DetailsPanel */
+
+// TODO split this out into its own repo.
+
+var _ = require('lodash');
+var highland = require('highland');
+var httpErrors = require('./http-errors.js');
+var jsonLdContext = require('./context.json');
+
+/**
+ * Used internally to create a new DetailsPanel instance
+ * @class
+ * @protected
+ * @memberof BridgeDb
+ */
+var DetailsPanel = function() {
+  'use strict';
+
+  /**
+   * @private
+   * Additional details about a given concept or thing, formatted for display in a details panel, e.g.,
+   *                  {@link http://www.biopax.org/release/biopax-level3.owl#Xref|biopax:Xrefs} for an {@link EntityReference}.
+   * @typedef {Object} DetailsPanelData
+   * @property {String} label
+   * @property {String} description
+   * @property {DetailsPanelListItem[]} listItems Such as sets of Xrefs grouped by dataset.
+  */
+
+  /**
+   * @private
+   * List element with one or more subelements, e.g., Xrefs for one dataset.
+   * @typedef {Object} DetailsPanelListItem
+   * @property {String} key Title of the list element, e.g., "WikiPathways"
+   * @property {DetailsPanelListItemValue[]} values
+  */
+
+  /**
+   * @private
+   * Used to create an HTML string for one or more identifiers/links.
+   * @typedef {Object} DetailsPanelListItemValue Set of identifiers, each with a linkout when available, such as for
+   *                                             a specific Xref.
+   * @property {String} text Displayed value, e.g., "WP1"
+   * @property {String} [uri] (when available) Link to the main human-readable description/page about that identifier.
+   *                          Sometimes called a "linkout.". See {@link http://www.w3.org/2001/XMLSchema#anyURI|xsd:anyURI}.
+   *                          Example: {@link http://wikipathways.org/index.php/Pathway:WP1}
+  */
+
+  /**
+   * @private
+   *
+   * Get all xrefs available from BridgeDb for the provided entity reference.
+   * Currently limited to biopax:UnificationXrefs and biopax:RelationshipXrefs.
+   *
+   * @param {String|Object|Stream} input
+   * @param {Object} [options]
+   * @param {String} [options.format='data'] Can be set equal to "data" or "display"
+   * @return {Stream&lt;EntityReference>|Stream&lt;DetailsPanelData>} result When options.format is "data", returns stream of
+   *                          enriched {@link EntityReference|EntityReferences}.
+   *                          When options.format is "display", returns stream of {@link DetailsPanelData}, consisting
+   *                          of sets of entity reference linkouts grouped by dataset.
+   */
+  function get(input, options) {
+    if (options.format === 'display') {
+      return _formatAllForDisplay({
+        specifiedEntityReference: specifiedEntityReference,
+        label: options.label,
+        description: options.description,
+        entityReferences: entityReferences
+      });
+    }
+  }
+
+  /**
+   * @private
+   *
+   * Add label (header) and description.
+   *
+   * TODO THIS ISN'T DONE YET, SO IT PROBABLY DOESN'T WORK.
+   *
+   * @param {Object} args
+   * @param {Stream} args.inputStream
+   * @param {Object} args.primaryResource
+   * @param {String} args.label
+   * @param {String} args.description
+   * @return {Stream&lt;DetailsPanelData>} result {@link DetailsPanelData}
+   */
+  function getNested(args) {
+    console.log('args');
+    console.log(args);
+    var inputStream = args.inputStream;
+    var primaryResource = args.primaryResource;
+    var label = args.label;
+    var description = args.description;
+
+    var result = {
+      'header': label,
+      'description': description
+    };
+
+    return formatAllForDisplay(args)
+    .errors(function(err, push) {
+      console.log(err);
+      console.log('in xref._formatAllForDisplay()');
+      //For unannotated nodes, without db or identifier
+      result.listItems = ['Missing identifier and/or db'];
+      return result;
+    })
+    .map(function(listItems) {
+      result.listItems = listItems;
+      return result;
+    });
+  }
+
+  /**
+   * @private
+   *
+   * Format one or more resources for display in a details panel.
+   *
+   * @param {Object} args
+   * @param {Stream} args.inputStream
+   * @param {Object} args.specifiedResource
+   * @return {DetailsPanelListItem[]} result Collection of {@link DetailsPanelListItem|DetailsPanelListItems}
+   */
+  function formatAllForDisplay(args) {
+    console.log('args');
+    console.log(args);
+    var inputStream = args.inputStream;
+    var specifiedEntityReference = args.specifiedResource;
+    return inputStream.errors(function(err, push) {
+      console.log(err);
+      console.log('in DetailsPanel.formatAllForDisplay()');
+      // TODO this is only half thought out
+      //For unannotated nodes, without db or identifier
+      return inputStream;
+      //return 'No entityReferenceXrefs returned. Is BridgeDb down?';
+    })
+    .map(function(entityReference) {
+      var identifier = entityReference.identifier;
+      var listItem = {};
+      listItem.title = entityReference.db;
+      listItem.text = identifier;
+      listItem.isPrimary = entityReference.isPrimary;
+      /*
+      if (entityReference.hasOwnProperty('urlPattern')) {
+        listItem.uri =
+          entityReference.urlPattern.replace('$id', identifier);
+      }
+      //*/
+      var uri = _([entityReference['@id']])
+      .concat(entityReference['owl:sameAs'])
+      .compact()
+      .filter(function(thisUri) {
+        return thisUri.indexOf('http') > -1;
+      })
+      .last();
+
+      if (!!uri) {
+        listItem.uri = uri;
+      }
+
+      return listItem;
+    })
+    .collect()
+    .map(function(listItems) {
+      return listItems.sort(function(a, b) {
+        // two-factor sort: primary key is "isPrimary" and secondary key is "title," which in this case is the db
+        if (a.isPrimary === b.isPrimary) {
+          var x = a.title.toLowerCase();
+          var y = b.title.toLowerCase();
+          return x &lt; y ? -1 : x > y ? 1 : 0;
+        }
+        return b.isPrimary - a.isPrimary;
+      });
+    })
+    .sequence()
+    .group('title')
+    .flatMap(highland.pairs)
+    .reduce([], function(listItems, pair) {
+      listItems.push({
+        key: pair[0],
+        values: pair[1]
+      });
+      return listItems;
+    })
+    /*
+     * TODO Use JsonldMatcher to find the specified entity reference
+     *      and put it first.
+    .map(function(listItems) {
+      console.log('listItems');
+      console.log(listItems);
+      // TODO is this needed? It seems as if it should be handled before this stage.
+
+      // Here we handle case where either 0 or 1 result is returned by BridgeDb webservice. This would most likely happen if BridgeDb is down.
+      if (listItems.length &lt; 2) {
+        var uri = '';
+        if (specifiedEntityReference.hasOwnProperty('urlPattern')) {
+          uri = specifiedEntityReference.urlPattern.replace(
+            '$id',
+            specifiedEntityReference.identifier
+          );
+        }
+        listItems = [{
+          'key': specifiedEntityReference.db,
+          'values':[{
+            'isPrimary': true,
+            'text': specifiedEntityReference.identifier,
+            'title': specifiedEntityReference.db,
+            'uri':uri}]
+        }];
+      } else {
+        // We want the identifier that was specified by the pathway creator for this data node to be listed first.
+        var specifiedListItem = _.remove(listItems, function(element) {
+          return (element.key === specifiedEntityReference.db);
+        })[0];
+
+        var specifiedXRefId =
+          _.remove(specifiedListItem.values, function(element) {
+          return (element.text === specifiedEntityReference.identifier);
+        })[0];
+
+        specifiedListItem.values.unshift(specifiedXRefId);
+
+        listItems.unshift(specifiedListItem);
+      }
+
+      return listItems;
+    })
+    //*/
+    .collect();
+  }
+
+  return {
+    formatAllForDisplay:formatAllForDisplay
+  };
+};
+
+exports = module.exports = DetailsPanel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+        <!-- disqus code -->
+        <div id="disqus_thread"></div>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        <!-- // disqus code -->
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Dec 19 2014 18:55:39 GMT-0800 (PST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

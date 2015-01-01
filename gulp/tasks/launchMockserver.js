@@ -33,6 +33,10 @@ function gracefullyCloseServer(server) {
 }
 
 gulp.task('launchMockserver', function(done) {
+  if (!!process.env.MOCKSERVER_PORT) {
+    return done();
+  }
+
   highland(createFreePortStream())
   .map(function(port) {
     process.env.MOCKSERVER_PORT = port;

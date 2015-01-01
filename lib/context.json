@@ -13,10 +13,22 @@
     "@id":"http://www.example.org/bridgedb/input-vocab/",
     "@type":"@id"
   },
+  "Dataset": {
+    "@id": "void:Dataset",
+    "@type": "@id"
+  },
   "db": {
     "@id": "biopax:db",
     "@container": "@set",
     "@type": "xsd:string"
+  },
+  "dcterms": {
+    "@id": "http://purl.org/dc/terms/",
+    "@type": "@id"
+  },
+  "EntityReference": {
+    "@id": "biopax:EntityReference",
+    "@type": "@id"
   },
   "exampleIdentifier": {
     "@id": "idot:exampleIdentifier",
@@ -42,12 +54,12 @@
     "@id": "idot:identifierPattern",
     "@type": "xsd:string"
   },
-  "inDataset": {
-    "@id": "void:inDataset",
-    "@type": "@id"
-  },
   "idot": {
     "@id": "http://identifiers.org/idot/",
+    "@type": "@id"
+  },
+  "isDataItemIn": {
+    "@id": "SIO:SIO_001278",
     "@type": "@id"
   },
   "schema": {
@@ -69,6 +81,14 @@
   "preferredPrefix": {
     "@id": "idot:preferredPrefix",
     "@type": "xsd:string"
+  },
+  "SIO": {
+    "@id": "http://semanticscience.org/resource/",
+    "@type": "@id"
+  },
+  "subject": {
+    "@id": "dcterms:subject",
+    "@type": "@id"
   },
   "void": {
     "@id": "http://rdfs.org/ns/void#",
