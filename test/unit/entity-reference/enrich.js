@@ -48,14 +48,14 @@ describe('BridgeDb.EntityReference.enrich', function() {
 
   //*
   it('should enrich entity reference by @id\n' +
-      '        bridgeDbXrefsIri: false\n' +
+      '        xref: false\n' +
       '        context: true\n' +
       '        dataset: true\n' +
       '        organism: false',
       function(done) {
 
     lkgDataPath = __dirname +
-          '/ncbigene-4292-bridgeDbXrefsIri-false-context-true-' +
+          '/ncbigene-4292-xref-false-context-true-' +
           'dataset-true-organism-false.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
@@ -72,122 +72,17 @@ describe('BridgeDb.EntityReference.enrich', function() {
         '@id': 'http://identifiers.org/ncbigene/4292'
       }
     ], {
-      bridgeDbXrefsIri: false,
+      xref: false,
       context: true,
       dataset: true,
       organism: false
     })
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
-  it('should enrich entity reference by @id\n' +
-      '        bridgeDbXrefsIri: false\n' +
-      '        context: true\n' +
-      '        dataset: true\n' +
-      '        organism: true',
-      function(done) {
-
-    lkgDataPath = __dirname +
-          '/ncbigene-4292-bridgeDbXrefsIri-false-context-true-' +
-          'dataset-true-organism-true.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.entityReference.enrich([
-      {
-        '@id': 'http://identifiers.org/ncbigene/4292'
-      }
-    ], {
-      bridgeDbXrefsIri: false,
-      context: true,
-      dataset: true,
-      organism: true
-    })
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-
-  //*
-  it('should enrich entity reference by @id\n' +
-      '        bridgeDbXrefsIri: true\n' +
-      '        context: false\n' +
-      '        dataset: true\n' +
-      '        organism: false',
-      function(done) {
-
-    lkgDataPath = __dirname +
-          '/ncbigene-4292-bridgeDbXrefsIri-true-context-false-' +
-          'dataset-true-organism-false.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.entityReference.enrich([
-      {
-        '@id': 'http://identifiers.org/ncbigene/4292'
-      }
-    ], {
-      bridgeDbXrefsIri: true,
-      context: false,
-      dataset: true,
-      organism: false
+    .map(function(result) {
+      expect(result.xref).to.not.exist;
+      expect(result['@context']).to.exist;
+      expect(result.isDataItemIn).to.exist;
+      expect(result.organism).to.not.exist;
+      return result;
     })
     .map(JSON.stringify)
     .pipe(highland.pipeline(function(s) {
@@ -217,14 +112,14 @@ describe('BridgeDb.EntityReference.enrich', function() {
 
   //*
   it('should enrich entity reference by @id\n' +
-      '        bridgeDbXrefsIri: true\n' +
-      '        context: false\n' +
+      '        xref: false\n' +
+      '        context: true\n' +
       '        dataset: true\n' +
       '        organism: true',
       function(done) {
 
     lkgDataPath = __dirname +
-          '/ncbigene-4292-bridgeDbXrefsIri-true-context-false-' +
+          '/ncbigene-4292-xref-false-context-true-' +
           'dataset-true-organism-true.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
@@ -241,10 +136,17 @@ describe('BridgeDb.EntityReference.enrich', function() {
         '@id': 'http://identifiers.org/ncbigene/4292'
       }
     ], {
-      bridgeDbXrefsIri: true,
-      context: false,
+      xref: false,
+      context: true,
       dataset: true,
       organism: true
+    })
+    .map(function(result) {
+      expect(result.xref).to.not.exist;
+      expect(result['@context']).to.exist;
+      expect(result.isDataItemIn).to.exist;
+      expect(result.organism).to.exist;
+      return result;
     })
     .map(JSON.stringify)
     .pipe(highland.pipeline(function(s) {
@@ -272,7 +174,137 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
   //*/
 
-  it('should enrich entity references using createEnrichmentStream',
+  //*
+  it('should enrich entity reference by @id\n' +
+      '        xref: true\n' +
+      '        context: false\n' +
+      '        dataset: true\n' +
+      '        organism: false',
+      function(done) {
+
+    lkgDataPath = __dirname +
+          '/ncbigene-4292-xref-true-context-false-' +
+          'dataset-true-organism-false.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+
+    var bridgeDbInstance = BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.entityReference.enrich([
+      {
+        '@id': 'http://identifiers.org/ncbigene/4292'
+      }
+    ], {
+      xref: true,
+      context: false,
+      dataset: true,
+      organism: false
+    })
+    .map(function(result) {
+      expect(result.xref).to.exist;
+      expect(result['@context']).to.not.exist;
+      expect(result.isDataItemIn).to.exist;
+      expect(result.organism).to.not.exist;
+      return result;
+    })
+    .map(JSON.stringify)
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
+
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+  //*/
+
+  //*
+  it('should enrich entity reference by @id\n' +
+      '        xref: true\n' +
+      '        context: false\n' +
+      '        dataset: true\n' +
+      '        organism: true',
+      function(done) {
+
+    lkgDataPath = __dirname +
+          '/ncbigene-4292-xref-true-context-false-' +
+          'dataset-true-organism-true.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+
+    var bridgeDbInstance = BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.entityReference.enrich([
+      {
+        '@id': 'http://identifiers.org/ncbigene/4292'
+      }
+    ], {
+      xref: true,
+      context: false,
+      dataset: true,
+      organism: true
+    })
+    .map(function(result) {
+      expect(result.xref).to.exist;
+      expect(result['@context']).to.not.exist;
+      expect(result.isDataItemIn).to.exist;
+      expect(result.organism).to.exist;
+      return result;
+    })
+    .map(JSON.stringify)
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
+
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+  //*/
+
+  //*
+  it('should enrich entity references using createEnrichmentStream, ' +
+      'with options not specified so defaults used.',
       function(done) {
 
     lkgDataPath = __dirname +
@@ -296,6 +328,13 @@ describe('BridgeDb.EntityReference.enrich', function() {
       }
     ])
     .pipe(bridgeDbInstance2.entityReference.createEnrichmentStream())
+    .map(function(result) {
+      expect(result.xref).to.exist;
+      expect(result['@context']).to.exist;
+      expect(result.isDataItemIn).to.exist;
+      expect(result.organism).to.exist;
+      return result;
+    })
     .collect()
     .map(JSON.stringify)
     .pipe(highland.pipeline(function(s) {
@@ -321,5 +360,6 @@ describe('BridgeDb.EntityReference.enrich', function() {
       return done();
     });
   });
+  //*/
 
 });

@@ -16,4 +16,7 @@ var highland = require('highland');
 // under the wrong header, e.g.:
 //   BridgeDb.Organism.query
 //    ✓ should fetch metadata for all datasets at BridgeDb (62ms)
-gulp.task('testLocalhost', ['testDataset', 'testOrganism']);
+gulp.task('testLocalhost', ['testDataset',
+    'testOrganism',
+    'testXref',
+    'testEntityReference']);
