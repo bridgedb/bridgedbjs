@@ -29,7 +29,7 @@ function gracefullyCloseServer(server) {
     }
 
     return server.close();
-  }, 1000);
+  }, 5000);
 }
 
 gulp.task('launchMockserver', function(done) {

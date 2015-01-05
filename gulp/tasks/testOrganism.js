@@ -15,7 +15,7 @@ gulp.task('testOrganism', ['launchMockserver'], function(done) {
     ['./test/unit/organism/get.js',
     './test/unit/organism/query.js'],
     //*/
-    //* This succeeds.
+    //* But this succeeds.
     ['./test/unit/organism/query.js',
     './test/unit/organism/get.js'],
     //*/

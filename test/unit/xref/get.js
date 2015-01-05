@@ -1,4 +1,4 @@
-var BridgeDb = require('../../index.js');
+var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
@@ -9,6 +9,7 @@ var http    =  require('http');
 var mockserver  =  require('mockserver');
 var run = require('gulp-run');
 var sinon      = require('sinon');
+var testUtils = require('../../test-utils.js');
 var wd = require('wd');
 
 var desired = {'browserName': 'phantomjs'};
@@ -19,17 +20,22 @@ chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('myBridgeDbInstance.xref.get', function() {
+describe('BridgeDb.Xref.get', function() {
   var allPassed = true;
-  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
-  // if we want to update the expected JSON result
-  var updateExpectedJson = false;
+  var that = this;
+  var update;
+  var lkgDataPath;
+  var lkgDataString;
+  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
 
   before(function(done) {
+    // Find whether user requested to update the expected JSON result
+    update = testUtils.getUpdateState(that.title);
     done();
   });
 
-  beforeEach(function() {
+  beforeEach(function(done) {
+    done();
   });
 
   afterEach(function(done) {
@@ -42,68 +48,11 @@ describe('myBridgeDbInstance.xref.get', function() {
   });
 
   //*
-  it('should get xrefs by bridgeDbXrefsUrl, formatted for display',
-      function(done) {
-    var lkgXrefsPath = __dirname +
-          '/../expected-data/ncbigene-1234-xrefs.jsonld';
-    var lkgXrefsString = fs.readFileSync(lkgXrefsPath, {
-      encoding: 'utf8'
-    });
-
-    var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    var xrefStream = bridgeDbInstance.xref.get({
-        bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Homo sapiens' +
-                            '/xrefs/L/1234'
-      },
-      {
-        format:'display'
-    })
-    .collect()
-    .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        );
-    })
-    .pipe(highland.pipeline(function(s) {
-      if (updateExpectedJson) {
-        s.fork()
-        .map(function(currentXrefsString) {
-          lkgXrefsString = currentXrefsString;
-          return currentXrefsString;
-        })
-        .pipe(fs.createWriteStream(lkgXrefsPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(currentXrefsString) {
-      return expect(lkgXrefsString).to.equal(
-        currentXrefsString);
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
-  //*
   it('should get xrefs (input: plain object with identifiers IRI)',
       function(done) {
-    var lkgXrefsPath = __dirname +
-          '/../expected-data/ncbigene-4292-xrefs.jsonld';
-    var lkgXrefsString = fs.readFileSync(lkgXrefsPath, {
-      encoding: 'utf8'
-    });
+    var lkgDataPath = __dirname +
+          '/ncbigene-4292-xrefs.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
     var bridgeDbInstance = BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -115,9 +64,9 @@ describe('myBridgeDbInstance.xref.get', function() {
 
     var xrefStream = bridgeDbInstance.xref.get({
       '@id': 'http://identifiers.org/ncbigene/4292'
-      //bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Homo sapiens' +
+      //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Homo sapiens' +
         //                  '/xrefs/L/4292'
-      //bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/4292'
+      //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/4292'
     })
     .map(function(xrefs) {
       return xrefs;
@@ -131,20 +80,22 @@ describe('myBridgeDbInstance.xref.get', function() {
         );
     })
     .pipe(highland.pipeline(function(s) {
-      if (updateExpectedJson) {
+      if (update) {
         s.fork()
-        .map(function(currentXrefsString) {
-          lkgXrefsString = currentXrefsString;
-          return currentXrefsString;
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
         })
-        .pipe(fs.createWriteStream(lkgXrefsPath));
+        .pipe(fs.createWriteStream(lkgDataPath));
       }
 
       return s.fork();
     }))
-    .map(function(currentXrefsString) {
-      return expect(lkgXrefsString).to.equal(
-        currentXrefsString);
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
     })
     .last()
     .each(function() {
@@ -155,11 +106,9 @@ describe('myBridgeDbInstance.xref.get', function() {
 
   //*
   it('should get xrefs (input: stream)', function(done) {
-    var lkgXrefsPath = __dirname +
-          '/../expected-data/ncbigene-1234-4292-xrefs.jsonld';
-    var lkgXrefsString = fs.readFileSync(lkgXrefsPath, {
-      encoding: 'utf8'
-    });
+    var lkgDataPath = __dirname +
+          '/ncbigene-1234-4292-xrefs.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
     var bridgeDbInstance = BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -174,7 +123,7 @@ describe('myBridgeDbInstance.xref.get', function() {
         '@id': 'http://identifiers.org/ncbigene/4292'
       },
       {
-        bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+        bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
       }
     ])
     .pipe(bridgeDbInstance.xref.createStream())
@@ -190,20 +139,22 @@ describe('myBridgeDbInstance.xref.get', function() {
         );
     })
     .pipe(highland.pipeline(function(s) {
-      if (updateExpectedJson) {
+      if (update) {
         s.fork()
-        .map(function(currentXrefsString) {
-          lkgXrefsString = currentXrefsString;
-          return currentXrefsString;
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
         })
-        .pipe(fs.createWriteStream(lkgXrefsPath));
+        .pipe(fs.createWriteStream(lkgDataPath));
       }
 
       return s.fork();
     }))
-    .map(function(currentXrefsString) {
-      return expect(lkgXrefsString).to.equal(
-        currentXrefsString);
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
     })
     .last()
     .each(function() {
@@ -214,11 +165,9 @@ describe('myBridgeDbInstance.xref.get', function() {
 
   //*
   it('should get xrefs (input: array)', function(done) {
-    var lkgXrefsPath = __dirname +
-          '/../expected-data/ncbigene-1234-4292-xrefs.jsonld';
-    var lkgXrefsString = fs.readFileSync(lkgXrefsPath, {
-      encoding: 'utf8'
-    });
+    var lkgDataPath = __dirname +
+          '/ncbigene-1234-4292-xrefs.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
     var bridgeDbInstance = BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -233,7 +182,7 @@ describe('myBridgeDbInstance.xref.get', function() {
         '@id': 'http://identifiers.org/ncbigene/4292'
       },
       {
-        bridgeDbXrefsUrl: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+        bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
       }
     ])
     .map(function(xrefs) {
@@ -248,20 +197,22 @@ describe('myBridgeDbInstance.xref.get', function() {
         );
     })
     .pipe(highland.pipeline(function(s) {
-      if (updateExpectedJson) {
+      if (update) {
         s.fork()
-        .map(function(currentXrefsString) {
-          lkgXrefsString = currentXrefsString;
-          return currentXrefsString;
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
         })
-        .pipe(fs.createWriteStream(lkgXrefsPath));
+        .pipe(fs.createWriteStream(lkgDataPath));
       }
 
       return s.fork();
     }))
-    .map(function(currentXrefsString) {
-      return expect(lkgXrefsString).to.equal(
-        currentXrefsString);
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
     })
     .last()
     .each(function() {

@@ -5,11 +5,7 @@ var highland = require('highland');
 
 gulp.task('testDataset', ['launchMockserver'], function(done) {
   gulp.src(
-    //['./test/unit/dataset/*.js'],
-    //* This succeeds.
-    ['./test/unit/dataset/query.js',
-    './test/unit/dataset/get.js'],
-    //*/
+    ['./test/unit/dataset/*.js'],
     {read: false}
   )
   .pipe(mocha({

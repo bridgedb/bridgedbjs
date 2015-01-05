@@ -47,6 +47,53 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   });
 
   //*
+  it('should free search for entity references (Latin/single instance)',
+      function(done) {
+
+    lkgDataPath = __dirname +
+          '/hits-for-pdha1-mus-musculus.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+
+    var bridgeDb1 = BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDb1.entityReference.freeSearch({
+      attribute: 'Pdha1',
+      organism: 'Mus musculus'
+    })
+    .collect()
+    .map(JSON.stringify)
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
+
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+  //*/
+
+  //*
   it('should free search for entity references (English/single instance)',
       function(done) {
 
