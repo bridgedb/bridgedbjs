@@ -538,7 +538,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
 	
         <tr>
             
-                <td class="name"><code>bridgeDbXrefsUrl</code></td>
+                <td class="name"><code>xref</code></td>
             
             
             <td class="type">
@@ -567,7 +567,7 @@ can be piped to enrich each one with data from BridgeDb.</p>
                         
                     
                 
-                <p>Enrich with URL for BridgeDb webservices
+                <p>Enrich with IRI (URL) for BridgeDb webservices
                                        to enable getting xrefs for this entity reference.</p></td>
         </tr>
 	
@@ -711,12 +711,12 @@ for enrichment can be controlled by setting options.include.</p>
                 <p>Entity reference(s). Each one must have an identifier
 (e.g. ENSG00000160791) and means for identifying the dataset.</p>
 <p>   Acceptable entityReference input arguments:</p>
-<pre class="prettyprint source"><code> 1. BridgeDb xrefs URL or identifiers.org IRI as string
+<pre class="prettyprint source"><code> 1. BridgeDb xrefs IRI (URL) or identifiers.org IRI as string
  2. Object with at least one of these properties:
    a. { '@id': identifiers.org IRI }
-   b. { bridgeDbXrefsUrl: BridgeDb xrefs URL }
+   b. { bridgeDbXrefsIri: BridgeDb xrefs IRI (URL) }
    c. { xref: [
-       BridgeDb xrefs URL
+       BridgeDb xrefs IRI (URL)
        ...
      ]
    }
@@ -724,7 +724,7 @@ for enrichment can be controlled by setting options.include.</p>
    {
      db: database name as specified in datasources.txt
      identifier: entity reference identifier, such as ChEBI:1234
-   }</code></pre><p>   Example of BridgeDb xrefs URL: http://webservice.bridgedb.org/Human/xrefs/L/1234
+   }</code></pre><p>   Example of BridgeDb xrefs IRI (URL): http://webservice.bridgedb.org/Human/xrefs/L/1234
    Example of identifiers.org IRI: http://identifiers.org/ncbigene/1234</p></td>
         </tr>
 	
@@ -889,7 +889,7 @@ for enrichment can be controlled by setting options.include.</p>
 	
         <tr>
             
-                <td class="name"><code>bridgeDbXrefsUrl</code></td>
+                <td class="name"><code>xref</code></td>
             
             
             <td class="type">
@@ -918,7 +918,7 @@ for enrichment can be controlled by setting options.include.</p>
                         
                     
                 
-                <p>Enrich with URL for BridgeDb webservices
+                <p>Enrich with IRI (URL) for BridgeDb webservices
                                        to enable getting xrefs for this entity reference.</p></td>
         </tr>
 	
@@ -974,7 +974,7 @@ for enrichment can be controlled by setting options.include.</p>
 
 <h5>Returns:</h5>
 <a href="global.html#EntityReference"><code>EntityReference</code></a> with as many properties
-                                 as possible added.
+                                 as possible added, unless otherwise specified by options.
 <br />
 
     
@@ -988,12 +988,12 @@ for enrichment can be controlled by setting options.include.</p>
     <div class="nameContainer">
         <h4 class="name" id="exists">
             
-            <span class="type-signature ">inner</span>exists<span class="signature">(bridgeDbSystemCode, identifier, organism)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;Boolean>}</span>
+            <span class="type-signature ">inner</span>exists<span class="signature">(systemCode, identifier, organism)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;Boolean>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line301">line 301</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line305">line 305</a>
         </div>
         
     </div>
@@ -1035,7 +1035,7 @@ for enrichment can be controlled by setting options.include.</p>
 	
         <tr>
             
-                <td class="name"><code>bridgeDbSystemCode</code></td>
+                <td class="name"><code>systemCode</code></td>
             
             
             <td class="type">
@@ -1088,6 +1088,9 @@ for enrichment can be controlled by setting options.include.</p>
             
                 
 <span class="param-type">String</span>
+|
+
+<span class="param-type"><a href="global.html#Organism">Organism</a></span>
 
 
             
@@ -1097,7 +1100,8 @@ for enrichment can be controlled by setting options.include.</p>
             
             <td class="description last">
                 
-                <p>Name in English or Latin</p></td>
+                <p><a href="global.html#Organism"><code>Organism</code></a> or name in English or Latin or taxonomy IRI like
+                         <a href="http://identifiers.org/taxonomy/9606">http://identifiers.org/taxonomy/9606</a>.</p></td>
         </tr>
 	
 	
@@ -1159,12 +1163,12 @@ Whether specified entity reference exists.
     <div class="nameContainer">
         <h4 class="name" id="freeSearch">
             
-            <span class="type-signature ">inner</span>freeSearch<span class="signature">(args, <span class="optional">args['@type']</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
+            <span class="type-signature ">inner</span>freeSearch<span class="signature">(args, organism, <span class="optional">args['@type']</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line410">line 410</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line418">line 418</a>
         </div>
         
     </div>
@@ -1271,6 +1275,12 @@ Whether specified entity reference exists.
         </tr>
 	
 	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
 	
         <tr>
             
@@ -1281,6 +1291,9 @@ Whether specified entity reference exists.
             
                 
 <span class="param-type">String</span>
+|
+
+<span class="param-type"><a href="global.html#Organism">Organism</a></span>
 
 
             
@@ -1290,13 +1303,13 @@ Whether specified entity reference exists.
             
             <td class="description last">
                 
-                <p>Organism name. Currently only accepting Latin and English.</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-            </td>
+                    
+                    
+                        
+                    
+                
+                <p><a href="global.html#Organism"><code>Organism</code></a> or name in English or Latin or taxonomy IRI like
+                         <a href="http://identifiers.org/taxonomy/9606">http://identifiers.org/taxonomy/9606</a>.</p></td>
         </tr>
 	
 	
@@ -1439,7 +1452,7 @@ Whether specified entity reference exists.
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line527">line 527</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line539">line 539</a>
         </div>
         
     </div>
@@ -1632,7 +1645,7 @@ One or more <a href="global.html#EntityReference"><code>entity references</code>
     
         
         <div class="tag-source">
-            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line546">line 546</a>
+            <a href="entity-reference.js.html">entity-reference.js</a>, <a href="entity-reference.js.html#line558">line 558</a>
         </div>
         
     </div>
@@ -1772,7 +1785,7 @@ One or more <a href="global.html#EntityReference"><code>entity references</code>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Dec 19 2014 19:01:37 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Jan 06 2015 15:24:56 GMT-0800 (PST)
         </footer>
     </div>
 </div>

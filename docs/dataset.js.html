@@ -217,7 +217,7 @@ var Dataset = function(instance) {
    * @property {String} exampleIdentifier See {@link http://identifiers.org/idot/exampleIdentifier|idot:exampleIdentifier}.
    * @property {String} organism Provided only if the dataset is for a single organism. See
    *                                                       {@link http://www.biopax.org/release/biopax-level3.owl#organism|biopax:organism}.
-   * @property {String} bridgeDbType Biological type, as used at BridgeDb. See
+   * @property {String} _bridgeDbType Biological type, as used at BridgeDb. See
    *                                  {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.Builder.html#type(java.lang.String)|Java documentation}.
    * @property {JsonldType} @type {@link http://rdfs.org/ns/void#Dataset|void:Dataset}
    * @property {String|String[]} subject Subject of the database, such as the biological type of its contained entity references.
@@ -225,16 +225,16 @@ var Dataset = function(instance) {
    *                                                       {@link http://vocabularies.wikipathways.org/gpml#Type|gpml:Type}.
    *                                                       Biological type as used in Biopax: see the domain for
    *                                                       {@link http://www.biopax.org/release/biopax-level3.owl#entityReference|biopax:entityReference}.
-   * @property {Boolean} isPrimary See Java documentation for {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.html#isPrimary()|"isPrimary"}
+   * @property {Boolean} _isPrimary See Java documentation for {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.html#isPrimary()|"isPrimary"}
    *                               and for {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.Builder.html#primary(boolean)|"primary" method}.
    * @property {String} identifierPattern Regular expression for the identifiers from this dataset.
    *                                                                See {@link http://identifiers.org/idot/identifierPattern|idot:identifierPattern}.
    * @property {String} preferredPrefix Abbreviation as used by identifiers.org to identify a dataset.
-   *                                                              See {@link http://identifiers.org/idot/preferredPrefix|idot:preferredPrefix}.
+   *                                    See {@link http://identifiers.org/idot/preferredPrefix|idot:preferredPrefix}. Example: "ncbigene"
    * @property {String[]} alternatePrefix Abbreviation as used elsewhere to identify a dataset, such
-   *                                                                as at BridgeDb (bridgeDbSystemCode located both here and on its own).
+   *                                                                as at BridgeDb (_systemCode located both here and on its own).
    *                                                                See {@link http://identifiers.org/idot/alternatePrefix|idot:alternatePrefix}.
-   * @property {String} bridgeDbSystemCode See {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.html#getSystemCode()|Java documentation}.
+   * @property {String} _systemCode See {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/DataSource.html#getSystemCode()|Java documentation}.
    */
 
   /**
@@ -273,13 +273,16 @@ var Dataset = function(instance) {
         return {
           '@context': internalContext,
           _displayName: array[0],
-          bridgeDbSystemCode: array[1],
+          _systemCode: array[1],
           webPage: array[2],
           _iriPattern: array[3],
           exampleIdentifier: array[4],
-          bridgeDbType: array[5],
+          _bridgeDbType: array[5],
+          // TODO this is returning organism as a string
+          // when elsewhere we are using organism as an
+          // object. Will that cause problems?
           organism: array[6],
-          isPrimary: array[7] === '1',
+          _isPrimary: array[7] === '1',
           _miriamRootUrn: array[8],
           identifierPattern: array[9],
           _standardName: array[10]
@@ -309,6 +312,13 @@ var Dataset = function(instance) {
             '$id',
             _getIdentifierPatternWithoutBeginEndRestriction(identifierPattern)
           );
+
+          // if '$id' is at the end of the iriPattern
+          var indexOfSid = iriPattern.length - 3;
+          if (iriPattern.indexOf('$id') === indexOfSid) {
+            dataset['owl:sameAs'] = dataset['owl:sameAs'] || [];
+            dataset['owl:sameAs'].push(iriPattern.substr(0, indexOfSid));
+          }
         }
 
         dataset['@type'] = 'Dataset';
@@ -331,31 +341,37 @@ var Dataset = function(instance) {
         return dataset;
       })
       .map(function(dataset) {
-        if (!!dataset.bridgeDbType) {
+        if (!!dataset._bridgeDbType) {
           dataset.subject = [];
-          if (dataset.bridgeDbType === 'gene' ||
-            dataset.bridgeDbType === 'probe' ||
-            dataset.preferredPrefix === 'go') {
-
+          if (dataset._bridgeDbType === 'gene' ||
+              // TODO should the following two conditions be removed?
+              dataset._bridgeDbType === 'probe' ||
+              dataset.preferredPrefix === 'go') {
             dataset.subject.push('gpml:GeneProduct');
             dataset.subject.push('biopax:DnaReference');
-          } else if (dataset.bridgeDbType === 'rna') {
+          } else if (dataset._bridgeDbType === 'probe') {
+            dataset.subject.push('probe');
+          } else if (dataset._bridgeDbType === 'rna') {
             dataset.subject.push('gpml:Rna');
             dataset.subject.push('biopax:RnaReference');
-          } else if (dataset.bridgeDbType === 'protein') {
+          } else if (dataset._bridgeDbType === 'protein') {
             dataset.subject.push('gpml:Protein');
             dataset.subject.push('biopax:ProteinReference');
-          } else if (dataset.bridgeDbType === 'metabolite') {
+          } else if (dataset._bridgeDbType === 'metabolite') {
             dataset.subject.push('gpml:Metabolite');
             dataset.subject.push('biopax:SmallMoleculeReference');
-          } else if (dataset.bridgeDbType === 'pathway') {
+          } else if (dataset._bridgeDbType === 'pathway') {
             dataset.subject.push('gpml:Pathway');
             dataset.subject.push('biopax:Pathway');
+          } else if (dataset._bridgeDbType === 'ontology') {
+            dataset.subject.push('owl:Ontology');
+          } else if (dataset._bridgeDbType === 'interaction') {
+            dataset.subject.push('biopax:Interaction');
           }
         }
 
         dataset.alternatePrefix = [
-          dataset.bridgeDbSystemCode
+          dataset._systemCode
         ];
 
         return dataset;
@@ -383,14 +399,15 @@ var Dataset = function(instance) {
   }
 
   /**
-   * Get all datasets or find the datasets that match at least one of the provided argument(s).
+   * Get all datasets, or find the datasets that match at least one of the provided argument(s).
    *
    * @param {DatasetArgs} [args] If no args specified, will return all datasets.
    * @return {Stream&lt;Dataset>} datasetsStream
    */
   function query(args) {
     if (_.isEmpty(args)) {
-      return _getAll();
+      return _getAll()
+      .map(JsonldMatcher._removeNormalizedProperties);
     }
 
     // preferred keys for identifying a dataset
@@ -420,7 +437,7 @@ var Dataset = function(instance) {
               new RegExp(referenceDataset.identifierPattern);
           return !!exampleIdentifier &amp;&amp;
             !!referenceDataset.identifierPattern &amp;&amp;
-            referenceDataset.isPrimary &amp;&amp;
+            referenceDataset._isPrimary &amp;&amp;
             identifierPatternRegExp.test(exampleIdentifier);
         }, args.exampleIdentifier)
       );
@@ -438,7 +455,7 @@ var Dataset = function(instance) {
     });
   }
 
-  function convertPreferredPrefixToBridgeDbSystemCode(preferredPrefix) {
+  function convertPreferredPrefixToSystemCode(preferredPrefix) {
     return getByPreferredPrefix(preferredPrefix)
       .map(function(dataset) {
       if (!dataset) {
@@ -446,13 +463,13 @@ var Dataset = function(instance) {
            'preferredPrefix + "' + preferredPrefix + '"';
         return new Error(message);
       }
-      return dataset.bridgeDbSystemCode;
+      return dataset._systemCode;
     });
   }
 
   return {
-    convertPreferredPrefixToBridgeDbSystemCode:
-      convertPreferredPrefixToBridgeDbSystemCode,
+    convertPreferredPrefixToSystemCode:
+      convertPreferredPrefixToSystemCode,
     get:get,
     _getIdentifierPatternWithoutBeginEndRestriction:
       _getIdentifierPatternWithoutBeginEndRestriction,
@@ -479,7 +496,7 @@ module.exports = Dataset;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Dec 19 2014 19:01:37 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Jan 06 2015 15:24:56 GMT-0800 (PST)
         </footer>
     </div>
 </div>

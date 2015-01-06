@@ -203,6 +203,52 @@ var Organism = function(instance) {
   'use strict';
 
   /**
+   * See {@link http://identifiers.org/snomedct/410607006|snomedct:Organism}
+   * @typedef {Object} Organism Organism with as many as possible of the properties listed below.
+   * @property {JsonldContext} @context JSON-LD context.
+   * @property {Iri} @id Preferred IRI for identifying an organism, using http://identifiers.org/taxonomy/.
+   * @property {Object[]} name
+   * @property {String} name.en English name, when available.
+   * @property {String} name.la Full Latin name.
+   */
+
+  var latinNameToIriMappings = {
+    'Anopheles gambiae': 'http://identifiers.org/taxonomy/7165',
+    'Arabidopsis thaliana': 'http://identifiers.org/taxonomy/3702',
+    'Aspergillus niger': 'http://identifiers.org/taxonomy/5061',
+    'Bacillus subtilis': 'http://identifiers.org/taxonomy/1423',
+    'Bos taurus': 'http://identifiers.org/taxonomy/9913',
+    'Caenorhabditis elegans': 'http://identifiers.org/taxonomy/6239',
+    'Canis familiaris': 'http://identifiers.org/taxonomy/9615',
+    'Ciona intestinalis': 'http://identifiers.org/taxonomy/7719',
+    'Danio rerio': 'http://identifiers.org/taxonomy/7955',
+    'Drosophila melanogaster': 'http://identifiers.org/taxonomy/7227',
+    'Escherichia coli': 'http://identifiers.org/taxonomy/562',
+    'Equus caballus': 'http://identifiers.org/taxonomy/9796',
+    'Gallus gallus': 'http://identifiers.org/taxonomy/9031',
+    'Gibberella zeae': 'http://identifiers.org/taxonomy/5518',
+    'Glycine max': 'http://identifiers.org/taxonomy/3847',
+    'Homo sapiens': 'http://identifiers.org/taxonomy/9606',
+    'Hordeum vulgare': 'http://identifiers.org/taxonomy/4513',
+    'Macaca mulatta': 'http://identifiers.org/taxonomy/9544',
+    'Mus musculus': 'http://identifiers.org/taxonomy/10090',
+    'Mycobacterium tuberculosis': 'http://identifiers.org/taxonomy/1773',
+    'Ornithorhynchus anatinus': 'http://identifiers.org/taxonomy/9258',
+    'Oryza indica': 'http://identifiers.org/taxonomy/39946',
+    'Oryza sativa': 'http://identifiers.org/taxonomy/4530',
+    'Oryza sativa Indica Group': 'http://identifiers.org/taxonomy/39946',
+    'Populus trichocarpa': 'http://identifiers.org/taxonomy/3694',
+    'Pan troglodytes': 'http://identifiers.org/taxonomy/9598',
+    'Rattus norvegicus': 'http://identifiers.org/taxonomy/10116',
+    'Saccharomyces cerevisiae': 'http://identifiers.org/taxonomy/4932',
+    'Solanum lycopersicum': 'http://identifiers.org/taxonomy/4081',
+    'Sus scrofa': 'http://identifiers.org/taxonomy/9823',
+    'Vitis vinifera': 'http://identifiers.org/taxonomy/29760',
+    'Xenopus tropicalis': 'http://identifiers.org/taxonomy/8364',
+    'Zea mays': 'http://identifiers.org/taxonomy/4577'
+  };
+
+  /**
    * @private
    *
    * Convert organism to Latin name.
@@ -232,95 +278,11 @@ var Organism = function(instance) {
   };
 
   /**
-   * @private
-   *
-   * Get all organisms currently supported by BridgeDb.
-   *
-   * @return {Stream&lt;Object>} organism
-   * @return {Object} organism['@context'] JSON-LD context. You can ignore this.
-   * @return {Object[]} organism.name
-   * @return {String} organism.name.en English name, when available.
-   * @return {String} organism.name.la Full Latin name.
-   */
-  var _getAll = function() {
-    function init() {
-      var path = 'contents';
-      var source = instance.config.baseIri + path;
-
-      return highland(request({
-        url: source,
-        withCredentials: false
-      })
-      .pipe(csv(csvOptions)))
-      .map(function(array) {
-        var names = {};
-        var englishName = array[0];
-        var latinName = array[1];
-
-        // Note: I intentionally used 'null' as a string, not a native value,
-        // because BridgeDb returns the string value
-        if (englishName !== 'null') {
-          names.en = englishName;
-        }
-        if (latinName !== 'null') {
-          names.la = latinName;
-        }
-
-        return {
-          '@context': [
-            {
-              name: {
-                '@id': 'biopax:name',
-                '@container': '@language'
-              }
-            },
-            'http://test2.wikipathways.org/v2/contexts/organism.jsonld'
-          ],
-          name: names
-        };
-      });
-    }
-
-    return Utils._runOnceGlobal('organisms', init);
-  };
-
-  /**
-   * @private
-   *
-   * If the organism is not specified but the BridgeDb system code and
-   * entity reference identifier are, we can identify the species by
-   * trying species until we find one that exists for the system code
-   * and identifier.
-   *
-   * @param bridgeDbSystemCode
-   * @param identifier
-   * @return {Stream&lt;Object>} organism
-   * @return {Object} organism['@context'] JSON-LD context. You can ignore this if
-   *                                                  you don't care about semantics.
-   * @return {Stream&lt;Object>} organism
-   * @return {Object[]} organism.name
-   * @return {String} organism.name.en English name, when available.
-   * @return {String} organism.name.la Full Latin name.
-   */
-  var _getByBridgeDbSystemCodeAndIdentifier =
-    function(bridgeDbSystemCode, identifier) {
-    var exists = highland.curry(instance.entityReference.exists,
-        bridgeDbSystemCode, identifier);
-
-    return _getAll()
-    // TODO sort organisms by number of pathways at WikiPathways. Get that data as part of build step for this library.
-    .flatFilter(function(organism) {
-      return exists(organism.name.la);
-    })
-    .head();
-  };
-
-  /**
    * Get one organism.
    *
    * @param {Object|String} searchCriteria
    * @param {String|String[]} [searchCriteria['@type']='Organism']
-   * @return {Stream&lt;Object>} organismStream
+   * @return {Stream&lt;Organism>} organismStream
    */
   function get(searchCriteria) {
     if (_.isEmpty(searchCriteria)) {
@@ -333,16 +295,85 @@ var Organism = function(instance) {
   /**
    * @private
    *
+   * Get all organisms currently supported by BridgeDb.
+   *
+   * @return {Stream&lt;Organism>} organism
+   */
+  var _getAll = function() {
+    var path = 'contents';
+    var source = instance.config.baseIri + path;
+
+    return highland(request({
+      url: source,
+      withCredentials: false
+    })
+    .pipe(csv(csvOptions)))
+    .map(function(array) {
+      var names = {};
+      var englishName = array[0];
+      var latinName = array[1];
+
+      // Note: I intentionally used 'null' as a string, not a native value,
+      // because BridgeDb returns the string value
+      if (englishName !== 'null') {
+        names.en = englishName;
+      }
+      if (latinName !== 'null') {
+        names.la = latinName;
+      }
+
+      return {
+        '@context': [
+          {
+            name: {
+              '@id': 'biopax:name',
+              '@container': '@language'
+            },
+            Organism: 'http://identifiers.org/snomedct/410607006'
+          }
+        ],
+        '@id': latinNameToIriMappings[latinName],
+        '@type': 'Organism',
+        name: names
+      };
+    });
+  };
+
+  /**
+   * @private
+   *
+   * If the organism is not specified but the BridgeDb system code and
+   * entity reference identifier are, we can identify the species by
+   * trying species until we find one that exists for the system code
+   * and identifier.
+   *
+   * @param systemCode
+   * @param identifier
+   * @return {Stream&lt;Organism>} organismStream
+   */
+  var _getBySystemCodeAndIdentifier =
+    function(systemCode, identifier) {
+    var exists = highland.curry(instance.entityReference.exists,
+        systemCode, identifier);
+
+    return query()
+    // TODO sort organisms by number of pathways at WikiPathways. Get that data as part of build step for this library.
+    .flatFilter(function(organism) {
+      return exists(organism.name.la);
+    })
+    .head();
+  };
+
+  /**
+   * @private
+   *
    * Identifies the organism for the provided entity reference and returns all
    * the data BridgeDb has about that organism, which currently is the Latin name
    * and, when available, the English name.
    *
    * @param {Object} entityReference See bridgeDb.entityReference.enrich for information
    *                                  on acceptable entity reference inputs.
-   * @return {Stream&lt;Object>} organism
-   * @return {Object[]} organism.name
-   * @return {String} organism.name.en English name, when available.
-   * @return {String} organism.name.la Full Latin name.
+   * @return {Stream&lt;Organism>} organismStream
    */
   function _getByEntityReference(entityReference) {
     // TODO as part of the build process, query all species like this:
@@ -352,26 +383,38 @@ var Organism = function(instance) {
     // Save that data as a JSON file.
     // Then use those limitations in this query.
 
-    return instance.entityReference.enrich(entityReference, {
-      bridgeDbXrefsUrl: false,
-      dataset: true,
-      organism: false
-    })
-    .flatMap(function(entityReference) {
+    var entityReferenceStream;
+
+    var systemCodeExists = !!entityReference.isDataItemIn &amp;&amp;
+      (entityReference.isDataItemIn._systemCode ||
+      _.isArray(entityReference.isDataItemIn.alternatePrefix) &amp;&amp;
+      entityReference.isDataItemIn.alternatePrefix[0]);
+    if (!systemCodeExists) {
+      entityReferenceStream = instance.entityReference.enrich(entityReference, {
+        bridgeDbXrefsUrl: false,
+        dataset: true,
+        organism: false
+      });
+    } else {
+      entityReferenceStream = highland([entityReference]);
+    }
+
+    return entityReferenceStream.flatMap(function(entityReference) {
       var organism = entityReference.organism;
       if (!!organism) {
-        return highland([organism]).map(_normalize);
+        return _normalize(organism);
       }
 
-      var bridgeDbSystemCode = entityReference.inDataset.bridgeDbSystemCode ||
-        _.isArray(entityReference.alternatePrefix) &amp;&amp;
-        entityReference.alternatePrefix[0];
+      var systemCode =
+        entityReference.isDataItemIn._systemCode ||
+        _.isArray(entityReference.isDataItemIn.alternatePrefix) &amp;&amp;
+        entityReference.isDataItemIn.alternatePrefix[0];
 
       var identifier = entityReference.identifier;
 
-      if (!!bridgeDbSystemCode &amp;&amp; !!identifier) {
-        return _getByBridgeDbSystemCodeAndIdentifier(
-          bridgeDbSystemCode, identifier);
+      if (!!systemCode &amp;&amp; !!identifier) {
+        return _getBySystemCodeAndIdentifier(
+          systemCode, identifier);
       } else {
         console.warn('Cannot get organism by entityReference.');
         return entityReference;
@@ -382,31 +425,26 @@ var Organism = function(instance) {
   /**
    * @private
    *
-   * Each BridgeDb instance has one organism name associated with it. This
-   * function gets the organism name once and then always returns that organism name.
+   * Each BridgeDb instance has one organism associated with it. This
+   * function gets the organism once and then always returns that organism.
    *
    * @param {Object|String} searchCriteria
-   * @return {Stream&lt;String>} organismNameNormalized Full Latin name.
-   * @return {String}
+   * @return {Stream&lt;Organism>} Organism
    */
-  function _getInstanceOrganismName(searchCriteria) {
+  function _getInstanceOrganism(searchCriteria) {
+    var searchCriteriaUsed = instance.instanceOrganismNonNormalized ||
+      searchCriteria;
+
     function initMethod() {
-      if (!_.isEmpty(instance.organismNameNonNormalized)) {
-        return _setInstanceOrganismName(instance.organismNameNonNormalized);
-      } else {
-        return get(searchCriteria)
-        .map(function(organism) {
-          // returns either the organism name or false
-          return !!organism.name &amp;&amp; !!organism.name.la &amp;&amp; organism.name.la;
-        });
-      }
+      return query(searchCriteriaUsed);
     }
 
     return Utils._runOncePerInstance(
         instance,
-        'organismNameNormalized',
+        'instanceOrganism',
         initMethod
-    );
+    )
+    .head();
   }
 
   /**
@@ -416,10 +454,7 @@ var Organism = function(instance) {
    *
    * @param {String|Object} organism - Can be name in Latin (full like "Escherichia coli"
    *      or abbreviated like "E. coli") or English. In the future, we might include IRIs for organisms.
-   * @return {Stream&lt;Object>} organism
-   * @return {Object[]} organism.name
-   * @return {String} organism.name.en English name, when available.
-   * @return {String} organism.name.la Full Latin name.
+   * @return {Stream&lt;Organism>} organismStream
    */
   function _normalize(organism) {
     var organismIdentifier;
@@ -460,11 +495,11 @@ var Organism = function(instance) {
    *
    * @param {Object|String} searchCriteria
    * @param {String|String[]} [searchCriteria['@type']='Organism']
-   * @return {Stream&lt;Object>} organismStream
+   * @return {Stream&lt;Organism>} organismStream
    */
   function query(searchCriteria) {
     if (_.isEmpty(searchCriteria)) {
-      return _getAll();
+      return Utils._runOnceGlobal('organisms', _getAll);
     }
 
     var typeToFunctionMapping = {
@@ -502,27 +537,17 @@ var Organism = function(instance) {
    *                                 with another organism, create another bridgedbjs instance.
    * @param {Boolean} normalize Normalize the provided organism to ensure it matches what
    *                                 the BridgeDb API expects.
-   * @return {Stream&lt;String>} Normalized organism name. Note that if args.normalize is set to false,
+   * @return {Stream&lt;Organism>} Normalized organism name. Note that if args.normalize is set to false,
    *                          the returned value will be whatever was provided as args.organism.
    */
-  function _setInstanceOrganismName(organism, normalize) {
-    normalize = normalize || true;
+  function _setInstanceOrganism(organism, normalize) {
+    if (normalize === null || typeof normalize === 'undefined') {
+      normalize = true;
+    }
 
+    instance.instanceOrganismNonNormalized = organism;
     if (normalize) {
-      var initMethod = highland.partial(_convertToLatinName, organism);
-      return Utils._runOncePerInstance(
-          instance,
-          // TODO why can't I set this to organismNameNormalized?
-          // There appears to be a conflict with having the same name
-          // here and in _getInstanceOrganismName(), so for now, I'm
-          // setting this to organismNameNormalizedAsSet, but I don't know
-          // why I need to.
-          'organismNameNormalizedAsSet',
-          initMethod
-      );
-    } else {
-      instance.organismNameNonNormalized = organism;
-      return highland([organism]);
+      return _getInstanceOrganism(organism);
     }
   }
 
@@ -530,9 +555,9 @@ var Organism = function(instance) {
     createEntityReferenceToOrganismTransformationStream:
       createEntityReferenceToOrganismTransformationStream,
     get:get,
-    _getInstanceOrganismName:_getInstanceOrganismName,
+    _getInstanceOrganism:_getInstanceOrganism,
     query:query,
-    _setInstanceOrganismName:_setInstanceOrganismName
+    _setInstanceOrganism:_setInstanceOrganism
   };
 };
 
@@ -555,7 +580,7 @@ exports = module.exports = Organism;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Dec 19 2014 19:01:37 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Jan 06 2015 15:24:56 GMT-0800 (PST)
         </footer>
     </div>
 </div>

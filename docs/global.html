@@ -496,7 +496,7 @@
 	
         <tr>
             
-                <td class="name"><code>bridgeDbType</code></td>
+                <td class="name"><code>_bridgeDbType</code></td>
             
             
             <td class="type">
@@ -573,7 +573,7 @@
 	
         <tr>
             
-                <td class="name"><code>isPrimary</code></td>
+                <td class="name"><code>_isPrimary</code></td>
             
             
             <td class="type">
@@ -638,7 +638,7 @@
             
             
             <td class="description last"><p>Abbreviation as used by identifiers.org to identify a dataset.
-                                                             See <a href="http://identifiers.org/idot/preferredPrefix">idot:preferredPrefix</a>.</p></td>
+                                   See <a href="http://identifiers.org/idot/preferredPrefix">idot:preferredPrefix</a>. Example: &quot;ncbigene&quot;</p></td>
         </tr>
 	
 	
@@ -662,7 +662,7 @@
             
             
             <td class="description last"><p>Abbreviation as used elsewhere to identify a dataset, such
-                                                               as at BridgeDb (bridgeDbSystemCode located both here and on its own).
+                                                               as at BridgeDb (_systemCode located both here and on its own).
                                                                See <a href="http://identifiers.org/idot/alternatePrefix">idot:alternatePrefix</a>.</p></td>
         </tr>
 	
@@ -670,7 +670,7 @@
 	
         <tr>
             
-                <td class="name"><code>bridgeDbSystemCode</code></td>
+                <td class="name"><code>_systemCode</code></td>
             
             
             <td class="type">
@@ -1097,7 +1097,7 @@
 	
         <tr>
             
-                <td class="name"><code>inDataset</code></td>
+                <td class="name"><code>isDataItemIn</code></td>
             
             
             <td class="type">
@@ -1114,7 +1114,7 @@
             
             
             <td class="description last"><p>The dataset (database) for the identifier. See
-                 <a href="http://rdfs.org/ns/void#inDataset">void:inDataset</a></p></td>
+                 <a href="http://semanticscience.org/resource/SIO_001278">SIO:001278</a></p></td>
         </tr>
 	
 	
@@ -1137,7 +1137,7 @@
             
             
             
-            <td class="description last"><p>URL for getting Xrefs, such as from the BridgeDb webservices.</p></td>
+            <td class="description last"><p>IRI (URL) for getting Xrefs, such as from the BridgeDb webservices.</p></td>
         </tr>
 	
 	
@@ -1160,7 +1160,7 @@
             
             
             
-            <td class="description last"><p>See <a href="http://www.biopax.org/release/biopax-level3.owl#id">biopax:id</a></p></td>
+            <td class="description last"><p>See <a href="http://www.biopax.org/release/biopax-level3.owl#id">biopax:id</a> Example: &quot;1234&quot;.</p></td>
         </tr>
 	
 	
@@ -1371,6 +1371,218 @@
                 
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="Organism">Organism<span class="type-signature type object">Object</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>See <a href="http://identifiers.org/snomedct/410607006">snomedct:Organism</a></p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>@context</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#JsonldContext">JsonldContext</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>JSON-LD context.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>@id</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Iri">Iri</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>Preferred IRI for identifying an organism, using http://identifiers.org/taxonomy/.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>en</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>English name, when available.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>la</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>Full Latin name.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+            
+                
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="Stream">Stream</h4>
     </div>
     
@@ -1435,7 +1647,7 @@
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Fri Dec 19 2014 19:01:37 GMT-0800 (PST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue Jan 06 2015 15:24:56 GMT-0800 (PST)
         </footer>
     </div>
 </div>
