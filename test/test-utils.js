@@ -176,18 +176,23 @@ var testUtils = (function() {
           var finalValue = previousValue[currentKey];
           if (_.isArray(previousValue)) {
             previousValue.push(jsonDiff.lhs);
-            lhsReplaceNthMatchIndex = previousValue.length;
+            lhsReplaceNthMatchIndex = _.filter(
+              _.initial(previousValue),
+            function(element) {
+              return JSON.stringify(jsonDiff.lhs) === JSON.stringify(element);
+            }).length;
           } else if (_.isPlainObject(previousValue)) {
             previousValue[currentKey] = jsonDiff.lhs;
           }
         }
         if (_.isArray(previousValue)) {
-          rhsReplaceNthMatchIndex = _.filter(_.initial(previousValue, key),
+          rhsReplaceNthMatchIndex = _.filter(
+              _.initial(previousValue, index - key + 1),
           function(element) {
             return JSON.stringify(jsonDiff.rhs) === JSON.stringify(element);
           }).length;
         } else if (_.isPlainObject(previousValue)) {
-          lhsReplaceNthMatchIndex = rhsReplaceNthMatchIndex = 1;
+          lhsReplaceNthMatchIndex = rhsReplaceNthMatchIndex = 0;
         }
 
         return previousValue;
@@ -213,6 +218,7 @@ var testUtils = (function() {
         rhsItem = rhsValue;
       }
       rhsItemReplacement = rhsItem[jsonDiffSideToColorMappings.rhs];
+
       diffItemInContextString = replaceNthMatch(
           diffItemInContextString, rhsItem,
           rhsReplaceNthMatchIndex, rhsItemReplacement);
@@ -242,9 +248,9 @@ var testUtils = (function() {
           console.log(message);
         } else {
           console.log('Item was replaced.');
-          console.log('* Original Item:');
+          console.log('Original Item:'.bold.white);
           console.log(lhsItemReplacement);
-          console.log('* Replacement Item (in context):');
+          console.log('Replacement Item (in context):'.bold.white);
         }
       }
     }
@@ -261,8 +267,7 @@ var testUtils = (function() {
    */
   function getJsonDiffLoggers(actualJson, jsonDiff) {
     if (jsonDiff.kind === 'A') {
-      jsonDiff.path.push(jsonDiff.index);
-      jsonDiff.item.path = jsonDiff.path;
+      jsonDiff.item.path = jsonDiff.path.concat(jsonDiff.index);
       return getJsonDiffLoggers(actualJson, jsonDiff.item);
     } else if (jsonDiff.kind === 'N') {
       return function() {
@@ -332,9 +337,22 @@ var testUtils = (function() {
     return updateEnabled;
   }
 
-  // thanks to
-  // http://stackoverflow.com/questions/36183/replacing-the-nth-instance-of-a-regex-match-in-javascript
+  /**
+   * thanks to
+   * http://stackoverflow.com/questions/36183/replacing-the-nth-instance-of-a-regex-match-in-javascript
+   *
+   * @param {string} original
+   * @param {string|object} pattern If object, the object is a JS regular expression.
+   * @param {number} n Which one of the matches to replace. Currently zero-based, although the
+   *                   original was one-based.
+   * @param {string} replace
+   * @return {string}
+   */
   function replaceNthMatch(original, pattern, n, replace) {
+    // Convert n from zero-based to one-based.
+    // The original code expected n to be one-based, but it's easier to use
+    // when it's zero-based.
+    n = n + 1;
     var parts;
     var tempParts;
 
