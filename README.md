@@ -53,6 +53,14 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 Pull requests are welcome.
 
-To build,
+To bump version and build:
 
+```
+gulp build
+```
 
+To create new release and push to github:
+
+```
+gulp publish
+```
