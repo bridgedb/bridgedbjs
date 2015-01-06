@@ -53,13 +53,16 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 Pull requests are welcome.
 
-To bump version and build:
+Process:
+
+1) Commit changes to the master branch of your local repo
+2) Build
 
 ```
 gulp build
 ```
 
-To create new release and push to github:
+3) Create new release and update pages at github:
 
 ```
 gulp publish

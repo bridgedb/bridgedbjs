@@ -9,7 +9,6 @@ tasks.forEach(function(task) {
 // TODO move content from here into separate files in ./tasks
 var _ = require('lodash');
 var argv = require('yargs').argv;
-var buffer = require('vinyl-buffer');
 var exec = require('child_process').exec;
 var File = require('vinyl');
 var fs = require('vinyl-fs');
@@ -25,8 +24,6 @@ var nodeFs = require('fs');
 var rename = require('gulp-rename');
 var replace = require('gulp-regex-replace');
 var source = require('vinyl-source-stream');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
 
 var createGitCheckoutStream = highland.wrapCallback(git.checkout);
 var createGitMergeStream = highland.wrapCallback(git.merge);
