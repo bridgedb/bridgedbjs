@@ -46,15 +46,6 @@ var metadataFiles = [
 
 //gulp.task('default', ['build']);
 
-/*
-gulp.task('build', [
-  'browserify',
-  'build-docs'
-], function(callback) {
-  return callback();
-});
-//*/
-
 gulp.task('build-docs', ['bump-readme'], function(callback) {
   // I think gulp-jsdoc currently cannot use an external conf.json.
   // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
@@ -81,7 +72,7 @@ gulp.task('build-docs', ['bump-readme'], function(callback) {
     });
 });
 
-/*
+//*
 gulp.task('bump', [
   'bump-git'
 ], function(callback) {
@@ -106,7 +97,7 @@ gulp.task('bump-git', ['build'], function bumpGit(callback) {
 });
 //*/
 
-/*
+//*
 // Update bower, component, npm all at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
   gulp.src(metadataFiles)
@@ -132,7 +123,7 @@ gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
 });
 //*/
 
-/*
+//*
 gulp.task('bump-readme', ['bump-metadata-files'], function() {
   return gulp.src('README.md')
     .pipe(replace({
@@ -143,8 +134,8 @@ gulp.task('bump-readme', ['bump-metadata-files'], function() {
 });
 //*/
 
+//*
 // get version type
-/*
 gulp.task('get-version-type', ['verify-git-status'], function(callback) {
   highland(createPromptStream({
     type: 'list',
