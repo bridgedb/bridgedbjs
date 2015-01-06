@@ -48,3 +48,11 @@ Most methods return [Node.js streams](http://nodejs.org/api/stream.html). Anywhe
 You can also ```pipe``` the stream through another stream or use any of the other functionality from the [Highland stream library](http://highlandjs.org/).
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
+
+## Developing
+
+Pull requests are welcome.
+
+To build,
+
+
