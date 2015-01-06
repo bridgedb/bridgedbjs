@@ -6,15 +6,19 @@
    of browserify for faster bundling using caching.
 */
 
+var brfs = require('gulp-brfs');
 var browserify   = require('browserify');
-var watchify     = require('watchify');
+var buffer = require('vinyl-buffer');
 var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
-var brfs = require('gulp-brfs');
 var handleErrors = require('../util/handleErrors');
+var packageJson = require('../../package.json');
 var source       = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var watchify     = require('watchify');
 
-/*
+//*
 // TODO Check whether we need any of the commented-out code below.
 // The commented-out code below is just a copy-paste from another library.
 // The non-commented-out code is working.
@@ -23,10 +27,10 @@ gulp.task('browserify', function() {
   var bundleMethod = global.isWatching ? watchify : browserify;
 
   var getBundleName = function() {
-    var version = newPackageJson.version;
+    var version = packageJson.version;
     console.log('version');
     console.log(version);
-    var name = newPackageJson.name;
+    var name = packageJson.name;
     return name + '-' + version + '.' + 'min';
   };
 
@@ -36,23 +40,23 @@ gulp.task('browserify', function() {
     // Browserify Options
     // specify entry point of app
     entries: ['./index.js'],
-    debug: true
-	})
+    // Enable source maps!
+    debug: true,
+    //insertGlobals : true,
+    //exclude: 'cheerio'
+	});
+  /*
   // enable fs.readFileSync() in browser
   .transform('brfs')
   .transform('deglobalify');
+  //*/
 
   var bundle = function() {
 		// Log when bundling starts
     bundleLogger.start();
 
     return bundler
-			.bundle({
-        insertGlobals : true,
-        //exclude: 'cheerio',
-        // Enable source maps!
-        //debug: true
-      })
+			.bundle()
 			// Report compile errors
 			.on('error', handleErrors)
 			// Use vinyl-source-stream to make the
@@ -79,29 +83,3 @@ gulp.task('browserify', function() {
   return bundle();
 });
 //*/
-
-gulp.task('browserify', function() {
-
-  var bundler = browserify({
-    // Required watchify args
-    cache: {}, packageCache: {}, fullPaths: true,
-    // Browserify Options
-    entries: ['./index.js'],
-    debug: true
-  });
-
-  var bundle = function() {
-    return bundler
-      .bundle()
-      .on('error', handleErrors)
-      .pipe(source('index.js'))
-      .pipe(gulp.dest('./dist/'));
-  };
-
-  if (global.isWatching) {
-    bundler = watchify(bundler);
-    bundler.on('update', bundle);
-  }
-
-  return bundle();
-});
