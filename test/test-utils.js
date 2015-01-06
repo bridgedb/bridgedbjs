@@ -93,9 +93,9 @@ var testUtils = (function() {
     console.log('**          Expected JSON           **');
     console.log('**************************************');
     console.log(pd.json(expectedJson).white.bgRed);
-    //*/
 
     displayActualJson(actualJson);
+    //*/
 
     //*
     console.log('**************************************');
@@ -338,7 +338,7 @@ var testUtils = (function() {
   }
 
   /**
-   * thanks to
+   * Based on this version:
    * http://stackoverflow.com/questions/36183/replacing-the-nth-instance-of-a-regex-match-in-javascript
    *
    * @param {string} original

@@ -5,7 +5,7 @@ var highland = require('highland');
 
 gulp.task('testXref', ['launchMockserver'], function(done) {
   gulp.src(
-    ['./test/unit/xref/get.js'],
+    ['./test/unit/xref/*.js'],
     {read: false}
   )
   .pipe(mocha({
