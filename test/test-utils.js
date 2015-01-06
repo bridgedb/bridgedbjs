@@ -12,14 +12,6 @@ var strcase = require('tower-strcase');
 var testUtils = (function() {
   'use strict';
 
-  function getLkgDataString(lkgDataPath) {
-    var lkgExists = fs.existsSync(lkgDataPath);
-    var lkgDataString = lkgExists ? fs.readFileSync(lkgDataPath, {
-      encoding: 'utf8'
-    }) : false;
-    return !!lkgDataString ? lkgDataString : '{}';
-  }
-
   //*
   var jsonDiffKindMappings = {
     'E': {
@@ -50,7 +42,115 @@ var testUtils = (function() {
   };
   //*/
 
-  function displayJsonDiffStringInContext(newJson, jsonDiff) {
+  /**
+   * compareJson
+   *
+   * @param {string} actualJsonString
+   * @param {string} expectedJsonString
+   * @return
+   */
+  function compareJson(actualJsonString, expectedJsonString) {
+    if (actualJsonString === expectedJsonString) {
+      // We're good
+      return true;
+    }
+
+    var actualJson = JSON.parse(actualJsonString);
+
+    if (expectedJsonString === '{}') {
+      console.log('***************************************************');
+      console.log('**      New Test - No Expected JSON Available    **');
+      console.log('** If Actual JSON below is valid, save it as     **');
+      console.log('** Expected JSON with the following command:     **');
+      console.log('** gulp testClass --update=BridgeDb.Class.method **');
+      console.log('***************************************************');
+      displayActualJson(actualJson);
+      return false;
+    }
+
+    var expectedJson = JSON.parse(expectedJsonString);
+    var jsonDiffs = _.filter(diff(expectedJson, actualJson),
+    function(jsonDiff) {
+      // TODO why do we test for !jsonDiff.path here?
+      // If the only difference is in the xref IRI, we're still good.
+      // We ignore differences in the xref IRI, because this value
+      // varies depending on whatever free port was available for
+      // the mock server.
+      return !jsonDiff.path || (jsonDiff.path.indexOf('xref') === -1);
+    });
+
+    if (!jsonDiffs || _.isEmpty(jsonDiffs)) {
+      // JSON is equivalent but is not identical as stringified,
+      // so we're still good.
+      // Possibly reasons for not being identical:
+      // * property order changed
+      // * BridgeDb xref IRI changed (which is OK)
+      return true;
+    }
+
+    /*
+    console.log('**************************************');
+    console.log('**          Expected JSON           **');
+    console.log('**************************************');
+    console.log(pd.json(expectedJson).white.bgRed);
+    //*/
+
+    displayActualJson(actualJson);
+
+    //*
+    console.log('**************************************');
+    console.log('**  jsonDiffs: Expected vs. Actual  **');
+    console.log('**************************************');
+    console.log(jsonDiffs);
+    //*/
+
+    jsonDiffs.map(function(jsonDiff) {
+      return getJsonDiffLoggers(actualJson, jsonDiff);
+    })
+    .map(function(jsonDiffLogger) {
+      return jsonDiffLogger();
+    });
+    //*/
+
+    return false;
+  }
+
+  /**
+   * displayActualJson
+   *
+   * @param {object|array} actualJson
+   * @return
+   */
+  function displayActualJson(actualJson) {
+    console.log('**************************************');
+    console.log('**           Actual JSON            **');
+    console.log('**************************************');
+    console.log(pd.json(actualJson).white.bgBlue);
+  }
+
+  /**
+   * NOTE: context here just means the JSON surrounding the jsonDiff item.
+   * (It has nothing to do with JSON-LD.)
+   *
+   * Colorize json diff
+   *
+   * * Object property
+   *   - Created
+   *   - Updated
+   *   - Deleted
+   * * Array element
+   *   - Created
+   *   - Updated
+   *     1. Moved
+   *     2. Value changed
+   *   - Deleted
+   *
+   * @param {object} actualJson
+   * @param {object} jsonDiff
+   * @return
+   */
+  function displayDiffItemInContext(actualJson, jsonDiff) {
+    // TODO aren't we already checking for this earlier?
     if (!jsonDiff.path) {
       return console.log('');
     }
@@ -61,65 +161,40 @@ var testUtils = (function() {
     var lhsItem = '';
     var rhsItem = '';
     var key = _.last(jsonDiff.path);
-    var oldArray = [];
 
-    var deletedNamespace = '_deleted_';
+    var replaceNthMatchIndex;
+    var lhsReplaceNthMatchIndex;
+    var rhsReplaceNthMatchIndex;
 
-    var surroundingJson = jsonDiff.path.reduce(function(
+    var diffItemInContext = jsonDiff.path.reduce(function(
         previousValue, currentKey, index, array) {
       if (previousValue.hasOwnProperty(currentKey) &&
         index < array.length - 1) {
         return previousValue[currentKey];
       } else {
-        if (!!jsonDiff.lhs) {
+        if (jsonDiff.kind === 'D') {
           var finalValue = previousValue[currentKey];
-          if (_.isPlainObject(previousValue)) {
-            previousValue[deletedNamespace + currentKey] = jsonDiff.lhs;
-          } else {
-            if (jsonDiff.kind === 'D') {
-              previousValue.unshift(jsonDiff.lhs);
-            } else if (jsonDiff.kind === 'E') {
-              oldArray = _.clone(previousValue);
-              oldArray[currentKey] = jsonDiff.lhs;
-            }
-            /*
-            var lhsString = _.isPlainObject(jsonDiff.lhs) ||
-              _.isArray(jsonDiff.lhs) ?
-              JSON.stringify(jsonDiff.lhs) : String(jsonDiff.lhs);
-
-            var finalValue = previousValue[currentKey];
-            var rhsString = _.isPlainObject(finalValue) ||
-              _.isArray(finalValue) ?
-              JSON.stringify(finalValue) : String(finalValue);
-            console.log('rhsString');
-            console.log(rhsString);
-            console.log('lhsString');
-            console.log(lhsString);
-            previousValue[currentKey] = rhsString + lhsString;
-            if (!!jsonDiff.rhs) {
-              previousValue[currentKey] = jsonDiff.rhs + jsonDiff.lhs;
-            } else {
-              previousValue[currentKey] = jsonDiff.lhs;
-            }
-            //*/
+          if (_.isArray(previousValue)) {
+            previousValue.push(jsonDiff.lhs);
+            lhsReplaceNthMatchIndex = previousValue.length;
+          } else if (_.isPlainObject(previousValue)) {
+            previousValue[currentKey] = jsonDiff.lhs;
           }
-
-          /*
-          var finalValue = previousValue[currentKey];
-          if (_.isArray(finalValue)) {
-            finalValue.push(jsonDiff.lhs);
-          } else {
-            previousValue[deletedNamespace + currentKey] = jsonDiff.lhs;
-          }
-          //*/
-          return previousValue;
-        } else {
-          return previousValue;
         }
-      }
-    }, newJson);
+        if (_.isArray(previousValue)) {
+          rhsReplaceNthMatchIndex = _.filter(_.initial(previousValue, key),
+          function(element) {
+            return JSON.stringify(jsonDiff.rhs) === JSON.stringify(element);
+          }).length;
+        } else if (_.isPlainObject(previousValue)) {
+          lhsReplaceNthMatchIndex = rhsReplaceNthMatchIndex = 1;
+        }
 
-    var value = surroundingJson[key];
+        return previousValue;
+      }
+    }, actualJson);
+
+    var value = diffItemInContext[key];
     var lhsValue = _.isPlainObject(jsonDiff.lhs) ||
       _.isArray(jsonDiff.lhs) ?
       JSON.stringify(jsonDiff.lhs) : '"' + String(jsonDiff.lhs) + '"';
@@ -127,127 +202,79 @@ var testUtils = (function() {
       _.isArray(jsonDiff.rhs) ?
       JSON.stringify(jsonDiff.rhs) : '"' + String(jsonDiff.rhs) + '"';
 
-    if (!!jsonDiff.lhs) {
-      if (_.isPlainObject(surroundingJson)) {
-        lhsItem = '"' + deletedNamespace + key + '"' + ':' + lhsValue;
-      } else {
-        lhsItem = lhsValue;
-      }
-    }
+    var diffItemInContextString = JSON.stringify(diffItemInContext);
+
+    var rhsItemReplacement;
 
     if (!!jsonDiff.rhs) {
-      if (_.isPlainObject(surroundingJson)) {
+      if (_.isPlainObject(diffItemInContext)) {
         rhsItem = '"' + key + '"' + ':' + rhsValue;
       } else {
         rhsItem = rhsValue;
       }
+      rhsItemReplacement = rhsItem[jsonDiffSideToColorMappings.rhs];
+      diffItemInContextString = replaceNthMatch(
+          diffItemInContextString, rhsItem,
+          rhsReplaceNthMatchIndex, rhsItemReplacement);
     }
 
-    console.log('lhsItem');
-    console.log(lhsItem);
-    console.log('rhsItem');
-    console.log(rhsItem);
-    console.log('key');
-    console.log(key);
-    if (!_.isEmpty(oldArray)) {
-      oldArray[key + 1] = lhsItem.yellow.bold;
-      /*
-      var re1 = new RegExp('(' + JSON.stringify(lhsItem.yellow.bold) + ')');
-      var re1 = new RegExp('(' + JSON.stringify(lhsItem) + ')');
-      var index = _.isNumber(key) ? key + 1 : 1;
-      console.log('index');
-      console.log(index);
-      var movedString = replaceNthMatch(oldArrayString,
-          re1, index, lhsItem.yellow.bold);
-      //*/
-
-      var oldArrayString = JSON.stringify(oldArray);
-      var re2 = new RegExp(lhsItem, 'g');
-      var movedString = oldArrayString.replace(re2, lhsItem.yellow.dim);
-
-      movedString = movedString.replace(JSON.stringify(lhsItem.yellow.bold),
-          lhsItem.yellow.bold);
-      console.log('Moved item from dim location to bold location.');
-      console.log('If multiple dim locations, this highlights only one move.');
-      console.log(movedString);
-      /*
-      console.log(JSON.stringify(surroundingJson)
-        .replace(lhsItem, (lhsItem)[jsonDiffSideToColorMappings.lhs])
-        .replace(rhsItem, (rhsItem)[jsonDiffSideToColorMappings.rhs]));
-      //*/
-
-      /*
-      //oldArray.replace(re, '$1$2bing');
-      var matches = oldArray.filter(function(element) {
-        return JSON.stringify(element) === JSON.stringify(lhsItem);
-      });
-      if (matches.length > 1) {
-        console.log('moved');
-        console.log(JSON.stringify(oldArray)
-          .replace(lhsItem, (lhsItem).yellow.dim)
-          .replace(lhsItem, (lhsItem).yellow.bold));
+    if (!!jsonDiff.lhs) {
+      if (_.isPlainObject(diffItemInContext)) {
+        lhsItem = '"' + key + '"' + ':' + lhsValue;
+      } else {
+        lhsItem = lhsValue;
       }
-      //*/
-
-    } else {
-      console.log(JSON.stringify(surroundingJson)
-        .replace(lhsItem, (lhsItem)[jsonDiffSideToColorMappings.lhs])
-        .replace(rhsItem, (rhsItem)[jsonDiffSideToColorMappings.rhs]));
+      var lhsItemReplacement = lhsItem[jsonDiffSideToColorMappings.lhs];
+      if (jsonDiff.kind === 'D') {
+        diffItemInContextString = replaceNthMatch(
+            diffItemInContextString, lhsItem,
+            lhsReplaceNthMatchIndex, lhsItemReplacement);
+      } else if (jsonDiff.kind === 'E') {
+        var lhsRe = new RegExp(lhsItem, 'g');
+        if (lhsRe.test(diffItemInContextString)) {
+          var message = 'One ' + 'item'.yellow + ' was moved';
+          diffItemInContextString = diffItemInContextString
+          .replace(lhsRe, lhsItem.yellow);
+          if (jsonDiff.rhs) {
+            message += ' to make room for ' + 'another'.green;
+          }
+          message += '.';
+          console.log(message);
+        } else {
+          console.log('Item was replaced.');
+          console.log('* Original Item:');
+          console.log(lhsItemReplacement);
+          console.log('* Replacement Item (in context):');
+        }
+      }
     }
+
+    console.log(diffItemInContextString);
   }
 
-  function getJsonDiffLoggers(newJson, jsonDiff) {
+  /**
+   * getJsonDiffLoggers
+   *
+   * @param {object|array} actualJson
+   * @param {object} jsonDiff
+   * @return
+   */
+  function getJsonDiffLoggers(actualJson, jsonDiff) {
     if (jsonDiff.kind === 'A') {
-      //jsonDiff.item.path = jsonDiff.item.path || jsonDiff.path;
-      return getJsonDiffLoggers(newJson, jsonDiff.item);
+      jsonDiff.path.push(jsonDiff.index);
+      jsonDiff.item.path = jsonDiff.path;
+      return getJsonDiffLoggers(actualJson, jsonDiff.item);
     } else if (jsonDiff.kind === 'N') {
       return function() {
-        /*
-        var surroundingJson = jsonDiff.path.reduce(function(
-              previousValue, currentValue, index, array) {
-          if (previousValue.hasOwnProperty(currentValue) &&
-            (index < array.length - 1)) {
-            return previousValue[currentValue];
-          } else {
-            return previousValue;
-          }
-        }, newJson);
-        displayJsonDiffStringInContext(surroundingJson, jsonDiff);
-        //*/
-        displayJsonDiffStringInContext(newJson, jsonDiff);
+        displayDiffItemInContext(actualJson, jsonDiff);
       };
     } else if (jsonDiff.kind === 'D') {
       return function() {
-        /*
-        console.log('********************************');
-        console.log(('Deleted. Path: ' + jsonDiff.path).white.bgRed);
-        var surroundingJson = jsonDiff.path.reduce(function(
-            previousValue, currentValue, index, array) {
-          if (previousValue.hasOwnProperty(currentValue) &&
-            index < array.length - 1) {
-            return previousValue[currentValue];
-          } else {
-            if (_.isNumber(currentValue)) {
-              previousValue.push(jsonDiff.lhs);
-            } else {
-              previousValue[currentValue] = jsonDiff.lhs;
-            }
-            return previousValue;
-          }
-        }, newJson);
-        displayJsonDiffStringInContext(surroundingJson, jsonDiff);
-        //*/
-        displayJsonDiffStringInContext(newJson, jsonDiff);
+        displayDiffItemInContext(actualJson, jsonDiff);
       };
     } else if (jsonDiff.kind === 'E') {
       return function() {
-        displayJsonDiffStringInContext(newJson, jsonDiff);
-        /*
-        console.log('********************************');
-        console.log(('Edited. Path: ' + jsonDiff.path).black.bgYellow);
-        console.log((JSON.stringify(jsonDiff.lhs)).strikethrough.yellow.bgRed);
-        console.log(JSON.stringify(jsonDiff.rhs).bold.yellow.bgGreen);
-        //*/
+        displayDiffItemInContext(actualJson, jsonDiff);
       };
     } else {
       return function() {
@@ -260,62 +287,27 @@ var testUtils = (function() {
     }
   }
 
-  function compareJson(newJsonString, oldJsonString) {
-    if (newJsonString === oldJsonString) {
-      return true;
-    }
-
-    var newJson = JSON.parse(newJsonString);
-
-    if (oldJsonString === '{}') {
-      console.log('*************************************************');
-      console.log('**               New Result                    **');
-      console.log('** Please update expected data to save result. **');
-      console.log('*************************************************');
-      console.log(pd.json(newJson).bgBlue);
-      return false;
-    }
-
-    var oldJson = JSON.parse(oldJsonString);
-    var jsonDiffs = _.filter(diff(oldJson, newJson), function(jsonDiff) {
-      // NOTE: we ignore differences in the xref IRI, because
-      // this value will vary based on the config value set.
-      return !jsonDiff.path || (jsonDiff.path.indexOf('xref') === -1);
-    });
-
-    if (!jsonDiffs || _.isEmpty(jsonDiffs)) {
-      // JSON is equivalent but is not identical as stringified.
-      // Possibly reasons:
-      // * property order changed
-      // * BridgeDb xref value in changed (from config)
-      return true;
-    }
-
-    /*
-    console.log('**************************************');
-    console.log('**       Old diffed with new        **');
-    console.log('**************************************');
-    console.log(jsonDiffs);
-    //*/
-
-    jsonDiffs.map(function(jsonDiff) {
-      return getJsonDiffLoggers(newJson, jsonDiff);
-    })
-    .map(function(jsonDiffLogger) {
-      return jsonDiffLogger();
-    });
-
-    console.log('**************************************');
-    console.log('**               New                **');
-    console.log('**************************************');
-    console.log(pd.json(newJson).bgBlue);
-    //*/
-
-    return false;
+  /**
+   * getLkgDataString
+   *
+   * @param {string} lkgDataPath
+   * @return
+   */
+  function getLkgDataString(lkgDataPath) {
+    var lkgExists = fs.existsSync(lkgDataPath);
+    var lkgDataString = lkgExists ? fs.readFileSync(lkgDataPath, {
+      encoding: 'utf8'
+    }) : false;
+    return !!lkgDataString ? lkgDataString : '{}';
   }
 
-  // Find whether user requested to update the expected JSON result
-  // for the current file/method
+  /**
+   * Find whether user requested to update the expected JSON result
+   * for the current file/method
+   *
+   * @param {string} methodName
+   * @return
+   */
   function getUpdateState(methodName) {
     var methodsToUpdate = _.isArray(argv.update) ? argv.update : [argv.update];
     var updateEnabled = methodsToUpdate.indexOf(methodName) > -1;
