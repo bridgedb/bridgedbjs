@@ -62,6 +62,10 @@
     "@id": "SIO:SIO_001278",
     "@type": "@id"
   },
+  "probe": {
+    "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+    "@type": "@id"
+  },
   "schema": {
     "@id": "http://schema.org/",
     "@type": "@id"
