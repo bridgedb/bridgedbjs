@@ -95,9 +95,7 @@ gulp.task('bump-git', function bumpGit(callback) {
 
 //*
 // Update bower, component, npm all at once:
-gulp.task('bump-metadata-files', ['get-version-type'], function(newPackageJson, callback) {
-  console.log('newPackageJson');
-  console.log(newPackageJson);
+gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
   console.log('callback');
   console.log(callback);
   gulp.src(metadataFiles)
