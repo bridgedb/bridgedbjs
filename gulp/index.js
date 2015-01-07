@@ -132,7 +132,7 @@ gulp.task('sync-readme-version', function() {
 
 //*
 // get version type
-gulp.task('get-version-type', ['verify-git-status'], function(callback) {
+gulp.task('get-version-type', function(callback) {
   highland(createPromptStream({
     type: 'list',
     name: 'versionType',
