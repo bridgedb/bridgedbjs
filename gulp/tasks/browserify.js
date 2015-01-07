@@ -12,7 +12,6 @@ var buffer = require('vinyl-buffer');
 var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
-var packageJson = require('../../package.json');
 var source       = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
@@ -22,15 +21,16 @@ var watchify     = require('watchify');
 // TODO Check whether we need any of the commented-out code below.
 // The commented-out code below is just a copy-paste from another library.
 // The non-commented-out code is working.
-gulp.task('browserify', ['bump-metadata-files'], function() {
+gulp.task('browserify', function() {
 
   var bundleMethod = global.isWatching ? watchify : browserify;
 
   var getBundleName = function() {
-    var version = packageJson.version;
+    // TODO don't use global
+    var version = global.newPackageJson.version;
     console.log('version');
     console.log(version);
-    var name = packageJson.name;
+    var name = global.newPackageJson.name;
     return name + '-' + version + '.' + 'min';
   };
 
