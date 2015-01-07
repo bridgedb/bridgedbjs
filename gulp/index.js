@@ -32,6 +32,8 @@ var createGitTagStream = highland.wrapCallback(git.tag);
 var createPromptStream = highland.wrapCallback(inquirer.prompt);
 
 var oldPackageJson = require('../package.json');
+// TODO refactor because this is not a good idea to pollute the global NS.
+global.oldPackageJson = oldPackageJson;
 var newPackageJson;
 var versionType;
 
@@ -114,7 +116,7 @@ gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
     .each(function(json) {
       // TODO this might not work if we have more than just the
       // package.json file. What happens if we add a bower.json file?
-      newPackageJson = json;
+      newPackageJson = global.newPackageJson = json;
       return callback(null, json);
     });
   }));
@@ -237,8 +239,6 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
   })
   .errors(killStream)
   .each(function(gitStatusOk) {
-    console.log('gitStatusOk1043');
-    console.log(gitStatusOk);
     return callback(null, gitStatusOk);
   });
 });

@@ -12,7 +12,6 @@ var buffer = require('vinyl-buffer');
 var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
-var packageJson = require('../../package.json');
 var source       = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
@@ -27,10 +26,11 @@ gulp.task('browserify', function() {
   var bundleMethod = global.isWatching ? watchify : browserify;
 
   var getBundleName = function() {
-    var version = packageJson.version;
+    // TODO don't use global
+    var version = global.newPackageJson.version;
     console.log('version');
     console.log(version);
-    var name = packageJson.name;
+    var name = global.newPackageJson.name;
     return name + '-' + version + '.' + 'min';
   };
 
