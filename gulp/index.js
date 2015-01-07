@@ -32,6 +32,8 @@ var createGitTagStream = highland.wrapCallback(git.tag);
 var createPromptStream = highland.wrapCallback(inquirer.prompt);
 
 var oldPackageJson = require('../package.json');
+// TODO refactor because this is not a good idea to pollute the global NS.
+global.oldPackageJson = oldPackageJson;
 var newPackageJson;
 var versionType;
 
@@ -41,7 +43,7 @@ var metadataFiles = [
   './package.json'
 ];
 
-gulp.task('build-docs', ['sync-readme-with-version'], function(callback) {
+gulp.task('build-docs', ['sync-readme-version'], function(callback) {
   // I think gulp-jsdoc currently cannot use an external conf.json.
   // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
   // and use exec instead to run the command at the command line.
@@ -76,7 +78,7 @@ gulp.task('bump', [
 //*/
 
 // bump git
-gulp.task('bump-git', function bumpGit(callback) {
+gulp.task('sync-git-version', function bumpGit(callback) {
   gulp.src(['./dist/*',
             './docs/*',
             'README.md']
@@ -96,6 +98,8 @@ gulp.task('bump-git', function bumpGit(callback) {
 //*
 // Update bower, component, npm all at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
+  console.log('callback');
+  console.log(callback);
   gulp.src(metadataFiles)
   .pipe(bump({type: versionType}))
   .pipe(gulp.dest('./'))
@@ -112,7 +116,7 @@ gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
     .each(function(json) {
       // TODO this might not work if we have more than just the
       // package.json file. What happens if we add a bower.json file?
-      newPackageJson = json;
+      newPackageJson = global.newPackageJson = json;
       return callback(null, json);
     });
   }));
@@ -132,7 +136,7 @@ gulp.task('sync-readme-version', function() {
 
 //*
 // get version type
-gulp.task('get-version-type', ['verify-git-status'], function(callback) {
+gulp.task('get-version-type', function(callback) {
   highland(createPromptStream({
     type: 'list',
     name: 'versionType',
@@ -160,7 +164,7 @@ gulp.task('get-version-type', ['verify-git-status'], function(callback) {
 //*/
 
 // publish to github repo, github pages and npm.
-gulp.task('publish', ['bump-git'], function publish(callback) {
+gulp.task('publish', ['sync-git-version'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
   .flatMap(createGitPushStream('origin', 'v' + newPackageJson.version))
@@ -235,8 +239,6 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
   })
   .errors(killStream)
   .each(function(gitStatusOk) {
-    console.log('gitStatusOk1043');
-    console.log(gitStatusOk);
     return callback(null, gitStatusOk);
   });
 });
