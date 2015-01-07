@@ -95,8 +95,12 @@ gulp.task('bump-git', function bumpGit(callback) {
 
 //*
 // Update bower, component, npm all at once:
-gulp.task('bump-metadata-files', ['get-version-type'], function() {
-  return gulp.src(metadataFiles)
+gulp.task('bump-metadata-files', ['get-version-type'], function(newPackageJson, callback) {
+  console.log('newPackageJson');
+  console.log(newPackageJson);
+  console.log('callback');
+  console.log(callback);
+  gulp.src(metadataFiles)
   .pipe(bump({type: versionType}))
   .pipe(gulp.dest('./'))
   .pipe(highland.pipeline(function(s) {
@@ -109,11 +113,11 @@ gulp.task('bump-metadata-files', ['get-version-type'], function() {
     .pipe(JSONStream.parse())
     // This is needed to turn the stream into a highland stream
     .pipe(highland.pipeline())
-    .map(function(json) {
+    .each(function(json) {
       // TODO this might not work if we have more than just the
       // package.json file. What happens if we add a bower.json file?
       newPackageJson = json;
-      return json;
+      return callback(null, json);
     });
   }));
 });
