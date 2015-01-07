@@ -15,7 +15,7 @@ var gulpSequence = require('gulp-sequence');
 gulp.task('build', gulpSequence('verify-git-status',
       'bump-metadata-files',
       ['browserify', 'build-docs'],
-      'bump-git'));
+      'sync-git-version'));
 /*
 gulp.task('build', gulpSequence([
   'browserify',

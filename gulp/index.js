@@ -76,7 +76,7 @@ gulp.task('bump', [
 //*/
 
 // bump git
-gulp.task('bump-git', function bumpGit(callback) {
+gulp.task('sync-git-version', function bumpGit(callback) {
   gulp.src(['./dist/*',
             './docs/*',
             'README.md']
@@ -162,7 +162,7 @@ gulp.task('get-version-type', function(callback) {
 //*/
 
 // publish to github repo, github pages and npm.
-gulp.task('publish', ['bump-git'], function publish(callback) {
+gulp.task('publish', ['sync-git-version'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
   .flatMap(createGitPushStream('origin', 'v' + newPackageJson.version))

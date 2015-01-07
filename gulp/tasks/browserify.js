@@ -22,7 +22,7 @@ var watchify     = require('watchify');
 // TODO Check whether we need any of the commented-out code below.
 // The commented-out code below is just a copy-paste from another library.
 // The non-commented-out code is working.
-gulp.task('browserify', ['bump-metadata-files'], function() {
+gulp.task('browserify', function() {
 
   var bundleMethod = global.isWatching ? watchify : browserify;
 
