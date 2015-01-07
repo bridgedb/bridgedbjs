@@ -102,8 +102,6 @@ gulp.task('sync-git-version', function bumpGit(callback) {
 //*
 // Update bower, component, npm all at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
-  console.log('callback');
-  console.log(callback);
   gulp.src(metadataFiles)
   .pipe(bump({type: versionType}))
   .pipe(gulp.dest('./'))
@@ -182,14 +180,10 @@ gulp.task('publish', ['sync-git-version'], function publish(callback) {
     return highland.wrapCallback(exec)('npm publish');
   })
   .map(function(stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
     return stdout;
   })
   //*/
   .each(function(data) {
-    console.log('data');
-    console.log(data);
     return callback(null, data);
   });
 });
@@ -248,7 +242,6 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
 });
 
 function killStream(err, push) {
-  console.error(err);
   if (_.isString(err)) {
     // err is not of the JS type "error".
     err = new Error(err);
