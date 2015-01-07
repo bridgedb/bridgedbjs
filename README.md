@@ -49,14 +49,15 @@ You can also ```pipe``` the stream through another stream or use any of the othe
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
 
-## Developing
+## How To Get Involved
 
-Pull requests are welcome.
+To run tests during development, check out the [test documentation]('./test/README.md').
 
-Process:
+To build bridgedbjs and update github repo:
 
-1) Commit changes to the master branch of your local repo
-2) Build
+1) Commit changes to the master branch of your local repo.
+
+2) Build:
 
 ```
 gulp build
@@ -67,3 +68,5 @@ gulp build
 ```
 gulp publish
 ```
+
+4) Send us a pull request.
