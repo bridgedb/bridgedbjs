@@ -41,9 +41,7 @@ var metadataFiles = [
   './package.json'
 ];
 
-//gulp.task('default', ['build']);
-
-gulp.task('build-docs', ['bump-readme'], function(callback) {
+gulp.task('build-docs', ['sync-readme-with-version'], function(callback) {
   // I think gulp-jsdoc currently cannot use an external conf.json.
   // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
   // and use exec instead to run the command at the command line.
@@ -69,15 +67,16 @@ gulp.task('build-docs', ['bump-readme'], function(callback) {
     });
 });
 
-//*
+/*
 gulp.task('bump', [
   'bump-git'
 ], function(callback) {
   return callback();
 });
+//*/
 
 // bump git
-gulp.task('bump-git', ['build'], function bumpGit(callback) {
+gulp.task('bump-git', function bumpGit(callback) {
   gulp.src(['./dist/*',
             './docs/*',
             'README.md']
@@ -121,7 +120,7 @@ gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
 //*/
 
 //*
-gulp.task('bump-readme', ['bump-metadata-files'], function() {
+gulp.task('sync-readme-version', function() {
   return gulp.src('README.md')
     .pipe(replace({
       regex: oldPackageJson.version,
