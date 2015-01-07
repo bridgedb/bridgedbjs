@@ -51,7 +51,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 ## How To Get Involved
 
-To run tests during development, check out the [test documentation]('./test/README.md').
+To run tests during development, check out the [test documentation](./test/README.md).
 
 To build bridgedbjs and update github repo:
 
