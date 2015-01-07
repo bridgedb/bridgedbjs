@@ -34,7 +34,7 @@ var createPromptStream = highland.wrapCallback(inquirer.prompt);
 var oldPackageJson = require('../package.json');
 // TODO refactor because this is not a good idea to pollute the global NS.
 global.oldPackageJson = oldPackageJson;
-var newPackageJson;
+var newPackageJson = global.newPackageJson = oldPackageJson;
 var versionType;
 
 var metadataFiles = [
@@ -79,6 +79,10 @@ gulp.task('bump', [
 
 // bump git
 gulp.task('sync-git-version', function bumpGit(callback) {
+  if (newPackageJson.version === oldPackageJson.version) {
+    return callback(null);
+  }
+
   gulp.src(['./dist/*',
             './docs/*',
             'README.md']
