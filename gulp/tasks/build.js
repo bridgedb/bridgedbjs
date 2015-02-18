@@ -16,11 +16,3 @@ gulp.task('build', gulpSequence('verify-git-status',
       'bump-metadata-files',
       ['browserify', 'build-docs'],
       'sync-git-version'));
-/*
-gulp.task('build', gulpSequence([
-  'browserify',
-  'build-docs'
-], function(callback) {
-  return callback();
-});
-//*/
