@@ -1,4 +1,5 @@
 var fs = require('fs');
+var killStream = require('./util/kill-stream.js');
 var onlyScripts = require('./util/scriptFilter');
 var tasks = fs.readdirSync('./gulp/tasks/').filter(onlyScripts);
 
@@ -241,6 +242,7 @@ gulp.task('verify-git-status', function verifyGitStatus(callback) {
   });
 });
 
+/*
 function killStream(err, push) {
   if (_.isString(err)) {
     // err is not of the JS type "error".
@@ -264,3 +266,4 @@ function killStream(err, push) {
   //push(err);
   //throw err;
 }
+//*/
