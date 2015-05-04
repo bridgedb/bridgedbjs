@@ -159,7 +159,7 @@ gulp.task('get-version-type', function(callback) {
 gulp.task('publish', ['sync-git-version'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
-  .flatMap(createGitPushStream('origin', 'v' + newPackageJson.version))
+  .flatMap(createGitPushStream('origin', newPackageJson.version))
   .errors(killStream)
   .flatMap(createGitCheckoutStream('gh-pages'))
   .flatMap(createGitMergeStream('master'))
