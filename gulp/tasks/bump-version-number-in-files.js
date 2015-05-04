@@ -38,7 +38,7 @@ gulp.task('bump-version-number-in-files',
       .flatMap(function(newPackageJson) {
 
         // TODO do we need to pollute the global namespace?
-        newPackageJson = global.newPackageJson = json;
+        global.newPackageJson = newPackageJson;
 
         var version = {};
         version.old = oldPackageJson.version;
