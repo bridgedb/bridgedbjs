@@ -13,14 +13,7 @@ var gulpSequence = require('gulp-sequence');
  * Publish
  */
 
-gulp.task('build', gulpSequence(
-    'browserify',
-    'copy'
-));
-
-/*
 gulp.task('build', gulpSequence('verify-git-status',
       'bump-metadata-files',
       ['browserify', 'build-docs'],
       'sync-git-version'));
-//*/
