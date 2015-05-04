@@ -5,7 +5,8 @@ var BridgeDb = require('../../index.js');
 var bridgeDb1 = BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri:
-    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+  organism: 'Homo sapiens'
 });
 
 /*
@@ -23,7 +24,7 @@ bridgeDb1.xref.get(_.clone(entityReference1))
 });
 //*/
 
-//*
+/*
 var entityReference2 = {
   //'@id': 'http://identifiers.org/ncbigene/4292'
   '@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
@@ -131,5 +132,20 @@ bridgeDb2.xref.get([
 .each(function(entityReferenceXrefs) {
   console.log('xrefs for provided entity reference');
   console.log(JSON.stringify(entityReferenceXrefs, null, '\t'));
+});
+//*/
+
+//*
+var entityReference4 = {
+  '@id': 'http://identifiers.org/ncbigene/173041'
+  //'@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+};
+bridgeDb1.xref.get(
+    _.clone(entityReference4))
+.each(function(entityReferenceXref) {
+  console.log('xref (single) for:');
+  console.log(JSON.stringify(entityReference4, null, '\t'));
+  console.log('**********************************************');
+  console.log(JSON.stringify(entityReferenceXref, null, '\t'));
 });
 //*/
