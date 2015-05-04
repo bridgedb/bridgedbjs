@@ -100,7 +100,7 @@ gulp.task('sync-git-version', function bumpGit(callback) {
 });
 //*/
 
-//*
+/*
 // Update bower, component, npm all at once:
 gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
   gulp.src(metadataFiles)
@@ -126,7 +126,7 @@ gulp.task('bump-metadata-files', ['get-version-type'], function(callback) {
 });
 //*/
 
-//*
+/*
 // get version type
 gulp.task('get-version-type', function(callback) {
   highland(createPromptStream({
