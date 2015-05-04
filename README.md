@@ -1,4 +1,4 @@
-bridgedbjs (v4.1.3)
+bridgedb-4.1.6
 ===================
 
 JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://bridgedb.org/wiki/BridgeWebservice/).
@@ -10,7 +10,7 @@ Not all the functionality of the BridgeDb webservice are exposed by this library
 
 **Browser**
 ```html
-<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-4.1.3.min.js"></script>
+<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-4.1.6.min.js"></script>
 ```
 
 **Node.js**
@@ -53,7 +53,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 To run tests during development, check out the [test documentation](./test/README.md).
 
-To build bridgedbjs and update github repo:
+To build bridgedb and update github repo:
 
 1) Commit changes to the master branch of your local repo.
 
