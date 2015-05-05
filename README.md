@@ -51,22 +51,23 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 ## How To Get Involved
 
-To run tests during development, check out the [test documentation](./test/README.md).
+1. Install [Node.js](https://nodejs.org/)
+2. Fork this repo
+3. Try running the tests. If you need help, check out the [test documentation](./test/README.md).
+4. Make your changes, including adding new tests for your changes if they are not already covered by the existing tests.
+5. Make sure the tests all pass.
+6. Then we can build bridgedb and update the github repo with this process:
 
-To build bridgedb and update github repo:
+  a) Commit changes to the master branch of your local repo.
 
-1) Commit changes to the master branch of your local repo.
+  b) Build:
+    ```
+    gulp build
+    ```
 
-2) Build:
+  c) Send us a pull request from your local repo to the master branch of this repo.
 
-```
-gulp build
-```
-
-3) Send us a pull request from your local repo to the master branch of this repo.
-
-4) Then we can create a new release and update the github pages:
-
-```
-gulp publish
-```
+  d) Then we can create a new release and update the github pages:
+    ```
+    gulp publish
+    ```
