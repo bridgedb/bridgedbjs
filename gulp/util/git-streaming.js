@@ -6,7 +6,6 @@ var execStreaming = highland.wrapCallback(exec);
 
 module.exports = {
   checkout: highland.wrapCallback(git.checkout),
-  commit: highland.wrapCallback(git.commit),
   createTag: highland.wrapCallback(git.tag),
   merge: highland.wrapCallback(git.merge),
   push: highland.wrapCallback(git.push),

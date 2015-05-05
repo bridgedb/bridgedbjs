@@ -9,15 +9,18 @@ gulp.task('commit-after-build', function commitAfterBuild(callback) {
   var package = JSON.parse(fs.readFileSync('package.json'));
   var version = package.version;
 
-  gulp.src(['./dist/*',
-            './docs/*',
+  gulp.src(['./dist/',
+            './docs/',
             'README.md']
             .concat(metadataFilePaths)
   )
   .pipe(highland.pipeline())
   .through(git.add())
-  .through(gitStreaming.commit('Built and bumped version to ' + version + '.'))
+  .through(git.commit('Built and bumped version to ' + version + '.'))
   .last()
+  .errors(function(err, push) {
+    throw err;
+  })
   .each(function() {
     return callback();
   });
