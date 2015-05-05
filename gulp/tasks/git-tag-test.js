@@ -9,6 +9,7 @@ gulp.task('git-tag-test', function bumpGitTag(callback) {
   var package = JSON.parse(fs.readFileSync('package.json'));
   var version = package.version;
 
+  /*
   gitStreaming.readTags
   .reduce(false, function checkTagExists(accumulator, tag) {
     if (accumulator || (tag === version)) {
@@ -22,7 +23,7 @@ gulp.task('git-tag-test', function bumpGitTag(callback) {
       return callback();
     }
 
-    gulp.src(['./dist/*',
+    return gulp.src(['./dist/*',
               './docs/*',
               'README.md']
               .concat(metadataFilePaths)
@@ -30,7 +31,11 @@ gulp.task('git-tag-test', function bumpGitTag(callback) {
     .pipe(highland.pipeline())
     .through(git.add())
     .through(git.commit('Built and bumped version to ' + version + '.'))
-    .last();
+    .map(function(result) {
+      console.log('result');
+      console.log(result);
+      return result;
+    });
   })
   .each(function() {
     gulp.src(['./dist/*',
@@ -45,5 +50,20 @@ gulp.task('git-tag-test', function bumpGitTag(callback) {
     .each(function() {
       return callback();
     });
+  });
+  //*/
+
+  gulp.src(['./dist/*',
+            './docs/*',
+            'README.md']
+            .concat(metadataFilePaths)
+  )
+  .pipe(highland.pipeline())
+  .through(git.add())
+  .through(git.commit('Built and bumped version to ' + version + '.'))
+  .map(function(result) {
+    console.log('result');
+    console.log(result);
+    return result;
   });
 });
