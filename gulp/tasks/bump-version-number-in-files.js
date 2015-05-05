@@ -43,8 +43,7 @@ gulp.task('bump-version-number-in-files',
         var version = {};
         version.old = oldPackageJson.version;
         version.new = newPackageJson.version;
-        console.log('version');
-        console.log(version);
+        console.log('files bumping from ' + version.old + ' to ' + version.new);
 
         function replaceVersionedName() {
           return replace({
