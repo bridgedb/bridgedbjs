@@ -30,6 +30,7 @@ gulp.task('bump-git-tag', function bumpGitTag(callback) {
     .pipe(highland.pipeline())
     .through(git.add())
     .through(git.commit('Built and bumped version to ' + version + '.'))
+    .debounce(1000)
     .through(gitStreaming.createTag(version,
             'Version ' + version))
     .last()
