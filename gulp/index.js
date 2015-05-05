@@ -78,6 +78,7 @@ gulp.task('bump', [
 });
 //*/
 
+/*
 // bump git
 gulp.task('sync-git-version', function bumpGit(callback) {
   console.log('oldPackageJson');
@@ -85,7 +86,11 @@ gulp.task('sync-git-version', function bumpGit(callback) {
   console.log('newPackageJson');
   console.log(newPackageJson);
   if (newPackageJson.version === oldPackageJson.version) {
-    return callback(null);
+    git.tag(function(err, result) {
+      console.log('result');
+      console.log(result);
+      return callback(null);
+    });
   }
 
   gulp.src(['./dist/*',
