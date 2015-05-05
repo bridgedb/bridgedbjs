@@ -21,11 +21,11 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
-    "lodash": "~2.4.1",
-    "highland": "~2.0.0",
-    "request": "~2.45.0",
     "csv-streamify": "~1.0.0",
-    "jsonld": "~0.3.4"
+    "highland": "^2.5.0",
+    "jsonld": "~0.3.4",
+    "lodash": "~2.4.1",
+    "request": "~2.45.0"
   },
   "devDependencies": {
     "gulp": "~3.8.10",
