@@ -63,10 +63,10 @@ To build bridgedb and update github repo:
 gulp build
 ```
 
-3) Create new release and update pages at github:
+3) Send us a pull request from your local repo to the master branch of this repo.
+
+4) Then we can create a new release and update the github pages:
 
 ```
 gulp publish
 ```
-
-4) Send us a pull request.
