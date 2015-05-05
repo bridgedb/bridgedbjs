@@ -165,7 +165,7 @@ gulp.task('get-version-type', function(callback) {
 //*/
 
 // publish to github repo, github pages and npm.
-gulp.task('publish', ['sync-git-version'], function publish(callback) {
+gulp.task('publish', ['sync-tag-version'], function publish(callback) {
   highland(createGitPushStream('origin', 'master'))
   .errors(killStream)
   .flatMap(createGitPushStream('origin', newPackageJson.version))
