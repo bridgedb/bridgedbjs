@@ -5,7 +5,7 @@ var gulp = require('gulp');
 var highland = require('highland');
 var metadataFilePaths = require('../util/metadata-file-paths.json');
 
-gulp.task('bump-git-tag', function bumpGitTag(callback) {
+gulp.task('sync-tag-version', function syncTagVersion(callback) {
   var package = JSON.parse(fs.readFileSync('package.json'));
   var version = package.version;
 
