@@ -1,4 +1,4 @@
-bridgedb-4.1.15
+bridgedb-4.1.16
 ===================
 
 JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://bridgedb.org/wiki/BridgeWebservice/).
@@ -10,7 +10,7 @@ Not all the functionality of the BridgeDb webservice are exposed by this library
 
 **Browser**
 ```html
-<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-4.1.15.min.js"></script>
+<script src="https://bridgedb.github.io/bridgedbjs/dist/bridgedb-4.1.16.min.js"></script>
 ```
 
 **Node.js**
