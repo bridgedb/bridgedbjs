@@ -80,6 +80,10 @@ gulp.task('bump', [
 
 // bump git
 gulp.task('sync-git-version', function bumpGit(callback) {
+  console.log('oldPackageJson');
+  console.log(oldPackageJson);
+  console.log('newPackageJson');
+  console.log(newPackageJson);
   if (newPackageJson.version === oldPackageJson.version) {
     return callback(null);
   }
@@ -91,7 +95,7 @@ gulp.task('sync-git-version', function bumpGit(callback) {
   )
   .pipe(git.add())
   .pipe(git.commit('Bump version to ' + newPackageJson.version + ' and build.'))
-  .pipe(createGitTagStream('v' + newPackageJson.version,
+  .pipe(createGitTagStream(newPackageJson.version,
           'Version ' + newPackageJson.version))
   .last()
   .each(function(data) {
