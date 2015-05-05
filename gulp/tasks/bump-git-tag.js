@@ -28,10 +28,9 @@ gulp.task('bump-git-tag', function bumpGitTag(callback) {
               .concat(metadataFilePaths)
     )
     .pipe(highland.pipeline())
-    /* TODO why doesn't the commit happen, or if it does,
-     * it's after the tag?
+    /* TODO why doesn't the commit below finish after the tag?
      * We're using the commit-after-build gulp task in
-     * build.js to handle this for now.
+     * build.js instead for now.
     .through(git.add())
     .through(gitStreaming.commit(
         'Built and bumped version to ' + version + '.'))
