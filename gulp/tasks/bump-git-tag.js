@@ -5,8 +5,7 @@ var gulp = require('gulp');
 var highland = require('highland');
 var metadataFilePaths = require('../util/metadata-file-paths.json');
 
-gulp.task('bump-git-tag', ['commit-after-build'],
-    function bumpGitTag(callback) {
+gulp.task('bump-git-tag', function bumpGitTag(callback) {
   var package = JSON.parse(fs.readFileSync('package.json'));
   var version = package.version;
 
@@ -29,7 +28,10 @@ gulp.task('bump-git-tag', ['commit-after-build'],
               .concat(metadataFilePaths)
     )
     .pipe(highland.pipeline())
-    /*
+    /* TODO why doesn't the commit happen, or if it does,
+     * it's after the tag?
+     * We're using the commit-after-build gulp task in
+     * build.js to handle this for now.
     .through(git.add())
     .through(gitStreaming.commit(
         'Built and bumped version to ' + version + '.'))
