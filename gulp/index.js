@@ -44,7 +44,7 @@ var metadataFiles = [
   './package.json'
 ];
 
-gulp.task('build-docs', ['sync-readme-version'], function(callback) {
+gulp.task('build-docs', function(callback) {
   // I think gulp-jsdoc currently cannot use an external conf.json.
   // Until it's confirmed that it does, we'll disable the gulp-jsdoc command
   // and use exec instead to run the command at the command line.
