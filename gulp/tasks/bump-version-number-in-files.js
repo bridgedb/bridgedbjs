@@ -3,12 +3,8 @@ var getVersionType = require('../util/get-version-type.js');
 var gulp = require('gulp');
 var highland = require('highland');
 var JSONStream = require('JSONStream');
+var metadataFiles = require('../util/metadata-file-paths.json');
 var oldPackageJson = require('../../package.json');
-var metadataFiles = [
-  './bower.json',
-  './component.json',
-  './package.json'
-];
 var replace = require('gulp-regex-replace');
 
 // Update bower, component, npm all at once:
@@ -75,6 +71,7 @@ gulp.task('bump-version-number-in-files',
           .pipe(gulp.dest('./demo/'))
         )
         .concat(
+          // gulp-bump does not update the dist file name
           gulp.src(metadataFiles)
           .pipe(replaceVersionedName())
           .pipe(gulp.dest('./'))
