@@ -24,6 +24,7 @@ gulp.task('sync-tag-version', function syncTagVersion(callback) {
 
     gulp.src(['./dist/*',
               './docs/*',
+              './demo/*',
               'README.md']
               .concat(metadataFilePaths)
     )
