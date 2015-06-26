@@ -26,6 +26,10 @@
     "@id": "http://purl.org/dc/terms/",
     "@type": "@id"
   },
+  "displayName": {
+    "@id": "biopax:displayName",
+    "@type": "xsd:string"
+  },
   "EntityReference": {
     "@id": "biopax:EntityReference",
     "@type": "@id"
@@ -47,7 +51,7 @@
     "@type": "@id"
   },
   "identifier": {
-    "@id": "biopax:id",
+    "@id": "http://rdaregistry.info/Elements/u/P60052",
     "@type": "xsd:string"
   },
   "identifierPattern": {
