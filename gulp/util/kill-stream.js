@@ -1,27 +1,33 @@
-var _ = require('lodash');
+var highland = require('highland');
+var http = require('http');
 
-module.exports = function killStream(err, push) {
-  if (_.isString(err)) {
-    // err is not of the JS type "error".
-    err = new Error(err);
-  } else if (_.isPlainObject(err)) {
-    // err is not of the JS type "error".
-    var jsError = new Error(err.msg || err.message || 'Error');
-    _.assign(jsError, err);
-    err = jsError;
-  }
+function isPortInUse(port) {
+  return highland([port]).map(function(port) {
+    var server = http.createServer().listen(port);
+    return server;
+  })
+  .flatMap(function(server) {
+    var listeningStream = highland('listening', server)
+    .map(function() {
+      if (!!server) {
+        server.close();
+      }
+      return false;
+    });
 
-  console.error(err);
+    var errorStream = highland('error', server)
+    .map(function(err) {
+      var result = true;
+      if (err.code === 'EADDRINUSE' || err.code === 'EACCES') {
+        return true;
+      } else {
+        console.log('Error starting server.');
+        return err;
+      }
+    });
 
-  // Using process.exit is a kludge to stop everything in this case.
-  process.exit(1);
-  // It would seem that Highland could kill the stream by
-  // using some combination of the commented-out options below,
-  // but in reality, at least with this version of Highland,
-  // none of those options stop the stream.
-  // Unless we use process.exit, the stream will continue, e.g.,
-  // git diff below will still run.
-  //stream.destroy();
-  //push(err);
-  //throw err;
-};
+    return listeningStream.otherwise(errorStream);
+  });
+}
+
+module.exports = isPortInUse;
