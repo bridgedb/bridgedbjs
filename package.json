@@ -30,14 +30,16 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
+    "JSONStream": "^1.0.4",
     "URIjs": "^1.15.1",
     "csv-streamify": "~1.0.0",
     "hyperquest": "^1.2.x",
     "jsonld": "~0.3.4",
+    "jsonld-rx": "git://github.com/ariutta/jsonld-rx",
     "lodash": "~2.4.1",
     "request": "^2.45.0",
     "rx": "^2.5.3",
-    "rx-node": "^1.0.0"
+    "rx-node": "^1.0.1"
   },
   "devDependencies": {
     "JSONStream": "~0.10.0",
