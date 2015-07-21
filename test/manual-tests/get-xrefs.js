@@ -135,12 +135,43 @@ bridgeDb2.xref.get([
 });
 //*/
 
-//*
+/*
 var entityReference4 = {
-  '@id': 'http://identifiers.org/ncbigene/173041'
-  //'@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+  '@id': 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
 };
 bridgeDb1.xref.get(
+    _.clone(entityReference4))
+.each(function(entityReferenceXref) {
+  console.log('xref (single) for:');
+  console.log(JSON.stringify(entityReference4, null, '\t'));
+  console.log('**********************************************');
+  console.log(JSON.stringify(entityReferenceXref, null, '\t'));
+});
+//*/
+
+/*
+var bridgeDb3 = BridgeDb();
+var entityReference4 = {
+  '@id': 'http://identifiers.org/ncbigene/173041'
+};
+bridgeDb1.xref.get(
+    _.clone(entityReference4))
+.each(function(entityReferenceXref) {
+  console.log('xref (single) for:');
+  console.log(JSON.stringify(entityReference4, null, '\t'));
+  console.log('**********************************************');
+  console.log(JSON.stringify(entityReferenceXref, null, '\t'));
+});
+//*/
+
+//*
+var bridgeDb4 = BridgeDb({
+  Organism: 'C. elegans'
+});
+var entityReference4 = {
+  '@id': 'http://identifiers.org/ncbigene/173041'
+};
+bridgeDb4.xref.get(
     _.clone(entityReference4))
 .each(function(entityReferenceXref) {
   console.log('xref (single) for:');
