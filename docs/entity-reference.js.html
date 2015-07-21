@@ -184,11 +184,12 @@
 
 var _ = require('lodash');
 var config = require('./config.js');
-var highland = require('highland');
-var httpErrors = require('./http-errors.js');
-var request = require('request');
 var csv = require('csv-streamify');
 var csvOptions = {objectMode: true, delimiter: '\t'};
+var highland = require('highland');
+var httpErrors = require('./http-errors.js');
+var internalContext = require('./context.json');
+var hyperquest = require('hyperquest');
 var Utils = require('./utils.js');
 
 /**
@@ -201,18 +202,26 @@ var Utils = require('./utils.js');
 var EntityReference = function(instance) {
   'use strict';
 
+  var jsonldRx = instance.jsonldRx;
+
   /**
-   * See {@link http://www.biopax.org/release/biopax-level3.owl#EntityReference|biopax:EntityReference}
-   * @typedef {Object} EntityReference Entity reference with as many as possible of the properties listed below.
+   * See {@link http://www.biopax.org/release/biopax-level3.owl#EntityReference|
+   *          biopax:EntityReference}
+   * @typedef {Object} EntityReference Entity reference with as many as possible of
+   *                    the properties listed below.
    * @property {JsonldContext} @context JSON-LD context.
    * @property {Iri} @id JSON-LD IRI.
-   * @property {String} displayName See {@link http://www.biopax.org/release/biopax-level3.owl#displayName|biopax:displayName}
+   * @property {String} displayName See
+   *    {@link http://www.biopax.org/release/biopax-level3.owl#displayName|biopax:displayName}
    * @property {String} db See {@link http://www.biopax.org/release/biopax-level3.owl#db|biopax:db}
    * @property {Dataset} isDataItemIn The dataset (database) for the identifier. See
    *                  {@link http://semanticscience.org/resource/SIO_001278|SIO:001278}
-   * @property {Array&lt;String>} xref IRI (URL) for getting Xrefs, such as from the BridgeDb webservices.
-   * @property {String} identifier See {@link http://www.biopax.org/release/biopax-level3.owl#id|biopax:id} Example: "1234".
-   * @property {JsonldType} @type Biological type. See {@link http://www.w3.org/TR/json-ld/#dfn-node-type|JSON-LD documentation}
+   * @property {Array&lt;String>} xref List of IRIs (URLs) for getting Xrefs,
+   *                      such as from the BridgeDb webservices or from mygene.info.
+   * @property {String} identifier See {@link http://www.biopax.org/release/biopax-level3.owl#id|
+   *                      biopax:id} @example: "1234".
+   * @property {JsonldType} @type Biological type. See
+   *    {@link http://www.w3.org/TR/json-ld/#dfn-node-type|JSON-LD documentation}
   */
 
   /**
@@ -225,8 +234,8 @@ var EntityReference = function(instance) {
    * @param {Dataset} entityReference.isDataItemIn
    * @param {String} entityReference.isDataItemIn.preferredPrefix
    * @return {EntityReference} {@link EntityReference} with an identifiers.org {@link Iri|@id}.
-   *                            Additionally, "owl:sameAs" will be added if a previous, non-identifiers.org IRI
-   *                            was present. @example: "http://bio2rdf.org/ncbigene/1234".
+   *                Additionally, "owl:sameAs" will be added if a previous, non-identifiers.org IRI
+   *                was present. @example: "http://bio2rdf.org/ncbigene/1234".
    */
   function _addIdentifiersIri(entityReference) {
     var dataset = entityReference.isDataItemIn;
@@ -270,14 +279,15 @@ var EntityReference = function(instance) {
    * @param {String} entityReference.identifier
    * @param {Organism} [organism]
    * @param {Dataset} entityReference.isDataItemIn
-   * @param {Array&lt;String>} entityReference.isDataItemIn.alternatePrefix The first element must be the BridgeDb systemCode
-   * @return {EntityReference} entityReference {@link EntityReference} with BridgeDb IRI (URL) added.
+   * @param {String} entityReference.isDataItemIn.bridgeDbSystemCode
+   * @return {EntityReference} entityReference {@link EntityReference} with
+   *                    BridgeDb IRI (URL) added.
    */
   var _addBridgeDbXrefsIri = function(entityReference) {
     if (!entityReference ||
         !entityReference.organism ||
         !entityReference.isDataItemIn ||
-        !entityReference.isDataItemIn.alternatePrefix ||
+        !entityReference.isDataItemIn.bridgeDbSystemCode ||
         !entityReference.identifier) {
       if (instance.debug) {
         var message = 'Cannot add BridgeDb Xrefs IRI (URL).' +
@@ -289,8 +299,14 @@ var EntityReference = function(instance) {
     }
 
     entityReference.xref = entityReference.xref || [];
+
+    // Note defining "xrefs" here instead of in one line above
+    // in order to make sure "xrefs" is linked to
+    // entityReference.xref in all cases, including the case
+    // where entityReference.xref was just defined as an
+    // empty array above.
     var xrefs = entityReference.xref;
-    xrefs = _.isArray(xrefs) ? xrefs : [xrefs];
+    xrefs = entityReference.xref = _.isArray(xrefs) ? xrefs : [xrefs];
 
     var bridgeDbXrefsIri =
       instance.xref._getBridgeDbIriByEntityReference(entityReference);
@@ -323,31 +339,37 @@ var EntityReference = function(instance) {
   };
 
   /**
-   * Enrich entity reference. Default is to enrich as much as possible as much as possible
-   * with data from BridgeDb, with the exception of not getting xrefs, but the data included
-   * for enrichment can be controlled by setting options.include.
+   * Enrich entity reference. Default is to enrich as much as possible with data from BridgeDb,
+   * with the exception of not dereferencing any xref IRIs, but this enrichment can be controlled
+   * by setting the relevant option(s) to false.
    *
    * @param {(Object|String|Stream)} input Entity reference(s). Each one must have an identifier
    * (e.g. ENSG00000160791) and means for identifying the dataset.
    *
    *    Acceptable entityReference input arguments:
-   *      1. BridgeDb xrefs IRI (URL) or identifiers.org IRI as string
+   *      1. BridgeDb xref IRI (URL) or identifiers.org IRI as string
+   *        BridgeDb xref IRI @example:
+   *        'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+   *        identifiers.org IRI @example:
+   *        'http://identifiers.org/ncbigene/1234'
    *      2. Object with at least one of these properties:
    *        a. { '@id': identifiers.org IRI }
-   *        b. { bridgeDbXrefsIri: BridgeDb xrefs IRI (URL) }
+   *        b. { bridgeDbXrefsIri: BridgeDb xref IRI }
    *        c. { xref: [
-   *            BridgeDb xrefs IRI (URL)
-   *            ...
-   *          ]
-   *        }
+   *               BridgeDb xref IRI
+   *               ...
+   *             ]
+   *           }
    *      3. Object with both of these properties:
    *        {
-   *          db: database name as specified in datasources.txt
+   *          db: official, standardized database name
    *          identifier: entity reference identifier, such as ChEBI:1234
    *        }
-   *
-   *    Example of BridgeDb xrefs IRI (URL): http://webservice.bridgedb.org/Human/xrefs/L/1234
-   *    Example of identifiers.org IRI: http://identifiers.org/ncbigene/1234
+   *      4. Object with both of these properties:
+   *        {
+   *          bridgeDbDatasourceName: database name as used in BridgeDb
+   *          identifier: entity reference identifier, such as ChEBI:1234
+   *        }
    *
    * @param {Object} [options]
    * @param {Boolean} [options.organism=true] Enrich with organism name.
@@ -356,8 +378,8 @@ var EntityReference = function(instance) {
    *                         (metadata about biological datasets).
    * @param {Boolean} [options.xref=true] Enrich with IRI (URL) for BridgeDb webservices
    *                                        to enable getting xrefs for this entity reference.
-   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference} with as many properties
-   *                                  as possible added, unless otherwise specified by options.
+   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference} with as many
+   *                    properties as possible added, unless otherwise specified by options.
    */
   var enrich = function(input, options) {
     var inputStream;
@@ -376,61 +398,160 @@ var EntityReference = function(instance) {
       xref: true
     });
 
-    return inputStream.map(_expand)
-    .map(function(entityReference) {
-      if (!entityReference.isDataItemIn ||
-        typeof entityReference.identifier === 'undefined') {
-        var message = 'Not enough data provided to identify' +
-          ' the specified entity reference: "' +
-          JSON.stringify(entityReference) + '"';
-        throw new Error(message);
-      }
+    return inputStream
+      .flatMap(instance.addContext)
+      .consume(function(err, entityReference, push, next) {
+        if (err) {
+          // pass errors along the stream and consume next value
+          push(err);
+          next();
+        } else if (entityReference === highland.nil) {
+          // pass nil (end event) along the stream
+          push(null, entityReference);
+        } else {
+          var bridgeDbInputOriginalContext = entityReference['@context'];
+          jsonldRx.replaceContext(entityReference, internalContext)
+            .subscribe(function(entityReference) {
+              entityReference.bridgeDbInputOriginalContext = bridgeDbInputOriginalContext;
 
-      return entityReference;
-    })
-    .flatMap(function(entityReference) {
-      if (options.dataset) {
-        return _enrichFromDataset(entityReference);
-      } else {
-        return highland([entityReference]);
-      }
-    })
-    .flatMap(function(entityReference) {
-      if (options.organism || options.xref) {
-        return instance.organism._getInstanceOrganism(entityReference)
-        .map(function(organism) {
-          if (!!organism) {
-            entityReference.organism = organism;
-          }
-          return entityReference;
-        });
-      } else {
-        return highland([entityReference]);
-      }
-    })
-    .map(function(entityReference) {
-      if (options.xref) {
-        var entityReferenceWithBridgeDbXrefsIri =
-          _addBridgeDbXrefsIri(entityReference);
-
-        if (!options.organism) {
-          // We needed to get the organism in order to get the BridgeDb Xrefs IRI,
-          // but we delete it here if the user didn't want it.
-          delete entityReferenceWithBridgeDbXrefsIri.organism;
+              // TODO can we get rid of this checking to ensure removal of empty type values?
+              var entityReferenceType = entityReference['@type'];
+              if (entityReferenceType) {
+                entityReferenceType = jsonldRx.arrayifyClean(entityReference['@type']);
+                entityReference['@type'] = entityReferenceType.filter(function(value) {
+                  return value;
+                });
+              }
+              push(null, entityReference);
+              next();
+            }, function(err) {
+              push(err);
+              next();
+            }, function() {
+            });
         }
-        return entityReferenceWithBridgeDbXrefsIri;
-      } else {
+      })
+      .map(_expand)
+      .map(function(entityReference) {
+        if (!entityReference.isDataItemIn ||
+          typeof entityReference.identifier === 'undefined') {
+          var message = 'Not enough data provided to identify' +
+            ' the specified entity reference: "' +
+            JSON.stringify(entityReference) + '"';
+          throw new Error(message);
+        }
+
         return entityReference;
-      }
+      })
+      .flatMap(function(entityReference) {
+        // TODO can we get rid of this checking to ensure removal of empty type values?
+        var entityReferenceType = entityReference['@type'];
+        if (entityReferenceType) {
+          entityReferenceType = jsonldRx.arrayifyClean(entityReference['@type']);
+          entityReference['@type'] = entityReferenceType.filter(function(value) {
+            return value;
+          });
+        }
+
+        if (options.dataset) {
+          return _enrichFromDataset(entityReference);
+        } else {
+          return highland([entityReference]);
+        }
+      })
+      .flatMap(function(entityReference) {
+        if (options.organism || options.xref) {
+          return instance.organism._getInstanceOrganism(entityReference)
+          .map(function(organism) {
+            if (!!organism) {
+              entityReference.organism = organism;
+            }
+            return entityReference;
+          });
+        } else {
+          return highland([entityReference]);
+        }
+      })
+      .map(function(entityReference) {
+        if (options.xref) {
+          var entityReferenceWithBridgeDbXrefsIri =
+            _addBridgeDbXrefsIri(entityReference);
+
+          var dataset = entityReference.isDataItemIn;
+          var preferredPrefix = dataset &amp;&amp; dataset.preferredPrefix;
+          var preferredPrefixesSupportedByMyGeneInfo = [
+            'ensembl',
+            'ncbigene'
+          ];
+          if (preferredPrefixesSupportedByMyGeneInfo.indexOf(preferredPrefix) > -1) {
+            entityReference.xref = entityReference.xref || [];
+            entityReference.xref.push(
+              encodeURI('http://mygene.info/v2/gene/' + entityReference.identifier));
+          }
+
+          if (!options.organism) {
+            // We needed to get the organism in order to get the BridgeDb Xrefs IRI,
+            // but we delete it here if the user didn't want it.
+            delete entityReferenceWithBridgeDbXrefsIri.organism;
+          }
+          return entityReferenceWithBridgeDbXrefsIri;
+        } else {
+          return entityReference;
+        }
+        //*/
+      })
+      .consume(function(err, entityReference, push, next) {
+        if (err) {
+          // pass errors along the stream and consume next value
+          push(err);
+          next();
+        } else if (entityReference === highland.nil) {
+          // pass nil (end event) along the stream
+          push(null, entityReference);
+        } else {
+          var bridgeDbInputOriginalContext = entityReference.bridgeDbInputOriginalContext;
+          delete entityReference.bridgeDbInputOriginalContext;
+          // TODO can we get rid of this checking to ensure removal of empty type values?
+          var entityReferenceType = entityReference['@type'];
+          if (entityReferenceType) {
+            entityReferenceType = jsonldRx.arrayifyClean(entityReference['@type']);
+            entityReference['@type'] = entityReferenceType.filter(function(value) {
+              return value;
+            });
+          }
+
+          jsonldRx.replaceContext(entityReference, bridgeDbInputOriginalContext)
+            .subscribe(function(value) {
+              if (!options.context) {
+                delete value['@context'];
+              }
+
+              // TODO can we get rid of this checking to ensure removal of empty type values?
+              var entityReferenceType = entityReference['@type'];
+              if (entityReferenceType) {
+                entityReferenceType = jsonldRx.arrayifyClean(entityReference['@type']);
+                entityReference['@type'] = entityReferenceType.filter(function(value) {
+                  return value;
+                });
+              }
+              push(null, value);
+              next();
+            }, function(err) {
+              push(err);
+              next();
+            }, function() {
+            });
+        }
+      });
+      /*
+      .flatMap(function(entityReference) {
+        if (options.context) {
+          return instance.addContext(entityReference);
+        } else {
+          return highland([entityReference]);
+        }
+      });
       //*/
-    })
-    .map(function(entityReference) {
-      if (options.context) {
-        return instance.addContext(entityReference);
-      } else {
-        return entityReference;
-      }
-    });
   };
 
   /**
@@ -440,7 +561,8 @@ var EntityReference = function(instance) {
    * for biological datasets from datasources.txt.
    *
    * @param {EntityReference} entityReference Expanded entity reference.
-   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference} enriched from data-sources.txt
+   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference}
+   *                                            enriched from data-sources.txt
    */
   function _enrichFromDataset(entityReference) {
     var datasetsStream =
@@ -448,13 +570,13 @@ var EntityReference = function(instance) {
 
     return datasetsStream.map(function(dataset) {
       entityReference.isDataItemIn = dataset;
-      entityReference.db = entityReference.db || dataset.name[0];
+      entityReference.db = entityReference.db || dataset.name;
       var typeFromDataset = dataset.subject;
       if (!_.isEmpty(typeFromDataset)) {
         typeFromDataset = _.isArray(typeFromDataset) ? typeFromDataset :
           [typeFromDataset];
         entityReference['@type'] = _.union(
-          Utils._arrayify(entityReference['@type']), typeFromDataset);
+          jsonldRx.arrayify(entityReference['@type']), typeFromDataset);
       }
 
       //*
@@ -476,12 +598,13 @@ var EntityReference = function(instance) {
   }
 
   /**
-   * Check whether an entity reference with the specified identifier is known by the specified dataset.
+   * Check whether an entity reference with the specified identifier is
+   * known by the specified dataset.
    *
    * @param {String} systemCode
    * @param {String} identifier
-   * @param {String|Organism} organism {@link Organism} or name in English or Latin or taxonomy IRI like
-   *                          {@link http://identifiers.org/taxonomy/9606|http://identifiers.org/taxonomy/9606}.
+   * @param {String|Organism} organism {@link Organism} or name in English or Latin or taxonomy IRI
+   *       like {@link http://identifiers.org/taxonomy/9606|http://identifiers.org/taxonomy/9606}.
    * @return {Stream&lt;Boolean>} exists Whether specified entity reference exists.
    */
   function exists(systemCode, identifier, organism) {
@@ -490,12 +613,11 @@ var EntityReference = function(instance) {
         '/xrefExists/' + systemCode + '/' + identifier;
       var source = instance.config.baseIri + path;
 
-      return highland(request({
-        url: source,
+      return highland(hyperquest(source, {
         withCredentials: false
       })).map(function(buf) {
-        // NOTE: we use "replace" to strip out anything that would make the Boolean determination incorrect,
-        // e.g., line breaks.
+        // NOTE: we use "replace" to strip out anything that would
+        // make the Boolean determination incorrect, e.g., line breaks.
         var str = buf.toString().replace(/([^a-z])+/g, '');
         return str === 'true';
       });
@@ -504,15 +626,17 @@ var EntityReference = function(instance) {
 
   /**
    * @private
-   * Parse provided object or string to return a normalized entity reference in the form of a JS object.
+   * Parse provided object or string to return a normalized entity reference
+   * in the form of a JS object.
    * Uses only provided input -- no external data lookups.
    * Any provided names/values will be retained as-is, even if doing so prevents
    * other methods in this library from being able to access the data they require,
    * because this library does not clean or transform the input.
    *
-   * @param {Object|String} entityReference {@see bridgeDb.entityReference.enrich()} for details on what
-   *                      constitutes a usable entityReference
-   * @return {EntityReference} EntityReference Entity reference converted to object, if required, and normalized.
+   * @param {Object|String} entityReference {@see bridgeDb.entityReference.enrich()}
+   *    for details on what constitutes a usable entityReference
+   * @return {EntityReference} EntityReference Entity reference converted to object,
+   *                      if required, and normalized.
    */
   function _expand(entityReference) {
     if (!_.isPlainObject(entityReference)) {
@@ -529,7 +653,7 @@ var EntityReference = function(instance) {
       }
     }
 
-    entityReference['@type'] = Utils._arrayify(entityReference['@type']);
+    entityReference['@type'] = jsonldRx.arrayify(entityReference['@type']);
     if (entityReference['@type'].indexOf('EntityReference') === -1) {
       entityReference['@type'].push('EntityReference');
     }
@@ -557,13 +681,21 @@ var EntityReference = function(instance) {
 
     entityReference.isDataItemIn = entityReference.isDataItemIn || {};
 
-    var datasetName = entityReference.db ||
+    var db = entityReference.db ||
       (!!entityReference.isDataItemIn.name &amp;&amp;
        entityReference.isDataItemIn.name);
 
-    if (!!datasetName) {
-      entityReference.db = datasetName;
-      entityReference.isDataItemIn.name = datasetName;
+    if (!!db) {
+      entityReference.db = db;
+      entityReference.isDataItemIn.name = db;
+    }
+
+    var bridgeDbDatasourceName = entityReference.bridgeDbDatasourceName ||
+      (!!entityReference.isDataItemIn.bridgeDbDatasourceName &amp;&amp;
+       entityReference.isDataItemIn.bridgeDbDatasourceName);
+    if (!!bridgeDbDatasourceName) {
+      entityReference.bridgeDbDatasourceName = bridgeDbDatasourceName;
+      entityReference.isDataItemIn.bridgeDbDatasourceName = bridgeDbDatasourceName;
     }
 
     var identifier = entityReference.identifier;
@@ -575,8 +707,11 @@ var EntityReference = function(instance) {
   }
 
   /**
-   * Get potential matches for a desired entity reference by free text search for matching symbols or identifiers. See also
-   * {@link http://bridgedb.org/apidoc/2.0/org/bridgedb/IDMapper.html#freeSearch(java.lang.String,%20int)|Java documentation}.
+   * Get potential matches for a desired entity reference by free text search for matching
+   * symbols or identifiers. See also
+   * {@link
+   * http://bridgedb.org/apidoc/2.0/org/bridgedb/IDMapper.html#freeSearch(java.lang.String,%20int)|
+   * Java documentation}.
    *
    * @example
    * myBridgeDbInstance.entityReference.freeSearch({
@@ -589,13 +724,15 @@ var EntityReference = function(instance) {
    *
    * @param {Object} args
    * @param {String} args.attribute - Attribute value to be used as search term
-   * @param {String|Organism} organism {@link Organism} or name in English or Latin or taxonomy IRI like
-   *                          {@link http://identifiers.org/taxonomy/9606|http://identifiers.org/taxonomy/9606}.
-   * @param {JsonldType} [args['@type']] - Entity reference type, such as Protein, Dna, SmallMolecule, etc.
-   *                               Not currently being used, but we might use it in the future to
-   *                               help narrow down the search results.
+   * @param {String|Organism} organism {@link Organism} or name in English or Latin or taxonomy
+   *  IRI like {@link http://identifiers.org/taxonomy/9606|http://identifiers.org/taxonomy/9606}.
+   * @param {JsonldType} [args['@type']] - Entity reference type, such as ProteinReference,
+   *              DnaReference, SmallMoleculeReference, etc.
+   *              Not currently being used, but we might use it in the future to
+   *              help narrow down the search results.
    * @param {String} [args.db] - Desired dataset name, such as Ensembl or Uniprot
-   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference}, enriched from data-sources.txt and BridgeDb organism data.
+   * @return {Stream&lt;EntityReference>} entityReference {@link EntityReference}, enriched
+   *                                    from data-sources.txt and BridgeDb organism data.
    */
   function freeSearch(args) {
     var attributeValue = args.attribute;
@@ -616,7 +753,7 @@ var EntityReference = function(instance) {
     //return instance.organism._getInstanceOrganism(organism).fork()
     //return instance.organism._getInstanceOrganism(organism)
     .map(function(organism) {
-      return organism.name.la;
+      return organism.nameLanguageMap.la;
     })
     .map(function(organismName) {
       var path = encodeURIComponent(organismName) +
@@ -625,20 +762,19 @@ var EntityReference = function(instance) {
       return instance.config.baseIri + path;
     })
     .flatMap(function(source) {
-      return highland(request({
-        url: source,
+      return highland(hyperquest(source, {
         withCredentials: false
       })
       .pipe(csv(csvOptions)));
     })
     .errors(function(err, push) {
-      console.log(err);
-      console.log('in entityReference.freeSearch()');
+      console.error('in bridgedb.entityReference.freeSearch()');
+      push(err);
     })
     .map(function(array) {
       return {
         identifier: array[0],
-        db: array[1],
+        bridgeDbDatasourceName: array[1],
         displayName: array[2]
       };
     })
@@ -687,7 +823,7 @@ var EntityReference = function(instance) {
 
       return {
         isDataItemIn: {
-          '@id': 'http://identifiers.org/' + preferredPrefix,
+          '@id': 'http://identifiers.org/' + preferredPrefix + '/',
           preferredPrefix: preferredPrefix
         },
         identifier: identifier,
@@ -695,15 +831,17 @@ var EntityReference = function(instance) {
       };
     },
     'bridgedb.org': function(iri) {
-      var systemCode = iri.match(/(bridgedb.org\/.*\/xrefs\/)(\w+)(?=\/.*)/)[2];
-      var identifier = iri.match(/(bridgedb.org\/.*\/xrefs\/\w+\/)(.*)$/)[2];
+      var bridgeDbSystemCode = decodeURIComponent(
+          iri.match(/(bridgedb.org\/.*\/xrefs\/)(\w+)(?=\/.*)/)[2]);
+      var identifier = decodeURIComponent(iri.match(/(bridgedb.org\/.*\/xrefs\/\w+\/)(.*)$/)[2]);
       return {
         organism: decodeURIComponent(iri.match(/(bridgedb.org\/)(.*)(?=\/xrefs)/)[2]),
         isDataItemIn: {
-          alternatePrefix: decodeURIComponent([systemCode]),
-          exampleIdentifier: decodeURIComponent(identifier),
+          alternatePrefix: [bridgeDbSystemCode],
+          bridgeDbSystemCode: bridgeDbSystemCode,
+          exampleIdentifier: identifier,
         },
-        identifier: decodeURIComponent(identifier),
+        identifier: identifier,
         bridgeDbXrefsIri: iri,
         xref: [iri]
       };
@@ -713,10 +851,12 @@ var EntityReference = function(instance) {
 
   /**
    * @param {Object} args
-   * @param {String} args.targetPreferredPrefix The Miriam namespace / identifiers.org preferredPrefix.
+   * @param {String} args.targetPreferredPrefix The Miriam namespace /
+   *    identifiers.org preferredPrefix.
    * @param {String|Object} args.sourceEntityReference @see bridgeDb.entityReference.enrich()
    *                        method for what constitutes a usable entityReference
-   * @return {Stream&lt;EntityReference>} entityReference One or more {@link EntityReference|entity references} with the target preferredPrefix.
+   * @return {Stream&lt;EntityReference>} entityReference One or more
+   *    {@link EntityReference|entity references} with the target preferredPrefix.
    */
   function map(args) {
     var targetPreferredPrefix = args.targetPreferredPrefix;
@@ -784,7 +924,7 @@ exports = module.exports = EntityReference;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue May 05 2015 14:02:32 GMT-0700 (PDT)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Jul 20 2015 17:17:30 GMT-0700 (PDT)
         </footer>
     </div>
 </div>

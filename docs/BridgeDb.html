@@ -202,7 +202,7 @@
     
         
         <div class="tag-source">
-            <a href="index.js.html">index.js</a>, <a href="index.js.html#line65">line 65</a>
+            <a href="index.js.html">index.js</a>, <a href="index.js.html#line76">line 76</a>
         </div>
         
     </div>
@@ -308,7 +308,7 @@ There is no need to use the &quot;new&quot; keyword.</p>
             
                 <td class="default">
                 
-                    'http://webservice.bridgedb.org/'
+                    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/'
                 
                 </td>
             
@@ -322,91 +322,83 @@ There is no need to use the &quot;new&quot; keyword.</p>
                         
                     
                 
-                <p>Base IRI (URL) for your BridgeDb
-               webservice instance. One use for this option is defining a CORS proxy to support in-browser
-               usage, because the BridgeDb webservice does not currently support CORS.</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>datasetsMetadataIri</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                    'https://raw.githubusercontent.com/bridgedb/BridgeDb/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt'
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                    
-                        <span class="optional">optional</span>
-                    
-                    
-                        
-                    
-                
-                <p>Location
-                 (URL) of the datasources.txt file that contains metadata for selected biological datasets.
-                 This metadata includes information such as name (e.g., Entrez Gene),
-                 Miriam identifier (e.g., urn:miriam:ncbigene) and BridgeDb system code (e.g., L).</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>organism</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-                <td class="default">
-                
-                </td>
-            
-            
-            <td class="description last">
-                
-                    
-                        <span class="optional">optional</span>
-                    
-                    
-                        
-                    
-                
-                <p>Full name in Latin, e.g., Homo sapiens. Each bridgedbjs instance
-                                   has one organism associated with it. Specifying it here will result
-                                   in faster response times, because bridgedbjs will not have to infer
-                                   it from the other provided data.</p></td>
+                <p>Base
+   IRI (URL) for your BridgeDb webservice instance.
+   TODO Enable CORS at bridgedb.org, because the default should be
+   'http://webservice.bridgedb.org/', but we are forced to use pointer as
+   a proxy for now for CORS so that web browsers can access the data.</p></td>
         </tr>
 	
 	
 	</tbody>
 </table>
             </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>[options.datasetsMetadataIri=
+   'https://cdn.rawgit.com/bridgedb/BridgeDb/master/org.bridgedb.bio/
+       resources/org/bridgedb/bio/datasources.txt']</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>Location
+   (URL) of the datasources.txt file that contains metadata for selected biological datasets.
+   This metadata includes information such as name (e.g., Entrez Gene),
+   Miriam identifier (e.g., urn:miriam:ncbigene) and BridgeDb system code (e.g., L).</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>options.organism</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Full name in Latin, e.g., Homo sapiens.
+   Each bridgedbjs instance has one organism associated with it.
+   Specifying it here will result in faster response times, because bridgedbjs
+   will not have to infer it from the other provided data.</p></td>
         </tr>
 	
 	
@@ -457,8 +449,9 @@ There is no need to use the &quot;new&quot; keyword.</p>
     
     <pre class="prettyprint"><code><p>BridgeDb = require('bridgedb'); // Only needed if using Node.js.
 var myBridgeDbInstance = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-  datasetsMetadataIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+  baseIri: 'http://webservice.bridgedb.org/', // Optional
+  datasetsMetadataIri:
+   'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'  // Optional
 });</p></code></pre>
     
 
@@ -518,7 +511,7 @@ var myBridgeDbInstance = BridgeDb({
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue May 05 2015 14:02:32 GMT-0700 (PDT)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Jul 20 2015 17:17:30 GMT-0700 (PDT)
         </footer>
     </div>
 </div>

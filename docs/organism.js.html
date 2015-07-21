@@ -185,11 +185,9 @@
 var _ = require('lodash');
 var highland = require('highland');
 var httpErrors = require('./http-errors.js');
-var jsonLdContext = require('./context.json');
-var request = require('request');
+var hyperquest = require('hyperquest');
 var csv = require('csv-streamify');
 var csvOptions = {objectMode: true, delimiter: '\t'};
-var JsonldMatcher = require('./jsonld-matcher.js');
 var Utils = require('./utils.js');
 
 /**
@@ -202,14 +200,18 @@ var Utils = require('./utils.js');
 var Organism = function(instance) {
   'use strict';
 
+  var jsonldRx = instance.jsonldRx;
+  var normalizeText = jsonldRx.normalizeText;
+
   /**
    * See {@link http://identifiers.org/snomedct/410607006|snomedct:Organism}
    * @typedef {Object} Organism Organism with as many as possible of the properties listed below.
    * @property {JsonldContext} @context JSON-LD context.
-   * @property {Iri} @id Preferred IRI for identifying an organism, using http://identifiers.org/taxonomy/.
-   * @property {Object[]} name
-   * @property {String} name.en English name, when available.
-   * @property {String} name.la Full Latin name.
+   * @property {Iri} @id Preferred IRI for identifying an organism,
+   *    using {@link http://identifiers.org/taxonomy/|Taxonomy ontology}
+   * @property {Object} nameLanguageMap
+   * @property {String} nameLanguageMap.en English name, when available.
+   * @property {String} nameLanguageMap.la Full Latin name.
    */
 
   var latinNameToIriMappings = {
@@ -251,17 +253,19 @@ var Organism = function(instance) {
   /**
    * @private
    *
-   * Convert organism to Latin name.
+   * Convert organismIdentifier to Latin name.
    *
    * @param {String} organismIdentifier - Can be name in Latin (full like "Escherichia coli"
-   *      or abbreviated like "E. coli") or English. In the future, we might include IRIs for organisms.
+   *      or abbreviated like "E. coli") or English. In the future, we might include IRIs
+   *      for organisms.
    * @return {Stream&lt;String>} organismLatinName Full name in Latin
    * @return {String}
    */
   function _convertToLatinName(organismIdentifier) {
     return _normalize(organismIdentifier).map(function(organism) {
       // returns either the organism name or false
-      return !!organism.name &amp;&amp; !!organism.name.la &amp;&amp; organism.name.la;
+      return !!organism.nameLanguageMap &amp;&amp; !!organism.nameLanguageMap.la &amp;&amp;
+          organism.nameLanguageMap.la;
     });
   }
 
@@ -303,39 +307,31 @@ var Organism = function(instance) {
     var path = 'contents';
     var source = instance.config.baseIri + path;
 
-    return highland(request({
-      url: source,
+    return highland(hyperquest(source, {
       withCredentials: false
     })
     .pipe(csv(csvOptions)))
     .map(function(array) {
-      var names = {};
+      var nameLanguageMap = {};
       var englishName = array[0];
       var latinName = array[1];
 
       // Note: I intentionally used 'null' as a string, not a native value,
       // because BridgeDb returns the string value
       if (englishName !== 'null') {
-        names.en = englishName;
+        nameLanguageMap.en = englishName;
       }
       if (latinName !== 'null') {
-        names.la = latinName;
+        nameLanguageMap.la = latinName;
       }
 
-      return {
-        '@context': [
-          {
-            name: {
-              '@id': 'biopax:name',
-              '@container': '@language'
-            },
-            Organism: 'http://identifiers.org/snomedct/410607006'
-          }
-        ],
+      var normalizedOrganism = {
         '@id': latinNameToIriMappings[latinName],
         '@type': 'Organism',
-        name: names
+        nameLanguageMap: nameLanguageMap
       };
+
+      return normalizedOrganism;
     });
   };
 
@@ -357,9 +353,10 @@ var Organism = function(instance) {
         systemCode, identifier);
 
     return query()
-    // TODO sort organisms by number of pathways at WikiPathways. Get that data as part of build step for this library.
+    // TODO sort organisms by number of pathways at WikiPathways.
+    // Get that data as part of build step for this library.
     .flatFilter(function(organism) {
-      return exists(organism.name.la);
+      return exists(organism.nameLanguageMap.la);
     })
     .head();
   };
@@ -386,14 +383,15 @@ var Organism = function(instance) {
     var entityReferenceStream;
 
     var systemCodeExists = !!entityReference.isDataItemIn &amp;&amp;
-      (entityReference.isDataItemIn._systemCode ||
+      (entityReference.isDataItemIn.bridgeDbSystemCode ||
       _.isArray(entityReference.isDataItemIn.alternatePrefix) &amp;&amp;
       entityReference.isDataItemIn.alternatePrefix[0]);
     if (!systemCodeExists) {
       entityReferenceStream = instance.entityReference.enrich(entityReference, {
         bridgeDbXrefsUrl: false,
         dataset: true,
-        organism: false
+        organism: false,
+        xref: false,
       });
     } else {
       entityReferenceStream = highland([entityReference]);
@@ -406,7 +404,7 @@ var Organism = function(instance) {
       }
 
       var systemCode =
-        entityReference.isDataItemIn._systemCode ||
+        entityReference.isDataItemIn.bridgeDbSystemCode ||
         _.isArray(entityReference.isDataItemIn.alternatePrefix) &amp;&amp;
         entityReference.isDataItemIn.alternatePrefix[0];
 
@@ -452,40 +450,83 @@ var Organism = function(instance) {
    *
    * Normalize organism.
    *
-   * @param {String|Object} organism - Can be name in Latin (full like "Escherichia coli"
-   *      or abbreviated like "E. coli") or English. In the future, we might include IRIs for organisms.
+   * @param {String|Object|Organism} organism - Can be any one of the following:
+   *    * IRI from the (@link http://identifiers.org/taxonomy/|Taxonomy ontology}
+   *    * name in Latin
+   *      - full like "Escherichia coli" or
+   *      - abbreviated like "E. coli" or
+   *    * name in English
+   *    * an object with the key being the language and the value being the name
+   *    * a full or partial Organism object
+   * @param {Iri} [organism['@id']] Taxonomy ontology IRI
+   * @param {String} [organism.name] name in Latin (preferred) or English
+   * @param {String} [organism.en] name in English - deprecated
+   * @param {String} [organism.english] name in English - deprecated
+   * @param {String} [organism.la] name in Latin - deprecated
+   * @param {String} [organism.latin] name in Latin - deprecated
+   * @param {Object} [organism.nameLanguageMap] {@link
+   *    http://www.w3.org/TR/json-ld/#language-maps|language map}
+   * @param {String} [organism.nameLanguageMap.en] name in English
+   * @param {String} [organism.nameLanguageMap.la] name in Latin
    * @return {Stream&lt;Organism>} organismStream
    */
   function _normalize(organism) {
-    var organismIdentifier;
+    // TODO has the input been transformed to use the internalContext yet?
+    var organismName;
+    var normalizedOrganismName;
+    var organismIri;
     if (_.isString(organism)) {
-      organismIdentifier = organism;
+      if (organism.indexOf('http://identifiers.org/taxonomy/') === 0) {
+        organismIri = organism;
+      } else {
+        organismName = organism;
+      }
     } else if (_.isPlainObject(organism)) {
-      organismIdentifier = organism.name || organism.latin || organism.english;
+      if (organism['@id']) {
+        organismIri = organism['@id'];
+      }
+      var nameLanguageMap = organism.nameLanguageMap;
+      if (nameLanguageMap) {
+        organismName = nameLanguageMap.la || nameLanguageMap.en;
+      } else {
+        organismName = organism.name || organism.la || organism.latin ||
+          organism.en || organism.english;
+      }
     }
 
-    if (!organismIdentifier) {
+    if (!organismIri &amp;&amp; !organismName) {
       console.log(organism);
-      throw new Error('Cannot normalize above provided organism.');
+      throw new Error('Cannot normalize provided organism (above).');
     }
 
-    var normalizedOrganismIdentifier =
-      JsonldMatcher._normalizeText(organismIdentifier);
+    if (organismName) {
+      normalizedOrganismName = normalizeText(organismName);
+    }
 
     return _getAll()
     .filter(function(organism) {
-      var names = organism.name;
-      var latinName = names.la;
-      var latinNameComponents = latinName.split(' ');
-      var latinNameAbbreviated = latinNameComponents[0][0] +
-        latinNameComponents[1];
-      var englishName = names.en;
-      return JsonldMatcher._normalizeText(latinName) ===
-        normalizedOrganismIdentifier ||
-        JsonldMatcher._normalizeText(latinNameAbbreviated) ===
-          normalizedOrganismIdentifier ||
-        JsonldMatcher._normalizeText(englishName) ===
-          normalizedOrganismIdentifier;
+      var organismIriMatch;
+      if (organismIri) {
+        organismIriMatch = organismIri === organism['@id'];
+      }
+      var normalizedOrganismNameMatch;
+      if (normalizedOrganismName) {
+        var nameLanguageMap = organism.nameLanguageMap;
+        var latinName = nameLanguageMap.la;
+        var latinNameComponents = latinName.split(' ');
+        var latinNameAbbreviated = latinNameComponents[0][0] +
+          latinNameComponents[1];
+        var englishName = nameLanguageMap.en;
+        var normalizedNameCandidates = [
+          latinName,
+          latinNameAbbreviated,
+          englishName
+        ].map(function(value) {
+          return normalizeText(value);
+        });
+        normalizedOrganismNameMatch = normalizedNameCandidates.indexOf(normalizedOrganismName) > -1;
+      }
+      return organismIriMatch || normalizedOrganismNameMatch;
     })
     .head();
   }
@@ -513,7 +554,7 @@ var Organism = function(instance) {
     } else {
       providedType = searchCriteria['@type'] || 'Organism';
     }
-    providedType = Utils._arrayify(providedType);
+    providedType = jsonldRx.arrayify(providedType);
 
     var supportedType = _(typeToFunctionMapping).keys()
     .intersection(providedType)
@@ -537,8 +578,8 @@ var Organism = function(instance) {
    *                                 with another organism, create another bridgedbjs instance.
    * @param {Boolean} normalize Normalize the provided organism to ensure it matches what
    *                                 the BridgeDb API expects.
-   * @return {Stream&lt;Organism>} Normalized organism name. Note that if args.normalize is set to false,
-   *                          the returned value will be whatever was provided as args.organism.
+   * @return {Stream&lt;Organism>} Normalized organism name. Note that if args.normalize is
+   *    set to false, the returned value will be whatever was provided as args.organism.
    */
   function _setInstanceOrganism(organism, normalize) {
     if (normalize === null || typeof normalize === 'undefined') {
@@ -580,7 +621,7 @@ exports = module.exports = Organism;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Tue May 05 2015 14:02:32 GMT-0700 (PDT)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Mon Jul 20 2015 17:17:30 GMT-0700 (PDT)
         </footer>
     </div>
 </div>
