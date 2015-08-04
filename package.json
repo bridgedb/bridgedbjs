@@ -34,7 +34,6 @@
     "URIjs": "^1.15.1",
     "csv-streamify": "~1.0.0",
     "hyperquest": "^1.2.x",
-    "jsonld": "~0.3.4",
     "jsonld-rx": "git://github.com/ariutta/jsonld-rx",
     "lodash": "~2.4.1",
     "rx": "^2.5.3",
