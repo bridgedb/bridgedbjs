@@ -29,7 +29,7 @@ Nashorn tutorials:
 
 ## Example
 ```js
-BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
+var BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
 
 var myBridgeDbInstance = new BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
