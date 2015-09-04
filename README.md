@@ -31,7 +31,7 @@ Nashorn tutorials:
 ```js
 BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
 
-var myBridgeDbInstance = BridgeDb({
+var myBridgeDbInstance = new BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
