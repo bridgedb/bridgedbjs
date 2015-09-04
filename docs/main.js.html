@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Class: Xref</title>
+    <title>Source: main.js</title>
     
     
     
@@ -173,302 +173,162 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="BridgeDb.Xref.html">Class: Xref</h1>
+        <h1 class="page-title" data-filename="main.js.html">Source: main.js</h1>
         
 
 
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>var _ = require('lodash');
+var config = require('./config.js');
+var EntityReference = require('./entity-reference.js');
+var highland = require('highland');
+var internalContext = require('./context.json');
+var JsonldMatcher = require('./jsonld-matcher.js');
+var JsonldRx = require('jsonld-rx');
+var Dataset = require('./dataset.js');
+var Organism = require('./organism.js');
+var Rx = require('rx');
+var RxNode = require('rx-node');
+var Utils = require('./utils.js');
+var Xref = require('./xref.js');
 
-<section>
-    
-<header>
-    <h2>
-        <span class="ancestors"><a href="BridgeDb.html">BridgeDb</a>.</span>
-    
-    Xref
-    </h2>
-    
-</header>  
+/**
+ * The keyword {@link http://www.w3.org/TR/json-ld/#the-context|@context} indicates
+ *    an object with information for identifying or defining terms used in the data.
+ *    The data is just regular JSON, so you can safely ignore the context. If you
+ *    choose to use the context, you can work with JSON-LD tools to view the JSON as
+ *    Linked Open Data.
+ * @typedef {String|Object|Array&lt;String>|Array&lt;Object>} JsonldContext
+*/
 
-<article>
-    <div class="container-overview">
-    
-    
-    
-        
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="Xref">
-            
-            <span class="type-signature ">protected</span>new BridgeDb.Xref<span class="signature">(instance)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line19">line 19</a>
-        </div>
-        
-    </div>
+/**
+ * The keyword {@link http://www.w3.org/TR/json-ld/#iris|id} indicates a unique identifier for a
+ *                      concept or thing. In JSON-LD terms, this unique identifier is called an IRI,
+ *                      which is usually a persistent (stable) URL. You can safely ignore this if
+ *                      you don't care about JSON-LD.
+ *                      @example http://identifiers.org/ncbigene/1234
+ * @typedef {String} Iri
+*/
 
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Used internally to create a new Xref instance</p>
-    </div>
-    
+/**
+ * The keyword {@link http://www.w3.org/TR/json-ld/#typed-values|type} sets data types in JSON-LD.
+ *                      You can safely ignore this if you don't care about JSON-LD.
+ * @typedef {String|String[]} JsonldType
+*/
 
-    
-    
-    
-    
-    
-        
+/**
+ * {@link http://nodejs.org/api/stream.html|Node.js stream}. This library additionally uses
+ *      {@link http://highlandjs.org/|highland} for easier stream handling, so you can use
+ *      the highland methods on all streams returned.
+ * @typedef Stream
+*/
 
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>instance</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
+/**
+ * Creates a new BridgeDb instance.
+ * There is no need to use the "new" keyword.
+ * @class
+ *
+ * @example
+ * BridgeDb = require('bridgedb'); // Only needed if using Node.js.
+ * var myBridgeDbInstance = BridgeDb({
+ *   baseIri: 'http://webservice.bridgedb.org/', // Optional
+ *   datasetsMetadataIri:
+ *    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'  // Optional
+ * });
+ *
+ * @param {object} [options] Overwrite any or all of the defaults in [config.js]{@link config}
+ * @param {string} [options.baseIri='http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/'] Base
+ *    IRI (URL) for your BridgeDb webservice instance.
+ *    TODO Enable CORS at bridgedb.org, because the default should be
+ *    'http://webservice.bridgedb.org/', but we are forced to use pointer as
+ *    a proxy for now for CORS so that web browsers can access the data.
+ * @param {string} [options.datasetsMetadataIri=
+ *    'https://cdn.rawgit.com/bridgedb/BridgeDb/master/org.bridgedb.bio/
+ *        resources/org/bridgedb/bio/datasources.txt'] Location
+ *    (URL) of the datasources.txt file that contains metadata for selected biological datasets.
+ *    This metadata includes information such as name (e.g., Entrez Gene),
+ *    Miriam identifier (e.g., urn:miriam:ncbigene) and BridgeDb system code (e.g., L).
+ * @param {string} [options.organism] Full name in Latin, e.g., Homo sapiens.
+ *    Each bridgedbjs instance has one organism associated with it.
+ *    Specifying it here will result in faster response times, because bridgedbjs
+ *    will not have to infer it from the other provided data.
+ */
+var BridgeDb = function(options) {
 
+  var instance = {};
+  options = options || {};
+  instance.config = _.clone(config);
+  instance.config =
+    Utils._defaultsDeep(options, instance.config);
 
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
+  var jsonldRx = instance.jsonldRx = new JsonldRx({
+    defaultContext: internalContext
+  });
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
+  var jsonldMatcher = jsonldRx._matcher = new JsonldMatcher(jsonldRx);
+  jsonldRx.normalizeText = jsonldMatcher._normalizeText;
+  jsonldRx.tieredFind = jsonldMatcher.tieredFind;
 
-    
-    
+  instance.addContext = function(inputDoc) {
+    // our BridgeDbJs context, internal to this library
+    internalContext = _.isArray(internalContext) ? internalContext :
+      [internalContext];
+    var externalContext = inputDoc['@context'] || [{'@vocab': 'http://bridgedb.org/input-vocab/'}];
+    externalContext = _.isArray(externalContext) ? externalContext :
+      [externalContext];
+    var unionContext = internalContext.concat(externalContext);
 
-    
+    var observable = jsonldRx.mergeContexts(unionContext).map(function(mergedContexts) {
+      // we need to do this awkward construction in order to put the @context property first
+      var outputDoc = {
+        '@context': mergedContexts
+      };
+      _.defaults(outputDoc, inputDoc);
+      // TODO why do we need to stringify it here and parse it in the next step?
+      return JSON.stringify(outputDoc);
+    });
+    var stream = highland();
+    RxNode.writeToStream(observable, stream);
+    return stream.map(function(value) {
+      var parsedValue = JSON.parse(value);
+      return parsedValue;
+    });
+  };
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+  instance.entityReference =
+    Object.create(EntityReference(instance));
+  instance.entityReference =
+    Object.create(EntityReference(instance));
+  instance.organism =
+    Object.create(Organism(instance));
+  if (!!options.organism) {
+    instance.organism._setInstanceOrganism(options.organism, false);
+  }
 
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="get">
-            
-            <span class="type-signature ">inner</span>get<span class="signature">(input)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="global.html#Stream">Stream</a>.&lt;<a href="global.html#EntityReference">EntityReference</a>>}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="xref.js.html">xref.js</a>, <a href="xref.js.html#line30">line 30</a>
-        </div>
-        
-    </div>
+  instance.dataset =
+    Object.create(Dataset(instance));
+  instance.xref = Object.create(Xref(instance));
 
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Get all xrefs available from BridgeDb for the provided entity reference.
-Currently limited to biopax:UnificationXrefs and biopax:RelationshipXrefs.</p>
-    </div>
-    
+  return instance;
+};
 
-    
-    
-    
-    
-    
-        
+(function() {
+  if (typeof window !== 'undefined' &amp;&amp; typeof document !== 'undefined') {
+    //in browser environment
+    window.BridgeDb = BridgeDb;
+  }
 
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>input</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
+  if (!!module &amp;&amp; !!module.exports) {
+    //in node and/or CommonJS environment
+    module.exports = BridgeDb;
+  }
+})();
+</code></pre>
+        </article>
+    </section>
 
-<span class="param-type">Object</span>
-|
-
-<span class="param-type"><a href="global.html#Stream">Stream</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-Stream of enriched
-                             <a href="global.html#EntityReference"><code>EntityReferences</code></a>.
-<br />
-
-    
-    
-    
-</dd>
-
-        </dl>
-    
-    
-    
-    
-    
-</article>
-
-</section>  
 
 
 
