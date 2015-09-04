@@ -16,7 +16,8 @@ gulp.task('publish', ['sync-tag-version'], function publish(callback) {
   .flatMap(gitStreaming.merge('master'))
   .flatMap(gitStreaming.push('origin', 'gh-pages'))
   .flatMap(gitStreaming.checkout('master'))
-  //* TODO the following should look something like this, but I haven't tested it yet
+
+  //* TODO why does this take 1.57 min to complete?
   .flatMap(function() {
     return utils.createExecStream('npm publish');
   })
