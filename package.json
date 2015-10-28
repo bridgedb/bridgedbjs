@@ -24,7 +24,7 @@
     "biology"
   ],
   "author": "BridgeDb team",
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bridgedb/bridgedbjs/issues"
   },
