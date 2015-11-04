@@ -32,6 +32,7 @@
   "dependencies": {
     "brfs": "~1.4.0",
     "csv-streamify": "~1.0.0",
+    "deglobalify": "~0.2.0",
     "hyperquest": "^1.2.x",
     "jsonld-rx": "git://github.com/ariutta/jsonld-rx",
     "JSONStream": "^1.0.4",
@@ -48,7 +49,6 @@
     "chai-as-promised": "~4.1.1",
     "colors": "~1.0.3",
     "deep-diff": "~0.3.0",
-    "deglobalify": "~0.2.0",
     "freeport": "~1.0.4",
     "gulp": "~3.8.10",
     "gulp-brfs": "~0.1.0",
