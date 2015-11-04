@@ -56,7 +56,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 3. Try running the tests. If you need help, check out the [test documentation](./test/README.md).
 4. Make your changes, including adding new tests for your changes if they are not already covered by the existing tests.
 5. Make sure the tests all pass.
-6. Then you can get us to rebuild bridgedb and update the github repo with this process:
+6. Then you can get us to rebuild bridgedb and update the github repo with this process (currently doesn't work quite right. see [issue](https://github.com/bridgedb/bridgedbjs/issues/3)):
 
   a) Commit your changes to the master branch of your local repo.
 
