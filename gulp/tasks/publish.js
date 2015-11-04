@@ -10,13 +10,13 @@ var utils = require('../util/utils.js');
 gulp.task('publish', ['sync-tag-version'], function publish(callback) {
   highland(gitStreaming.push('origin', 'master'))
   .errors(killStream)
-  .flatMap(gitStreaming.push('origin', packageJson.version))
+  //.flatMap(gitStreaming.push('origin', packageJson.version))
   .errors(killStream)
   .flatMap(gitStreaming.checkout('gh-pages'))
   .flatMap(gitStreaming.merge('master'))
   .flatMap(gitStreaming.push('origin', 'gh-pages'))
   .flatMap(gitStreaming.checkout('master'))
-  /*
+  //*
   //* TODO why does this take 1.57 min to complete?
   .flatMap(function() {
     return utils.createExecStream('npm publish');
