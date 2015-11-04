@@ -17,5 +17,7 @@ var gulpSequence = require('gulp-sequence');
 gulp.task('build', gulpSequence('verify-git-status',
       'bump-version-number-in-files',
       ['browserify', 'build-docs'],
-      'commit-after-build',
-      'sync-tag-version'));
+      'commit-after-build'
+      // Disabled this, bc it isn't working correctly.
+      //'sync-tag-version'
+    ));
