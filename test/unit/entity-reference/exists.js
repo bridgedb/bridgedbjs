@@ -41,10 +41,9 @@ describe('BridgeDb.EntityReference.exists', function() {
   });
 
   //*
-  it('should check existence of existent entity reference (Latin)',
-      function(done) {
+  it('should check existence of existent entity reference (Latin)', function(done) {
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -67,10 +66,9 @@ describe('BridgeDb.EntityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of existent entity reference (English)',
-      function(done) {
+  it('should check existence of existent entity reference (English)', function(done) {
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -93,10 +91,9 @@ describe('BridgeDb.EntityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of non-existent entity reference (Latin)',
-      function(done) {
+  it('should check existence of non-existent entity reference (Latin)', function(done) {
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -119,10 +116,9 @@ describe('BridgeDb.EntityReference.exists', function() {
   //*/
 
   //*
-  it('should check existence of non-existent entity reference (English)',
-      function(done) {
+  it('should check existence of non-existent entity reference (English)', function(done) {
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:

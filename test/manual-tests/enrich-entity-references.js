@@ -1,14 +1,14 @@
 var highland = require('highland');
 var BridgeDb = require('../../index.js');
 
-var bridgeDb1 = BridgeDb({
+var bridgeDb1 = new BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
 });
 
 //*
-var bridgeDb2 = BridgeDb({
+var bridgeDb2 = new BridgeDb({
   baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
   datasetsMetadataIri:
     'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
