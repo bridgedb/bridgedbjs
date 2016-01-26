@@ -46,7 +46,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
     done();
   });
 
-  //*
+  /*
   it('should enrich entity reference by @id\n' +
       '        xref: false\n' +
       '        context: true\n' +
@@ -59,7 +59,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
           'dataset-true-organism-false.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -110,7 +110,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
   //*/
 
-  //*
+  /*
   it('should enrich entity reference by @id\n' +
       '        xref: false\n' +
       '        context: true\n' +
@@ -123,7 +123,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
           'dataset-true-organism-true.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -174,7 +174,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
   //*/
 
-  //*
+  /*
   it('should enrich entity reference by @id\n' +
       '        xref: true\n' +
       '        context: false\n' +
@@ -187,7 +187,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
           'dataset-true-organism-false.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -238,7 +238,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
   //*/
 
-  //*
+  /*
   it('should enrich entity reference by @id\n' +
       '        xref: true\n' +
       '        context: false\n' +
@@ -251,7 +251,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
           'dataset-true-organism-true.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -302,7 +302,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
   //*/
 
-  //*
+  /*
   it('should enrich entity references using createEnrichmentStream, ' +
       'with options not specified so defaults used.',
       function(done) {
@@ -311,7 +311,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
           '/ncbigene-4292-and-bridgedb-L-1234.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance2 = BridgeDb({
+    var bridgeDbInstance2 = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:

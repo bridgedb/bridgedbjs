@@ -46,7 +46,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
     done();
   });
 
-  //*
+  /*
   it('should free search for entity references (Latin/single instance)',
       function(done) {
 
@@ -54,7 +54,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
           '/hits-for-pdha1-mus-musculus.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDb1 = BridgeDb({
+    var bridgeDb1 = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -93,7 +93,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   });
   //*/
 
-  //*
+  /*
   it('should free search for entity references (English/single instance)',
       function(done) {
 
@@ -101,7 +101,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
           '/hits-for-agt-mouse.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDb1 = BridgeDb({
+    var bridgeDb1 = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
@@ -138,7 +138,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   });
   //*/
 
-  //*
+  /*
   it('should free search for entity references (English&Latin/multi-instance)',
       function(done) {
 
@@ -146,7 +146,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
           '/hits-for-nfkb1-and-agt-mouse.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDb2 = BridgeDb({
+    var bridgeDb2 = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
