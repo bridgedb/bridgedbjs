@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "5.0.10",
+  "version": "5.0.11",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
@@ -30,12 +30,10 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
-    "brfs": "~1.4.0",
+    "JSONStream": "^1.0.4",
     "csv-streamify": "~1.0.0",
-    "deglobalify": "~0.2.0",
     "hyperquest": "^1.2.x",
     "jsonld-rx": "^1.0.0-alpha.0",
-    "JSONStream": "^1.0.4",
     "lodash": "~2.4.1",
     "rx": "^2.5.3",
     "rx-node": "^1.0.1",
