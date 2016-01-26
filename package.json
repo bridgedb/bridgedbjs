@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "csv-streamify": "~1.0.0",
     "deglobalify": "~0.2.0",
     "hyperquest": "^1.2.x",
-    "jsonld-rx": "git://github.com/ariutta/jsonld-rx",
+    "jsonld-rx": "^1.0.0-alpha.0",
     "JSONStream": "^1.0.4",
     "lodash": "~2.4.1",
     "rx": "^2.5.3",
