@@ -74,7 +74,9 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 ## Dependencies
 
-Currently, this library actively relies on the following files (downloads them each time it's loaded):
+Currently, this library uses http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/ as a proxy to allow for making CORS requests to the BridgeDb webservice.
+
+This library actively relies on the following files (downloads them each time it's loaded):
 
 * [jsonld-context.jsonld](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.rdf/resources/jsonld-context.jsonld)
 * [datasources.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt)
