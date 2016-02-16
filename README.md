@@ -71,6 +71,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
     ```
     gulp publish
     ```
+
 ## Dependencies
 
 Currently, this library actively relies on the following files (downloads them each time it's loaded):
