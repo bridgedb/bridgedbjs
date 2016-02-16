@@ -71,3 +71,20 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
     ```
     gulp publish
     ```
+## Dependencies
+
+Currently, this library actively relies on the following files (downloads them each time it's loaded):
+
+* [jsonld-context.jsonld](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.rdf/resources/jsonld-context.jsonld)
+* [datasources.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt)
+
+These files are accessed via the [RawGit CDN](http://rawgit.com/), frozen to the latest commit as of the time of the latest release of `bridgedbjs`, e.g.:
+https://cdn.rawgit.com/bridgedb/BridgeDb/24186142d05b5f811893970b9a5d61a06f241f68/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt
+
+This library also passively relies on these files (does not download, but some code is based on their content):
+* [datasources_headers.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt)
+* [organisms.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/organisms.txt)
+
+TODO: move the `taxonomy` IRIs from [./lib/organism.js](https://github.com/bridgedb/bridgedbjs/blob/master/lib/organism.js#L35) into the organisms.txt file and then download that file upon loading this library to get the mappings.
+
+TODO: download datasources_headers.txt to get the headers upon loading this library, instead of [hard-coding them here](https://github.com/bridgedb/bridgedbjs/blob/master/lib/dataset.js#L124).
