@@ -4,52 +4,349 @@
 var _ = require('lodash');
 var argv = require('yargs').argv;
 var colors = require('colors');
-var diff = require('deep-diff').diff;
 var fs = require('fs');
+var multiplex = require('./multiplex.js');
 var pd = require('pretty-data').pd;
 var strcase = require('tower-strcase');
+
+function stringifyJSON(json) {
+  return JSON.stringify(json, null, '  ');
+}
 
 var testUtils = (function() {
   'use strict';
 
-  //*
-  var jsonDiffKindMappings = {
-    'E': {
-      bgColor: 'bgYellow',
-      color: 'black',
+  var kindMappings = {
+    'unchanged': {
+      name: 'Unchanged',
+      lhs: {
+        bgColor: 'black',
+        color: 'white',
+      },
+      rhs: {
+        bgColor: 'black',
+        color: 'white',
+      }
+    },
+    'edited': {
       name: 'Edited',
-      side: 'rhs',
+      lhs: {
+        bgColor: 'bgYellow',
+        color: 'black',
+      },
+      rhs: {
+        bgColor: 'bgYellow',
+        color: 'black',
+      }
     },
-    'N': {
-      bgColor: 'bgGreen',
-      color: 'black',
-      name: 'New',
-      side: 'rhs',
+    'added': {
+      name: 'Added',
+      lhs: {
+        bgColor: 'bgRed',
+        color: 'white',
+      },
+      rhs: {
+        bgColor: 'bgGreen',
+        color: 'black',
+      }
     },
-    'D': {
-      bgColor: 'bgRed',
-      color: 'white',
+    'deleted': {
       name: 'Deleted',
-      side: 'lhs',
+      lhs: {
+        bgColor: 'bgGreen',
+        color: 'black',
+      },
+      rhs: {
+        bgColor: 'bgRed',
+        color: 'white',
+      }
+    },
+    // moved (an item in an array)
+    'moved': {
+      name: 'Moved',
+      lhs: {
+        bgColor: 'bgYellow',
+        color: 'black',
+      },
+      rhs: {
+        bgColor: 'bgYellow',
+        color: 'black',
+      }
     }
   };
-  //*/
 
-  //*
-  var jsonDiffSideToColorMappings = {
-    rhs: 'green',
-    lhs: 'red'
-  };
-  //*/
+  var PLACEHOLDER = 'test-utils-placeholder';
+  var PLACEHOLDER_EMPTY = PLACEHOLDER + '-------------------------------------';
+
+  function diffOne(expected, actual) {
+    var result = {
+      expected: expected,
+      actual: actual
+    };
+    var actualString = stringifyJSON(actual);
+    var expectedString = stringifyJSON(expected);
+    if (actualString === expectedString) {
+      result.kind = 'unchanged';
+      return [result];
+    }
+    if (typeof actual === 'undefined') {
+      result.kind = 'deleted';
+      return [result];
+    }
+    if (typeof expected === 'undefined') {
+      result.kind = 'added';
+      return [result];
+    }
+    var actualType = typeof actual;
+    var expectedType = typeof expected;
+    var actualIsArray = _.isArray(actual);
+    var expectedIsArray = _.isArray(expected);
+    var actualIsPlainObject = _.isPlainObject(actual);
+    var expectedIsPlainObject = _.isPlainObject(expected);
+    if ((actualType !== expectedType) ||
+        (actualIsArray !== expectedIsArray) ||
+        (actualIsPlainObject !== expectedIsPlainObject)) {
+      result.kind = 'edited';
+      return [result];
+    }
+    if (actualIsArray) {
+      var actualLength = actual.length;
+      var expectedLength = expected.length;
+      if (actualLength !== expectedLength) {
+        var maxArrayLength = Math.max(actualLength, expectedLength);
+        [actual, expected].forEach(function(item) {
+          var itemLength = item.length;
+          if (itemLength < maxArrayLength) {
+            var itemsToAddCount = maxArrayLength - itemLength;
+            //var itemsToAdd = _.fill(new Array(itemsToAddCount), 'test-utils-placeholder');
+            _.fill(new Array(itemsToAddCount), PLACEHOLDER).forEach(function(toAdd) {
+              item.push(toAdd);
+            });
+          }
+        });
+      }
+      var actualArrayStrings = actual.map(stringifyJSON);
+      var expectedArrayStrings = expected.map(stringifyJSON);
+      return _.zip(actual, actualArrayStrings, expected, expectedArrayStrings)
+      .map(function(zipped) {
+        var actualItem = zipped[0];
+        var expectedItem = zipped[1];
+        var actualItemString = zipped[2];
+        var expectedItemString = zipped[3];
+        var resultItem = {
+          actual: actualItem,
+          expected: expectedItem
+        };
+        if (actualItemString === expectedItemString) {
+          resultItem.kind = 'unchanged';
+          return resultItem;
+        }
+        if (expectedArrayStrings.indexOf(actualItemString) > -1) {
+          resultItem.kind = 'moved';
+          return resultItem;
+        }
+        if (expectedItemString === PLACEHOLDER) {
+          resultItem.kind = 'deleted';
+          return resultItem;
+        }
+        if (actualItemString === PLACEHOLDER) {
+          resultItem.kind = 'added';
+          return resultItem;
+        }
+      });
+    }
+    if (actualIsPlainObject) {
+      var actualKeys = _.keys(actual);
+      var expectedKeys = _.keys(expected);
+      var intersectionKeys = _.intersection(actualKeys, expectedKeys);
+      var xorKeys = _.xor(actualKeys, expectedKeys);
+      var addedProperties = [];
+      var deletedProperties = [];
+      var editedProperties = [];
+      var intersectionResults = intersectionKeys.map(function(intersectionKey) {
+        var actualValue = actual[intersectionKey];
+        var actualProperty = {};
+        actualProperty[intersectionKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
+        var expectedValue = expected[intersectionKey];
+        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedProperty = {};
+        expectedProperty[intersectionKey] = expectedValue;
+
+        var resultItem = {
+          actual: actualProperty,
+          expected: expectedProperty
+        };
+
+        if (actualValueString !== expectedValueString) {
+          resultItem.kind = 'edited';
+          return resultItem;
+        } else {
+          resultItem.kind = 'unchanged';
+          return resultItem;
+        }
+
+        console.error('actual');
+        console.error(actualProperty);
+        console.error('expected');
+        console.error(expectedProperty);
+        throw new Error('Cannot handle above value for actual or expected.');
+      });
+      var xorResults = xorKeys.map(function(xorKey) {
+        var actualValue = actual[xorKey];
+        var actualProperty = {};
+        actualProperty[xorKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+        var actualHasProperty = actual.hasOwnProperty(xorKey);
+
+        var expectedValue = expected[xorKey];
+        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedProperty = {};
+        expectedProperty[xorKey] = expectedValue;
+        var expectedHasProperty = expected.hasOwnProperty(xorKey);
+
+        var resultItem = {};
+
+        if (expectedHasProperty) {
+          resultItem.kind = 'deleted';
+          resultItem.actual = PLACEHOLDER_EMPTY;
+          resultItem.expected = expectedProperty;
+          return resultItem;
+        }
+        if (actualHasProperty) {
+          resultItem.kind = 'added';
+          resultItem.expected = PLACEHOLDER_EMPTY;
+          resultItem.actual = actualProperty;
+          return resultItem;
+        }
+
+        console.error('actual');
+        console.error(actualProperty);
+        console.error('expected');
+        console.error(expectedProperty);
+        throw new Error('Cannot handle above value for actual or expected.');
+      });
+      return intersectionResults.concat(xorResults);
+    }
+    console.error('actual');
+    console.error(actualItemString);
+    console.error('expected');
+    console.error(expectedItemString);
+    throw new Error('Cannot handle above value for actual or expected.');
+  }
+
+  function diffDeep(expected, actual, depth) {
+    if (typeof depth === 'undefined' || depth === null) {
+      depth = 1;
+    }
+    var result = {
+      expected: expected,
+      actual: actual
+    };
+    if (typeof actual === 'undefined') {
+      result.kind = 'deleted';
+      return [result];
+    }
+    if (typeof expected === 'undefined') {
+      result.kind = 'added';
+      return [result];
+    }
+    var actualType = typeof actual;
+    var expectedType = typeof expected;
+    var actualIsArray = _.isArray(actual);
+    var expectedIsArray = _.isArray(expected);
+    var actualIsPlainObject = _.isPlainObject(actual);
+    var expectedIsPlainObject = _.isPlainObject(expected);
+    if ((actualType !== expectedType) ||
+        (actualIsArray !== expectedIsArray) ||
+        (actualIsPlainObject !== expectedIsPlainObject)) {
+      result.kind = 'edited';
+      return [result];
+    }
+    if (depth === 0) {
+      return diffOne(expected, actual).reduce(function(accumulator, diffResult) {
+        return accumulator.concat(diffResult);
+      }, []);
+    }
+    if (actualIsPlainObject) {
+      var actualKeys = _.keys(actual);
+      var expectedKeys = _.keys(expected);
+      var intersectionKeys = _.intersection(actualKeys, expectedKeys);
+      var xorKeys = _.xor(actualKeys, expectedKeys);
+      var addedProperties = [];
+      var deletedProperties = [];
+      var editedProperties = [];
+      var intersectionResults = intersectionKeys.map(function(intersectionKey) {
+        var actualValue = actual[intersectionKey];
+        var actualProperty = {};
+        actualProperty[intersectionKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
+        var expectedValue = expected[intersectionKey];
+        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedProperty = {};
+        expectedProperty[intersectionKey] = expectedValue;
+
+        var resultItem = {
+          actual: actualProperty,
+          expected: expectedProperty
+        };
+
+        if (actualItemString === expectedValueString) {
+          resultItem.kind = 'unchanged';
+          return resultItem;
+        } else {
+          return diffDeep(expectedProperty, actualProperty, depth - 1);
+        }
+      });
+      var xorResults = xorKeys.map(function(xorKey) {
+        var actualValue = actual[xorKey];
+        var actualProperty = {};
+        actualProperty[xorKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
+        var expectedValue = expected[xorKey];
+        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedProperty = {};
+        expectedProperty[xorKey] = expectedValue;
+
+        var resultItem = {};
+
+        if (!actualValue && !!expectedValue) {
+          resultItem.kind = 'deleted';
+          resultItem.actual = PLACEHOLDER_EMPTY;
+          resultItem.expected = expectedProperty;
+          return resultItem;
+        }
+        if (!expectedValue && !!actualValue) {
+          resultItem.kind = 'added';
+          resultItem.expected = PLACEHOLDER_EMPTY;
+          resultItem.actual = actualProperty;
+          return resultItem;
+        }
+      });
+      return intersectionResults.concat(xorResults);
+    }
+
+    if (actualIsArray) {
+      return _.zip(actual, expected)
+      .map(function(zipped) {
+        var actualItem = zipped[0];
+        var expectedItem = zipped[1];
+        return diffDeep(expectedItem, actualItem, depth - 1);
+      });
+    }
+  }
 
   /**
    * compareJson
    *
-   * @param {string} actualJsonString
    * @param {string} expectedJsonString
+   * @param {string} actualJsonString
    * @return
    */
-  function compareJson(actualJsonString, expectedJsonString) {
+  function compareJson(expectedJsonString, actualJsonString) {
     if (actualJsonString === expectedJsonString) {
       // We're good
       return true;
@@ -69,48 +366,70 @@ var testUtils = (function() {
     }
 
     var expectedJson = JSON.parse(expectedJsonString);
-    var jsonDiffs = _.filter(diff(expectedJson, actualJson),
-    function(jsonDiff) {
-      // TODO why do we test for !jsonDiff.path here?
-      // If the only difference is in the xref IRI, we're still good.
-      // We ignore differences in the xref IRI, because this value
-      // varies depending on whatever free port was available for
-      // the mock server.
-      return !jsonDiff.path || (jsonDiff.path.indexOf('xref') === -1);
+
+    var jsonDiffs = diffDeep(expectedJson, actualJson)
+    .reduce(function(accumulator, diffResult) {
+      return accumulator.concat(diffResult);
+    }, [])
+    .filter(function(diffResult) {
+      return diffResult.kind !== 'unchanged';
     });
 
-    if (!jsonDiffs || _.isEmpty(jsonDiffs)) {
-      // JSON is equivalent but is not identical as stringified,
-      // so we're still good.
-      // Possibly reasons for not being identical:
-      // * property order changed
-      // * BridgeDb xref IRI changed (which is OK)
-      return true;
-    }
-
-    /*
-    console.log('**************************************');
-    console.log('**          Expected JSON           **');
-    console.log('**************************************');
-    console.log(pd.json(expectedJson).white.bgRed);
-
-    displayActualJson(actualJson);
-    //*/
-
-    //*
-    console.log('**************************************');
-    console.log('**  jsonDiffs: Expected vs. Actual  **');
-    console.log('**************************************');
-    console.log(jsonDiffs);
-    //*/
-
-    jsonDiffs.map(function(jsonDiff) {
-      return getJsonDiffLoggers(actualJson, jsonDiff);
+    var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
+      var kindMapping = kindMappings[jsonDiff.kind];
+      var lhsColoredString = stringifyJSON(jsonDiff.expected)
+        [kindMapping.lhs.color][kindMapping.lhs.bgColor];
+      var rhsColoredString = stringifyJSON(jsonDiff.actual)
+        [kindMapping.rhs.color][kindMapping.rhs.bgColor];
+      return {
+        lhs: lhsColoredString,
+        rhs: rhsColoredString
+      };
     })
-    .map(function(jsonDiffLogger) {
-      return jsonDiffLogger();
+    .reduce(function(accumulator, coloredSideStringsForItem) {
+      var sideStringDataSets = [
+        coloredSideStringsForItem.lhs,
+        coloredSideStringsForItem.rhs
+      ]
+      .map(function(sideString) {
+        return sideString.split('\n');
+      })
+      .map(function(sideStringLines) {
+        return {
+          lines: sideStringLines,
+          lineCount: sideStringLines.length
+        };
+      });
+
+      var maxSideLineCount = _.maxBy(sideStringDataSets, 'lineCount').lineCount;
+      var coloredStrings = _.map(sideStringDataSets, function(sideStringData) {
+        var sideStringLineCount = sideStringData.lineCount;
+        var sideStringLines = sideStringData.lines;
+        if (sideStringLineCount < maxSideLineCount) {
+          var linesToAddCount = maxSideLineCount - sideStringLineCount;
+          sideStringLines = sideStringLines.concat(_.fill(new Array(linesToAddCount), ''));
+        }
+        return sideStringLines.join('\n');
+      });
+
+      accumulator.lhs += '\n\n' + coloredStrings[0];
+      accumulator.rhs += '\n\n' + coloredStrings[1];
+      return accumulator;
+    }, {lhs: '', rhs: ''});
+
+    multiplex({
+      header: {
+        label: 'Diff Results'
+      },
+      left: {
+        label: 'Expected',
+        content: coloredSideStrings.lhs,
+      },
+      right: {
+        label: 'Actual',
+        content: coloredSideStrings.rhs
+      }
     });
-    //*/
 
     return false;
   }
@@ -126,170 +445,6 @@ var testUtils = (function() {
     console.log('**           Actual JSON            **');
     console.log('**************************************');
     console.log(pd.json(actualJson).white.bgBlue);
-  }
-
-  /**
-   * NOTE: context here just means the JSON surrounding the jsonDiff item.
-   * (It has nothing to do with JSON-LD.)
-   *
-   * Colorize json diff
-   *
-   * * Object property
-   *   - Created
-   *   - Updated
-   *   - Deleted
-   * * Array element
-   *   - Created
-   *   - Updated
-   *     1. Moved
-   *     2. Value changed
-   *   - Deleted
-   *
-   * @param {object} actualJson
-   * @param {object} jsonDiff
-   * @return
-   */
-  function displayDiffItemInContext(actualJson, jsonDiff) {
-    // TODO aren't we already checking for this earlier?
-    if (!jsonDiff.path) {
-      return console.log('');
-    }
-    var jsonDiffKindMapping = jsonDiffKindMappings[jsonDiff.kind];
-    console.log('********************************');
-    console.log((jsonDiffKindMapping.name + '. Path: ' + jsonDiff.path)
-        [jsonDiffKindMapping.color][jsonDiffKindMapping.bgColor]);
-    var lhsItem = '';
-    var rhsItem = '';
-    var key = _.last(jsonDiff.path);
-
-    var replaceNthMatchIndex;
-    var lhsReplaceNthMatchIndex;
-    var rhsReplaceNthMatchIndex;
-
-    var diffItemInContext = jsonDiff.path.reduce(function(
-        previousValue, currentKey, index, array) {
-      if (previousValue.hasOwnProperty(currentKey) &&
-        index < array.length - 1) {
-        return previousValue[currentKey];
-      } else {
-        if (jsonDiff.kind === 'D') {
-          var finalValue = previousValue[currentKey];
-          if (_.isArray(previousValue)) {
-            previousValue.push(jsonDiff.lhs);
-            lhsReplaceNthMatchIndex = _.filter(
-              _.initial(previousValue),
-            function(element) {
-              return JSON.stringify(jsonDiff.lhs) === JSON.stringify(element);
-            }).length;
-          } else if (_.isPlainObject(previousValue)) {
-            previousValue[currentKey] = jsonDiff.lhs;
-          }
-        }
-        if (_.isArray(previousValue)) {
-          rhsReplaceNthMatchIndex = _.filter(
-              _.initial(previousValue, index - key + 1),
-          function(element) {
-            return JSON.stringify(jsonDiff.rhs) === JSON.stringify(element);
-          }).length;
-        } else if (_.isPlainObject(previousValue)) {
-          lhsReplaceNthMatchIndex = rhsReplaceNthMatchIndex = 0;
-        }
-
-        return previousValue;
-      }
-    }, actualJson);
-
-    var value = diffItemInContext[key];
-    var lhsValue = _.isPlainObject(jsonDiff.lhs) ||
-      _.isArray(jsonDiff.lhs) ?
-      JSON.stringify(jsonDiff.lhs) : '"' + String(jsonDiff.lhs) + '"';
-    var rhsValue = _.isPlainObject(jsonDiff.rhs) ||
-      _.isArray(jsonDiff.rhs) ?
-      JSON.stringify(jsonDiff.rhs) : '"' + String(jsonDiff.rhs) + '"';
-
-    var diffItemInContextString = JSON.stringify(diffItemInContext);
-
-    var rhsItemReplacement;
-
-    if (!!jsonDiff.rhs) {
-      if (_.isPlainObject(diffItemInContext)) {
-        rhsItem = '"' + key + '"' + ':' + rhsValue;
-      } else {
-        rhsItem = rhsValue;
-      }
-      rhsItemReplacement = rhsItem[jsonDiffSideToColorMappings.rhs];
-
-      diffItemInContextString = replaceNthMatch(
-          diffItemInContextString, rhsItem,
-          rhsReplaceNthMatchIndex, rhsItemReplacement);
-    }
-
-    if (!!jsonDiff.lhs) {
-      if (_.isPlainObject(diffItemInContext)) {
-        lhsItem = '"' + key + '"' + ':' + lhsValue;
-      } else {
-        lhsItem = lhsValue;
-      }
-      var lhsItemReplacement = lhsItem[jsonDiffSideToColorMappings.lhs];
-      if (jsonDiff.kind === 'D') {
-        diffItemInContextString = replaceNthMatch(
-            diffItemInContextString, lhsItem,
-            lhsReplaceNthMatchIndex, lhsItemReplacement);
-      } else if (jsonDiff.kind === 'E') {
-        var lhsRe = new RegExp(lhsItem, 'g');
-        if (lhsRe.test(diffItemInContextString)) {
-          var message = 'One ' + 'item'.yellow + ' was moved';
-          diffItemInContextString = diffItemInContextString
-          .replace(lhsRe, lhsItem.yellow);
-          if (jsonDiff.rhs) {
-            message += ' to make room for ' + 'another'.green;
-          }
-          message += '.';
-          console.log(message);
-        } else {
-          console.log('Item was replaced.');
-          console.log('Original Item:'.bold.white);
-          console.log(lhsItemReplacement);
-          console.log('Replacement Item (in context):'.bold.white);
-        }
-      }
-    }
-
-    console.log(diffItemInContextString);
-  }
-
-  /**
-   * getJsonDiffLoggers
-   *
-   * @param {object|array} actualJson
-   * @param {object} jsonDiff
-   * @return
-   */
-  function getJsonDiffLoggers(actualJson, jsonDiff) {
-    if (jsonDiff.kind === 'A') {
-      jsonDiff.item.path = jsonDiff.path.concat(jsonDiff.index);
-      return getJsonDiffLoggers(actualJson, jsonDiff.item);
-    } else if (jsonDiff.kind === 'N') {
-      return function() {
-        displayDiffItemInContext(actualJson, jsonDiff);
-      };
-    } else if (jsonDiff.kind === 'D') {
-      return function() {
-        displayDiffItemInContext(actualJson, jsonDiff);
-      };
-    } else if (jsonDiff.kind === 'E') {
-      return function() {
-        displayDiffItemInContext(actualJson, jsonDiff);
-      };
-    } else {
-      return function() {
-        console.log('********************************');
-        console.log(('Other. Path: ' + jsonDiff.path).black.bgYellow);
-        console.log('TODO'.black.bgMagenta +
-            ': Refactor testUtils to handle this case.');
-        console.log(pd.json(jsonDiff).random);
-      };
-    }
   }
 
   /**
@@ -335,81 +490,6 @@ var testUtils = (function() {
     }
 
     return updateEnabled;
-  }
-
-  /**
-   * Based on this version:
-   * http://stackoverflow.com/questions/36183/replacing-the-nth-instance-of-a-regex-match-in-javascript
-   *
-   * @param {string} original
-   * @param {string|object} pattern If object, the object is a JS regular expression.
-   * @param {number} n Which one of the matches to replace. Currently zero-based, although the
-   *                   original was one-based.
-   * @param {string} replace
-   * @return {string}
-   */
-  function replaceNthMatch(original, pattern, n, replace) {
-    // Convert n from zero-based to one-based.
-    // The original code expected n to be one-based, but it's easier to use
-    // when it's zero-based.
-    n = n + 1;
-    var parts;
-    var tempParts;
-
-    if (pattern.constructor === RegExp) {
-
-      // If there's no match, bail
-      if (original.search(pattern) === -1) {
-        return original;
-      }
-
-      // Every other item should be a matched capture group;
-      // between will be non-matching portions of the substring
-      parts = original.split(pattern);
-
-      // If there was a capture group, index 1 will be
-      // an item that matches the RegExp
-      if (parts[1].search(pattern) !== 0) {
-        throw {name: 'ArgumentError',
-          message: 'RegExp must have a capture group'};
-      }
-    } else if (pattern.constructor === String) {
-      parts = original.split(pattern);
-      // Need every other item to be the matched string
-      tempParts = [];
-
-      for (var i = 0; i < parts.length; i++) {
-        tempParts.push(parts[i]);
-
-        // Insert between, but don't tack one onto the end
-        if (i < parts.length - 1) {
-          tempParts.push(pattern);
-        }
-      }
-      parts = tempParts;
-    }  else {
-      throw {name: 'ArgumentError',
-        message: 'Must provide either a RegExp or String'};
-    }
-
-    // Parens are unnecessary, but explicit. :)
-    var indexOfNthMatch = (n * 2) - 1;
-
-    if (parts[indexOfNthMatch] === undefined) {
-      // There IS no Nth match
-      return original;
-    }
-
-    if (typeof(replace) === 'function') {
-      // Call it. After this, we don't need it anymore.
-      replace = replace(parts[indexOfNthMatch]);
-    }
-
-    // Update our parts array with the new value
-    parts[indexOfNthMatch] = replace;
-
-    // Put it back together and return
-    return parts.join('');
   }
 
   return {

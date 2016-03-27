@@ -57,7 +57,7 @@ describe('DetailsPanel', function() {
           '/ncbigene-1234-xrefs.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:

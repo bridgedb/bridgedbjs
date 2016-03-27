@@ -44,7 +44,7 @@ describe('BridgeDb', function() {
   it('should construct multiple independent instances',
       function(done) {
 
-    bridgeDbInstance1 = BridgeDb({
+    bridgeDbInstance1 = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -60,7 +60,7 @@ describe('BridgeDb', function() {
         '/datasources.txt');
     expect(bridgeDbInstance1.organismNameNormalizedAsSet).to.exist;
 
-    bridgeDbInstance2 = BridgeDb({
+    bridgeDbInstance2 = new BridgeDb({
       baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       datasetsMetadataIri:
         'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'

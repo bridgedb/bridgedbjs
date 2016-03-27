@@ -54,7 +54,7 @@ describe('BridgeDb.Organism.query', function() {
           '/all-organism.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -98,7 +98,7 @@ describe('BridgeDb.Organism.query', function() {
           '/ncbigene-4292-organism.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -141,7 +141,7 @@ describe('BridgeDb.Organism.query', function() {
           '/ncbigene-4292-organism.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -187,7 +187,7 @@ describe('BridgeDb.Organism.query', function() {
           '/ncbigene-4292-organism.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -233,7 +233,7 @@ describe('BridgeDb.Organism.query', function() {
           '/ncbigene-4292-organism.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
