@@ -16,16 +16,19 @@ module.exports = function(options) {
   });
 
   options.header = options.header || {};
-  options.header.label = options.header.label || '';
-  options.header.content = options.header.content || '';
-  var headerHeight = 3;
+  var headerLabel = options.header.label || '';
+  var headerContent = options.header.content || '';
+  // TODO trying to better handle showing any errors and yet
+  // having the diff at the bottom. But the error(s) may take up
+  // a varying amount of space. Fix this.
+  var headerHeight = 30;
   var top = blessed.box({
-    label: options.header.label,
+    label: headerLabel,
     top: 0,
     left: 0,
     width: '100%',
     height: headerHeight,
-    content: 'Quit with Ctrl/Cmd-Q. Scroll with Up/Down keys.' + options.header.content,
+    content: 'Quit with Ctrl-Q (even for OS/X). Scroll with Up/Down keys.' + headerContent,
     tags: true,
     border: {
       type: 'line'
@@ -42,15 +45,17 @@ module.exports = function(options) {
   });
 
   options.left = options.left || {};
-  options.left.label = options.left.label || 'left';
-  options.left.content = options.left.content || '';
+  var leftLabel = options.left.label || 'left';
+  var leftContent = options.left.content || '';
+  var leftHeight = options.left.height ||
+      '100%-' + String(headerHeight);
   var left = blessed.box({
-    label: options.left.label,
+    label: leftLabel,
     top: headerHeight,
     left: 0,
     width: '50%',
-    height: '100%-' + String(headerHeight),
-    content: options.left.content,
+    height: leftHeight,
+    content: leftContent,
     tags: true,
     border: {
       type: 'line'
@@ -68,15 +73,17 @@ module.exports = function(options) {
   });
 
   options.right = options.right || {};
-  options.right.label = options.right.label || 'right';
-  options.right.content = options.right.content || '';
+  var rightLabel = options.right.label || 'right';
+  var rightContent = options.right.content || '';
+  var rightHeight = options.right.height ||
+      '100%-' + String(headerHeight);
   var right = blessed.box({
-    label: options.right.label,
+    label: rightLabel,
     top: headerHeight,
     left: '50%-1',
     width: '50%',
-    height: '100%-' + String(headerHeight),
-    content: options.right.content,
+    height: rightHeight,
+    content: rightContent,
     tags: true,
     border: {
       type: 'line'
@@ -104,22 +111,45 @@ module.exports = function(options) {
       screen.render();
     });
 
-    function scroll(value) {
+    function scrollBoth(value) {
       contentBoxes.forEach(function(box) {
         box.scroll(value);
       });
       screen.render();
     }
-    function down() {
-      scroll(1);
-    }
     function up() {
-      scroll(-1);
+      scrollBoth(-1);
     }
-    box.key('down', down);
-    box.key('j', down);
+    function down() {
+      scrollBoth(1);
+    }
+
+    var pageHeight = box.getScrollHeight();
+    function pageUp() {
+      scrollBoth(-1 * pageHeight);
+    }
+    function pageDown() {
+      scrollBoth(1 * pageHeight);
+    }
+
+    function pageUpHalf() {
+      scrollBoth(-1 * pageHeight / 2);
+    }
+    function pageDownHalf() {
+      scrollBoth(1 * pageHeight / 2);
+    }
+
     box.key('up', up);
     box.key('k', up);
+
+    box.key('down', down);
+    box.key('j', down);
+
+    box.key('C-b', pageUp);
+    box.key('C-f', pageDown);
+
+    box.key('C-u', pageUpHalf);
+    box.key('C-d', pageDownHalf);
   });
 
   screen.key('C-q', function() {
@@ -129,5 +159,10 @@ module.exports = function(options) {
   // Focus left box.
   left.focus();
 
-  screen.render();
+  // TODO trying to better handle showing any errors and yet
+  // having the diff at the bottom. But the error(s) may take up
+  // a varying amount of space. Fix this.
+  setTimeout(function() {
+    screen.render();
+  }, 300);
 };

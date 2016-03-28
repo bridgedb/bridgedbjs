@@ -12,6 +12,9 @@ var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
 
+var internalContext = JSON.parse(fs.readFileSync(
+  __dirname + '/../../jsonld-context.jsonld'));
+
 var desired = {'browserName': 'phantomjs'};
 desired.name = 'example with ' + desired.browserName;
 desired.tags = ['dev-test'];
@@ -46,8 +49,84 @@ describe('BridgeDb.Dataset.query', function() {
     done();
   });
 
-  it('should fetch metadata for all datasets at BridgeDb', function(done) {
-    lkgDataPath = __dirname + '/datasets.jsonld';
+//  it('should fetch metadata for all datasets at BridgeDb', function(done) {
+//    lkgDataPath = __dirname + '/datasets.jsonld';
+//    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+//
+//    var bridgeDbInstance = new BridgeDb({
+//      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+//      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+//      datasetsMetadataIri:
+//        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+//        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+//      context: internalContext['@context']
+//    });
+//
+//    bridgeDbInstance.dataset.query()
+//    .toArray()
+//    .map(function(currentDatasets) {
+//      return JSON.stringify(currentDatasets, null, '  ');
+//    })
+//    .let(function(source) {
+//      if (update) {
+//        return source 
+//        .let(RxFs.createWriteObservable(lkgDataPath));
+//      }
+//
+//      return source
+//      .map(function(dataString) {
+//        return testUtils.compareJson(lkgDataString, dataString);
+//      })
+//      .map(function(passed) {
+//        return expect(passed).to.be.true;
+//      });
+//    })
+//    .doOnError(done)
+//    .subscribeOnCompleted(done);
+//  });
+//
+//  it('should fetch metadata for datasets by name (one hit)', function(done) {
+//    lkgDataPath = __dirname + '/query-name-entrez-gene.jsonld';
+//    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+//
+//    var bridgeDbInstance = new BridgeDb({
+//      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+//      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+//      datasetsMetadataIri:
+//        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+//        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+//      context: internalContext['@context']
+//    });
+//
+//    bridgeDbInstance.dataset.query({
+//      '@context': 'http://schema.org/',
+//      name: 'Entrez Gene'
+//    })
+//    .toArray()
+//    .map(function(currentDatasets) {
+//      return JSON.stringify(currentDatasets);
+//    })
+//    .let(function(source) {
+//      if (update) {
+//        return source 
+//        .let(RxFs.createWriteObservable(lkgDataPath));
+//      }
+//
+//      return source
+//      .map(function(dataString) {
+//        return testUtils.compareJson(lkgDataString, dataString);
+//      })
+//      .map(function(passed) {
+//        return expect(passed).to.be.true;
+//      });
+//    })
+//    .doOnError(done)
+//    .subscribeOnCompleted(done);
+//  });
+
+  it('should fetch metadata for datasets by name and exampleIdentifier (one hit)', function(done) {
+    lkgDataPath = __dirname +
+          '/query-name-entrez-gene.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
     var bridgeDbInstance = new BridgeDb({
@@ -55,13 +134,18 @@ describe('BridgeDb.Dataset.query', function() {
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+      context: internalContext['@context']
     });
 
-    bridgeDbInstance.dataset.query()
+    bridgeDbInstance.dataset.query({
+      '@context': 'http://schema.org/',
+      name: 'Entrez Gene',
+      'http://identifiers.org/idot/exampleIdentifier': '1234'
+    })
     .toArray()
     .map(function(currentDatasets) {
-      return JSON.stringify(currentDatasets, null, '  ');
+      return JSON.stringify(currentDatasets);
     })
     .let(function(source) {
       if (update) {
@@ -71,6 +155,10 @@ describe('BridgeDb.Dataset.query', function() {
 
       return source
       .map(function(dataString) {
+        console.log('lkgDataString158');
+        console.log(lkgDataString);
+        console.log('dataString161');
+        console.log(dataString);
         return testUtils.compareJson(lkgDataString, dataString);
       })
       .map(function(passed) {
@@ -81,8 +169,9 @@ describe('BridgeDb.Dataset.query', function() {
     .subscribeOnCompleted(done);
   });
 
-  /* TODO add jsonldRx.matcher functionality to datasets.js to get this working again.
-  it('should fetch metadata for datasets by name (one hit)', function(done) {
+  /* TODO this might be working correctly, but no lkg has ever been set.
+  // verify correctness of results and then set lkg.
+  it('should fetch metadata for datasets by exampleIdentifier (one hit)', function(done) {
     lkgDataPath = __dirname +
           '/query-name-entrez-gene.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
@@ -92,38 +181,37 @@ describe('BridgeDb.Dataset.query', function() {
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+      context: internalContext['@context']
     });
 
     bridgeDbInstance.dataset.query({
-      name: 'Entrez Gene'
+      'http://identifiers.org/idot/exampleIdentifier': '1234'
     })
-    .collect()
+//    .doOnNext(function(currentDataset) {
+//      console.log('currentDataset103');
+//      console.log(currentDataset);
+//    })
+    .toArray()
     .map(function(currentDatasets) {
       return JSON.stringify(currentDatasets);
     })
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
+//    .let(function(source) {
+//      if (update) {
+//        return source 
+//        .let(RxFs.createWriteObservable(lkgDataPath));
+//      }
+//
+//      return source
+//      .map(function(dataString) {
+//        return testUtils.compareJson(lkgDataString, dataString);
+//      })
+//      .map(function(passed) {
+//        return expect(passed).to.be.true;
+//      });
+//    })
+    .doOnError(done)
+    .subscribeOnCompleted(done);
   });
   //*/
 
@@ -138,7 +226,8 @@ describe('BridgeDb.Dataset.query', function() {
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
         //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+      context: internalContext['@context']
     });
 
     bridgeDbInstance.dataset.query({
@@ -161,7 +250,7 @@ describe('BridgeDb.Dataset.query', function() {
       return s.fork();
     }))
     .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
+      return testUtils.compareJson(lkgDataString, dataString);
     })
     .map(function(passed) {
       return expect(passed).to.be.true;

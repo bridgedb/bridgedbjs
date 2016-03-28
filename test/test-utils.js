@@ -9,6 +9,8 @@ var multiplex = require('./multiplex.js');
 var pd = require('pretty-data').pd;
 var strcase = require('tower-strcase');
 
+var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
+
 function stringifyJSON(json) {
   return JSON.stringify(json, null, '  ');
 }
@@ -75,16 +77,17 @@ var testUtils = (function() {
     }
   };
 
-  var PLACEHOLDER = 'test-utils-placeholder';
-  var PLACEHOLDER_EMPTY = PLACEHOLDER + '-------------------------------------';
-
   function diffOne(expected, actual) {
+    /*
+    expected = expected || PLACEHOLDER;
+    actual = actual || PLACEHOLDER;
+    //*/
     var result = {
       expected: expected,
       actual: actual
     };
-    var actualString = stringifyJSON(actual);
     var expectedString = stringifyJSON(expected);
+    var actualString = stringifyJSON(actual);
     if (actualString === expectedString) {
       result.kind = 'unchanged';
       return [result];
@@ -97,12 +100,14 @@ var testUtils = (function() {
       result.kind = 'added';
       return [result];
     }
-    var actualType = typeof actual;
     var expectedType = typeof expected;
-    var actualIsArray = _.isArray(actual);
+    var actualType = typeof actual;
+
     var expectedIsArray = _.isArray(expected);
-    var actualIsPlainObject = _.isPlainObject(actual);
+    var actualIsArray = _.isArray(actual);
+
     var expectedIsPlainObject = _.isPlainObject(expected);
+    var actualIsPlainObject = _.isPlainObject(actual);
     if ((actualType !== expectedType) ||
         (actualIsArray !== expectedIsArray) ||
         (actualIsPlainObject !== expectedIsPlainObject)) {
@@ -110,11 +115,11 @@ var testUtils = (function() {
       return [result];
     }
     if (actualIsArray) {
-      var actualLength = actual.length;
       var expectedLength = expected.length;
+      var actualLength = actual.length;
       if (actualLength !== expectedLength) {
-        var maxArrayLength = Math.max(actualLength, expectedLength);
-        [actual, expected].forEach(function(item) {
+        var maxArrayLength = Math.max(expectedLength, actualLength);
+        [expected, actual].forEach(function(item) {
           var itemLength = item.length;
           if (itemLength < maxArrayLength) {
             var itemsToAddCount = maxArrayLength - itemLength;
@@ -125,17 +130,19 @@ var testUtils = (function() {
           }
         });
       }
-      var actualArrayStrings = actual.map(stringifyJSON);
       var expectedArrayStrings = expected.map(stringifyJSON);
-      return _.zip(actual, actualArrayStrings, expected, expectedArrayStrings)
+      var actualArrayStrings = actual.map(stringifyJSON);
+      return _.zip(expected, expectedArrayStrings, actual, actualArrayStrings)
       .map(function(zipped) {
-        var actualItem = zipped[0];
-        var expectedItem = zipped[1];
-        var actualItemString = zipped[2];
-        var expectedItemString = zipped[3];
+        var expectedItem = zipped[0];
+        var expectedItemString = zipped[1];
+
+        var actualItem = zipped[2];
+        var actualItemString = zipped[3];
+
         var resultItem = {
-          actual: actualItem,
-          expected: expectedItem
+          expected: expectedItem,
+          actual: actualItem
         };
         if (actualItemString === expectedItemString) {
           resultItem.kind = 'unchanged';
@@ -164,19 +171,19 @@ var testUtils = (function() {
       var deletedProperties = [];
       var editedProperties = [];
       var intersectionResults = intersectionKeys.map(function(intersectionKey) {
-        var actualValue = actual[intersectionKey];
-        var actualProperty = {};
-        actualProperty[intersectionKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
-
         var expectedValue = expected[intersectionKey];
         var expectedValueString = stringifyJSON(expectedValue);
         var expectedProperty = {};
         expectedProperty[intersectionKey] = expectedValue;
 
+        var actualValue = actual[intersectionKey];
+        var actualProperty = {};
+        actualProperty[intersectionKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
         var resultItem = {
-          actual: actualProperty,
-          expected: expectedProperty
+          expected: expectedProperty,
+          actual: actualProperty
         };
 
         if (actualValueString !== expectedValueString) {
@@ -187,52 +194,52 @@ var testUtils = (function() {
           return resultItem;
         }
 
-        console.error('actual');
-        console.error(actualProperty);
         console.error('expected');
         console.error(expectedProperty);
+        console.error('actual');
+        console.error(actualProperty);
         throw new Error('Cannot handle above value for actual or expected.');
       });
       var xorResults = xorKeys.map(function(xorKey) {
-        var actualValue = actual[xorKey];
-        var actualProperty = {};
-        actualProperty[xorKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
-        var actualHasProperty = actual.hasOwnProperty(xorKey);
-
         var expectedValue = expected[xorKey];
         var expectedValueString = stringifyJSON(expectedValue);
         var expectedProperty = {};
         expectedProperty[xorKey] = expectedValue;
         var expectedHasProperty = expected.hasOwnProperty(xorKey);
 
+        var actualValue = actual[xorKey];
+        var actualProperty = {};
+        actualProperty[xorKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+        var actualHasProperty = actual.hasOwnProperty(xorKey);
+
         var resultItem = {};
 
         if (expectedHasProperty) {
           resultItem.kind = 'deleted';
-          resultItem.actual = PLACEHOLDER_EMPTY;
           resultItem.expected = expectedProperty;
+          resultItem.actual = PLACEHOLDER;
           return resultItem;
         }
         if (actualHasProperty) {
           resultItem.kind = 'added';
-          resultItem.expected = PLACEHOLDER_EMPTY;
+          resultItem.expected = PLACEHOLDER;
           resultItem.actual = actualProperty;
           return resultItem;
         }
 
-        console.error('actual');
-        console.error(actualProperty);
         console.error('expected');
         console.error(expectedProperty);
+        console.error('actual');
+        console.error(actualProperty);
         throw new Error('Cannot handle above value for actual or expected.');
       });
       return intersectionResults.concat(xorResults);
     }
-    console.error('actual');
-    console.error(actualItemString);
     console.error('expected');
     console.error(expectedItemString);
+    console.error('actual');
+    console.error(actualItemString);
     throw new Error('Cannot handle above value for actual or expected.');
   }
 
@@ -240,24 +247,36 @@ var testUtils = (function() {
     if (typeof depth === 'undefined' || depth === null) {
       depth = 1;
     }
+
     var result = {
       expected: expected,
       actual: actual
     };
-    if (typeof actual === 'undefined') {
+
+    var expectedType = typeof expected;
+    var actualType = typeof actual;
+
+    var expectedIsUndefined = (expectedType === 'undefined');
+    var actualIsUndefined = (actualType === 'undefined');
+
+    if (expectedIsUndefined && actualIsUndefined) {
+      throw new Error('At least one of actual and expected must not be undefined.');
+    } else if (expectedIsUndefined) {
+      result.expected = PLACEHOLDER;
+      result.kind = 'added';
+      return [result];
+    } else if (actualIsUndefined) {
+      result.actual = PLACEHOLDER;
       result.kind = 'deleted';
       return [result];
     }
-    if (typeof expected === 'undefined') {
-      result.kind = 'added';
-      return [result];
-    }
-    var actualType = typeof actual;
-    var expectedType = typeof expected;
-    var actualIsArray = _.isArray(actual);
+
     var expectedIsArray = _.isArray(expected);
-    var actualIsPlainObject = _.isPlainObject(actual);
+    var actualIsArray = _.isArray(actual);
+
     var expectedIsPlainObject = _.isPlainObject(expected);
+    var actualIsPlainObject = _.isPlainObject(actual);
+
     if ((actualType !== expectedType) ||
         (actualIsArray !== expectedIsArray) ||
         (actualIsPlainObject !== expectedIsPlainObject)) {
@@ -270,27 +289,30 @@ var testUtils = (function() {
       }, []);
     }
     if (actualIsPlainObject) {
-      var actualKeys = _.keys(actual);
       var expectedKeys = _.keys(expected);
-      var intersectionKeys = _.intersection(actualKeys, expectedKeys);
-      var xorKeys = _.xor(actualKeys, expectedKeys);
+      var actualKeys = _.keys(actual);
+
+      var intersectionKeys = _.intersection(expectedKeys, actualKeys);
+      var xorKeys = _.xor(expectedKeys, actualKeys);
+
       var addedProperties = [];
       var deletedProperties = [];
       var editedProperties = [];
-      var intersectionResults = intersectionKeys.map(function(intersectionKey) {
-        var actualValue = actual[intersectionKey];
-        var actualProperty = {};
-        actualProperty[intersectionKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
 
+      var intersectionResults = intersectionKeys.map(function(intersectionKey) {
         var expectedValue = expected[intersectionKey];
         var expectedValueString = stringifyJSON(expectedValue);
         var expectedProperty = {};
         expectedProperty[intersectionKey] = expectedValue;
 
+        var actualValue = actual[intersectionKey];
+        var actualProperty = {};
+        actualProperty[intersectionKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
         var resultItem = {
-          actual: actualProperty,
-          expected: expectedProperty
+          expected: expectedProperty,
+          actual: actualProperty
         };
 
         if (actualItemString === expectedValueString) {
@@ -301,27 +323,27 @@ var testUtils = (function() {
         }
       });
       var xorResults = xorKeys.map(function(xorKey) {
-        var actualValue = actual[xorKey];
-        var actualProperty = {};
-        actualProperty[xorKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
-
         var expectedValue = expected[xorKey];
         var expectedValueString = stringifyJSON(expectedValue);
         var expectedProperty = {};
         expectedProperty[xorKey] = expectedValue;
 
+        var actualValue = actual[xorKey];
+        var actualProperty = {};
+        actualProperty[xorKey] = actualValue;
+        var actualValueString = stringifyJSON(actualValue);
+
         var resultItem = {};
 
         if (!actualValue && !!expectedValue) {
           resultItem.kind = 'deleted';
-          resultItem.actual = PLACEHOLDER_EMPTY;
           resultItem.expected = expectedProperty;
+          resultItem.actual = PLACEHOLDER;
           return resultItem;
         }
         if (!expectedValue && !!actualValue) {
           resultItem.kind = 'added';
-          resultItem.expected = PLACEHOLDER_EMPTY;
+          resultItem.expected = PLACEHOLDER;
           resultItem.actual = actualProperty;
           return resultItem;
         }
@@ -330,10 +352,10 @@ var testUtils = (function() {
     }
 
     if (actualIsArray) {
-      return _.zip(actual, expected)
+      return _.zip(expected, actual)
       .map(function(zipped) {
-        var actualItem = zipped[0];
-        var expectedItem = zipped[1];
+        var expectedItem = zipped[0];
+        var actualItem = zipped[1];
         return diffDeep(expectedItem, actualItem, depth - 1);
       });
     }
@@ -377,6 +399,8 @@ var testUtils = (function() {
 
     var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
       var kindMapping = kindMappings[jsonDiff.kind];
+      console.log('jsonDiff390');
+      console.log(stringifyJSON(jsonDiff));
       var lhsColoredString = stringifyJSON(jsonDiff.expected)
         [kindMapping.lhs.color][kindMapping.lhs.bgColor];
       var rhsColoredString = stringifyJSON(jsonDiff.actual)
@@ -424,10 +448,12 @@ var testUtils = (function() {
       left: {
         label: 'Expected',
         content: coloredSideStrings.lhs,
+        //height: coloredSideStrings.lhs.split('\n').length * 3,
       },
       right: {
         label: 'Actual',
-        content: coloredSideStrings.rhs
+        content: coloredSideStrings.rhs,
+        //height: coloredSideStrings.rhs.split('\n').length * 3,
       }
     });
 

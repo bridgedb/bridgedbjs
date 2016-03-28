@@ -12,7 +12,7 @@ gulp.task('testDataset', ['launchMockserver'], function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 1000,
+    timeout: 10000,
     // enable colors
     c: true,
     //debug: true
