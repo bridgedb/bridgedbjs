@@ -164,5 +164,5 @@ module.exports = function(options) {
   // a varying amount of space. Fix this.
   setTimeout(function() {
     screen.render();
-  }, 300);
+  }, 1500);
 };

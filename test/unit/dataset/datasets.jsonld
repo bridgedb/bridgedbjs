@@ -309,9 +309,6 @@
     "name": "Agilent",
     "http://vocabularies.bridgedb.org/ops#uri": "Ag",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Ag"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -2087,9 +2084,6 @@
     "name": "CodeLink",
     "http://vocabularies.bridgedb.org/ops#uri": "Ge",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Ge"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -2735,8 +2729,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Eco",
     "uriRegexPattern": "http://ecocyc.org/ECOLI/NEW-IMAGE?type=NIL&object=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://ecocyc.org/ECOLI/NEW-IMAGE?type=NIL&object=",
-      "Eco"
+      "http://ecocyc.org/ECOLI/NEW-IMAGE?type=NIL&object="
     ],
     "type": "Dataset",
     "subject": [
@@ -3386,8 +3379,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnBs",
     "uriRegexPattern": "http://bacteria.ensembl.org/Bacillus/B_subtilis/Gene/Summary?g=(EBBACG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://bacteria.ensembl.org/Bacillus/B_subtilis/Gene/Summary?g=",
-      "EnBs"
+      "http://bacteria.ensembl.org/Bacillus/B_subtilis/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -3547,8 +3539,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnCe",
     "uriRegexPattern": "http://www.ensembl.org/Caenorhabditis_elegans/Gene/Summary?g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Caenorhabditis_elegans/Gene/Summary?g=",
-      "EnCe"
+      "http://www.ensembl.org/Caenorhabditis_elegans/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -3709,8 +3700,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnGg",
     "uriRegexPattern": "http://www.ensembl.org/Gallus_gallus/Gene/Summary?g=(ENSGALG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Gallus_gallus/Gene/Summary?g=",
-      "EnGg"
+      "http://www.ensembl.org/Gallus_gallus/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -3871,8 +3861,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnPt",
     "uriRegexPattern": "http://www.ensembl.org/Pan_troglodytes/Gene/Summary?g=(ENSPTRG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Pan_troglodytes/Gene/Summary?g=",
-      "EnPt"
+      "http://www.ensembl.org/Pan_troglodytes/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4033,8 +4022,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnBt",
     "uriRegexPattern": "http://www.ensembl.org/Bos_taurus/Gene/Summary?g=(ENSBTAG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Bos_taurus/Gene/Summary?g=",
-      "EnBt"
+      "http://www.ensembl.org/Bos_taurus/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4195,8 +4183,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnCf",
     "uriRegexPattern": "http://www.ensembl.org/Canis_familiaris/Gene/Summary?g=(ENSCAFG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Canis_familiaris/Gene/Summary?g=",
-      "EnCf"
+      "http://www.ensembl.org/Canis_familiaris/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4357,8 +4344,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnEc",
     "uriRegexPattern": "http://bacteria.ensembl.org/Escherichia_Shigella/E_coli_K12/Gene/Summary?g=(EBESCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://bacteria.ensembl.org/Escherichia_Shigella/E_coli_K12/Gene/Summary?g=",
-      "EnEc"
+      "http://bacteria.ensembl.org/Escherichia_Shigella/E_coli_K12/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4519,8 +4505,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnDm",
     "uriRegexPattern": "http://www.ensembl.org/Drosophila_melanogaster/Gene/Summary?g=(FBgn\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Drosophila_melanogaster/Gene/Summary?g=",
-      "EnDm"
+      "http://www.ensembl.org/Drosophila_melanogaster/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4681,8 +4666,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnQc",
     "uriRegexPattern": "http://www.ensembl.org/Equus_caballus/Gene/Summary?g=(ENSECAG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Equus_caballus/Gene/Summary?g=",
-      "EnQc"
+      "http://www.ensembl.org/Equus_caballus/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -4843,8 +4827,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnHs",
     "uriRegexPattern": "http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=(ENSG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=",
-      "EnHs"
+      "http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -5005,8 +4988,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnMx",
     "uriRegexPattern": "http://bacteria.ensembl.org/Mycobacterium/M_tuberculosis_H37Rv/Gene/Summary?g=(EBMYCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://bacteria.ensembl.org/Mycobacterium/M_tuberculosis_H37Rv/Gene/Summary?g=",
-      "EnMx"
+      "http://bacteria.ensembl.org/Mycobacterium/M_tuberculosis_H37Rv/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -5167,8 +5149,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnAg",
     "uriRegexPattern": "http://www.ensembl.org/Anopheles_gambiae/Gene/Summary?_q=(AGAP\\d{6})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Anopheles_gambiae/Gene/Summary?_q=",
-      "EnAg"
+      "http://www.ensembl.org/Anopheles_gambiae/Gene/Summary?_q="
     ],
     "type": "Dataset",
     "subject": [
@@ -5329,8 +5310,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnMm",
     "uriRegexPattern": "http://www.ensembl.org/Mus_musculus/Gene/Summary?g=(ENSMUSG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Mus_musculus/Gene/Summary?g=",
-      "EnMm"
+      "http://www.ensembl.org/Mus_musculus/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -5491,8 +5471,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnSs",
     "uriRegexPattern": "http://www.ensembl.org/Sus_scrofa/Gene/Summary?g=(ENSSSCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Sus_scrofa/Gene/Summary?g=",
-      "EnSs"
+      "http://www.ensembl.org/Sus_scrofa/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -5816,8 +5795,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnRn",
     "uriRegexPattern": "http://www.ensembl.org/Rattus_norvegicus/Gene/Summary?g=(ENSRNOG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Rattus_norvegicus/Gene/Summary?g=",
-      "EnRn"
+      "http://www.ensembl.org/Rattus_norvegicus/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -5978,8 +5956,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnXt",
     "uriRegexPattern": "http://www.ensembl.org/Xenopus_tropicalis/Gene/Summary?g=(ENSXETG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Xenopus_tropicalis/Gene/Summary?g=",
-      "EnXt"
+      "http://www.ensembl.org/Xenopus_tropicalis/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -6140,8 +6117,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnSc",
     "uriRegexPattern": "http://www.ensembl.org/Saccharomyces_cerevisiae/Gene/Summary?g=(Y[A-Z][RL]\\d{3}[WC](?:\\-[A-Z])?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Saccharomyces_cerevisiae/Gene/Summary?g=",
-      "EnSc"
+      "http://www.ensembl.org/Saccharomyces_cerevisiae/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -6302,8 +6278,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnDr",
     "uriRegexPattern": "http://www.ensembl.org/Danio_rerio/Gene/Summary?g=(ENSDARG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ensembl.org/Danio_rerio/Gene/Summary?g=",
-      "EnDr"
+      "http://www.ensembl.org/Danio_rerio/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -7442,8 +7417,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnAt",
     "uriRegexPattern": "http://www.gramene.org/Arabidopsis_thaliana/Gene/Summary?g=(AT[\\dCM]G\\d{5}\\-TAIR\\-G)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.gramene.org/Arabidopsis_thaliana/Gene/Summary?g=",
-      "EnAt"
+      "http://www.gramene.org/Arabidopsis_thaliana/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -7603,8 +7577,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Gg",
     "uriRegexPattern": "http://www.gramene.org/db/genes/search_gene?acc=(GR:\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.gramene.org/db/genes/search_gene?acc=",
-      "Gg"
+      "http://www.gramene.org/db/genes/search_gene?acc="
     ],
     "type": "Dataset",
     "subject": [
@@ -7763,8 +7736,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Gl",
     "uriRegexPattern": "http://www.gramene.org/db/literature/pub_search?ref_id=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.gramene.org/db/literature/pub_search?ref_id=",
-      "Gl"
+      "http://www.gramene.org/db/literature/pub_search?ref_id="
     ],
     "type": "Dataset",
     "subject": [
@@ -7923,8 +7895,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnZm",
     "uriRegexPattern": "http://www.maizesequence.org/Zea_mays/Gene/Summary?g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.maizesequence.org/Zea_mays/Gene/Summary?g=",
-      "EnZm"
+      "http://www.maizesequence.org/Zea_mays/Gene/Summary?g="
     ],
     "type": "Dataset",
     "subject": [
@@ -8081,9 +8052,6 @@
     "name": "Gramene Pathway",
     "http://vocabularies.bridgedb.org/ops#uri": "Gp",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Gp"
-    ],
     "subject": [
       "gpml:Pathway",
       "biopax:Pathway"
@@ -8240,8 +8208,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "EnOj",
     "uriRegexPattern": "http://www.gramene.org/Oryza_sativa/Gene/Summary?db=core;g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.gramene.org/Oryza_sativa/Gene/Summary?db=core;g=",
-      "EnOj"
+      "http://www.gramene.org/Oryza_sativa/Gene/Summary?db=core;g="
     ],
     "type": "Dataset",
     "subject": [
@@ -9211,9 +9178,6 @@
     "name": "Illumina",
     "http://vocabularies.bridgedb.org/ops#uri": "Il",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Il"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -9856,9 +9820,6 @@
     "name": "IRGSP Gene",
     "http://vocabularies.bridgedb.org/ops#uri": "Ir",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Ir"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -11482,8 +11443,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Mg",
     "uriRegexPattern": "http://www.maizegdb.org/cgi-bin/displaylocusresults.cgi?term=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.maizegdb.org/cgi-bin/displaylocusresults.cgi?term=",
-      "Mg"
+      "http://www.maizegdb.org/cgi-bin/displaylocusresults.cgi?term="
     ],
     "type": "Dataset",
     "subject": [
@@ -11803,8 +11763,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Mc",
     "uriRegexPattern": "http://www.metacyc.org/META/NEW-IMAGE?type=NIL&object=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.metacyc.org/META/NEW-IMAGE?type=NIL&object=",
-      "Mc"
+      "http://www.metacyc.org/META/NEW-IMAGE?type=NIL&object="
     ],
     "type": "Dataset",
     "subject": [
@@ -12614,9 +12573,6 @@
     "name": "NASC Gene",
     "http://vocabularies.bridgedb.org/ops#uri": "N",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "N"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -13099,8 +13055,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Nw",
     "uriRegexPattern": "http://wiki.nugo.org/index.php/(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://wiki.nugo.org/index.php/",
-      "Nw"
+      "http://wiki.nugo.org/index.php/"
     ],
     "type": "Dataset",
     "subject": [
@@ -13423,8 +13378,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Ob",
     "uriRegexPattern": "http://www.shigen.nig.ac.jp/rice/oryzabase/gateway/gatewayAction.do?target=symbol&id=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.shigen.nig.ac.jp/rice/oryzabase/gateway/gatewayAction.do?target=symbol&id=",
-      "Ob"
+      "http://www.shigen.nig.ac.jp/rice/oryzabase/gateway/gatewayAction.do?target=symbol&id="
     ],
     "type": "Dataset",
     "subject": [
@@ -13579,9 +13533,6 @@
     "name": "Other",
     "http://vocabularies.bridgedb.org/ops#uri": "O",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "O"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -15038,9 +14989,6 @@
     "name": "PlantGDB",
     "http://vocabularies.bridgedb.org/ops#uri": "Pl",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Pl"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -16174,8 +16122,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Rf",
     "uriRegexPattern": "http://www.sanger.ac.uk/cgi-bin/Rfam/getacc?(RF\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.sanger.ac.uk/cgi-bin/Rfam/getacc?",
-      "Rf"
+      "http://www.sanger.ac.uk/cgi-bin/Rfam/getacc?"
     ],
     "type": "Dataset",
     "subject": [
@@ -16661,8 +16608,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Os",
     "uriRegexPattern": "http://www.gramene.org/Oryza_sativa/geneview?gene=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.gramene.org/Oryza_sativa/geneview?gene=",
-      "Os"
+      "http://www.gramene.org/Oryza_sativa/geneview?gene="
     ],
     "type": "Dataset",
     "subject": [
@@ -18771,9 +18717,6 @@
     "name": "TIGR",
     "http://vocabularies.bridgedb.org/ops#uri": "Ti",
     "type": "Dataset",
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      "Ti"
-    ],
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
@@ -19421,8 +19364,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Uc",
     "uriRegexPattern": "http://genome.ucsc.edu/cgi-bin/hgTracks?position=(uc\\d{3}[a-z]{3}\\.\\d)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://genome.ucsc.edu/cgi-bin/hgTracks?position=",
-      "Uc"
+      "http://genome.ucsc.edu/cgi-bin/hgTracks?position="
     ],
     "type": "Dataset",
     "subject": [
@@ -19582,8 +19524,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "U",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH=([A-Z][a-z][a-z]?\\.\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH=",
-      "U"
+      "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH="
     ],
     "type": "Dataset",
     "subject": [
@@ -20069,8 +20010,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Sp",
     "uriRegexPattern": "http://www.uniprot.org/uniprot/([A-Z0-9]+_[A-Z]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.uniprot.org/uniprot/",
-      "Sp"
+      "http://www.uniprot.org/uniprot/"
     ],
     "type": "Dataset",
     "subject": [
@@ -20230,8 +20170,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Wn",
     "uriRegexPattern": "http://wheat.pw.usda.gov/report?class=gene;name=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://wheat.pw.usda.gov/report?class=gene;name=",
-      "Wn"
+      "http://wheat.pw.usda.gov/report?class=gene;name="
     ],
     "type": "Dataset",
     "subject": [
@@ -20391,8 +20330,7 @@
     "http://vocabularies.bridgedb.org/ops#uri": "Wr",
     "uriRegexPattern": "http://wheat.pw.usda.gov/cgi-bin/graingenes/report.cgi?class=reference&name=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://wheat.pw.usda.gov/cgi-bin/graingenes/report.cgi?class=reference&name=",
-      "Wr"
+      "http://wheat.pw.usda.gov/cgi-bin/graingenes/report.cgi?class=reference&name="
     ],
     "type": "Dataset",
     "subject": [

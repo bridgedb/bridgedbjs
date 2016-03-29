@@ -315,7 +315,7 @@ var testUtils = (function() {
           actual: actualProperty
         };
 
-        if (actualItemString === expectedValueString) {
+        if (expectedValueString === actualValueString) {
           resultItem.kind = 'unchanged';
           return resultItem;
         } else {
@@ -368,13 +368,13 @@ var testUtils = (function() {
    * @param {string} actualJsonString
    * @return
    */
-  function compareJson(expectedJsonString, actualJsonString) {
+  function compareJson(expectedJson, actualJson) {
+    var expectedJsonString = stringifyJSON(expectedJson);
+    var actualJsonString = stringifyJSON(actualJson);
     if (actualJsonString === expectedJsonString) {
       // We're good
       return true;
     }
-
-    var actualJson = JSON.parse(actualJsonString);
 
     if (expectedJsonString === '{}') {
       console.log('***************************************************');
@@ -387,8 +387,6 @@ var testUtils = (function() {
       return false;
     }
 
-    var expectedJson = JSON.parse(expectedJsonString);
-
     var jsonDiffs = diffDeep(expectedJson, actualJson)
     .reduce(function(accumulator, diffResult) {
       return accumulator.concat(diffResult);
@@ -399,8 +397,6 @@ var testUtils = (function() {
 
     var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
       var kindMapping = kindMappings[jsonDiff.kind];
-      console.log('jsonDiff390');
-      console.log(stringifyJSON(jsonDiff));
       var lhsColoredString = stringifyJSON(jsonDiff.expected)
         [kindMapping.lhs.color][kindMapping.lhs.bgColor];
       var rhsColoredString = stringifyJSON(jsonDiff.actual)
