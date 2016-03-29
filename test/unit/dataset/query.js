@@ -32,7 +32,7 @@ describe('BridgeDb.Dataset.query', function() {
     var lkgDataString = testUtils.getLkgDataString(lkgDataPath);
     var lkgData = JSON.parse(lkgDataString);
     if (update) {
-      return source 
+      return source
       .map(function(currentDatasets) {
         return JSON.stringify(currentDatasets, null, '  ');
       })

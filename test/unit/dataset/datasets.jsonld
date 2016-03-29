@@ -25,7 +25,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -37,7 +37,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -86,7 +86,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -145,7 +145,7 @@
     "_isPrimary": false,
     "identifierPattern": "\\d{4,}((_[asx])?_at)?",
     "name": "Affymetrix Probeset",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:affy.probeset",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:affy.probeset",
     "uriRegexPattern": "https://www.affymetrix.com/LinkServlet?probeset=(\\d{4,}((_[asx])?_at)?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "https://www.affymetrix.com/LinkServlet?probeset=",
@@ -188,7 +188,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -200,7 +200,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -249,7 +249,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -307,7 +307,7 @@
     "_isPrimary": false,
     "identifierPattern": "A_\\d+_.+",
     "name": "Agilent",
-    "http://vocabularies.bridgedb.org/ops#uri": "Ag",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Ag",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -343,7 +343,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -355,7 +355,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -404,7 +404,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -462,7 +462,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "BIND",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:bind",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:bind",
     "uriRegexPattern": "http://www.bind.ca/Action?identifier=bindid&idsearch=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.bind.ca/Action?identifier=bindid&idsearch=",
@@ -504,7 +504,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -516,7 +516,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -565,7 +565,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -624,7 +624,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+\\:[A-Za-z0-9-]+$",
     "name": "BioCyc",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:biocyc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:biocyc",
     "uriRegexPattern": "http://biocyc.org/getid?id=(\\w+\\:[A-Za-z0-9-]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://biocyc.org/getid?id=",
@@ -667,7 +667,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -679,7 +679,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -728,7 +728,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -787,7 +787,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "BioGRID",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:biogrid",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:biogrid",
     "uriRegexPattern": "http://thebiogrid.org/(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://thebiogrid.org/",
@@ -829,7 +829,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -841,7 +841,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -890,7 +890,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -949,7 +949,7 @@
     "_isPrimary": true,
     "identifierPattern": "^((BIOMD|MODEL)\\d{10})|(BMID\\d{12})$",
     "name": "BioModels Database",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:biomodels.db",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:biomodels.db",
     "uriRegexPattern": "http://www.ebi.ac.uk/biomodels-main/(((BIOMD|MODEL)\\d{10})|(BMID\\d{12}))",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/biomodels-main/",
@@ -992,7 +992,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1004,7 +1004,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1053,7 +1053,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1112,7 +1112,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "BioSystems",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:biosystems",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:biosystems",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/biosystems/(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/biosystems/",
@@ -1155,7 +1155,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1167,7 +1167,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1216,7 +1216,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1271,10 +1271,11 @@
     "webPage": "http://www.brenda-enzymes.org/",
     "_iriPattern": "http://www.brenda-enzymes.org/php/result_flat.php4?ecno=$id",
     "exampleIdentifier": "1.1.1.1",
+    "_bridgeDbType": "protein",
     "_isPrimary": true,
     "identifierPattern": "^((\\d+\\.-\\.-\\.-)|(\\d+\\.\\d+\\.-\\.-)|(\\d+\\.\\d+\\.\\d+\\.-)|(\\d+\\.\\d+\\.\\d+\\.\\d+))$",
     "name": "BRENDA",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:brenda",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:brenda",
     "uriRegexPattern": "http://www.brenda-enzymes.org/php/result_flat.php4?ecno=(((\\d+\\.-\\.-\\.-)|(\\d+\\.\\d+\\.-\\.-)|(\\d+\\.\\d+\\.\\d+\\.-)|(\\d+\\.\\d+\\.\\d+\\.\\d+)))",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.brenda-enzymes.org/php/result_flat.php4?ecno=",
@@ -1283,6 +1284,10 @@
     "type": "Dataset",
     "preferredPrefix": "brenda",
     "id": "http://identifiers.org/brenda/",
+    "subject": [
+      "gpml:Protein",
+      "biopax:ProteinReference"
+    ],
     "alternatePrefix": [
       "Br"
     ]
@@ -1313,7 +1318,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1325,7 +1330,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1374,7 +1379,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1433,7 +1438,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d{1,7}\\-\\d{2}\\-\\d$",
     "name": "CAS",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:cas",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:cas",
     "uriRegexPattern": "http://commonchemistry.org/ChemicalDetail.aspx?ref=(\\d{1,7}\\-\\d{2}\\-\\d)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://commonchemistry.org/ChemicalDetail.aspx?ref=",
@@ -1476,7 +1481,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1488,7 +1493,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1537,7 +1542,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1596,7 +1601,7 @@
     "_isPrimary": false,
     "identifierPattern": "^CCDS\\d+\\.\\d+$",
     "name": "Consensus CDS",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ccds",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ccds",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/CCDS/CcdsBrowse.cgi?REQUEST=ALLFIELDS&DATA=(CCDS\\d+\\.\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/CCDS/CcdsBrowse.cgi?REQUEST=ALLFIELDS&DATA=",
@@ -1639,7 +1644,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1651,7 +1656,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1700,7 +1705,170 @@
       },
       "name": {
         "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "organism": {
+        "@id": "biopax:organism",
         "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@id"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@vocab"
+      },
+      "type": "@type",
+      "uri": {
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@id"
+      },
+      "website_url": {
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "bridgeDbDataSourceName": "ChEMBL compound",
+    "bridgeDbSystemCode": "Cl",
+    "webPage": "https://www.ebi.ac.uk/chembldb/",
+    "_iriPattern": "https://www.ebi.ac.uk/chembl/compound/inspect/$id",
+    "exampleIdentifier": "CHEMBL308052",
+    "_bridgeDbType": "metabolite",
+    "_isPrimary": true,
+    "identifierPattern": "^CHEMBL\\d+$",
+    "name": "ChEMBL compound",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:chembl.compound",
+    "uriRegexPattern": "https://www.ebi.ac.uk/chembl/compound/inspect/(CHEMBL\\d+)",
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      "https://www.ebi.ac.uk/chembl/compound/inspect/",
+      "urn:miriam:chembl.compound"
+    ],
+    "type": "Dataset",
+    "preferredPrefix": "chembl.compound",
+    "id": "http://identifiers.org/chembl.compound/",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "alternatePrefix": [
+      "Cl"
+    ]
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@id"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourceName": {
+        "@id": "bridgeDbDataSourcesHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "bridgeDbDataSources": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourcesHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbSystemCode": {
+        "@id": "bridgeDbDataSourcesHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@id"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@id"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@id"
+      },
+      "id": "@id",
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@id"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1759,7 +1927,7 @@
     "_isPrimary": true,
     "identifierPattern": "^CHEBI:\\d+$",
     "name": "ChEBI",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:chebi",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:chebi",
     "uriRegexPattern": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=(CHEBI:\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=",
@@ -1802,7 +1970,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1814,7 +1982,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -1863,7 +2031,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -1922,7 +2090,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "ChemSpider",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:chemspider",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:chemspider",
     "uriRegexPattern": "http://www.chemspider.com/Chemical-Structure.(\\d+).html",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -1964,7 +2132,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -1976,7 +2144,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2025,7 +2193,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2082,7 +2250,7 @@
     "_bridgeDbType": "probe",
     "_isPrimary": false,
     "name": "CodeLink",
-    "http://vocabularies.bridgedb.org/ops#uri": "Ge",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Ge",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -2118,7 +2286,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2130,7 +2298,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2179,7 +2347,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2238,7 +2406,7 @@
     "_isPrimary": true,
     "identifierPattern": "^DIP[\\:\\-]\\d{3}[EN]$",
     "name": "Database of Interacting Proteins",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:dip",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:dip",
     "uriRegexPattern": "http://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?ID=(DIP[\\:\\-]\\d{3}[EN])",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?ID=",
@@ -2280,7 +2448,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2292,7 +2460,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2341,7 +2509,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2400,7 +2568,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "dbSNP",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:dbsnp",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:dbsnp",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=",
@@ -2443,7 +2611,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2455,7 +2623,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2504,7 +2672,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2563,7 +2731,7 @@
     "_isPrimary": true,
     "identifierPattern": "^DB\\d{5}$",
     "name": "DrugBank",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:drugbank",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:drugbank",
     "uriRegexPattern": "http://www.drugbank.ca/drugs/(DB\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.drugbank.ca/drugs/",
@@ -2606,7 +2774,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2618,7 +2786,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2667,7 +2835,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2726,7 +2894,7 @@
     "organism": "Escherichia coli",
     "_isPrimary": true,
     "name": "EcoCyc",
-    "http://vocabularies.bridgedb.org/ops#uri": "Eco",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Eco",
     "uriRegexPattern": "http://ecocyc.org/ECOLI/NEW-IMAGE?type=NIL&object=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://ecocyc.org/ECOLI/NEW-IMAGE?type=NIL&object="
@@ -2765,7 +2933,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2777,7 +2945,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2826,7 +2994,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -2886,7 +3054,7 @@
     "_isPrimary": true,
     "identifierPattern": "^EG\\d+$",
     "name": "EcoGene",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ecogene",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ecogene",
     "uriRegexPattern": "http://ecogene.org/geneInfo.php?eg_id=(EG\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://ecogene.org/geneInfo.php?eg_id=",
@@ -2929,7 +3097,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -2941,7 +3109,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -2990,7 +3158,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3049,7 +3217,7 @@
     "_isPrimary": true,
     "identifierPattern": "^[A-Z]+[0-9]+$",
     "name": "European Nucleotide Archive",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ena.embl",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ena.embl",
     "uriRegexPattern": "http://www.ebi.ac.uk/ena/data/view/([A-Z]+[0-9]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/ena/data/view/",
@@ -3092,7 +3260,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3104,7 +3272,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3153,7 +3321,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3212,7 +3380,7 @@
     "_isPrimary": true,
     "identifierPattern": "^ENS[A-Z]*[FPTG]\\d{11}$",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ensembl",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ensembl",
     "uriRegexPattern": "http://ensemblgenomes.org/id/(ENS[A-Z]*[FPTG]\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://ensemblgenomes.org/id/",
@@ -3255,7 +3423,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3267,7 +3435,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3316,7 +3484,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3376,7 +3544,7 @@
     "_isPrimary": true,
     "identifierPattern": "EBBACG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnBs",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnBs",
     "uriRegexPattern": "http://bacteria.ensembl.org/Bacillus/B_subtilis/Gene/Summary?g=(EBBACG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://bacteria.ensembl.org/Bacillus/B_subtilis/Gene/Summary?g="
@@ -3416,7 +3584,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3428,7 +3596,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3477,7 +3645,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3536,7 +3704,7 @@
     "organism": "Caenorhabditis elegans",
     "_isPrimary": true,
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnCe",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnCe",
     "uriRegexPattern": "http://www.ensembl.org/Caenorhabditis_elegans/Gene/Summary?g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Caenorhabditis_elegans/Gene/Summary?g="
@@ -3576,7 +3744,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3588,7 +3756,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3637,7 +3805,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3697,7 +3865,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSGALG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnGg",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnGg",
     "uriRegexPattern": "http://www.ensembl.org/Gallus_gallus/Gene/Summary?g=(ENSGALG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Gallus_gallus/Gene/Summary?g="
@@ -3737,7 +3905,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3749,7 +3917,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3798,7 +3966,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -3858,7 +4026,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSPTRG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnPt",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnPt",
     "uriRegexPattern": "http://www.ensembl.org/Pan_troglodytes/Gene/Summary?g=(ENSPTRG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Pan_troglodytes/Gene/Summary?g="
@@ -3898,7 +4066,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -3910,7 +4078,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -3959,7 +4127,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4019,7 +4187,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSBTAG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnBt",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnBt",
     "uriRegexPattern": "http://www.ensembl.org/Bos_taurus/Gene/Summary?g=(ENSBTAG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Bos_taurus/Gene/Summary?g="
@@ -4059,7 +4227,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4071,7 +4239,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4120,7 +4288,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4180,7 +4348,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSCAFG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnCf",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnCf",
     "uriRegexPattern": "http://www.ensembl.org/Canis_familiaris/Gene/Summary?g=(ENSCAFG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Canis_familiaris/Gene/Summary?g="
@@ -4220,7 +4388,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4232,7 +4400,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4281,7 +4449,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4341,7 +4509,7 @@
     "_isPrimary": true,
     "identifierPattern": "EBESCG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnEc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnEc",
     "uriRegexPattern": "http://bacteria.ensembl.org/Escherichia_Shigella/E_coli_K12/Gene/Summary?g=(EBESCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://bacteria.ensembl.org/Escherichia_Shigella/E_coli_K12/Gene/Summary?g="
@@ -4381,7 +4549,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4393,7 +4561,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4442,7 +4610,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4502,7 +4670,7 @@
     "_isPrimary": true,
     "identifierPattern": "FBgn\\d{7}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnDm",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnDm",
     "uriRegexPattern": "http://www.ensembl.org/Drosophila_melanogaster/Gene/Summary?g=(FBgn\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Drosophila_melanogaster/Gene/Summary?g="
@@ -4542,7 +4710,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4554,7 +4722,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4603,7 +4771,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4663,7 +4831,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSECAG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnQc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnQc",
     "uriRegexPattern": "http://www.ensembl.org/Equus_caballus/Gene/Summary?g=(ENSECAG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Equus_caballus/Gene/Summary?g="
@@ -4703,7 +4871,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4715,7 +4883,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4764,7 +4932,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4824,7 +4992,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnHs",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnHs",
     "uriRegexPattern": "http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=(ENSG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="
@@ -4864,7 +5032,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -4876,7 +5044,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -4925,7 +5093,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -4985,7 +5153,7 @@
     "_isPrimary": true,
     "identifierPattern": "EBMYCG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnMx",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnMx",
     "uriRegexPattern": "http://bacteria.ensembl.org/Mycobacterium/M_tuberculosis_H37Rv/Gene/Summary?g=(EBMYCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://bacteria.ensembl.org/Mycobacterium/M_tuberculosis_H37Rv/Gene/Summary?g="
@@ -5025,7 +5193,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5037,7 +5205,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5086,7 +5254,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5146,7 +5314,7 @@
     "_isPrimary": true,
     "identifierPattern": "AGAP\\d{6}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnAg",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnAg",
     "uriRegexPattern": "http://www.ensembl.org/Anopheles_gambiae/Gene/Summary?_q=(AGAP\\d{6})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Anopheles_gambiae/Gene/Summary?_q="
@@ -5186,7 +5354,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5198,7 +5366,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5247,7 +5415,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5307,7 +5475,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSMUSG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnMm",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnMm",
     "uriRegexPattern": "http://www.ensembl.org/Mus_musculus/Gene/Summary?g=(ENSMUSG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Mus_musculus/Gene/Summary?g="
@@ -5347,7 +5515,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5359,7 +5527,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5408,7 +5576,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5468,7 +5636,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSSSCG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnSs",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnSs",
     "uriRegexPattern": "http://www.ensembl.org/Sus_scrofa/Gene/Summary?g=(ENSSSCG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Sus_scrofa/Gene/Summary?g="
@@ -5508,7 +5676,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5520,7 +5688,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5569,7 +5737,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5628,7 +5796,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+$",
     "name": "Ensembl Plants",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ensembl.plant",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ensembl.plant",
     "uriRegexPattern": "http://plants.ensembl.org/id/(\\w+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://plants.ensembl.org/id/",
@@ -5671,7 +5839,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5683,7 +5851,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5732,7 +5900,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5792,7 +5960,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSRNOG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnRn",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnRn",
     "uriRegexPattern": "http://www.ensembl.org/Rattus_norvegicus/Gene/Summary?g=(ENSRNOG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Rattus_norvegicus/Gene/Summary?g="
@@ -5832,7 +6000,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -5844,7 +6012,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -5893,7 +6061,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -5953,7 +6121,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSXETG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnXt",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnXt",
     "uriRegexPattern": "http://www.ensembl.org/Xenopus_tropicalis/Gene/Summary?g=(ENSXETG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Xenopus_tropicalis/Gene/Summary?g="
@@ -5993,7 +6161,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6005,7 +6173,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6054,7 +6222,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6114,7 +6282,7 @@
     "_isPrimary": true,
     "identifierPattern": "Y[A-Z][RL]\\d{3}[WC](?:\\-[A-Z])?",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnSc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnSc",
     "uriRegexPattern": "http://www.ensembl.org/Saccharomyces_cerevisiae/Gene/Summary?g=(Y[A-Z][RL]\\d{3}[WC](?:\\-[A-Z])?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Saccharomyces_cerevisiae/Gene/Summary?g="
@@ -6154,7 +6322,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6166,7 +6334,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6215,7 +6383,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6275,7 +6443,7 @@
     "_isPrimary": true,
     "identifierPattern": "ENSDARG\\d{11}",
     "name": "Ensembl",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnDr",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnDr",
     "uriRegexPattern": "http://www.ensembl.org/Danio_rerio/Gene/Summary?g=(ENSDARG\\d{11})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ensembl.org/Danio_rerio/Gene/Summary?g="
@@ -6315,7 +6483,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6327,7 +6495,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6376,7 +6544,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6435,7 +6603,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "Entrez Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ncbigene",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ncbigene",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/gene/(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/gene/",
@@ -6478,7 +6646,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6490,7 +6658,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6539,7 +6707,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6598,7 +6766,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+\\.-\\.-\\.-|\\d+\\.\\d+\\.-\\.-|\\d+\\.\\d+\\.\\d+\\.-|\\d+\\.\\d+\\.\\d+\\.(n)?\\d+$",
     "name": "Enzyme Nomenclature",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ec-code",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ec-code",
     "uriRegexPattern": "http://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=(\\d+\\.-\\.-\\.-|\\d+\\.\\d+\\.-\\.-|\\d+\\.\\d+\\.\\d+\\.-|\\d+\\.\\d+\\.\\d+\\.(n)?\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=",
@@ -6641,7 +6809,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6653,7 +6821,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6702,7 +6870,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6762,7 +6930,7 @@
     "_isPrimary": true,
     "identifierPattern": "^FB\\w{2}\\d{7}$",
     "name": "FlyBase",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:flybase",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:flybase",
     "uriRegexPattern": "http://flybase.org/reports/(FB\\w{2}\\d{7}).html",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -6804,7 +6972,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6816,7 +6984,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -6865,7 +7033,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -6924,7 +7092,7 @@
     "_isPrimary": false,
     "identifierPattern": "(\\w\\d{5})|(\\w{2}\\d{6})|(\\w{3}\\d{5})",
     "name": "GenBank",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:insdc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:insdc",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/nuccore/((\\w\\d{5})|(\\w{2}\\d{6})|(\\w{3}\\d{5}))",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/nuccore/",
@@ -6967,7 +7135,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -6979,7 +7147,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7028,7 +7196,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7087,7 +7255,7 @@
     "_isPrimary": false,
     "identifierPattern": "\\d+",
     "name": "Gene Wiki",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:genewiki",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:genewiki",
     "uriRegexPattern": "http://plugins.biogps.org/cgi-bin/wp.cgi?id=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://plugins.biogps.org/cgi-bin/wp.cgi?id=",
@@ -7130,7 +7298,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7142,7 +7310,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7191,7 +7359,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7250,7 +7418,7 @@
     "_isPrimary": false,
     "identifierPattern": "^GO:\\d{7}$",
     "name": "Gene Ontology",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:go",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:go",
     "uriRegexPattern": "http://www.ebi.ac.uk/QuickGO/GTerm?id=(GO:\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/QuickGO/GTerm?id=",
@@ -7293,7 +7461,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7305,7 +7473,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7354,7 +7522,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7413,8 +7581,8 @@
     "organism": "Arabidopsis thaliana",
     "_isPrimary": true,
     "identifierPattern": "AT[\\dCM]G\\d{5}\\-TAIR\\-G",
-    "name": "Grameen Arabidopsis",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnAt",
+    "name": "Gramene Arabidopsis",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnAt",
     "uriRegexPattern": "http://www.gramene.org/Arabidopsis_thaliana/Gene/Summary?g=(AT[\\dCM]G\\d{5}\\-TAIR\\-G)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.gramene.org/Arabidopsis_thaliana/Gene/Summary?g="
@@ -7454,7 +7622,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7466,7 +7634,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7515,7 +7683,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7574,7 +7742,7 @@
     "_isPrimary": true,
     "identifierPattern": "GR:\\d+",
     "name": "Gramene Genes",
-    "http://vocabularies.bridgedb.org/ops#uri": "Gg",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Gg",
     "uriRegexPattern": "http://www.gramene.org/db/genes/search_gene?acc=(GR:\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.gramene.org/db/genes/search_gene?acc="
@@ -7614,7 +7782,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7626,7 +7794,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7675,7 +7843,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7733,7 +7901,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": false,
     "name": "Gramene Literature",
-    "http://vocabularies.bridgedb.org/ops#uri": "Gl",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Gl",
     "uriRegexPattern": "http://www.gramene.org/db/literature/pub_search?ref_id=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.gramene.org/db/literature/pub_search?ref_id="
@@ -7773,7 +7941,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7785,7 +7953,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7834,7 +8002,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -7892,7 +8060,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": true,
     "name": "Gramene Maize",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnZm",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnZm",
     "uriRegexPattern": "http://www.maizesequence.org/Zea_mays/Gene/Summary?g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.maizesequence.org/Zea_mays/Gene/Summary?g="
@@ -7932,7 +8100,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -7944,7 +8112,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -7993,7 +8161,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8050,7 +8218,7 @@
     "_bridgeDbType": "pathway",
     "_isPrimary": true,
     "name": "Gramene Pathway",
-    "http://vocabularies.bridgedb.org/ops#uri": "Gp",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Gp",
     "type": "Dataset",
     "subject": [
       "gpml:Pathway",
@@ -8086,7 +8254,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8098,7 +8266,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8147,7 +8315,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8205,7 +8373,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": true,
     "name": "Gramene Rice",
-    "http://vocabularies.bridgedb.org/ops#uri": "EnOj",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "EnOj",
     "uriRegexPattern": "http://www.gramene.org/Oryza_sativa/Gene/Summary?db=core;g=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.gramene.org/Oryza_sativa/Gene/Summary?db=core;g="
@@ -8245,7 +8413,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8257,7 +8425,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8306,7 +8474,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8366,7 +8534,7 @@
     "_isPrimary": true,
     "identifierPattern": "^[A-Za-z0-9]+",
     "name": "HGNC Symbol",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:hgnc.symbol",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:hgnc.symbol",
     "uriRegexPattern": "http://www.genenames.org/data/hgnc_data.php?match=([A-Za-z0-9]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genenames.org/data/hgnc_data.php?match=",
@@ -8409,7 +8577,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8421,7 +8589,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8470,7 +8638,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8530,7 +8698,7 @@
     "_isPrimary": true,
     "identifierPattern": "^(HGNC:)?\\d{1,5}$",
     "name": "HGNC",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:hgnc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:hgnc",
     "uriRegexPattern": "http://www.genenames.org/data/hgnc_data.php?hgnc_id=((HGNC:)?\\d{1,5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genenames.org/data/hgnc_data.php?hgnc_id=",
@@ -8573,7 +8741,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8585,7 +8753,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8634,7 +8802,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8693,7 +8861,7 @@
     "_isPrimary": true,
     "identifierPattern": "^HMDB\\d{5}$",
     "name": "HMDB",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:hmdb",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:hmdb",
     "uriRegexPattern": "http://www.hmdb.ca/metabolites/(HMDB\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.hmdb.ca/metabolites/",
@@ -8736,7 +8904,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8748,7 +8916,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8797,7 +8965,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -8856,7 +9024,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "HomoloGene",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:homologene",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:homologene",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/homologene/(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/homologene/",
@@ -8899,7 +9067,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -8911,7 +9079,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -8960,7 +9128,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9017,7 +9185,7 @@
     "organism": "Homo sapiens",
     "_isPrimary": true,
     "name": "HPRD",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:hprd",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:hprd",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "urn:miriam:hprd"
@@ -9057,7 +9225,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9069,7 +9237,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9118,7 +9286,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9176,7 +9344,7 @@
     "_isPrimary": false,
     "identifierPattern": "ILMN_\\d+",
     "name": "Illumina",
-    "http://vocabularies.bridgedb.org/ops#uri": "Il",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Il",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -9212,7 +9380,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9224,7 +9392,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9273,7 +9441,167 @@
       },
       "name": {
         "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "organism": {
+        "@id": "biopax:organism",
         "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@id"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@vocab"
+      },
+      "type": "@type",
+      "uri": {
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@id"
+      },
+      "website_url": {
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "bridgeDbDataSourceName": "InChIKey",
+    "bridgeDbSystemCode": "Ik",
+    "webPage": "http://inchi.org/",
+    "exampleIdentifier": "QTBSBXVTEAMEQO-UHFFFAOYSA-N",
+    "_bridgeDbType": "metabolite",
+    "_isPrimary": true,
+    "identifierPattern": "^[A-Z]{14}\\-[A-Z]{10}(\\-[A-P])?",
+    "name": "Standard InChIKey",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:inchikey",
+    "type": "Dataset",
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      "urn:miriam:inchikey"
+    ],
+    "preferredPrefix": "inchikey",
+    "id": "http://identifiers.org/inchikey/",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "alternatePrefix": [
+      "Ik"
+    ]
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@id"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourceName": {
+        "@id": "bridgeDbDataSourcesHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "bridgeDbDataSources": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourcesHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbSystemCode": {
+        "@id": "bridgeDbDataSourcesHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@id"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@id"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@id"
+      },
+      "id": "@id",
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@id"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9332,7 +9660,7 @@
     "_isPrimary": true,
     "identifierPattern": "^EBI\\-[0-9]+$",
     "name": "IntAct",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:intact",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:intact",
     "uriRegexPattern": "http://www.ebi.ac.uk/intact/pages/details/details.xhtml?interactionAc=(EBI\\-[0-9]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/intact/pages/details/details.xhtml?interactionAc=",
@@ -9374,7 +9702,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9386,7 +9714,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9435,7 +9763,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9494,7 +9822,7 @@
     "_isPrimary": true,
     "identifierPattern": "^IPR\\d{6}$",
     "name": "InterPro",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:interpro",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:interpro",
     "uriRegexPattern": "http://www.ebi.ac.uk/interpro/DisplayIproEntry?ac=(IPR\\d{6})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/interpro/DisplayIproEntry?ac=",
@@ -9537,7 +9865,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9549,7 +9877,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9598,7 +9926,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9657,7 +9985,7 @@
     "_isPrimary": true,
     "identifierPattern": "^IPI\\d{8}$",
     "name": "IPI",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ipi",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ipi",
     "uriRegexPattern": "http://www.ebi.ac.uk/cgi-bin/dbfetch?db=IPI&id=(IPI\\d{8})&format=default",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -9699,7 +10027,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9711,7 +10039,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9760,7 +10088,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9818,7 +10146,7 @@
     "_isPrimary": true,
     "identifierPattern": "Os\\d{2}g\\d+",
     "name": "IRGSP Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "Ir",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Ir",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -9854,7 +10182,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -9866,7 +10194,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -9915,7 +10243,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -9974,7 +10302,7 @@
     "_isPrimary": true,
     "identifierPattern": "^C\\d+$",
     "name": "KEGG Compound",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.compound",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.compound",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?cpd:(C\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?cpd:",
@@ -10017,7 +10345,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10029,7 +10357,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10078,7 +10406,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10137,7 +10465,7 @@
     "_isPrimary": true,
     "identifierPattern": "^D\\d+$",
     "name": "KEGG Drug",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.drug",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.drug",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?dr:(D\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?dr:",
@@ -10180,7 +10508,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10192,7 +10520,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10241,7 +10569,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10300,7 +10628,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+:[\\w\\d\\.-]*$",
     "name": "KEGG Genes",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.genes",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.genes",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?(\\w+:[\\w\\d\\.-]*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?",
@@ -10343,7 +10671,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10355,7 +10683,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10404,7 +10732,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10463,7 +10791,7 @@
     "_isPrimary": true,
     "identifierPattern": "^G\\d+$",
     "name": "KEGG Glycan",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.glycan",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.glycan",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?gl:(G\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?gl:",
@@ -10506,7 +10834,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10518,7 +10846,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10567,7 +10895,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10626,7 +10954,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w{2,4}\\d{5}$",
     "name": "KEGG Pathway",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.pathway",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.pathway",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?pathway+(\\w{2,4}\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?pathway+",
@@ -10669,7 +10997,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10681,7 +11009,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10730,7 +11058,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10785,11 +11113,11 @@
     "webPage": "http://www.genome.jp/kegg/reaction/",
     "_iriPattern": "http://www.genome.jp/dbget-bin/www_bget?rn:$id",
     "exampleIdentifier": "R00100",
-    "_bridgeDbType": "protein",
+    "_bridgeDbType": "pathway",
     "_isPrimary": true,
     "identifierPattern": "^R\\d+$",
     "name": "KEGG Reaction",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:kegg.reaction",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:kegg.reaction",
     "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?rn:(R\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.genome.jp/dbget-bin/www_bget?rn:",
@@ -10799,8 +11127,8 @@
     "preferredPrefix": "kegg.reaction",
     "id": "http://identifiers.org/kegg.reaction/",
     "subject": [
-      "gpml:Protein",
-      "biopax:ProteinReference"
+      "gpml:Pathway",
+      "biopax:Pathway"
     ],
     "alternatePrefix": [
       "Rk"
@@ -10832,7 +11160,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -10844,7 +11172,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -10893,7 +11221,170 @@
       },
       "name": {
         "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "organism": {
+        "@id": "biopax:organism",
         "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@id"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@vocab"
+      },
+      "type": "@type",
+      "uri": {
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@id"
+      },
+      "website_url": {
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "bridgeDbDataSourceName": "KNApSAcK",
+    "bridgeDbSystemCode": "Cks",
+    "webPage": "http://kanaya.aist-nara.ac.jp/KNApSAcK/",
+    "_iriPattern": "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=$id",
+    "exampleIdentifier": "C00000001",
+    "_bridgeDbType": "metabolite",
+    "_isPrimary": true,
+    "identifierPattern": "^C\\d{8}",
+    "name": "KNApSAcK",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:knapsack",
+    "uriRegexPattern": "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=(C\\d{8})",
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=",
+      "urn:miriam:knapsack"
+    ],
+    "type": "Dataset",
+    "preferredPrefix": "knapsack",
+    "id": "http://identifiers.org/knapsack/",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "alternatePrefix": [
+      "Cks"
+    ]
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@id"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourceName": {
+        "@id": "bridgeDbDataSourcesHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "bridgeDbDataSources": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourcesHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbSystemCode": {
+        "@id": "bridgeDbDataSourcesHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@id"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@id"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@id"
+      },
+      "id": "@id",
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@id"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -10952,7 +11443,7 @@
     "_isPrimary": true,
     "identifierPattern": "^LM(FA|GL|GP|SP|ST|PR|SL|PK)[0-9]{4}([0-9a-zA-Z]{4,6})?$",
     "name": "LIPID MAPS",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:lipidmaps",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:lipidmaps",
     "uriRegexPattern": "http://www.lipidmaps.org/data/get_lm_lipids_dbgif.php?LM_ID=(LM(FA|GL|GP|SP|ST|PR|SL|PK)[0-9]{4}([0-9a-zA-Z]{4,6})?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.lipidmaps.org/data/get_lm_lipids_dbgif.php?LM_ID=",
@@ -10995,7 +11486,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11007,7 +11498,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11056,7 +11547,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11115,7 +11606,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+\\d+$",
     "name": "LipidBank",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:lipidbank",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:lipidbank",
     "uriRegexPattern": "http://lipidbank.jp/cgi-bin/detail.cgi?id=(\\w+\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://lipidbank.jp/cgi-bin/detail.cgi?id=",
@@ -11158,7 +11649,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11170,7 +11661,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11219,7 +11710,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11278,7 +11769,7 @@
     "_isPrimary": true,
     "identifierPattern": "^M\\d{4}$",
     "name": "MACiE",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:macie",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:macie",
     "uriRegexPattern": "http://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/MACiE/entry/getPage.pl?id=(M\\d{4})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/MACiE/entry/getPage.pl?id=",
@@ -11321,7 +11812,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11333,7 +11824,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11382,7 +11873,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11440,7 +11931,7 @@
     "organism": "Zea mays",
     "_isPrimary": true,
     "name": "MaizeGDB",
-    "http://vocabularies.bridgedb.org/ops#uri": "Mg",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Mg",
     "uriRegexPattern": "http://www.maizegdb.org/cgi-bin/displaylocusresults.cgi?term=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.maizegdb.org/cgi-bin/displaylocusresults.cgi?term="
@@ -11480,7 +11971,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11492,7 +11983,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11541,7 +12032,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11600,7 +12091,7 @@
     "_isPrimary": true,
     "identifierPattern": "^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])_.*|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9]_.*)|(GAG_.*)|(MULT_.*)|(PFRAG_.*)|(LIP_.*)|(CAT_.*)$",
     "name": "MatrixDB",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:matrixdb.association",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:matrixdb.association",
     "uriRegexPattern": "http://matrixdb.ibcp.fr/cgi-bin/model/report/default?name=(([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])_.*|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9]_.*)|(GAG_.*)|(MULT_.*)|(PFRAG_.*)|(LIP_.*)|(CAT_.*))&class=Association",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -11641,7 +12132,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11653,7 +12144,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11702,7 +12193,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11760,7 +12251,7 @@
     "_bridgeDbType": "interaction",
     "_isPrimary": true,
     "name": "MetaCyc",
-    "http://vocabularies.bridgedb.org/ops#uri": "Mc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Mc",
     "uriRegexPattern": "http://www.metacyc.org/META/NEW-IMAGE?type=NIL&object=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.metacyc.org/META/NEW-IMAGE?type=NIL&object="
@@ -11799,7 +12290,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11811,7 +12302,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -11860,7 +12351,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -11920,7 +12411,7 @@
     "_isPrimary": true,
     "identifierPattern": "^MGI:\\d+$",
     "name": "Mouse Genome Database",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:mgd",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:mgd",
     "uriRegexPattern": "http://www.informatics.jax.org/marker/(MGI:\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.informatics.jax.org/marker/",
@@ -11963,7 +12454,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -11975,7 +12466,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12024,7 +12515,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12083,7 +12574,7 @@
     "_isPrimary": true,
     "identifierPattern": "^MINT\\-\\d{1,5}$",
     "name": "MINT",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:mint",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:mint",
     "uriRegexPattern": "http://mint.bio.uniroma2.it/mint/search/inFrameInteraction.do?interactionAc=(MINT\\-\\d{1,5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://mint.bio.uniroma2.it/mint/search/inFrameInteraction.do?interactionAc=",
@@ -12125,7 +12616,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12137,7 +12628,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12186,7 +12677,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12245,7 +12736,7 @@
     "_isPrimary": true,
     "identifierPattern": "MIMAT\\d{7}",
     "name": "miRBase mature sequence",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:mirbase.mature",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:mirbase.mature",
     "uriRegexPattern": "http://www.mirbase.org/cgi-bin/mature.pl?mature_acc=(MIMAT\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.mirbase.org/cgi-bin/mature.pl?mature_acc=",
@@ -12288,7 +12779,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12300,7 +12791,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12349,7 +12840,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12408,7 +12899,7 @@
     "_isPrimary": true,
     "identifierPattern": "MI\\d{7}",
     "name": "miRBase Sequence",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:mirbase",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:mirbase",
     "uriRegexPattern": "http://microrna.sanger.ac.uk/cgi-bin/sequences/mirna_entry.pl?acc=(MI\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://microrna.sanger.ac.uk/cgi-bin/sequences/mirna_entry.pl?acc=",
@@ -12451,7 +12942,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12463,7 +12954,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12512,7 +13003,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12571,7 +13062,7 @@
     "_isPrimary": true,
     "identifierPattern": "AT[\\dCM]G\\d{5}\\-TAIR\\-G",
     "name": "NASC Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "N",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "N",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -12607,7 +13098,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12619,7 +13110,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12668,7 +13159,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12727,7 +13218,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+\\d+(\\.\\d+)?$",
     "name": "NCBI Protein",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ncbiprotein",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ncbiprotein",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/protein/(\\w+\\d+(\\.\\d+)?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/protein/",
@@ -12770,7 +13261,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12782,7 +13273,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12831,7 +13322,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -12890,7 +13381,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+$",
     "name": "NCI Pathway Interaction Database",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pid.pathway",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pid.pathway",
     "uriRegexPattern": "http://pid.nci.nih.gov/search/pathway_landing.shtml?what=graphic&jpg=on&pathway_id=(\\w+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://pid.nci.nih.gov/search/pathway_landing.shtml?what=graphic&jpg=on&pathway_id=",
@@ -12933,7 +13424,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -12945,7 +13436,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -12994,7 +13485,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13052,7 +13543,7 @@
     "_bridgeDbType": "metabolite",
     "_isPrimary": false,
     "name": "NuGO wiki",
-    "http://vocabularies.bridgedb.org/ops#uri": "Nw",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Nw",
     "uriRegexPattern": "http://wiki.nugo.org/index.php/(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://wiki.nugo.org/index.php/"
@@ -13092,7 +13583,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13104,7 +13595,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13153,7 +13644,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13212,7 +13703,7 @@
     "_isPrimary": false,
     "identifierPattern": "^[*#+%^]?\\d{6}$",
     "name": "OMIM",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:omim",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:omim",
     "uriRegexPattern": "http://omim.org/entry/([*#+%^]?\\d{6})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://omim.org/entry/",
@@ -13255,7 +13746,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13267,7 +13758,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13316,7 +13807,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13375,7 +13866,7 @@
     "organism": "Oryza sativa",
     "_isPrimary": true,
     "name": "Oryzabase",
-    "http://vocabularies.bridgedb.org/ops#uri": "Ob",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Ob",
     "uriRegexPattern": "http://www.shigen.nig.ac.jp/rice/oryzabase/gateway/gatewayAction.do?target=symbol&id=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.shigen.nig.ac.jp/rice/oryzabase/gateway/gatewayAction.do?target=symbol&id="
@@ -13415,7 +13906,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13427,7 +13918,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13476,7 +13967,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13531,7 +14022,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": true,
     "name": "Other",
-    "http://vocabularies.bridgedb.org/ops#uri": "O",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "O",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -13567,7 +14058,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13579,7 +14070,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13628,7 +14119,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13687,7 +14178,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "Pathway Commons",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pathwaycommons",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pathwaycommons",
     "uriRegexPattern": "http://www.pathwaycommons.org/pc/record2.do?id=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.pathwaycommons.org/pc/record2.do?id=",
@@ -13730,7 +14221,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13742,7 +14233,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13791,7 +14282,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -13850,7 +14341,7 @@
     "_isPrimary": false,
     "identifierPattern": "^[0-9][A-Za-z0-9]{3}$",
     "name": "Protein Data Bank",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pdb",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pdb",
     "uriRegexPattern": "http://www.rcsb.org/pdb/explore/explore.do?structureId=([0-9][A-Za-z0-9]{3})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.rcsb.org/pdb/explore/explore.do?structureId=",
@@ -13893,7 +14384,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -13905,7 +14396,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -13954,7 +14445,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14013,7 +14504,7 @@
     "_isPrimary": true,
     "identifierPattern": "^PF\\d{5}$",
     "name": "Pfam",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pfam",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pfam",
     "uriRegexPattern": "http://pfam.sanger.ac.uk/family/(PF\\d{5})/",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -14055,7 +14546,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14067,7 +14558,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14116,7 +14607,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14175,7 +14666,7 @@
     "_isPrimary": true,
     "identifierPattern": "^PA\\d+$",
     "name": "PharmGKB Drug",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pharmgkb.drug",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pharmgkb.drug",
     "uriRegexPattern": "http://www.pharmgkb.org/drug/(PA\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.pharmgkb.org/drug/",
@@ -14218,7 +14709,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14230,7 +14721,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14279,7 +14770,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14338,7 +14829,7 @@
     "_isPrimary": true,
     "identifierPattern": "^PA\\w+$",
     "name": "PharmGKB Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pharmgkb.gene",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pharmgkb.gene",
     "uriRegexPattern": "http://www.pharmgkb.org/gene/(PA\\w+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.pharmgkb.org/gene/",
@@ -14381,7 +14872,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14393,7 +14884,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14442,7 +14933,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14501,7 +14992,7 @@
     "_isPrimary": true,
     "identifierPattern": "^PA\\d+$",
     "name": "PharmGKB Pathways",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pharmgkb.pathways",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pharmgkb.pathways",
     "uriRegexPattern": "http://www.pharmgkb.org/pathway/(PA\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.pharmgkb.org/pathway/",
@@ -14544,7 +15035,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14556,7 +15047,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14605,7 +15096,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14664,7 +15155,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d{5}$",
     "name": "PhosphoSite Protein",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:phosphosite.protein",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:phosphosite.protein",
     "uriRegexPattern": "http://www.phosphosite.org/proteinAction.do?id=(\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.phosphosite.org/proteinAction.do?id=",
@@ -14707,7 +15198,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14719,7 +15210,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14768,7 +15259,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14827,7 +15318,7 @@
     "_isPrimary": true,
     "identifierPattern": "^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])$",
     "name": "PINA",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pina",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pina",
     "uriRegexPattern": "http://cbg.garvan.unsw.edu.au/pina/interactome.oneP.do?ac=(([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9]))&showExtend=null",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -14868,7 +15359,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -14880,7 +15371,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -14929,7 +15420,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -14987,7 +15478,7 @@
     "_isPrimary": true,
     "identifierPattern": "PUT-[\\w\\d-]+",
     "name": "PlantGDB",
-    "http://vocabularies.bridgedb.org/ops#uri": "Pl",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Pl",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -15023,7 +15514,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15035,7 +15526,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15084,7 +15575,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15140,10 +15631,10 @@
     "_iriPattern": "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=$id",
     "exampleIdentifier": "1018",
     "_bridgeDbType": "metabolite",
-    "_isPrimary": true,
+    "_isPrimary": false,
     "identifierPattern": "^\\d+$",
     "name": "PubChem-bioassay",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pubchem.bioassay",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pubchem.bioassay",
     "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=",
@@ -15186,7 +15677,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15198,7 +15689,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15247,7 +15738,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15306,7 +15797,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "PubChem-compound",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pubchem.compound",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pubchem.compound",
     "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=",
@@ -15349,7 +15840,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15361,7 +15852,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15410,7 +15901,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15469,7 +15960,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d+$",
     "name": "PubChem-substance",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pubchem.substance",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pubchem.substance",
     "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?sid=(\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?sid=",
@@ -15512,7 +16003,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15524,7 +16015,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15573,7 +16064,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15632,7 +16123,7 @@
     "_isPrimary": true,
     "identifierPattern": "^REACT_\\d+(\\.\\d+)?$",
     "name": "Reactome",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:reactome",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:reactome",
     "uriRegexPattern": "http://www.reactome.org/cgi-bin/eventbrowser_st_id?FROM_REACTOME=1&ST_ID=(REACT_\\d+(\\.\\d+)?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.reactome.org/cgi-bin/eventbrowser_st_id?FROM_REACTOME=1&ST_ID=",
@@ -15675,7 +16166,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15687,7 +16178,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15736,7 +16227,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15795,7 +16286,7 @@
     "_isPrimary": true,
     "identifierPattern": "^(NC|AC|NG|NT|NW|NZ|NM|NR|XM|XR|NP|AP|XP|ZP)_\\d+$",
     "name": "RefSeq",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:refseq",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:refseq",
     "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?val=((NC|AC|NG|NT|NW|NZ|NM|NR|XM|XR|NP|AP|XP|ZP)_\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?val=",
@@ -15838,7 +16329,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -15850,7 +16341,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -15899,7 +16390,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -15958,7 +16449,7 @@
     "_isPrimary": true,
     "identifierPattern": "^AA\\d{4}$",
     "name": "RESID",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:resid",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:resid",
     "uriRegexPattern": "http://srs.ebi.ac.uk/srsbin/cgi-bin/wgetz?-id+6JSUg1NA6u4+-e+[RESID:'(AA\\d{4})']",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -16000,7 +16491,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16012,7 +16503,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16061,7 +16552,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16119,7 +16610,7 @@
     "_isPrimary": true,
     "identifierPattern": "RF\\d+",
     "name": "RFAM",
-    "http://vocabularies.bridgedb.org/ops#uri": "Rf",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Rf",
     "uriRegexPattern": "http://www.sanger.ac.uk/cgi-bin/Rfam/getacc?(RF\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.sanger.ac.uk/cgi-bin/Rfam/getacc?"
@@ -16159,7 +16650,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16171,7 +16662,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16220,7 +16711,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16280,7 +16771,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d{4,7}$",
     "name": "Rat Genome Database",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:rgd",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:rgd",
     "uriRegexPattern": "http://rgd.mcw.edu/tools/genes/genes_view.cgi?id=(\\d{4,7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://rgd.mcw.edu/tools/genes/genes_view.cgi?id=",
@@ -16323,7 +16814,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16335,7 +16826,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16384,7 +16875,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16443,7 +16934,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\d{5}$",
     "name": "Rhea",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:rhea",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:rhea",
     "uriRegexPattern": "http://www.ebi.ac.uk/rhea/reaction.xhtml?id=(\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/rhea/reaction.xhtml?id=",
@@ -16485,7 +16976,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16497,7 +16988,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16546,7 +17037,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16605,7 +17096,7 @@
     "organism": "Oryza sativa",
     "_isPrimary": true,
     "name": "Rice Ensembl Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "Os",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Os",
     "uriRegexPattern": "http://www.gramene.org/Oryza_sativa/geneview?gene=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.gramene.org/Oryza_sativa/geneview?gene="
@@ -16645,7 +17136,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16657,7 +17148,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16706,7 +17197,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16766,7 +17257,7 @@
     "_isPrimary": true,
     "identifierPattern": "^S\\d+$",
     "name": "SGD",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:sgd",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:sgd",
     "uriRegexPattern": "http://www.yeastgenome.org/cgi-bin/locus.fpl?dbid=(S\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.yeastgenome.org/cgi-bin/locus.fpl?dbid=",
@@ -16809,7 +17300,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16821,7 +17312,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -16870,7 +17361,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -16929,7 +17420,7 @@
     "_isPrimary": true,
     "identifierPattern": "^SMP\\d{5}$",
     "name": "Small Molecule Pathway Database",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:smpdb",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:smpdb",
     "uriRegexPattern": "http://pathman.smpdb.ca/pathways/(SMP\\d{5})/pathway",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -16971,7 +17462,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -16983,7 +17474,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17032,7 +17523,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17091,7 +17582,7 @@
     "_isPrimary": true,
     "identifierPattern": "^SM\\d{5}$",
     "name": "SMART",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:smart",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:smart",
     "uriRegexPattern": "http://smart.embl-heidelberg.de/smart/do_annotation.pl?DOMAIN=(SM\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://smart.embl-heidelberg.de/smart/do_annotation.pl?DOMAIN=",
@@ -17134,7 +17625,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17146,7 +17637,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17195,7 +17686,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17254,7 +17745,7 @@
     "_isPrimary": true,
     "identifierPattern": "^spike\\d{5}$",
     "name": "SPIKE Map",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:spike.map",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:spike.map",
     "uriRegexPattern": "http://www.cs.tau.ac.il/~spike/maps/(spike\\d{5}).html",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -17295,7 +17786,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17307,7 +17798,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17356,7 +17847,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17415,7 +17906,7 @@
     "_isPrimary": true,
     "identifierPattern": "^PR\\d{5}$",
     "name": "SPRINT",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:sprint",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:sprint",
     "uriRegexPattern": "http://www.bioinf.manchester.ac.uk/cgi-bin/dbbrowser/sprint/searchprintss.cgi?prints_accn=(PR\\d{5})&display_opts=Prints&category=None&queryform=false&regexpr=off",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -17457,7 +17948,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17469,7 +17960,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17518,7 +18009,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17577,7 +18068,7 @@
     "_isPrimary": true,
     "identifierPattern": "^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3})$",
     "name": "STRING",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:string",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:string",
     "uriRegexPattern": "http://string.embl.de/interactions/(([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3}))",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://string.embl.de/interactions/",
@@ -17620,7 +18111,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17632,7 +18123,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17681,7 +18172,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17740,7 +18231,7 @@
     "_isPrimary": false,
     "identifierPattern": "^\\d+$",
     "name": "SubstrateDB",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:pmap.substratedb",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:pmap.substratedb",
     "uriRegexPattern": "http://substrate.burnham.org/protein/annotation/(\\d+)/html",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -17782,7 +18273,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17794,7 +18285,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -17843,7 +18334,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -17903,7 +18394,7 @@
     "_isPrimary": true,
     "identifierPattern": "^BSU\\d{5}$",
     "name": "SubtiWiki",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:subtiwiki",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:subtiwiki",
     "uriRegexPattern": "http://www.subtiwiki.uni-goettingen.de/wiki/index.php/(BSU\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.subtiwiki.uni-goettingen.de/wiki/index.php/",
@@ -17946,7 +18437,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -17958,7 +18449,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18007,7 +18498,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18066,7 +18557,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+$",
     "name": "SUPFAM",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:supfam",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:supfam",
     "uriRegexPattern": "http://supfam.org/SUPERFAMILY/cgi-bin/scop.cgi?ipid=(\\w+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://supfam.org/SUPERFAMILY/cgi-bin/scop.cgi?ipid=",
@@ -18109,7 +18600,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18121,7 +18612,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18170,7 +18661,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18229,7 +18720,7 @@
     "_isPrimary": true,
     "identifierPattern": "^\\w+$",
     "name": "SWISS-MODEL",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:swiss-model",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:swiss-model",
     "uriRegexPattern": "http://swissmodel.expasy.org/repository/smr.php?sptr_ac=(\\w+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://swissmodel.expasy.org/repository/smr.php?sptr_ac=",
@@ -18272,7 +18763,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18284,7 +18775,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18333,7 +18824,163 @@
       },
       "name": {
         "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "organism": {
+        "@id": "biopax:organism",
         "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@id"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@vocab"
+      },
+      "type": "@type",
+      "uri": {
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@id"
+      },
+      "website_url": {
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "bridgeDbDataSourceName": "SwissLipids",
+    "bridgeDbSystemCode": "Sl",
+    "webPage": "http://www.swisslipids.org/",
+    "_iriPattern": "http://www.swisslipids.org/#/entity/$id/",
+    "exampleIdentifier": "SLM:000048885",
+    "_bridgeDbType": "metabolite",
+    "_isPrimary": true,
+    "identifierPattern": "^SML:\\d+$",
+    "name": "SwissLipids",
+    "uriRegexPattern": "http://www.swisslipids.org/#/entity/(SML:\\d+)/",
+    "type": "Dataset",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "alternatePrefix": [
+      "Sl"
+    ]
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@id"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourceName": {
+        "@id": "bridgeDbDataSourcesHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "bridgeDbDataSources": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourcesHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbSystemCode": {
+        "@id": "bridgeDbDataSourcesHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@id"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@id"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@id"
+      },
+      "id": "@id",
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@id"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18392,7 +19039,7 @@
     "_isPrimary": true,
     "identifierPattern": "^SBO:\\d{7}$",
     "name": "Systems Biology Ontology",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:biomodels.sbo",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:biomodels.sbo",
     "uriRegexPattern": "http://www.ebi.ac.uk/sbo/main/(SBO:\\d{7})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.ebi.ac.uk/sbo/main/",
@@ -18434,7 +19081,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18446,7 +19093,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18495,7 +19142,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18554,7 +19201,7 @@
     "_isPrimary": true,
     "identifierPattern": "^AT[1-5]G\\d{5}$",
     "name": "TAIR Locus",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:tair.locus",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:tair.locus",
     "uriRegexPattern": "http://arabidopsis.org/servlets/TairObject?type=locus&name=(AT[1-5]G\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://arabidopsis.org/servlets/TairObject?type=locus&name=",
@@ -18597,7 +19244,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18609,7 +19256,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18658,7 +19305,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18715,7 +19362,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": true,
     "name": "TIGR",
-    "http://vocabularies.bridgedb.org/ops#uri": "Ti",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Ti",
     "type": "Dataset",
     "subject": [
       "gpml:GeneProduct",
@@ -18751,7 +19398,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18763,7 +19410,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18812,7 +19459,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -18871,7 +19518,7 @@
     "_isPrimary": true,
     "identifierPattern": "^DAP\\d+$",
     "name": "TTD Drug",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ttd.drug",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ttd.drug",
     "uriRegexPattern": "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDRUG.asp?ID=(DAP\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDRUG.asp?ID=",
@@ -18914,7 +19561,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -18926,7 +19573,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -18975,7 +19622,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19034,7 +19681,7 @@
     "_isPrimary": true,
     "identifierPattern": "^TTDS\\d+$",
     "name": "TTD Target",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:ttd.target",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:ttd.target",
     "uriRegexPattern": "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDetail.asp?ID=(TTDS\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDetail.asp?ID=",
@@ -19077,7 +19724,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19089,7 +19736,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19138,7 +19785,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19198,7 +19845,7 @@
     "_isPrimary": true,
     "identifierPattern": "Rv\\d{4}(A|B|c|\\.\\d)?",
     "name": "TubercuList",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:myco.tuber",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:myco.tuber",
     "uriRegexPattern": "http://tuberculist.epfl.ch/quicksearch.php?gene+name=(Rv\\d{4}(A|B|c|\\.\\d)?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://tuberculist.epfl.ch/quicksearch.php?gene+name=",
@@ -19241,7 +19888,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19253,7 +19900,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19302,7 +19949,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19361,7 +20008,7 @@
     "_isPrimary": true,
     "identifierPattern": "uc\\d{3}[a-z]{3}\\.\\d",
     "name": "UCSC Genome Browser",
-    "http://vocabularies.bridgedb.org/ops#uri": "Uc",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Uc",
     "uriRegexPattern": "http://genome.ucsc.edu/cgi-bin/hgTracks?position=(uc\\d{3}[a-z]{3}\\.\\d)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://genome.ucsc.edu/cgi-bin/hgTracks?position="
@@ -19401,7 +20048,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19413,7 +20060,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19462,7 +20109,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19515,16 +20162,16 @@
     "bridgeDbDataSourceName": "UniGene",
     "bridgeDbSystemCode": "U",
     "webPage": "http://www.ncbi.nlm.nih.gov/unigene",
-    "_iriPattern": "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH=$id",
+    "_iriPattern": "http://www.ncbi.nlm.nih.gov/unigene?term=$id",
     "exampleIdentifier": "Hs.553708",
     "_bridgeDbType": "gene",
     "_isPrimary": true,
     "identifierPattern": "[A-Z][a-z][a-z]?\\.\\d+",
     "name": "UniGene",
-    "http://vocabularies.bridgedb.org/ops#uri": "U",
-    "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH=([A-Z][a-z][a-z]?\\.\\d+)",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "U",
+    "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/unigene?term=([A-Z][a-z][a-z]?\\.\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
-      "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?UGID=1548618&SEARCH="
+      "http://www.ncbi.nlm.nih.gov/unigene?term="
     ],
     "type": "Dataset",
     "subject": [
@@ -19561,7 +20208,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19573,7 +20220,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19622,7 +20269,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19681,7 +20328,7 @@
     "_isPrimary": true,
     "identifierPattern": "^UPA\\d{5}$",
     "name": "Unipathway",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:unipathway",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:unipathway",
     "uriRegexPattern": "http://www.grenoble.prabi.fr/obiwarehouse/unipathway/upa?upid=(UPA\\d{5})",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.grenoble.prabi.fr/obiwarehouse/unipathway/upa?upid=",
@@ -19724,7 +20371,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19736,7 +20383,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19785,7 +20432,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -19844,7 +20491,7 @@
     "_isPrimary": true,
     "identifierPattern": "^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?|([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])$",
     "name": "UniProtKB/TrEMBL",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:uniprot",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:uniprot",
     "uriRegexPattern": "http://www.uniprot.org/uniprot/(([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?|([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9]))",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.uniprot.org/uniprot/",
@@ -19887,7 +20534,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -19899,7 +20546,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -19948,7 +20595,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20007,7 +20654,7 @@
     "_isPrimary": true,
     "identifierPattern": "^[A-Z0-9]+_[A-Z]+$",
     "name": "UniProtKB/Swiss-Prot",
-    "http://vocabularies.bridgedb.org/ops#uri": "Sp",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Sp",
     "uriRegexPattern": "http://www.uniprot.org/uniprot/([A-Z0-9]+_[A-Z]+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.uniprot.org/uniprot/"
@@ -20047,7 +20694,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20059,7 +20706,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20108,7 +20755,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20167,7 +20814,7 @@
     "organism": "Triticum aestivum",
     "_isPrimary": true,
     "name": "Wheat gene names",
-    "http://vocabularies.bridgedb.org/ops#uri": "Wn",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Wn",
     "uriRegexPattern": "http://wheat.pw.usda.gov/report?class=gene;name=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://wheat.pw.usda.gov/report?class=gene;name="
@@ -20207,7 +20854,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20219,7 +20866,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20268,7 +20915,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20327,7 +20974,7 @@
     "organism": "Triticum aestivum",
     "_isPrimary": false,
     "name": "Wheat gene refs",
-    "http://vocabularies.bridgedb.org/ops#uri": "Wr",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "Wr",
     "uriRegexPattern": "http://wheat.pw.usda.gov/cgi-bin/graingenes/report.cgi?class=reference&name=(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://wheat.pw.usda.gov/cgi-bin/graingenes/report.cgi?class=reference&name="
@@ -20367,7 +21014,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20379,7 +21026,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20428,7 +21075,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20486,7 +21133,7 @@
     "_bridgeDbType": "gene",
     "_isPrimary": false,
     "name": "WikiGenes",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:wikigenes",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:wikigenes",
     "uriRegexPattern": "http://www.wikigenes.org/e/gene/e/(.*).html",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -20528,7 +21175,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20540,7 +21187,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20589,7 +21236,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20648,7 +21295,7 @@
     "_isPrimary": true,
     "identifierPattern": "WP\\d{1,5}(_r\\d+)?",
     "name": "WikiPathways",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:wikipathways",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:wikipathways",
     "uriRegexPattern": "http://www.wikipathways.org/index.php/Pathway:(WP\\d{1,5}(_r\\d+)?)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://www.wikipathways.org/index.php/Pathway:",
@@ -20691,7 +21338,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20703,7 +21350,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20752,7 +21399,170 @@
       },
       "name": {
         "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "organism": {
+        "@id": "biopax:organism",
         "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@id"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@vocab"
+      },
+      "type": "@type",
+      "uri": {
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@id"
+      },
+      "website_url": {
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "bridgeDbDataSourceName": "Wikidata",
+    "bridgeDbSystemCode": "Wd",
+    "webPage": "http://www.wikidata.org",
+    "_iriPattern": "http://www.wikidata.org/wiki/$id",
+    "exampleIdentifier": "Q407962",
+    "_bridgeDbType": "metabolite",
+    "_isPrimary": false,
+    "identifierPattern": "^Q\\d+$",
+    "name": "Wikidata",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:wikidata",
+    "uriRegexPattern": "http://www.wikidata.org/wiki/(Q\\d+)",
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      "http://www.wikidata.org/wiki/",
+      "urn:miriam:wikidata"
+    ],
+    "type": "Dataset",
+    "preferredPrefix": "wikidata",
+    "id": "http://identifiers.org/wikidata/",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "alternatePrefix": [
+      "Wd"
+    ]
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@id"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourceName": {
+        "@id": "bridgeDbDataSourcesHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "bridgeDbDataSources": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbDataSourcesHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@id"
+      },
+      "bridgeDbSystemCode": {
+        "@id": "bridgeDbDataSourcesHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@id"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@id"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@id"
+      },
+      "id": "@id",
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@id"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20810,7 +21620,7 @@
     "_bridgeDbType": "metabolite",
     "_isPrimary": false,
     "name": "Wikipedia",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:wikipedia.en",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:wikipedia.en",
     "uriRegexPattern": "http://en.wikipedia.org/wiki/(.*)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://en.wikipedia.org/wiki/",
@@ -20853,7 +21663,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -20865,7 +21675,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -20914,7 +21724,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -20974,7 +21784,7 @@
     "_isPrimary": true,
     "identifierPattern": "^WBGene\\d{8}$",
     "name": "WormBase",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:wormbase",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:wormbase",
     "uriRegexPattern": "http://www.wormbase.org/db/gene/gene?name=(WBGene\\d{8});class=Gene",
     "type": "Dataset",
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -21016,7 +21826,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -21028,7 +21838,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -21077,7 +21887,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -21174,7 +21984,7 @@
       },
       "bridgeDbDataSourceName": {
         "@id": "bridgeDbDataSourcesHeaders:datasource_name",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "bridgeDbDataSources": {
         "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt#",
@@ -21186,7 +21996,7 @@
       },
       "bridgeDbSystemCode": {
         "@id": "bridgeDbDataSourcesHeaders:system_code",
-        "@type": "@vocab"
+        "@type": "xsd:string"
       },
       "db": {
         "@id": "biopax:db",
@@ -21235,7 +22045,7 @@
       },
       "name": {
         "@id": "schema:name",
-        "@type": "@id"
+        "@type": "xsd:string"
       },
       "nameLanguageMap": {
         "@container": "@language",
@@ -21295,7 +22105,7 @@
     "_isPrimary": true,
     "identifierPattern": "ZDB\\-GENE\\-\\d+\\-\\d+",
     "name": "ZFIN Gene",
-    "http://vocabularies.bridgedb.org/ops#uri": "urn:miriam:zfin",
+    "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": "urn:miriam:zfin",
     "uriRegexPattern": "http://zfin.org/action/marker/view/(ZDB\\-GENE\\-\\d+\\-\\d+)",
     "http://www.w3.org/2002/07/owl#sameAs": [
       "http://zfin.org/action/marker/view/",
