@@ -20,7 +20,7 @@ chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('BridgeDb.Organism.get', function() {
+describe('BridgeDb.Dataset.query', function() {
   var allPassed = true;
   var that = this;
   var update;
@@ -46,15 +46,12 @@ describe('BridgeDb.Organism.get', function() {
     done();
   });
 
-  /* TODO Doesn't work yet
-  it('should get organism by @id',
-      function(done) {
-
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
+  it('should fetch metadata for all datasets at BridgeDb', function(done) {
+    lkgDataPath = __dirname +
+          '/datasets.jsonld';
     lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
-    var bridgeDbInstance = new BridgeDb({
+    var bridgeDbInstance = BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -62,11 +59,100 @@ describe('BridgeDb.Organism.get', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.get({
-      '@id': 'http://identifiers.org/taxonomy/9606',
-      '@type': 'Organism'
+    bridgeDbInstance.dataset.query()
+    .collect()
+    .map(function(currentDatasets) {
+      return JSON.stringify(currentDatasets);
     })
-    .map(JSON.stringify)
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
+
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+
+  it('should fetch metadata for datasets by name (one hit)', function(done) {
+    lkgDataPath = __dirname +
+          '/query-name-entrez-gene.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+
+    var bridgeDbInstance = BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.dataset.query({
+      name: 'Entrez Gene'
+    })
+    .collect()
+    .map(function(currentDatasets) {
+      return JSON.stringify(currentDatasets);
+    })
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
+
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+
+  /* I don't whether datasources.txt is correct for this one. -AR
+  it('should fetch metadata for datasets by name (multiple hits)', function(done) {
+    lkgDataPath = __dirname +
+          '/query-name-ensembl.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+
+    var bridgeDbInstance = BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.dataset.query({
+      name: 'Ensembl'
+    })
+    .collect()
+    .map(function(currentDatasets) {
+      return JSON.stringify(currentDatasets);
+    })
     .pipe(highland.pipeline(function(s) {
       if (update) {
         s.fork()
@@ -91,186 +177,4 @@ describe('BridgeDb.Organism.get', function() {
     });
   });
   //*/
-
-  //*
-  it('should get organism by name (Latin/string)',
-      function(done) {
-
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.get('Homo sapiens')
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
-  //*
-  it('should get organism by name (Latin/object)',
-      function(done) {
-
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.get({
-      'name': 'Homo sapiens',
-      '@type': 'Organism'
-    })
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
-  //*
-  it('should get organism by name (English)',
-      function(done) {
-
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.get({
-      'name': 'Human',
-      '@type': 'Organism'
-    })
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
-  //*
-  it('should get organism by entity reference identifiers IRI',
-      function(done) {
-
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.get({
-      '@id': 'http://identifiers.org/ncbigene/4292',
-      '@type': 'EntityReference'
-    })
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
-  //*/
-
 });

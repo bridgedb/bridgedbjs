@@ -23,7 +23,7 @@ chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('BridgeDb.Organism.query', function() {
+describe('BridgeDb.Organism.get', function() {
   var allPassed = true;
   var that = this;
 
@@ -33,14 +33,14 @@ describe('BridgeDb.Organism.query', function() {
     if (update) {
       return source
       .map(function(currentDatasets) {
-        return JSON.stringify(currentDatasets, null, '  ');
+        return JSON.stringify(currentDatasets[0], null, '  ');
       })
       .let(RxFs.createWriteObservable(lkgDataPath));
     }
 
     return source
     .map(function(actual) {
-      return testUtils.compareJson(lkgData, actual);
+      return testUtils.compareJson(lkgData, actual[0]);
     })
     .map(function(passed) {
       return expect(passed).to.be.true;
@@ -49,7 +49,7 @@ describe('BridgeDb.Organism.query', function() {
 
   before(function(done) {
     // Find whether user requested to update the expected JSON result
-    update = testUtils.getUpdateState(that.title);
+    var update = testUtils.getUpdateState(that.title);
     handleResultWithUpdateSpecified = handleResult.bind(null, update);
     done();
   });
@@ -67,10 +67,13 @@ describe('BridgeDb.Organism.query', function() {
     done();
   });
 
-  it('should fetch all organisms', function(done) {
-    var lkgDataPath = __dirname + '/all-organism.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+  /* TODO Doesn't work yet
+  it('should get organism by @id',
+      function(done) {
+
+    var lkgDataPath = __dirname +
+          '/ncbigene-4292-organism.jsonld';
+    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -80,14 +83,37 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query()
-    .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
-  });
+    bridgeDbInstance.organism.get({
+      '@id': 'http://identifiers.org/taxonomy/9606',
+      '@type': 'Organism'
+    })
+    .map(JSON.stringify)
+    .pipe(highland.pipeline(function(s) {
+      if (update) {
+        s.fork()
+        .map(function(dataString) {
+          lkgDataString = dataString;
+          return dataString;
+        })
+        .pipe(fs.createWriteStream(lkgDataPath));
+      }
 
-  it('should query organisms by name (Latin/string)', function(done) {
+      return s.fork();
+    }))
+    .map(function(dataString) {
+      return testUtils.compareJson(dataString, lkgDataString);
+    })
+    .map(function(passed) {
+      return expect(passed).to.be.true;
+    })
+    .last()
+    .each(function() {
+      return done();
+    });
+  });
+  //*/
+
+  it('should get organism by name (Latin/string)', function(done) {
     var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
     var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
         null, lkgDataPath);
@@ -100,16 +126,15 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query('Homo sapiens')
+    bridgeDbInstance.organism.get('Homo sapiens')
     .toArray()
     .let(handleResultWithUpdateAndLkgDataPathSpecified)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
-  it('should query organisms by name (Latin/object)', function(done) {
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
+  it('should get organism by name (Latin/object)',  function(done) {
+    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
     var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
         null, lkgDataPath);
 
@@ -121,7 +146,7 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query({
+    bridgeDbInstance.organism.get({
       'name': 'Homo sapiens',
       '@type': 'Organism'
     })
@@ -131,9 +156,9 @@ describe('BridgeDb.Organism.query', function() {
     .subscribeOnCompleted(done);
   });
 
-  it('should query organisms by name (English)', function(done) {
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-organism.jsonld';
+  it('should get organism by name (English)', function(done) {
+
+    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
     var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
         null, lkgDataPath);
 
@@ -145,7 +170,7 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query({
+    bridgeDbInstance.organism.get({
       'name': 'Human',
       '@type': 'Organism'
     })
@@ -155,8 +180,8 @@ describe('BridgeDb.Organism.query', function() {
     .subscribeOnCompleted(done);
   });
 
-// TODO waiting to finish Rxifying EntityReference.js before getting this
-//  it('should query organisms by entity reference identifiers IRI', function(done) {
+//  TODO this is waiting for entity reference to be Rx-ified.
+//  it('should get organism by entity reference identifiers IRI', function(done) {
 //    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
 //    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
 //        null, lkgDataPath);
@@ -169,7 +194,7 @@ describe('BridgeDb.Organism.query', function() {
 //        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
 //    });
 //
-//    bridgeDbInstance.organism.query({
+//    bridgeDbInstance.organism.get({
 //      '@id': 'http://identifiers.org/ncbigene/4292',
 //      '@type': 'EntityReference'
 //    })
@@ -178,6 +203,5 @@ describe('BridgeDb.Organism.query', function() {
 //    .doOnError(done)
 //    .subscribeOnCompleted(done);
 //  });
-//  //*/
 
 });
