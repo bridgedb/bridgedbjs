@@ -115,7 +115,7 @@ describe('BridgeDb.Dataset.get', function() {
     .subscribeOnCompleted(done);
   });
 
-  describe('Get BridgeDb system code by BridgeDb conventional name (GPML Database)', function() {
+  describe('Get BridgeDb system code by BridgeDb conventional name (GPML Datasource)', function() {
 
     it('should get for "Entrez Gene" by bridgeDbDataSourceName', function(done) {
       var bridgeDbInstance = new BridgeDb({

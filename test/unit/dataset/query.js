@@ -7,6 +7,7 @@ var fs = require('fs');
 var http    =  require('http');
 var mockserver  =  require('mockserver');
 var run = require('gulp-run');
+var Rx = require('rx');
 var RxFs = require('rx-fs');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
@@ -27,6 +28,7 @@ describe('BridgeDb.Dataset.query', function() {
   var allPassed = true;
   var that = this;
   var handleResultWithUpdateSpecified;
+  var handler;
 
   function handleResult(update, lkgDataPath, source) {
     var lkgDataString = testUtils.getLkgDataString(lkgDataPath);
@@ -43,8 +45,19 @@ describe('BridgeDb.Dataset.query', function() {
     .map(function(actual) {
       return testUtils.compareJson(lkgData, actual);
     })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
+    .doOnNext(function(testResult) {
+      var passed = (testResult === true);
+      if (passed) {
+        handler = Rx.Observable.empty;
+      } else {
+        handler = testResult;
+      }
+    })
+    .map(function(testResult) {
+      return function() {
+        var passed = (testResult === true);
+        return expect(passed).to.equal(true);
+      };
     });
   }
 
@@ -60,8 +73,15 @@ describe('BridgeDb.Dataset.query', function() {
   });
 
   afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
-    done();
+    var innerThat = this;
+    allPassed = allPassed && (innerThat.currentTest.state === 'passed');
+    console.log('handler');
+    console.log(handler);
+    handler('Failed Test: ' + innerThat.currentTest.title)
+    .subscribe(function(result) {
+      console.log('result82');
+      console.log(result);
+    }, done, done);
   });
 
   after(function(done) {
@@ -85,6 +105,10 @@ describe('BridgeDb.Dataset.query', function() {
     bridgeDbInstance.dataset.query()
     .toArray()
     .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .doOnNext(function(result) {
+      console.log('result107');
+      console.log(result);
+    })
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -108,6 +132,9 @@ describe('BridgeDb.Dataset.query', function() {
     })
     .toArray()
     .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .map(function(expecter) {
+      return expecter();
+    })
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -159,6 +186,36 @@ describe('BridgeDb.Dataset.query', function() {
     .let(handleResultWithUpdateAndLkgDataPathSpecified)
     .doOnError(done)
     .subscribeOnCompleted(done);
+  });
+
+  // TODO AP, you can add use cases for pvjs editor dropdowns here
+  describe('fetch metadata for datasets by type', function() {
+    it('should work for metabolites', function(done) {
+      // TODO
+      var lkgDataPath = __dirname + '/query-example-identifier-1234.jsonld';
+      var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
+          null, lkgDataPath);
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+        context: internalContext['@context']
+      });
+
+      bridgeDbInstance.dataset.query({
+        // TODO
+        '@type': 'http://vocabularies.wikipathways.org/gpml#Metabolite'
+      })
+      .toArray()
+      .let(handleResultWithUpdateAndLkgDataPathSpecified)
+      .doOnError(done)
+      .subscribeOnCompleted(done);
+    });
+
+    // TODO for gene products, etc.
   });
 
   it('should fetch metadata for datasets by exampleIdentifier', function(done) {

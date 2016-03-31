@@ -437,7 +437,7 @@ var testUtils = (function() {
       return accumulator;
     }, {lhs: '', rhs: ''});
 
-    multiplex({
+    return multiplex.bind(null, {
       header: {
         label: 'Diff Results'
       },
@@ -453,7 +453,7 @@ var testUtils = (function() {
       }
     });
 
-    return false;
+    //return false;
   }
 
   /**
