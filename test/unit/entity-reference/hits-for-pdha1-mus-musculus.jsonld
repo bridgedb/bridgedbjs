@@ -1,1 +1,433 @@
-[{"@context":[{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}}],"identifier":"18597","db":"Entrez Gene","displayName":"Pdha1","@type":["EntityReference","gpml:GeneProduct","biopax:DnaReference"],"isDataItemIn":{"@context":{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}},"_displayName":"Entrez Gene","_systemCode":"L","webPage":"http://www.ncbi.nlm.nih.gov/gene","_iriPattern":"http://www.ncbi.nlm.nih.gov/gene/$id","exampleIdentifier":"100010","_bridgeDbType":"gene","_isPrimary":true,"identifierPattern":"^\\d+$","_standardName":"Entrez Gene","name":["Entrez Gene"],"uriRegexPattern":"http://www.ncbi.nlm.nih.gov/gene/(\\d+)","owl:sameAs":["http://www.ncbi.nlm.nih.gov/gene/","urn:miriam:ncbigene"],"@type":"Dataset","preferredPrefix":"ncbigene","@id":"http://identifiers.org/ncbigene","subject":["gpml:GeneProduct","biopax:DnaReference"],"alternatePrefix":["L"],"exampleResource":"http://www.ncbi.nlm.nih.gov/gene/18597"},"@id":"http://identifiers.org/ncbigene/18597","owl:sameAs":["http://www.ncbi.nlm.nih.gov/gene/18597"],"organism":{"@context":[{"name":{"@id":"biopax:name","@container":"@language"},"Organism":"http://identifiers.org/snomedct/410607006"}],"@id":"http://identifiers.org/taxonomy/10090","@type":"Organism","name":{"en":"Mouse","la":"Mus musculus"}},"xref":["http://localhost:58657/Mus%20musculus/xrefs/L/18597"]},{"@context":[{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}}],"identifier":"ENSMUSG00000031299","db":"Ensembl","displayName":"Pdha1","@type":["EntityReference","gpml:GeneProduct","biopax:DnaReference"],"isDataItemIn":{"@context":{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}},"_displayName":"Ensembl","_systemCode":"En","webPage":"http://www.ensembl.org/","_iriPattern":"http://ensemblgenomes.org/id/$id","exampleIdentifier":"ENSG00000139618","_bridgeDbType":"gene","_isPrimary":true,"identifierPattern":"^ENS[A-Z]*[FPTG]\\d{11}$","_standardName":"Ensembl","name":["Ensembl"],"uriRegexPattern":"http://ensemblgenomes.org/id/(ENS[A-Z]*[FPTG]\\d{11})","owl:sameAs":["http://ensemblgenomes.org/id/","urn:miriam:ensembl"],"@type":"Dataset","preferredPrefix":"ensembl","@id":"http://identifiers.org/ensembl","subject":["gpml:GeneProduct","biopax:DnaReference"],"alternatePrefix":["En"],"exampleResource":"http://ensemblgenomes.org/id/ENSMUSG00000031299"},"@id":"http://identifiers.org/ensembl/ENSMUSG00000031299","owl:sameAs":["http://ensemblgenomes.org/id/ENSMUSG00000031299"],"organism":{"@context":[{"name":{"@id":"biopax:name","@container":"@language"},"Organism":"http://identifiers.org/snomedct/410607006"}],"@id":"http://identifiers.org/taxonomy/10090","@type":"Organism","name":{"en":"Mouse","la":"Mus musculus"}},"xref":["http://localhost:58657/Mus%20musculus/xrefs/En/ENSMUSG00000031299"]},{"@context":[{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}}],"identifier":"MGI:97532","db":"MGI","displayName":"Pdha1","@type":["EntityReference","gpml:GeneProduct","biopax:DnaReference"],"isDataItemIn":{"@context":{"@vocab":"http://www.example.org/bridgedb/input-vocab/","alternatePrefix":{"@id":"idot:alternatePrefix","@type":"xsd:string"},"baseIri":"@base","biopax":{"@id":"http://www.biopax.org/release/biopax-level3.owl#","@type":"@id"},"bridgeDbInput":{"@id":"http://www.example.org/bridgedb/input-vocab/","@type":"@id"},"Dataset":{"@id":"void:Dataset","@type":"@id"},"db":{"@id":"biopax:db","@container":"@set","@type":"xsd:string"},"dcterms":{"@id":"http://purl.org/dc/terms/","@type":"@id"},"EntityReference":{"@id":"biopax:EntityReference","@type":"@id"},"exampleIdentifier":{"@id":"idot:exampleIdentifier","@type":"xsd:string"},"exampleResource":{"@id":"void:exampleResource","@type":"@id"},"foaf":{"@id":"http://xmlns.com/foaf/0.1/","@type":"@id"},"gpml":{"@id":"http://vocabularies.wikipathways.org/gpml#","@type":"@id"},"identifier":{"@id":"biopax:id","@type":"xsd:string"},"identifierPattern":{"@id":"idot:identifierPattern","@type":"xsd:string"},"idot":{"@id":"http://identifiers.org/idot/","@type":"@id"},"isDataItemIn":{"@id":"SIO:SIO_001278","@type":"@id"},"probe":{"@id":"http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051","@type":"@id"},"schema":{"@id":"http://schema.org/","@type":"@id"},"name":{"@id":"schema:name","@type":"xsd:string"},"organism":{"@id":"biopax:organism","@type":"@id"},"owl":{"@id":"http://www.w3.org/2002/07/owl#","@type":"@id"},"preferredPrefix":{"@id":"idot:preferredPrefix","@type":"xsd:string"},"SIO":{"@id":"http://semanticscience.org/resource/","@type":"@id"},"subject":{"@id":"dcterms:subject","@type":"@id"},"void":{"@id":"http://rdfs.org/ns/void#","@type":"@id"},"xsd":{"@id":"http://www.w3.org/2001/XMLSchema#","@type":"@id"},"xref":{"@id":"biopax:xref","@type":"@id"},"webPage":{"@id":"foaf:page","@type":"@id"}},"_displayName":"MGI","_systemCode":"M","webPage":"http://www.informatics.jax.org/","_iriPattern":"http://www.informatics.jax.org/marker/$id","exampleIdentifier":"MGI:2442292","_bridgeDbType":"gene","organism":"Mus musculus","_isPrimary":true,"identifierPattern":"^MGI:\\d+$","_standardName":"Mouse Genome Database","name":["MGI","Mouse Genome Database"],"uriRegexPattern":"http://www.informatics.jax.org/marker/(MGI:\\d+)","owl:sameAs":["http://www.informatics.jax.org/marker/","urn:miriam:mgd"],"@type":"Dataset","preferredPrefix":"mgd","@id":"http://identifiers.org/mgd","subject":["gpml:GeneProduct","biopax:DnaReference"],"alternatePrefix":["M"],"exampleResource":"http://www.informatics.jax.org/marker/MGI:97532"},"@id":"http://identifiers.org/mgd/MGI:97532","owl:sameAs":["http://www.informatics.jax.org/marker/MGI:97532"],"organism":{"@context":[{"name":{"@id":"biopax:name","@container":"@language"},"Organism":"http://identifiers.org/snomedct/410607006"}],"@id":"http://identifiers.org/taxonomy/10090","@type":"Organism","name":{"en":"Mouse","la":"Mus musculus"}},"xref":["http://localhost:58657/Mus%20musculus/xrefs/M/MGI%3A97532"]}]
+[
+  {
+    "@context": {
+      "@vocab": "http://bridgedb.org/input-vocab/",
+      "Dataset": {
+        "reverse": false,
+        "@id": "http://rdfs.org/ns/void#Dataset",
+        "@type": "@id"
+      },
+      "void": {
+        "reverse": false,
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#EntityReference",
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#EntityReference",
+        "@type": "@id"
+      },
+      "biopax": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "EntityReference": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#EntityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "reverse": false,
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/alternatePrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "xsd": {
+        "reverse": false,
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      },
+      "idot:alternatePrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/alternatePrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "idot": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "alternatePrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/alternatePrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "baseIri": {
+        "reverse": false,
+        "@id": "@base"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "datasource_name": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "linkout_pattern": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "entityType": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#primary",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "primary": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#primary",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#systemCode",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "systemCode": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#systemCode",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#system_code",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "system_code": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#system_code",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#uriRegexPattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "uriRegexPattern": {
+        "reverse": false,
+        "@id": "http://vocabularies.bridgedb.org/ops#uriRegexPattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#db",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "biopax:db": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#db",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "db": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#db",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "dcterms": {
+        "reverse": false,
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#displayName",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "biopax:displayName": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#displayName",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "displayName": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#displayName",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/exampleIdentifier",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "idot:exampleIdentifier": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/exampleIdentifier",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "exampleIdentifier": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/exampleIdentifier",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "reverse": false,
+        "@id": "http://rdfs.org/ns/void#exampleResource",
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "reverse": false,
+        "@id": "http://rdfs.org/ns/void#exampleResource",
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "reverse": false,
+        "@id": "http://rdfs.org/ns/void#exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "reverse": false,
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "reverse": false,
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "id": {
+        "reverse": false,
+        "@id": "@id"
+      },
+      "identifier": {
+        "reverse": false,
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/identifierPattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "idot:identifierPattern": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/identifierPattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "identifierPattern": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/identifierPattern",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "isDataItemIn": {
+        "reverse": false,
+        "@id": "http://semanticscience.org/resource/SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "reverse": false,
+        "@id": "http://schema/name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "schema:name": {
+        "reverse": false,
+        "@id": "http://schema.org/name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "schema": {
+        "reverse": false,
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "name": {
+        "reverse": false,
+        "@id": "http://schema.org/name",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "nameLanguageMap": {
+        "reverse": false,
+        "@id": "http://schema.org/name",
+        "@container": "@language"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#organism",
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#organism",
+        "@type": "@id"
+      },
+      "organism": {
+        "reverse": false,
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "reverse": false,
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/preferredPrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "idot:preferredPrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/preferredPrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "preferredPrefix": {
+        "reverse": false,
+        "@id": "http://identifiers.org/idot/preferredPrefix",
+        "@type": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "probe": {
+        "reverse": false,
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "reverse": false,
+        "@id": "http://purl.org/dc/terms/subject",
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "reverse": false,
+        "@id": "http://purl.org/dc/terms/subject",
+        "@type": "@id"
+      },
+      "subject": {
+        "reverse": false,
+        "@id": "http://purl.org/dc/terms/subject",
+        "@type": "@id"
+      },
+      "type": {
+        "reverse": false,
+        "@id": "@type"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri",
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri",
+        "@type": "@id"
+      },
+      "uri": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url",
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url",
+        "@type": "@id"
+      },
+      "website_url": {
+        "reverse": false,
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "reverse": false,
+        "@id": "http://xmlns.com/foaf/0.1/page",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/ensembl/ENSMUSG00000031299",
+    "type": [
+      "EntityReference",
+      "gpml:GeneProduct",
+      "biopax:DnaReference"
+    ],
+    "identifier": "ENSMUSG00000031299",
+    "isDataItemIn": {
+      "id": "http://identifiers.org/ensembl/",
+      "type": "Dataset",
+      "alternatePrefix": "En",
+      "exampleIdentifier": "ENSG00000139618",
+      "identifierPattern": "^ENS[A-Z]*[FPTG]\\d{11}$",
+      "preferredPrefix": "ensembl",
+      "subject": [
+        "gpml:GeneProduct",
+        "biopax:DnaReference"
+      ],
+      "exampleResource": "http://ensemblgenomes.org/id/ENSMUSG00000031299",
+      "name": "Ensembl",
+      "primary": true,
+      "systemCode": "En",
+      "entityType": "gene",
+      "uriRegexPattern": "http://ensemblgenomes.org/id/(ENS[A-Z]*[FPTG]\\d{11})",
+      "owl:sameAs": [
+        "http://ensemblgenomes.org/id/",
+        "urn:miriam:ensembl"
+      ],
+      "webPage": "http://www.ensembl.org/",
+      "datasource_name": "Ensembl",
+      "linkout_pattern": "http://ensemblgenomes.org/id/$id",
+      "uri": "urn:miriam:ensembl"
+    },
+    "db": "Ensembl",
+    "displayName": "Pdha1",
+    "organism": {
+      "id": "http://identifiers.org/taxonomy/10090",
+      "type": "http://identifiers.org/snomedct/410607006",
+      "nameLanguageMap": {
+        "en": "Mouse",
+        "la": "Mus musculus"
+      }
+    },
+    "xref": [
+      "http://webservice.bridgedb.org/Mus%20musculus/xrefs/En/ENSMUSG00000031299",
+      "http://mygene.info/v2/gene/ENSMUSG00000031299"
+    ],
+    "owl:sameAs": "http://ensemblgenomes.org/id/ENSMUSG00000031299",
+    "datasource_name": "Ensembl"
+  }
+]

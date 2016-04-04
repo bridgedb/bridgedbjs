@@ -6,11 +6,12 @@ var expect = chai.expect;
 var fs = require('fs');
 var http    =  require('http');
 var mockserver  =  require('mockserver');
-var run = require('gulp-run');
 var RxFs = require('rx-fs');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
+
+var handleResult = testUtils.handleResult;
 
 var internalContext = JSON.parse(fs.readFileSync(
   __dirname + '/../../jsonld-context.jsonld'));
@@ -24,42 +25,30 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.Dataset.get', function() {
-  var allPassed = true;
-  var that = this;
-
-  function handleResult(update, lkgDataPath, source) {
-    var lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-    var lkgData = JSON.parse(lkgDataString);
-    if (update) {
-      return source
-      .map(function(currentDatasets) {
-        return JSON.stringify(currentDatasets[0], null, '  ');
-      })
-      .let(RxFs.createWriteObservable(lkgDataPath));
-    }
-
-    return source
-    .map(function(actual) {
-      return testUtils.compareJson(lkgData, actual[0]);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    });
-  }
+  var suite = this;
+  suite.allPassed = true;
 
   before(function(done) {
-    // Find whether user requested to update the expected JSON result
-    var update = testUtils.getUpdateState(that.title);
-    handleResultWithUpdateSpecified = handleResult.bind(null, update);
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+
+    currentTest.handleResult = handleResult.bind(
+        null, suite, currentTest);
+
     done();
   });
 
   afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
     done();
   });
 
@@ -68,10 +57,9 @@ describe('BridgeDb.Dataset.get', function() {
   });
 
   it('should get metadata by provider @id', function(done) {
-    var lkgDataPath = __dirname +
+    var test = this.test;
+    test.expectedPath = __dirname +
           '/entrez-gene-dataset-metadata.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -85,17 +73,38 @@ describe('BridgeDb.Dataset.get', function() {
     bridgeDbInstance.dataset.get({
       '@id': 'http://www.ncbi.nlm.nih.gov/gene/'
     })
-    .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .last()
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get metadata by identifiers.org @id', function(done) {
-    var lkgDataPath = __dirname +
+    var test = this.test;
+    test.expectedPath = __dirname +
           '/entrez-gene-dataset-metadata.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+
+    var bridgeDbInstance = new BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+      context: internalContext['@context']
+    });
+
+    bridgeDbInstance.dataset.get({
+      '@id': 'http://identifiers.org/ncbigene/'
+    })
+    .last()
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+
+  it('should get metadata by non-normalized identifiers.org @id', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -109,15 +118,38 @@ describe('BridgeDb.Dataset.get', function() {
     bridgeDbInstance.dataset.get({
       '@id': 'http://identifiers.org/ncbigene'
     })
-    .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .last()
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+
+  it('should get metadata by datasource_name and exampleIdentifier', function(done) {
+    var bridgeDbInstance = new BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+      context: internalContext['@context']
+    });
+
+    bridgeDbInstance.dataset.get({
+      //'@context': internalContext['@context'],
+      'datasource_name': 'Entrez Gene',
+      'exampleIdentifier': '18597'
+    })
+    .last()
+    .map(function(actual) {
+      return expect(actual.systemCode).to.equal('L');
+    })
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   describe('Get BridgeDb system code by BridgeDb conventional name (GPML Datasource)', function() {
 
-    it('should get for "Entrez Gene" by bridgeDbDataSourceName', function(done) {
+    it('should get for "Entrez Gene" by datasource_name', function(done) {
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -129,12 +161,11 @@ describe('BridgeDb.Dataset.get', function() {
 
       bridgeDbInstance.dataset.get({
         '@context': internalContext['@context'],
-        'bridgeDbDataSourceName': 'Entrez Gene'
+        'datasource_name': 'Entrez Gene'
       })
-      .toArray()
-      .map(function(actualSet) {
-        var actual = actualSet[0];
-        return expect(actual.bridgeDbSystemCode).to.equal('L');
+      .last()
+      .map(function(actual) {
+        return expect(actual.systemCode).to.equal('L');
       })
       .doOnError(done)
       .subscribeOnCompleted(done);
@@ -158,16 +189,15 @@ describe('BridgeDb.Dataset.get', function() {
       var input = {};
       input[key] = 'Ensembl';
       bridgeDbInstance.dataset.get(input)
-      .toArray()
-      .map(function(actualSet) {
-        var actual = actualSet[0];
-        return expect(actual.bridgeDbSystemCode).to.equal('En');
+      .last()
+      .map(function(actual) {
+        return expect(actual.systemCode).to.equal('En');
       })
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
 
-    it('should get for "KNApSAcK" by bridgeDbDataSourceName', function(done) {
+    it('should get for "KNApSAcK" by datasource_name', function(done) {
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -179,18 +209,17 @@ describe('BridgeDb.Dataset.get', function() {
 
       bridgeDbInstance.dataset.get({
         '@context': internalContext['@context'],
-        'bridgeDbDataSourceName': 'KNApSAcK'
+        'datasource_name': 'KNApSAcK'
       })
-      .toArray()
-      .map(function(actualSet) {
-        var actual = actualSet[0];
-        return expect(actual.bridgeDbSystemCode).to.equal('Cks');
+      .last()
+      .map(function(actual) {
+        return expect(actual.systemCode).to.equal('Cks');
       })
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
 
-    it('should get for "Uniprot-TrEMBL" by bridgeDbDataSourceName', function(done) {
+    it('should get for "Uniprot-TrEMBL" by datasource_name', function(done) {
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -202,12 +231,11 @@ describe('BridgeDb.Dataset.get', function() {
 
       bridgeDbInstance.dataset.get({
         '@context': internalContext['@context'],
-        'bridgeDbDataSourceName': 'Uniprot-TrEMBL'
+        'datasource_name': 'Uniprot-TrEMBL'
       })
-      .toArray()
-      .map(function(actualSet) {
-        var actual = actualSet[0];
-        return expect(actual.bridgeDbSystemCode).to.equal('S');
+      .last()
+      .map(function(actual) {
+        return expect(actual.systemCode).to.equal('S');
       })
       .doOnError(done)
       .subscribeOnCompleted(done);

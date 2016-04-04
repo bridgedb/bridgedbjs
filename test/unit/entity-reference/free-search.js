@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
@@ -12,6 +13,8 @@ var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
 
+var handleResult = testUtils.handleResult;
+
 var internalContext = JSON.parse(fs.readFileSync(
   __dirname + '/../../jsonld-context.jsonld'));
 
@@ -24,42 +27,31 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.EntityReference.freeSearch', function() {
-  var allPassed = true;
-  var that = this;
-
-  function handleResult(update, lkgDataPath, source) {
-    var lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-    var lkgData = JSON.parse(lkgDataString);
-    if (update) {
-      return source
-      .map(function(currentDatasets) {
-        return JSON.stringify(currentDatasets, null, '  ');
-      })
-      .let(RxFs.createWriteObservable(lkgDataPath));
-    }
-
-    return source
-    .map(function(actual) {
-      return testUtils.compareJson(lkgData, actual);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    });
-  }
+  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
+  var suite = this;
+  suite.allPassed = true;
 
   before(function(done) {
-    // Find whether user requested to update the expected JSON result
-    update = testUtils.getUpdateState(that.title);
-    handleResultWithUpdateSpecified = handleResult.bind(null, update);
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+
+    currentTest.handleResult = handleResult.bind(
+        null, suite, currentTest);
+
     done();
   });
 
   afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
     done();
   });
 
@@ -69,17 +61,16 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
 
   //*
   it('should free search for entity references (Latin/single instance)', function(done) {
-    var lkgDataPath = __dirname +
-          '/hits-for-pdha1-mus-musculus.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+    var test = this.test;
+    test.expectedPath = __dirname + '/hits-for-pdha1-mus-musculus.jsonld';
 
     var bridgeDb1 = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+        //'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+        context: internalContext['@context']
     });
 
     bridgeDb1.entityReference.freeSearch({
@@ -87,56 +78,56 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
       organism: 'Mus musculus'
     })
     .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+      .replace(
+        new RegExp(bridgeDb1.config.baseIri, 'g'),
+        standardBridgeDbApiUrlStub
+      ));
+    })
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
 
   });
   //*/
 
-  /*
+  //*
   it('should free search for entity references (English/single instance)',
       function(done) {
+        var test = this.test;
+        test.expectedPath = __dirname + '/hits-for-agt-mouse.jsonld';
+        var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
 
-    lkgDataPath = __dirname +
-          '/hits-for-agt-mouse.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+        var bridgeDb1 = new BridgeDb({
+          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+          datasetsMetadataIri:
+            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        });
 
-    var bridgeDb1 = new BridgeDb({
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDb1.entityReference.freeSearch({
-      attribute: 'Agt',
-      organism: 'Mouse'
-    })
-    .collect()
-    .map(JSON.stringify)
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
+        bridgeDb1.entityReference.freeSearch({
+          attribute: 'Agt',
+          organism: 'Mouse'
         })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
+        .toArray()
+        .map(function(currentXrefs) {
+          return JSON.parse(JSON.stringify(currentXrefs)
+          .replace(
+            new RegExp(bridgeDb1.config.baseIri, 'g'),
+            standardBridgeDbApiUrlStub
+          ));
+        })
+        .map(function(currentXrefs) {
+          var currentStringifiedXrefs = currentXrefs.map(JSON.stringify);
+          var expectedStringifiedXrefs = expected.map(JSON.stringify);
+          var intersection = _.intersection(currentStringifiedXrefs, expectedStringifiedXrefs);
+          return expect(intersection.length).to.equal(currentStringifiedXrefs.length);
+        })
+        //.let(test.handleResult)
+        .doOnError(done)
+        .subscribeOnCompleted(done);
 
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
-  });
+      });
   //*/
 
   /*

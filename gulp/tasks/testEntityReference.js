@@ -21,7 +21,7 @@ gulp.task('testEntityReference', ['launchMockserver'], function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 3000,
+    timeout: 60000,
     // enable colors
     c: true,
     //debug: true

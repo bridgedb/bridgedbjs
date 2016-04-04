@@ -4,9 +4,14 @@
 var _ = require('lodash');
 var argv = require('yargs').argv;
 var colors = require('colors');
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+var expect = chai.expect;
 var fs = require('fs');
 var multiplex = require('./multiplex.js');
 var pd = require('pretty-data').pd;
+var Rx = require('rx');
+var RxFs = require('rx-fs');
 var strcase = require('tower-strcase');
 
 var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
@@ -366,14 +371,15 @@ var testUtils = (function() {
    *
    * @param {string} expectedJsonString
    * @param {string} actualJsonString
-   * @return
+   * @return {function} that creates a multiplex Observable
    */
-  function compareJson(expectedJson, actualJson) {
+  function compareJson(expectedJson, actualJson, messageOnFailure) {
     var expectedJsonString = stringifyJSON(expectedJson);
     var actualJsonString = stringifyJSON(actualJson);
+
     if (actualJsonString === expectedJsonString) {
       // We're good
-      return true;
+      return Rx.Observable.empty();
     }
 
     if (expectedJsonString === '{}') {
@@ -384,7 +390,7 @@ var testUtils = (function() {
       console.log('** gulp testClass --update=BridgeDb.Class.method **');
       console.log('***************************************************');
       displayActualJson(actualJson);
-      return false;
+      return Rx.Observable.throw(new Error('TODO enable user to specify to save.'));
     }
 
     var jsonDiffs = diffDeep(expectedJson, actualJson)
@@ -437,9 +443,9 @@ var testUtils = (function() {
       return accumulator;
     }, {lhs: '', rhs: ''});
 
-    return multiplex.bind(null, {
+    return multiplex({
       header: {
-        label: 'Diff Results'
+        label: 'Diff Results\n' + messageOnFailure
       },
       left: {
         label: 'Expected',
@@ -514,10 +520,59 @@ var testUtils = (function() {
     return updateEnabled;
   }
 
+  function handleResult(suite, currentTest, source) {
+    var messageOnFailure = [
+      'Failed Test:',
+      !!currentTest.parent && currentTest.parent.title,
+      currentTest.title
+    ]
+    .filter(function(str) {
+      return !!str;
+    })
+    .join(' ');
+
+    // Find whether user requested to update the expected JSON result
+    var updateAll = getUpdateState(suite.title);
+
+    var expected = currentTest.expected;
+    var expectedPath = currentTest.expectedPath;
+    if (typeof expected === 'undefined') {
+      var expectedString = getLkgDataString(expectedPath);
+      expected = JSON.parse(expectedString);
+    }
+
+    return source
+    .flatMap(function(actual) {
+      if (updateAll) {
+        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
+        .let(RxFs.createWriteObservable(expectedPath));
+      }
+
+      var outputPath;
+      return compareJson(expected, actual, messageOnFailure.red)
+      .flatMap(function(userResponseOnFailure) {
+        console.log('userResponseOnFailure:"' + userResponseOnFailure + '"');
+        if (!expectedPath) {
+          return Rx.Observable.throw('No expectedPath');
+        } else if (userResponseOnFailure === 'save') {
+          outputPath = expectedPath;
+        } else if (userResponseOnFailure === 'next') {
+          outputPath = expectedPath + '.FAILED-' + new Date().toISOString() + '.jsonld';
+        } else {
+          return Rx.Observable.throw('Unknown response:' + userResponseOnFailure);
+        }
+
+        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
+        .let(RxFs.createWriteObservable(outputPath));
+      });
+    });
+  }
+
   return {
     compareJson:compareJson,
     getLkgDataString:getLkgDataString,
-    getUpdateState:getUpdateState
+    getUpdateState:getUpdateState,
+    handleResult: handleResult
   };
 })();
 

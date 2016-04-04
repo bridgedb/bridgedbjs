@@ -379,47 +379,29 @@
       "@type": "@id"
     }
   },
-  "id": "http://identifiers.org/ncbigene/4292",
   "type": [
     "EntityReference",
     "gpml:GeneProduct",
     "biopax:DnaReference"
   ],
-  "identifier": "4292",
+  "identifier": "A_23_P69058",
   "isDataItemIn": {
-    "id": "http://identifiers.org/ncbigene/",
     "type": "Dataset",
-    "alternatePrefix": "L",
-    "exampleIdentifier": "100010",
-    "identifierPattern": "^\\d+$",
-    "preferredPrefix": "ncbigene",
+    "alternatePrefix": "Ag",
+    "exampleIdentifier": "A_24_P98555",
+    "identifierPattern": "A_\\d+_.+",
     "subject": [
       "gpml:GeneProduct",
       "biopax:DnaReference"
     ],
-    "exampleResource": "http://www.ncbi.nlm.nih.gov/gene/4292",
-    "name": "Entrez Gene",
-    "primary": true,
-    "systemCode": "L",
-    "entityType": "gene",
-    "uriRegexPattern": "http://www.ncbi.nlm.nih.gov/gene/(\\d+)",
-    "owl:sameAs": [
-      "http://www.ncbi.nlm.nih.gov/gene/",
-      "urn:miriam:ncbigene"
-    ],
-    "webPage": "http://www.ncbi.nlm.nih.gov/gene",
-    "datasource_name": "Entrez Gene",
-    "linkout_pattern": "http://www.ncbi.nlm.nih.gov/gene/$id",
-    "uri": "urn:miriam:ncbigene"
+    "name": "Agilent",
+    "primary": false,
+    "systemCode": "Ag",
+    "entityType": "probe",
+    "webPage": "http://agilent.com",
+    "datasource_name": "Agilent",
+    "uri": "Ag"
   },
-  "db": "Entrez Gene",
-  "organism": {
-    "id": "http://identifiers.org/taxonomy/9606",
-    "type": "http://identifiers.org/snomedct/410607006",
-    "nameLanguageMap": {
-      "en": "Human",
-      "la": "Homo sapiens"
-    }
-  },
-  "owl:sameAs": "http://www.ncbi.nlm.nih.gov/gene/4292"
+  "db": "Agilent",
+  "datasource_name": "Agilent"
 }

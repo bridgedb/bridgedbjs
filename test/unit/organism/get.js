@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
@@ -12,6 +13,8 @@ var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
 
+var handleResult = testUtils.handleResult;
+
 var internalContext = JSON.parse(fs.readFileSync(
   __dirname + '/../../jsonld-context.jsonld'));
 
@@ -24,42 +27,30 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.Organism.get', function() {
-  var allPassed = true;
-  var that = this;
-
-  function handleResult(update, lkgDataPath, source) {
-    var lkgDataString = testUtils.getLkgDataString(lkgDataPath);
-    var lkgData = JSON.parse(lkgDataString);
-    if (update) {
-      return source
-      .map(function(currentDatasets) {
-        return JSON.stringify(currentDatasets[0], null, '  ');
-      })
-      .let(RxFs.createWriteObservable(lkgDataPath));
-    }
-
-    return source
-    .map(function(actual) {
-      return testUtils.compareJson(lkgData, actual[0]);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    });
-  }
+  var suite = this;
+  suite.allPassed = true;
 
   before(function(done) {
-    // Find whether user requested to update the expected JSON result
-    var update = testUtils.getUpdateState(that.title);
-    handleResultWithUpdateSpecified = handleResult.bind(null, update);
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+
+    currentTest.handleResult = handleResult.bind(
+        null, suite, currentTest);
+
     done();
   });
 
   afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
     done();
   });
 
@@ -71,9 +62,9 @@ describe('BridgeDb.Organism.get', function() {
   it('should get organism by @id',
       function(done) {
 
-    var lkgDataPath = __dirname +
+    var expectedPath = __dirname +
           '/ncbigene-4292-organism.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+    lkgDataString = testUtils.getLkgDataString(expectedPath);
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -95,7 +86,7 @@ describe('BridgeDb.Organism.get', function() {
           lkgDataString = dataString;
           return dataString;
         })
-        .pipe(fs.createWriteStream(lkgDataPath));
+        .pipe(fs.createWriteStream(expectedPath));
       }
 
       return s.fork();
@@ -114,9 +105,8 @@ describe('BridgeDb.Organism.get', function() {
   //*/
 
   it('should get organism by name (Latin/string)', function(done) {
-    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -128,15 +118,14 @@ describe('BridgeDb.Organism.get', function() {
 
     bridgeDbInstance.organism.get('Homo sapiens')
     .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get organism by name (Latin/object)',  function(done) {
-    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -151,16 +140,16 @@ describe('BridgeDb.Organism.get', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get organism by name (English)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
-    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
-    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-        null, lkgDataPath);
+    var expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -175,16 +164,16 @@ describe('BridgeDb.Organism.get', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
 //  TODO this is waiting for entity reference to be Rx-ified.
 //  it('should get organism by entity reference identifiers IRI', function(done) {
-//    var lkgDataPath = __dirname + '/ncbigene-4292-organism.jsonld';
-//    var handleResultWithUpdateAndLkgDataPathSpecified = handleResultWithUpdateSpecified.bind(
-//        null, lkgDataPath);
+//    var expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
+//    var handleResultBySource = handleResultWithUpdateSpecified.bind(
+//        null, expectedPath);
 //
 //    var bridgeDbInstance = new BridgeDb({
 //      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -199,7 +188,7 @@ describe('BridgeDb.Organism.get', function() {
 //      '@type': 'EntityReference'
 //    })
 //    .toArray()
-//    .let(handleResultWithUpdateAndLkgDataPathSpecified)
+//    .let(handleResultBySource)
 //    .doOnError(done)
 //    .subscribeOnCompleted(done);
 //  });

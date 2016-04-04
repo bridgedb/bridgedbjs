@@ -5,7 +5,7 @@ var Rx = require('rx');
 
 var blessed = require('blessed');
 
-module.exports = function(options, errorMessage) {
+module.exports = function(options) {
   var screen;
 
   screen = blessed.screen({
@@ -18,7 +18,7 @@ module.exports = function(options, errorMessage) {
 
   options.header = options.header || {};
   var headerLabel = options.header.label || '';
-  var headerContent = (options.header.content || '') + '\n' + errorMessage;
+  var headerContent = options.header.content || '';
   // TODO trying to better handle showing any errors and yet
   // having the diff at the bottom. But the error(s) may take up
   // a varying amount of space. Fix this.
@@ -29,7 +29,7 @@ module.exports = function(options, errorMessage) {
     left: 0,
     width: '100%',
     height: headerHeight,
-    content: 'Quit with Ctrl-Q (even for OS/X). Scroll with Up/Down keys.' + headerContent,
+    content: '"q" to quit w/out saving. Up/Down keys to scroll.' + headerContent,
     tags: true,
     border: {
       type: 'line'
@@ -147,7 +147,7 @@ module.exports = function(options, errorMessage) {
     var scrollDriverSource = Rx.Observable.fromEvent(box, 'scroll', function(data) {
       return data;
     })
-    .debounce(300 /* ms */)
+    .debounce(16 /* ms */)
     .concatMap(function(data) {
       // if not equal, current box was scrolled, so its
       // scroll index is the desired scroll index for all
@@ -188,32 +188,38 @@ module.exports = function(options, errorMessage) {
     });
   });
 
-  var quitSource = Rx.Observable.fromNodeCallback(function(keysToWatch, cb) {
+  screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+    console.log('Force quit.');
+    return process.exit(0);
+  });
+
+  var saveSource = Rx.Observable.fromNodeCallback(function(keysToWatch, cb) {
     screen.key(keysToWatch, function(data) {
-      console.log('data205');
-      console.log(data);
-      top.content += '\nTrying to quit...\n';
-      screen.render();
-      return cb(null, data);
+      return cb(null, 'save');
     });
-  })(['escape', 'q', 'C-c'])
+  })(['enter'])
   .first()
   .doOnNext(function() {
-    top.content += '\nQuitting...\n';
-    screen.render();
-    return screen.destroy();
+    console.log('Saving and moving to next...');
+  });
+
+  var nextSource = Rx.Observable.fromNodeCallback(function(keysToWatch, cb) {
+    screen.key(keysToWatch, function(data) {
+      return cb(null, 'next');
+    });
+  })(['n'])
+  .first()
+  .doOnNext(function() {
+    console.log('Moving to next w/out saving...');
   });
 
   // Focus left box.
   left.focus();
 
-  // TODO trying to better handle showing any errors and yet
-  // having the diff at the bottom. But the error(s) may take up
-  // a varying amount of space. Fix this.
-  setTimeout(function() {
-    left.focus();
-    screen.render();
-  }, 1100);
+  screen.render();
 
-  return quitSource;
+  return Rx.Observable.amb(saveSource, nextSource)
+  .doOnNext(function(userResponseOnFailure) {
+    return screen.destroy();
+  });
 };

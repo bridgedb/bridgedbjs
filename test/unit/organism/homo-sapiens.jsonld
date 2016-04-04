@@ -1,0 +1,17 @@
+{
+  "@context": [
+    {
+      "name": {
+        "@id": "biopax:name",
+        "@container": "@language"
+      },
+      "Organism": "http://identifiers.org/snomedct/410607006"
+    }
+  ],
+  "id": "http://identifiers.org/taxonomy/9606",
+  "type": "Organism",
+  "nameLanguageMap": {
+    "en": "Human",
+    "la": "Homo sapiens"
+  }
+}

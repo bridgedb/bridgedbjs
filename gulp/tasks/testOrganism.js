@@ -16,8 +16,13 @@ gulp.task('testOrganism', ['launchMockserver'], function(done) {
     './test/unit/organism/query.js'],
     //*/
     //* But this succeeds.
-    ['./test/unit/organism/query.js',
-    './test/unit/organism/get.js'],
+    [
+      './test/unit/organism/query.js',
+      './test/unit/organism/get.js',
+      './test/unit/organism/_setInstanceOrganism.js',
+      './test/unit/organism/_getBySystemCodeAndIdentifier.js',
+      './test/unit/organism/_getByEntityReference.js',
+    ],
     //*/
     {read: false}
   )
@@ -25,7 +30,7 @@ gulp.task('testOrganism', ['launchMockserver'], function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 4000,
+    timeout: 60000,
     // enable colors
     c: true,
     //debug: true

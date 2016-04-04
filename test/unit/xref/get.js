@@ -1,16 +1,18 @@
+var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
 var expect = chai.expect;
 var fs = require('fs');
-var highland = require('highland');
 var http    =  require('http');
 var mockserver  =  require('mockserver');
 var run = require('gulp-run');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils.js');
 var wd = require('wd');
+
+var handleResult = testUtils.handleResult;
 
 var desired = {'browserName': 'phantomjs'};
 desired.name = 'example with ' + desired.browserName;
@@ -21,25 +23,31 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.Xref.get', function() {
-  var allPassed = true;
-  var that = this;
-  var update;
-  var lkgDataPath;
-  var lkgDataString;
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
+  var suite = this;
+  suite.allPassed = true;
 
   before(function(done) {
-    // Find whether user requested to update the expected JSON result
-    update = testUtils.getUpdateState(that.title);
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+
+    currentTest.handleResult = handleResult.bind(
+        null, suite, currentTest);
+
     done();
   });
 
   afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
+    var testCoordinator = this;
+    var currentTest = testCoordinator.currentTest;
+    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
     done();
   });
 
@@ -48,69 +56,45 @@ describe('BridgeDb.Xref.get', function() {
   });
 
   //*
-  it('should get xrefs (input: plain object with identifiers IRI)',
-      function(done) {
-    var lkgDataPath = __dirname +
-          '/ncbigene-4292-xrefs.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+  it('should get xrefs (input: plain object with identifiers IRI)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
+    var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
 
-    var bridgeDbInstance = BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        //'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    var xrefStream = bridgeDbInstance.xref.get({
+    bridgeDbInstance.xref.get({
       '@id': 'http://identifiers.org/ncbigene/4292'
       //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Homo sapiens' +
         //                  '/xrefs/L/4292'
       //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/4292'
     })
-    .map(function(xrefs) {
-      return xrefs;
-    })
-    .collect()
+    .toArray()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        );
+      var currentStringifiedXrefs = currentXrefs.map(JSON.stringify);
+      var expectedStringifiedXrefs = expected.map(JSON.stringify);
+      var intersection = _.intersection(currentStringifiedXrefs, expectedStringifiedXrefs);
+      return expect(intersection.length).to.equal(currentStringifiedXrefs.length);
     })
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
+    //.let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: stream)', function(done) {
-    var lkgDataPath = __dirname +
+    var LKGDataPath = __dirname +
           '/ncbigene-1234-4292-xrefs.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+    lkgDataString = testUtils.getLkgDataString(LKGDataPath);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -130,7 +114,7 @@ describe('BridgeDb.Xref.get', function() {
     .map(function(xrefs) {
       return xrefs;
     })
-    .collect()
+    .toArray()
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
@@ -145,7 +129,7 @@ describe('BridgeDb.Xref.get', function() {
           lkgDataString = dataString;
           return dataString;
         })
-        .pipe(fs.createWriteStream(lkgDataPath));
+        .pipe(fs.createWriteStream(LKGDataPath));
       }
 
       return s.fork();
@@ -163,13 +147,16 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: array)', function(done) {
-    var lkgDataPath = __dirname +
+    var LKGDataPath = __dirname +
           '/ncbigene-1234-4292-xrefs.jsonld';
-    lkgDataString = testUtils.getLkgDataString(lkgDataPath);
+    var testParams = {
+      expectedPath: LKGDataPath
+    };
+    var handleResultBySource = handleResultByLKGDataPathAndSource.bind(null, testParams);
 
-    var bridgeDbInstance = BridgeDb({
+    var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
@@ -185,10 +172,7 @@ describe('BridgeDb.Xref.get', function() {
         bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
       }
     ])
-    .map(function(xrefs) {
-      return xrefs;
-    })
-    .collect()
+    .toArray()
     .map(function(currentXrefs) {
       return JSON.stringify(currentXrefs)
         .replace(
@@ -196,28 +180,10 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         );
     })
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(lkgDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
     .last()
-    .each(function() {
-      return done();
-    });
+    .let(handleResultBySource)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
   });
   //*/
 

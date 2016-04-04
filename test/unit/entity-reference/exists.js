@@ -7,7 +7,6 @@ var fs = require('fs');
 var http    =  require('http');
 var mockserver  =  require('mockserver');
 var run = require('gulp-run');
-var RxFs = require('rx-fs');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
@@ -25,7 +24,8 @@ chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('BridgeDb.Organism.query', function() {
+describe('BridgeDb.EntityReference.exists', function() {
+  var standardBridgeDbApiBaseIri = 'http://webservice.bridgedb.org/';
   var suite = this;
   suite.allPassed = true;
 
@@ -57,10 +57,8 @@ describe('BridgeDb.Organism.query', function() {
     done();
   });
 
-  it('should fetch all organisms', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/all-organism.jsonld';
-
+  //*
+  it('should check existence of existent entity reference (Latin)', function(done) {
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -69,57 +67,22 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query()
-    .toArray()
-    .let(test.handleResult)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
-  });
-
-  it('should query organisms by name (Latin/string)', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.query('Homo sapiens')
-    .toArray()
-    .let(test.handleResult)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
-  });
-
-  it('should query organisms by name (Latin/object)', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism.query({
-      'name': 'Homo sapiens',
-      '@type': 'Organism'
+    bridgeDbInstance.entityReference.exists(
+      'L',
+      '4292',
+      'Homo sapiens'
+    )
+    .last()
+    .map(function(exists) {
+      return expect(exists).to.be.true;
     })
-    .toArray()
-    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
+  //*/
 
-  it('should query organisms by name (English)', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
+  //*
+  it('should check existence of existent entity reference (English)', function(done) {
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -129,39 +92,68 @@ describe('BridgeDb.Organism.query', function() {
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism.query({
-      'name': 'Human',
-      '@type': 'Organism'
+    bridgeDbInstance.entityReference.exists(
+      'L',
+      '4292',
+      'Human'
+    )
+    .last()
+    .map(function(exists) {
+      return expect(exists).to.be.true;
     })
-    .toArray()
-    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
+  //*/
 
-// TODO waiting to finish Rxifying EntityReference.js before getting this
-//  it('should query organisms by entity reference identifiers IRI', function(done) {
-//    var expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
-//    var handleResultBySource = handleResultByexpectedPathAndSource.bind(
-//        null, expectedPath);
-//
-//    var bridgeDbInstance = new BridgeDb({
-//      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-//      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-//      datasetsMetadataIri:
-//        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-//        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-//    });
-//
-//    bridgeDbInstance.organism.query({
-//      '@id': 'http://identifiers.org/ncbigene/4292',
-//      '@type': 'EntityReference'
-//    })
-//    .toArray()
-//    .let(handleResultBySource)
-//    .doOnError(done)
-//    .subscribeOnCompleted(done);
-//  });
-//  //*/
+  //*
+  it('should check existence of non-existent entity reference (Latin)', function(done) {
+
+    var bridgeDbInstance = new BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.entityReference.exists(
+      'L',
+      '4292',
+      'Mus musculus'
+    )
+    .last()
+    .map(function(exists) {
+      return expect(exists).to.be.false;
+    })
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  //*
+  it('should check existence of non-existent entity reference (English)', function(done) {
+
+    var bridgeDbInstance = new BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.entityReference.exists(
+      'L',
+      '4292',
+      'Mouse'
+    )
+    .last()
+    .map(function(exists) {
+      return expect(exists).to.be.false;
+    })
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
 
 });
