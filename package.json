@@ -4,7 +4,6 @@
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
-    "comment": "# the following don't work. probably need to re-install gulp. is it installed locally?",
     "test": "npm run test:Dataset && npm run test:EntityReference && npm run test:Organism && npm run test:Xref",
     "test:Dataset": "gulp testDataset",
     "test:EntityReference": "gulp testEntityReference",
