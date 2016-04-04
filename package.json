@@ -32,7 +32,7 @@
     "JSONStream": "^1.0.4",
     "csv-streamify": "~1.0.0",
     "hyperquest": "^1.2.x",
-    "jsonld-rx-extra": "ariutta/jsonld-rx-extra",
+    "jsonld-rx-extra": "ariutta/jsonld-rx-extra#a15d55059b6176db464c156c93513eed0f7d4663",
     "lodash": "^4.6.1",
     "rx": "^2.5.3",
     "rx-node": "^1.0.1",
