@@ -40,14 +40,16 @@ Most methods return [RxJS Observablves](https://github.com/Reactive-Extensions/R
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
 
-## How To Get Involved
+## For Developers
 
 1. Install [Node.js](https://nodejs.org/)
 2. Fork this repo if you don't have commit rights to it
-3. Try running the tests. If you need help, check out the [test documentation](./test/README.md).
-4. Make your changes, including adding new tests for your changes if they are not already covered by the existing tests.
+3. `git clone https://github.com/bridgedb/bridgedbjs.git` (or use your fork's URL)
+4. `npm install`
+3. Make sure the tests pass: [test documentation](./test/README.md).
+4. Refactor the code. Add new tests for your changes if not already covered by the existing tests.
 5. Make sure the tests all pass.
-6. Then you can get us to rebuild bridgedb and update the github repo with this process (currently doesn't work quite right. see [issue](https://github.com/bridgedb/bridgedbjs/issues/3)):
+6. ~~To integrate your changes into master:~~ (these steps currently don't work quite right. see [issue](https://github.com/bridgedb/bridgedbjs/issues/3)):
 
   a) Commit your changes to the master branch of your local repo.
 
