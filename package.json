@@ -32,7 +32,7 @@
     "csv-streamify": "~1.0.0",
     "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
-    "jsonld-rx-extra": "ariutta/jsonld-rx-extra#a15d55059b6176db464c156c93513eed0f7d4663",
+    "jsonld-rx-extra": "ariutta/jsonld-rx-extra#cb6f44f442ecc1a1b02fc7d653dd6bdb538ef9e5",
     "lodash": "^4.6.1",
     "rx": "^2.5.3",
     "rx-extra": "git://github.com/ariutta/rx-extra.git#58d949cef9a711e638374b84e6b6942620d2c37d",
