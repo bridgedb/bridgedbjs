@@ -18,15 +18,6 @@ Not all the functionality of the BridgeDb webservice are exposed by this library
 npm install bridgedb
 ```
 
-**Java/JVM**
-
-Use BridgeDb-Java instead. If you really want to use this, you can try [Nashorn (Java 8+)](http://openjdk.java.net/projects/nashorn/), [Rhino (Java <8)](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino) or [DynJS](http://dynjs.org/).
-
-Nashorn tutorials:
-* [Oracle introduction](http://www.oracle.com/technetwork/articles/java/jf14-nashorn-2126515.html)
-* [Winterbe tutorial](http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial/)
-* [Video](https://www.youtube.com/watch?v=Cxyg22C5gcw)
-
 ## Example
 ```js
 var BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
@@ -52,7 +43,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 ## How To Get Involved
 
 1. Install [Node.js](https://nodejs.org/)
-2. Fork this repo
+2. Fork this repo if you don't have commit rights to it
 3. Try running the tests. If you need help, check out the [test documentation](./test/README.md).
 4. Make your changes, including adding new tests for your changes if they are not already covered by the existing tests.
 5. Make sure the tests all pass.
