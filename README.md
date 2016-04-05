@@ -45,11 +45,12 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 1. Install [Node.js](https://nodejs.org/)
 2. Fork this repo if you don't have commit rights to it
 3. `git clone https://github.com/bridgedb/bridgedbjs.git` (or use your fork's URL)
-4. `npm install`
-3. Make sure the tests pass: [test documentation](./test/README.md).
-4. Refactor the code. Add new tests for your changes if not already covered by the existing tests.
-5. Make sure the tests all pass.
-6. ~~To integrate your changes into master:~~ (these steps currently don't work quite right. see [issue](https://github.com/bridgedb/bridgedbjs/issues/3)):
+4. `cd ./bridgedbjs`
+5. `npm install`
+6. Make sure the tests pass: [test documentation](./test/README.md).
+7. Refactor the code. Add new tests for your changes if not already covered by the existing tests.
+8. Make sure the tests all pass.
+9. ~~To merge your changes into master if you don't have commits rights to this repo:~~ (these steps currently don't work quite right. see [issue](https://github.com/bridgedb/bridgedbjs/issues/3)):
 
   a) Commit your changes to the master branch of your local repo.
 
