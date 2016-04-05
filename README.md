@@ -29,14 +29,14 @@ var myBridgeDbInstance = new BridgeDb({
 myBridgeDbInstance.entityReference.freeSearch({
   attribute: 'Nfkb1',
   organism: 'Mouse'
-}).each(function(searchResult) {
+})
+.subscribe(function(searchResult) {
   console.log('Result for Nfkb1');
   console.log(searchResult);
 });
 ```
 
-Most methods return [Node.js streams](http://nodejs.org/api/stream.html). Anywhere the return type is listed as a Stream, you can use ```each``` as shown above.
-You can also ```pipe``` the stream through another stream or use any of the other functionality from the [Highland stream library](http://highlandjs.org/).
+Most methods return [RxJS Observablves](https://github.com/Reactive-Extensions/RxJS). Anywhere the return type is listed as an `Observable`, you can use ```subscribe``` as shown above.
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
 
