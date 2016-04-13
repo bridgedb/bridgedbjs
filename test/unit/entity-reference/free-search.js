@@ -5,9 +5,7 @@ var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
 var expect = chai.expect;
 var fs = require('fs');
-var http    =  require('http');
-var mockserver  =  require('mockserver');
-var run = require('gulp-run');
+var mockserverMocha  =  require('../../mockserver-mocha.js');
 var RxFs = require('rx-fs');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
@@ -30,6 +28,8 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
   var suite = this;
   suite.allPassed = true;
+
+  mockserverMocha();
 
   before(function(done) {
     var testCoordinator = this;

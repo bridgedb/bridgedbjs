@@ -5,8 +5,7 @@ var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
 var expect = chai.expect;
 var fs = require('fs');
-var http    =  require('http');
-var mockserver  =  require('mockserver');
+var mockserverMocha  =  require('../../mockserver-mocha.js');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils');
 var wd = require('wd');
@@ -30,6 +29,8 @@ chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 describe('BridgeDb.Organism._setInstanceOrganism', function() {
   var suite = this;
   suite.allPassed = true;
+
+  mockserverMocha();
 
   before(function(done) {
     var testCoordinator = this;
@@ -59,85 +60,33 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     done();
   });
 
-  it('should set as Homo sapiens (normalize: true)', function(done) {
+  it('should set as Homo sapiens', function() {
     var test = this.test;
-    test.expectedPath = __dirname + '/homo-sapiens.jsonld';
+    test.expected = undefined;
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens', true)
-    .last()
-    .let(test.handleResult)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
+    var result = bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens');
+    expect(result).to.equal(test.expected);
   });
 
-  it('should set as Homo sapiens (normalize: false)', function(done) {
+  it('should set as Homo sapiens, then get', function(done) {
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism._setInstanceOrganism(homoSapiens, false)
-    .last()
-    .let(test.handleResult)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
-  });
+    bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens');
 
-  it('should set as Homo sapiens (normalize: true), then get', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/homo-sapiens.jsonld';
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens', true)
-    .last()
-    .flatMap(function(organism) {
-      expect(organism.nameLanguageMap.la).to.eql('Homo sapiens');
-      return bridgeDbInstance.organism._getInstanceOrganism();
-    })
-    .let(test.handleResult)
-    .doOnError(done)
-    .subscribeOnCompleted(done);
-  });
-
-  it('should set as Homo sapiens (normalize: not specified), then get', function(done) {
-    var test = this.test;
-    test.expectedPath = __dirname + '/homo-sapiens.jsonld';
-
-    var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-      datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-    });
-
-    bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens')
-    .last()
-    .flatMap(function(organism) {
-      expect(organism.nameLanguageMap.la).to.eql('Homo sapiens');
-      return bridgeDbInstance.organism._getInstanceOrganism();
-    })
+    bridgeDbInstance.organism._getInstanceOrganism()
     .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
@@ -148,10 +97,8 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
@@ -165,50 +112,40 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     .subscribeOnCompleted(done);
   });
 
-  it('should set by entity reference (normalize: true), then get', function(done) {
+  it('should set by entity reference, then get', function(done) {
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.organism._setInstanceOrganism({
       '@id': 'http://identifiers.org/ncbigene/4292',
       '@type': 'EntityReference'
-    }, true)
-    .last()
-    .flatMap(function(organism) {
-      expect(organism.nameLanguageMap.la).to.eql('Homo sapiens');
-      return bridgeDbInstance.organism._getInstanceOrganism();
-    })
+    });
+
+    bridgeDbInstance.organism._getInstanceOrganism()
     .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
-  it('should set as pre-normalized Homo sapiens (normalize: false), then get', function(done) {
+  it('should set as pre-normalized Homo sapiens, then get', function(done) {
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    bridgeDbInstance.organism._setInstanceOrganism(homoSapiens, false)
-    .last()
-    .flatMap(function(organism) {
-      expect(organism.nameLanguageMap.la).to.eql('Homo sapiens');
-      return bridgeDbInstance.organism._getInstanceOrganism();
-    })
+    bridgeDbInstance.organism._setInstanceOrganism(homoSapiens);
+
+    bridgeDbInstance.organism._getInstanceOrganism()
     .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);

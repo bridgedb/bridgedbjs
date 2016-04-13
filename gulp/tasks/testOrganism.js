@@ -3,7 +3,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testOrganism', ['launchMockserver'], function(done) {
+gulp.task('testOrganism', function(done) {
   gulp.src(
     // TODO Tests fail when get.js is run first. There is
     // probably something wrong with the runOnce and/or

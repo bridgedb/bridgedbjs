@@ -3,7 +3,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testDataset', ['launchMockserver'], function(done) {
+gulp.task('testDataset', function(done) {
   gulp.src(
     ['./test/unit/dataset/*.js'],
     {read: false}

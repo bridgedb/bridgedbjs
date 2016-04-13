@@ -3,7 +3,7 @@ var mocha = require('gulp-mocha');
 var wd = require('wd');
 var highland = require('highland');
 
-gulp.task('testXref', ['launchMockserver'], function(done) {
+gulp.task('testXref', function(done) {
   gulp.src(
     ['./test/unit/xref/*.js'],
     {read: false}
@@ -12,7 +12,7 @@ gulp.task('testXref', ['launchMockserver'], function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 60000,
+    timeout: 60 * 1000, // ms
     // enable colors
     c: true,
     //debug: true

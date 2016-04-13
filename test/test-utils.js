@@ -10,7 +10,7 @@ var expect = chai.expect;
 var fs = require('fs');
 var multiplex = require('./multiplex.js');
 var pd = require('pretty-data').pd;
-var Rx = require('rx');
+var Rx = require('rx-extra');
 var RxFs = require('rx-fs');
 var strcase = require('tower-strcase');
 
@@ -27,11 +27,11 @@ var testUtils = (function() {
     'unchanged': {
       name: 'Unchanged',
       lhs: {
-        bgColor: 'black',
+        bgColor: 'bgBlack',
         color: 'white',
       },
       rhs: {
-        bgColor: 'black',
+        bgColor: 'bgBlack',
         color: 'white',
       }
     },
@@ -72,12 +72,12 @@ var testUtils = (function() {
     'moved': {
       name: 'Moved',
       lhs: {
-        bgColor: 'bgYellow',
-        color: 'black',
+        bgColor: 'bgBlue',
+        color: 'white',
       },
       rhs: {
-        bgColor: 'bgYellow',
-        color: 'black',
+        bgColor: 'bgBlue',
+        color: 'white',
       }
     }
   };
@@ -366,23 +366,29 @@ var testUtils = (function() {
     }
   }
 
+  function deepEqual(expected, actual) {
+    return JSON.stringify(expected) === JSON.stringify(actual);
+  }
+
   /**
    * compareJson
    *
-   * @param {string} expectedJsonString
-   * @param {string} actualJsonString
+   * @param {object} expected
+   * @param {object} actual
+   * @param {object} options
    * @return {function} that creates a multiplex Observable
    */
-  function compareJson(expectedJson, actualJson, messageOnFailure) {
-    var expectedJsonString = stringifyJSON(expectedJson);
-    var actualJsonString = stringifyJSON(actualJson);
+  function compareJson(expectedJson, actualJson, messageOnFailure, suite, currentTest, options) {
+    options = options || {};
+    var ignoreOrder = options.ignoreOrder;
+    var done = currentTest.done;
 
-    if (actualJsonString === expectedJsonString) {
+    if (deepEqual(expectedJson, actualJson)) {
       // We're good
       return Rx.Observable.empty();
     }
 
-    if (expectedJsonString === '{}') {
+    if (deepEqual(expectedJson, {})) {
       console.log('***************************************************');
       console.log('**      New Test - No Expected JSON Available    **');
       console.log('** If Actual JSON below is valid, save it as     **');
@@ -393,12 +399,54 @@ var testUtils = (function() {
       return Rx.Observable.throw(new Error('TODO enable user to specify to save.'));
     }
 
-    var jsonDiffs = diffDeep(expectedJson, actualJson)
+    var expectedToCompare;
+    var actualToCompare;
+    if (ignoreOrder) {
+      var expectedStringifiedList = expectedJson.map(JSON.stringify);
+      var actualStringifiedList = actualJson.map(JSON.stringify);
+
+      var sorter = function(a, b) {
+        if (a.id !== b.id) {
+          return a.id > b.id;
+        } else if (a.name !== b.name) {
+          return a.name > b.name;
+        } else if (a.identifier !== b.identifier) {
+          return a.identifier > b.identifier;
+        } else {
+          return JSON.stringify(a) > JSON.stringify(b);
+        }
+      };
+
+      expectedToCompare = _.difference(expectedStringifiedList, actualStringifiedList)
+      .map(JSON.parse)
+      .sort(sorter);
+
+      actualToCompare = _.difference(actualStringifiedList, expectedStringifiedList)
+      .map(JSON.parse)
+      .sort(sorter);
+
+      if (deepEqual(expectedToCompare, actualToCompare)) {
+        // We're good, except for sort order, which we can ignore
+        console.warn('    Warning: actual sorted differently from expected'.yellow);
+        return Rx.Observable.empty();
+      }
+    } else {
+      expectedToCompare = expectedJson;
+      actualToCompare = actualJson;
+    }
+
+    // TODO still need to handle case of getting more than one failed test.
+    done(new Error('JSON results do not match.'));
+
+    var jsonDiffs = diffDeep(expectedToCompare, actualToCompare)
     .reduce(function(accumulator, diffResult) {
       return accumulator.concat(diffResult);
     }, [])
     .filter(function(diffResult) {
       return diffResult.kind !== 'unchanged';
+    })
+    .filter(function(diffResult) {
+      return !ignoreOrder || diffResult.kind !== 'moved';
     });
 
     var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
@@ -445,7 +493,19 @@ var testUtils = (function() {
 
     return multiplex({
       header: {
-        label: 'Diff Results\n' + messageOnFailure
+        label: [
+          'Diff Results:  ',
+          _.values(kindMappings).map(function(kindMapping) {
+            var lhs = kindMapping.lhs;
+            var rhs = kindMapping.rhs;
+            return kindMapping.name +
+              'expected'[lhs.color][lhs.bgColor] + '/' +
+              'actual'[rhs.color][rhs.bgColor];
+          }).join(', '),
+          '\n',
+          messageOnFailure,
+        ]
+        .join('')
       },
       left: {
         label: 'Expected',
@@ -456,10 +516,16 @@ var testUtils = (function() {
         label: 'Actual',
         content: coloredSideStrings.rhs,
         //height: coloredSideStrings.rhs.split('\n').length * 3,
+      },
+      delayedRender: function(cb) {
+        after(function(next) {
+          next(null);
+          setTimeout(function() {
+            cb();
+          }, 500);
+        });
       }
     });
-
-    //return false;
   }
 
   /**
@@ -540,6 +606,8 @@ var testUtils = (function() {
       var expectedString = getLkgDataString(expectedPath);
       expected = JSON.parse(expectedString);
     }
+    var options = {};
+    options.ignoreOrder = currentTest.ignoreOrder;
 
     return source
     .flatMap(function(actual) {
@@ -549,7 +617,7 @@ var testUtils = (function() {
       }
 
       var outputPath;
-      return compareJson(expected, actual, messageOnFailure.red)
+      return compareJson(expected, actual, messageOnFailure.red, suite, currentTest, options)
       .flatMap(function(userResponseOnFailure) {
         console.log('userResponseOnFailure:"' + userResponseOnFailure + '"');
         if (!expectedPath) {

@@ -5,9 +5,8 @@ var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
 var expect = chai.expect;
 var fs = require('fs');
-var http    =  require('http');
-var mockserver  =  require('mockserver');
-var run = require('gulp-run');
+var mockserverMocha  =  require('../../mockserver-mocha.js');
+var Rx = require('rx-extra');
 var sinon      = require('sinon');
 var testUtils = require('../../test-utils.js');
 var wd = require('wd');
@@ -26,6 +25,20 @@ describe('BridgeDb.Xref.get', function() {
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
   var suite = this;
   suite.allPassed = true;
+
+  var sorter = function(a, b) {
+    if (a.id !== b.id) {
+      return a.id > b.id;
+    } else if (a.name !== b.name) {
+      return a.name > b.name;
+    } else if (a.identifier !== b.identifier) {
+      return a.identifier > b.identifier;
+    } else {
+      return JSON.stringify(a) > JSON.stringify(b);
+    }
+  };
+
+  mockserverMocha();
 
   before(function(done) {
     var testCoordinator = this;
@@ -56,7 +69,121 @@ describe('BridgeDb.Xref.get', function() {
   });
 
   //*
-  it('should get xrefs (input: plain object with identifiers IRI)', function(done) {
+  it('should get xrefs (input: map w/ Entrez Gene, 4292, Homo sapiens)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname +
+        '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get({
+      'datasource_name': 'Entrez Gene',
+      'identifier': '4292',
+      organism: 'Homo sapiens'
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  //*
+  it('should get xrefs (input: map w/ systemCode, 4292, nameLanguageMap.la)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname +
+        '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get({
+      identifier: '4292',
+      organism: {
+        nameLanguageMap: {
+          la: 'Homo sapiens'
+        }
+      },
+      isDataItemIn: {
+        systemCode: 'L'
+      }
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  //*
+  it('should get xrefs (input: map w/ Entrez Gene, 1234, Human)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname +
+        '/ncbigene-1234-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get({
+      'datasource_name': 'Entrez Gene',
+      'identifier': '1234',
+      organism: 'Human'
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  /* TODO this might not work
+  it('should get xrefs (input: map w/ Homo%20sapiens BridgeDb endpoint)', function(done) {
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
     var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
@@ -70,91 +197,134 @@ describe('BridgeDb.Xref.get', function() {
     });
 
     bridgeDbInstance.xref.get({
-      '@id': 'http://identifiers.org/ncbigene/4292'
-      //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Homo sapiens' +
-        //                  '/xrefs/L/4292'
-      //bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/4292'
+      bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Homo%20sapiens/xrefs/L/4292'
     })
     .toArray()
     .map(function(currentXrefs) {
-      var currentStringifiedXrefs = currentXrefs.map(JSON.stringify);
-      var expectedStringifiedXrefs = expected.map(JSON.stringify);
-      var intersection = _.intersection(currentStringifiedXrefs, expectedStringifiedXrefs);
-      return expect(intersection.length).to.equal(currentStringifiedXrefs.length);
+      return currentXrefs.sort(sorter);
     })
-    //.let(test.handleResult)
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
   //*/
 
-  /*
-  it('should get xrefs (input: stream)', function(done) {
-    var LKGDataPath = __dirname +
-          '/ncbigene-1234-4292-xrefs.jsonld';
-    lkgDataString = testUtils.getLkgDataString(LKGDataPath);
+  //*
+  it('should get xrefs (input: map w/ Homo sapiens BridgeDb endpoint)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
-      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
         'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
-    highland([
-      {
-        '@id': 'http://identifiers.org/ncbigene/4292'
-      },
-      {
-        bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
-      }
-    ])
-    .pipe(bridgeDbInstance.xref.createStream())
-    .map(function(xrefs) {
-      return xrefs;
+    bridgeDbInstance.xref.get({
+      bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Homo sapiens/xrefs/L/4292'
     })
     .toArray()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs)
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
         .replace(
           new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
-        );
+        ));
     })
-    .pipe(highland.pipeline(function(s) {
-      if (update) {
-        s.fork()
-        .map(function(dataString) {
-          lkgDataString = dataString;
-          return dataString;
-        })
-        .pipe(fs.createWriteStream(LKGDataPath));
-      }
-
-      return s.fork();
-    }))
-    .map(function(dataString) {
-      return testUtils.compareJson(dataString, lkgDataString);
-    })
-    .map(function(passed) {
-      return expect(passed).to.be.true;
-    })
-    .last()
-    .each(function() {
-      return done();
-    });
+    .doOnError(done)
+    .subscribeOnCompleted(done);
   });
   //*/
 
-  /*
+  //*
+  it('should get xrefs (input: map w/ Human BridgeDb endpoint)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-xrefs-human.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get({
+      bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/4292'
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  //*
+  it('should get xrefs (input: map w/ identifiers IRI)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get({
+      '@id': 'http://identifiers.org/ncbigene/4292'
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  /* TODO this does not work
   it('should get xrefs (input: array)', function(done) {
-    var LKGDataPath = __dirname +
-          '/ncbigene-1234-4292-xrefs.jsonld';
-    var testParams = {
-      expectedPath: LKGDataPath
-    };
-    var handleResultBySource = handleResultByLKGDataPathAndSource.bind(null, testParams);
+    var test = this.test;
+    console.log('test.ctx');
+    console.log(test.ctx);
+    console.log('test.done');
+    console.log(test.done);
+
+    test.expectedPath = __dirname + '/ncbigene-1234-4292-xrefs.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -172,16 +342,59 @@ describe('BridgeDb.Xref.get', function() {
         bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
       }
     ])
-    .toArray()
     .map(function(currentXrefs) {
-      return JSON.stringify(currentXrefs)
+      console.log('currentXrefs');
+      console.log(currentXrefs);
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
         .replace(
           new RegExp(bridgeDbInstance.config.baseIri, 'g'),
           standardBridgeDbApiUrlStub
-        );
+        ));
     })
-    .last()
-    .let(handleResultBySource)
+    .let(test.handleResult)
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+  });
+  //*/
+
+  /* TODO this does not work
+  it('should get xrefs (input: Observable)', function(done) {
+    var test = this.test;
+    test.expectedPath = __dirname + '/ncbigene-1234-4292-xrefs.jsonld';
+    test.ignoreOrder = true;
+    test.done = done;
+
+    var bridgeDbInstance = new BridgeDb({
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+    });
+
+    bridgeDbInstance.xref.get(
+        Rx.Observable.from([
+          {
+            '@id': 'http://identifiers.org/ncbigene/4292'
+          },
+          {
+            bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
+          }
+        ])
+    )
+    .toArray()
+    .map(function(currentXrefs) {
+      return currentXrefs.sort(sorter);
+    })
+    .map(function(currentXrefs) {
+      return JSON.parse(JSON.stringify(currentXrefs)
+        .replace(
+          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+          standardBridgeDbApiUrlStub
+        ));
+    })
+    .let(test.handleResult)
     .doOnError(done)
     .subscribeOnCompleted(done);
   });

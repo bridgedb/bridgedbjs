@@ -6,6 +6,7 @@ var Rx = require('rx');
 var blessed = require('blessed');
 
 module.exports = function(options) {
+  var delayedRender = options.delayedRender;
   var screen;
 
   screen = blessed.screen({
@@ -62,8 +63,8 @@ module.exports = function(options) {
       type: 'line'
     },
     style: {
-      fg: 'default',
-      bg: 'default',
+      fg: 'black',
+      bg: 'black',
       hover: {
         border: {
           fg: 'green'
@@ -93,8 +94,8 @@ module.exports = function(options) {
       type: 'line'
     },
     style: {
-      fg: 'default',
-      bg: 'default',
+      fg: 'black',
+      bg: 'black',
       hover: {
         border: {
           fg: 'green'
@@ -216,7 +217,13 @@ module.exports = function(options) {
   // Focus left box.
   left.focus();
 
-  screen.render();
+  if (delayedRender) {
+    delayedRender(function() {
+      screen.render();
+    });
+  } else {
+    screen.render();
+  }
 
   return Rx.Observable.amb(saveSource, nextSource)
   .doOnNext(function(userResponseOnFailure) {
