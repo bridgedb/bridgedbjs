@@ -59,8 +59,7 @@ describe('BridgeDb.Dataset.get', function() {
 
   it('should get metadata by provider @id', function(done) {
     var test = this.test;
-    test.expectedPath = __dirname +
-          '/entrez-gene-dataset-metadata.jsonld';
+    test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -82,8 +81,7 @@ describe('BridgeDb.Dataset.get', function() {
 
   it('should get metadata by identifiers.org @id', function(done) {
     var test = this.test;
-    test.expectedPath = __dirname +
-          '/entrez-gene-dataset-metadata.jsonld';
+    test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
