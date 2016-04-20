@@ -7,7 +7,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai', 'browserify'],
     browsers: [
       'Chrome',
-      'Firefox'
+      //'Firefox'
     ],
     files: ['test/unit/ui-components/**/*.js'],
     preprocessors: {

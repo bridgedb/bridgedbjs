@@ -1,7 +1,4 @@
 var $ = require('jquery');
-//var Observable = require('rxjs/Observable').Observable;
-//var BehaviorSubject = require('rxjs/BehaviorSubject').BehaviorSubject;
-//var Subject = require('rxjs/Subject').Subject;
 
 var Rx = require('rx-extra');
 
@@ -9,18 +6,10 @@ var yolk = require('yolk');
 var h = yolk.h;
 var noop = function() {};
 var render = yolk.render;
-//var render = require('yolk/lib/render');
 var renderInDocument = require('../../render-in-document');
 
 var BridgeDb = require('../../../lib/main.js');
 process.env.MOCKSERVER_PORT = 4522;
-
-//require('rxjs/add/observable/from');
-//
-//require('rxjs/add/operator/map');
-//require('rxjs/add/operator/scan');
-//require('rxjs/add/operator/startWith');
-//require('rxjs/add/operator/combineLatest');
 
 var BridgeDbUI = require('../../../lib/ui-components');
 
@@ -60,16 +49,11 @@ describe('kitchen sink of tests', function() {
     cleanup();
   });
 
-  it('creates a datasource selection element', function(done) {
+  it('creates a fresh datasource selection element', function(done) {
     var vnode = h(BridgeDbUI, {
-      dataset: Rx.Observable.from([{
-        id: 2,
-        name: 'second'
-      }, {
-        id: 1,
-        name: 'first'
-      }]),
-      entityReferenceType: Rx.Observable.from([['gpml:Metabolite']])
+      dataset: Rx.Observable.empty()
+      //entityReferenceType: Rx.Observable.return('gpml:Metabolite')
+      //entityReferenceType: Rx.Observable.empty()
     });
     var result = renderInDocument(vnode);
     var node = result.node;
@@ -80,17 +64,131 @@ describe('kitchen sink of tests', function() {
 
       var $node = $(node);
 
-      console.log('$node82');
-      console.log($node[0]);
+      var $firstOption = $node.find('option').first();
+      assert.equal($firstOption.text(), 'Select datasource');
 
-      var $first = $node.find('[value="http://identifiers.org/ncbigene/"]');
-      $first.trigger('click');
-      assert.equal($first.text(), 'Entrez Gene');
+      var $selected = $node.find('[value="http://identifiers.org/ncbigene/"]');
+      $selected.trigger('click');
+      assert.equal($selected.text(), 'Entrez Gene');
 
       cleanup();
       done();
-    }, 10 * 1000);
+    }, 2 * 1000);
   });
+
+  describe('create a datasource selection element', function() {
+
+    it('filtered by GPML entity type (Observable)', function(done) {
+      var vnode = h(BridgeDbUI, {
+        dataset: Rx.Observable.empty(),
+        entityReferenceType: Rx.Observable.return(['gpml:Metabolite'])
+      });
+      var result = renderInDocument(vnode);
+      var node = result.node;
+      var cleanup = result.cleanup;
+
+      setTimeout(function() {
+        assert.equal(node.tagName, 'DIV');
+
+        var $node = $(node);
+
+        var $metaboliteSelection = $node.find('[value="http://identifiers.org/chembl.compound/"]');
+        $metaboliteSelection.trigger('click');
+        assert.equal($metaboliteSelection.text(), 'ChEMBL compound');
+
+        var $geneSelection = $node.find('[value="http://identifiers.org/ncbigene/"]');
+        assert.equal($geneSelection.length, 0);
+
+        cleanup();
+        done();
+      }, 2 * 1000);
+    });
+
+    it('filtered by GPML entity type (plain object)', function(done) {
+      var vnode = h(BridgeDbUI, {
+        dataset: Rx.Observable.empty(),
+        entityReferenceType: ['gpml:Metabolite']
+      });
+      var result = renderInDocument(vnode);
+      var node = result.node;
+      var cleanup = result.cleanup;
+
+      setTimeout(function() {
+        assert.equal(node.tagName, 'DIV');
+
+        var $node = $(node);
+
+        var $metaboliteSelection = $node.find('[value="http://identifiers.org/chembl.compound/"]');
+        $metaboliteSelection.trigger('click');
+        assert.equal($metaboliteSelection.text(), 'ChEMBL compound');
+
+        var $geneSelection = $node.find('[value="http://identifiers.org/ncbigene/"]');
+        assert.equal($geneSelection.length, 0);
+
+        cleanup();
+        done();
+      }, 2 * 1000);
+    });
+
+    it('filtered by BioPAX entity type (plain object)', function(done) {
+      var vnode = h(BridgeDbUI, {
+        dataset: Rx.Observable.empty(),
+        entityReferenceType: ['biopax:SmallMoleculeReference']
+      });
+      var result = renderInDocument(vnode);
+      var node = result.node;
+      var cleanup = result.cleanup;
+
+      setTimeout(function() {
+        assert.equal(node.tagName, 'DIV');
+
+        var $node = $(node);
+
+        var $metaboliteSelection = $node.find('[value="http://identifiers.org/chembl.compound/"]');
+        $metaboliteSelection.trigger('click');
+        assert.equal($metaboliteSelection.text(), 'ChEMBL compound');
+
+        var $geneSelection = $node.find('[value="http://identifiers.org/ncbigene/"]');
+        assert.equal($geneSelection.length, 0);
+
+        cleanup();
+        done();
+      }, 2 * 1000);
+    });
+
+  });
+
+//  it('creates a datasource selection element', function(done) {
+//    var vnode = h(BridgeDbUI, {
+//      dataset: Rx.Observable.from([{
+//        id: 2,
+//        name: 'second'
+//      }, {
+//        id: 1,
+//        name: 'first'
+//      }]),
+//      entityReferenceType: Rx.Observable.from([['gpml:Metabolite']])
+//    });
+//    var result = renderInDocument(vnode);
+//    var node = result.node;
+//    var cleanup = result.cleanup;
+//
+//    setTimeout(function() {
+//      assert.equal(node.tagName, 'DIV');
+//
+//      var $node = $(node);
+//
+//      console.log('$node82');
+//      console.log($node[0]);
+//
+//      var $first = $node.find('[value="http://identifiers.org/ncbigene/"]');
+//      $first.trigger('click');
+//      assert.equal($first.text(), 'Entrez Gene');
+//
+//      cleanup();
+//      done();
+//    }, 10 * 1000);
+//  });
 
   /*
   it('gets all datasources', function(done) {
