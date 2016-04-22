@@ -9,7 +9,7 @@ module.exports = function(config) {
       'Chrome',
       //'Firefox'
     ],
-    files: ['test/unit/ui-components/**/*.js'],
+    files: ['test/unit/ui-components/**/*.test.js'],
     preprocessors: {
       'test/unit/ui-components/**/*.js': 'browserify'
     },
