@@ -13,7 +13,7 @@ process.env.MOCKSERVER_PORT = 4522;
 
 var BridgeDbUI = require('../../../lib/ui-components');
 
-var timeout = 750;
+var timeout = 300;
 
 function fireEvent(node, eventName) {
   // Make sure we use the ownerDocument from the provided node to avoid cross-window problems
@@ -158,20 +158,30 @@ describe('create a datasource selection element', function() {
       setTimeout(function() {
         assert.equal(node.tagName, 'SELECT');
 
+        console.log('node');
+        console.log(node);
+
+        console.log('node.dataset.id');
+        console.log(node.dataset.id);
+
         assert.equal($node.find('option:selected').text(), 'Ensembl');
 
+        // For some reason, yolk does not seem to respond to
+        // either of the jQuery triggers below,
+        // but it does respond to fireEvent.
+        //
+        //$node.val('http://identifiers.org/ncbigene/').trigger('change');
+        //$node.val('http://identifiers.org/ncbigene/').change();
+        //
+        // Also, it responds to $node.trigger('click'), but not $node.trigger('change');
         $node.val('http://identifiers.org/ncbigene/');
+        fireEvent($node[0], 'change');
         assert.equal($node.find('option:selected').text(), 'Entrez Gene');
 
         $node.val('http://identifiers.org/wikipathways/');
+        fireEvent($node[0], 'change');
         assert.equal($node.find('option:selected').text(), 'WikiPathways');
 
-        // for some reason, yolk does not seem to respond to
-        // either of the jQuery triggers below,
-        // but it does respond to fireEvent.
-        // It also responds to $node.trigger('click')
-        //$node.val('http://identifiers.org/chembl.compound/').trigger('change');
-        //$node.val('http://identifiers.org/chembl.compound/').change();
         $node.val('http://identifiers.org/chembl.compound/');
         fireEvent($node[0], 'change');
         assert.equal($node.find('option:selected').text(), 'ChEMBL compound');
@@ -341,6 +351,38 @@ describe('create a datasource selection element', function() {
         var result = renderInDocument(vnode);
         var node = result.node;
         var cleanup = result.cleanup;
+
+        setTimeout(function() {
+          assert.equal(node.tagName, 'SELECT');
+
+          var $node = $(node);
+
+          var $pathwaySelection = $node.find('[value="http://identifiers.org/wikipathways/"]');
+          $pathwaySelection.trigger('click');
+          assert.equal($pathwaySelection.text(), 'WikiPathways');
+
+          var $geneSelection = $node.find('[value="http://identifiers.org/ncbigene/"]');
+          assert.equal($geneSelection.length, 0);
+
+          var $metaboliteSelection = $node
+          .find('[value="http://identifiers.org/chembl.compound/"]');
+          assert.equal($metaboliteSelection.length, 0);
+
+          cleanup();
+          done();
+        }, timeout);
+      });
+
+      it('select when prop is Subject', function(done) {
+        var entityReferenceType$ = new Rx.Subject();
+        var vnode = h(BridgeDbUI, {
+          entityReferenceType: entityReferenceType$
+        });
+        var result = renderInDocument(vnode);
+        var node = result.node;
+        var cleanup = result.cleanup;
+
+        entityReferenceType$.onNext(['gpml:Pathway']);
 
         setTimeout(function() {
           assert.equal(node.tagName, 'SELECT');
