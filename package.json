@@ -30,7 +30,7 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
-    "JSONStream": "^1.0.4",
+    "jsonstream": "^1.0.3",
     "csv-streamify": "~1.0.0",
     "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
@@ -38,7 +38,8 @@
     "lodash": "^4.11.1",
     "rx-extra": "git://github.com/ariutta/rx-extra.git#f9a3bebb51e0ac54d16a62b2d35293376623a152",
     "urijs": "^1.15.1",
-    "yolk": "0.10.1"
+    "yolk": "0.10.1",
+    "yolk-simple-modal": "git://github.com/ariutta/yolk-simple-modal.git"
   },
   "devDependencies": {
     "bdd-with-opts": "~1.0.0",
