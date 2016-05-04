@@ -4,6 +4,7 @@
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
+    "budo": "budo test/e2e/ui-components.test.js --live --open",
     "karma": "NODE_ENV=test karma start",
     "start": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
     "test": "npm run test:Dataset && npm run test:EntityReference && npm run test:Organism && npm run test:Xref",
@@ -46,6 +47,7 @@
     "blessed": "^0.1.81",
     "browser-sync": "~2.5.3",
     "browserify": "^12.0.2",
+    "budo": "^8.2.2",
     "chai": "~1.10.0",
     "chai-as-promised": "~4.1.1",
     "colors": "~1.0.3",
