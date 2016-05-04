@@ -4,7 +4,7 @@
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
-    "budo": "budo test/e2e/ui-components.test.js --live --open",
+    "budo": "budo test/e2e/ui-components.test.js --live --open -- -t brfs",
     "karma": "NODE_ENV=test karma start",
     "start": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
     "test": "npm run test:Dataset && npm run test:EntityReference && npm run test:Organism && npm run test:Xref",
@@ -31,11 +31,13 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
-    "jsonstream": "^1.0.3",
+    "brfs": "^1.4.3",
     "csv-streamify": "~1.0.0",
     "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
+    "insert-css": "^0.2.0",
     "jsonld-rx-extra": "ariutta/jsonld-rx-extra#66da18716a526abdcea6c25b865858a26780e204",
+    "jsonstream": "^1.0.3",
     "lodash": "^4.11.1",
     "rx-extra": "git://github.com/ariutta/rx-extra.git#f9a3bebb51e0ac54d16a62b2d35293376623a152",
     "urijs": "^1.15.1",
