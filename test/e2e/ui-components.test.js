@@ -7,7 +7,9 @@ var renderInDocument = require('../render-in-document');
 
 var BridgeDbUIElement = require('../../lib/ui-components');
 
-var vnode = h(BridgeDbUIElement);
+var vnode = h(BridgeDbUIElement, {
+  organism: 'Homo sapiens'
+});
 
 var result = renderInDocument(vnode);
 

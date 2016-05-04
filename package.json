@@ -38,6 +38,7 @@
     "insert-css": "^0.2.0",
     "jsonld-rx-extra": "ariutta/jsonld-rx-extra#66da18716a526abdcea6c25b865858a26780e204",
     "jsonstream": "^1.0.3",
+    "levenshtein": "^1.0.5",
     "lodash": "^4.11.1",
     "rx-extra": "git://github.com/ariutta/rx-extra.git#f9a3bebb51e0ac54d16a62b2d35293376623a152",
     "urijs": "^1.15.1",
