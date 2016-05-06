@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "budo": "budo test/e2e/ui-components.test.js --live --open -- -t brfs",
-    "karma": "NODE_ENV=test karma start",
+    "budo:datasource": "budo test/e2e/datasource-control.test.js --live --open -- -t brfs",
+    "budo:identifier": "budo test/e2e/identifier-control.test.js --live --open -- -t brfs",
     "start": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
-    "test": "npm run test:Dataset && npm run test:EntityReference && npm run test:Organism && npm run test:Xref",
+    "test": "npm run test:*",
     "test:Dataset": "gulp testDataset",
     "test:EntityReference": "gulp testEntityReference",
     "test:Organism": "gulp testOrganism",
-    "test:Xref": "gulp testXref"
+    "test:Xref": "gulp testXref",
+    "test:ui": "NODE_ENV=test karma start"
   },
   "browser": {
     "commander": false

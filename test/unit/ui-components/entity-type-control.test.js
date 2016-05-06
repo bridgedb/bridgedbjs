@@ -11,7 +11,9 @@ var renderInDocument = require('../../render-in-document');
 var BridgeDb = require('../../../lib/main.js');
 process.env.MOCKSERVER_PORT = 4522;
 
-var bridgeDbUI = require('../../../lib/ui-components');
+var bridgeDbUI = {
+  EntityTypeControl: require('../../../lib/ui-components/entity-type-control.js')
+};
 
 var timeout = 300;
 

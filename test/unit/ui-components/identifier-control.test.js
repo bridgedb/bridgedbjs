@@ -11,7 +11,9 @@ var renderInDocument = require('../../render-in-document');
 var BridgeDb = require('../../../lib/main.js');
 process.env.MOCKSERVER_PORT = 4522;
 
-var bridgeDbUI = require('../../../lib/ui-components');
+var bridgeDbUI = {
+  IdentifierControl: require('../../../lib/ui-components/identifier-control.js')
+};
 
 // Note: must be greater than the debounce period
 var timeout = 500;

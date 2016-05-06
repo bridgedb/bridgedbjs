@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-var Rx = require('rx-extra');
+var Rx = global.Rx = require('rx-extra');
 
 var yolk = require('yolk');
 var h = yolk.h;
@@ -11,7 +11,9 @@ var renderInDocument = require('../../render-in-document');
 var BridgeDb = require('../../../lib/main.js');
 process.env.MOCKSERVER_PORT = 4522;
 
-var bridgeDbUI = require('../../../lib/ui-components');
+var bridgeDbUI = {
+  DatasourceControl: require('../../../lib/ui-components/datasource-control.js')
+};
 
 var timeout = 300;
 

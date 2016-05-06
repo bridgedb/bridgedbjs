@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-var Rx = require('rx-extra');
+var Rx = global.Rx = require('rx-extra');
 
 var yolk = require('yolk');
 var h = yolk.h;
@@ -75,10 +75,7 @@ function fireEvent(node, eventName) {
 
 describe('create an xref search element', function() {
   it('add query and run', function(done) {
-    var query$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.XrefSearch, {
-      //query: query$,
-      query: 'ENSG00000012048',
       organism: 'Homo sapiens',
     });
     var result = renderInDocument(vnode);
@@ -87,19 +84,15 @@ describe('create an xref search element', function() {
 
     var $node = $(node);
 
-    //query$.onNext('ENSG00000012048');
-
     setTimeout(function() {
-      assert.equal(node.tagName, 'DIV');
+      assert.equal(node.tagName, 'FORM');
 
-      console.log('node');
-      console.log(node);
+      var input = node.querySelector('#xref-search-input');
+      input.textContent = 'BRCA';
+      fireEvent(input, 'change');
+      assert.equal(input.textContent, 'BRCA');
 
-      assert.equal($node.val(), 'ENSG00000012048');
-
-      $node.val('672');
-      fireEvent($node[0], 'change');
-      assert.equal($node.val(), '672');
+      // TODO should we check whether modal opened in a unit test?
 
       cleanup();
       done();
