@@ -143,9 +143,9 @@ describe('create a datasource select (dropdown) element', function() {
     });
 
     it('select when datasource is pre-selected', function(done) {
-      var selectedDataset$ = new Rx.Subject();
+      var selectedDatasource$ = new Rx.Subject();
       var vnode = h(bridgeDbUI.DatasourceControl, {
-        dataset: selectedDataset$,
+        datasource: selectedDatasource$,
       });
       var result = renderInDocument(vnode);
       var node = result.node;
@@ -153,7 +153,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       var $node = $(node);
 
-      selectedDataset$.onNext({
+      selectedDatasource$.onNext({
         id: 'http://identifiers.org/ensembl/'
       });
 
@@ -227,9 +227,9 @@ describe('create a datasource select (dropdown) element', function() {
     });
 
     it('programmatically set datasource', function(done) {
-      var selectedDataset$ = new Rx.Subject();
+      var selectedDatasource$ = new Rx.Subject();
       var vnode = h(bridgeDbUI.DatasourceControl, {
-        dataset: selectedDataset$,
+        datasource: selectedDatasource$,
       });
       var result = renderInDocument(vnode);
       var node = result.node;
@@ -237,7 +237,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       var $node = $(node);
 
-      selectedDataset$.onNext({
+      selectedDatasource$.onNext({
         id: 'http://identifiers.org/ensembl/'
       });
 
@@ -252,15 +252,15 @@ describe('create a datasource select (dropdown) element', function() {
     });
 
     it('programmatically set datasource and then programmatically update', function(done) {
-      var selectedDataset$ = new Rx.Subject();
+      var selectedDatasource$ = new Rx.Subject();
       var vnode = h(bridgeDbUI.DatasourceControl, {
-        dataset: selectedDataset$,
+        datasource: selectedDatasource$,
       });
       var result = renderInDocument(vnode);
       var node = result.node;
       var cleanup = result.cleanup;
 
-      selectedDataset$.onNext({
+      selectedDatasource$.onNext({
         id: 'http://identifiers.org/ensembl/'
       });
 
@@ -271,7 +271,7 @@ describe('create a datasource select (dropdown) element', function() {
       setTimeout(function() {
         assert.equal($node.find('option:selected').text(), 'Ensembl');
 
-        selectedDataset$.onNext({
+        selectedDatasource$.onNext({
           id: 'http://identifiers.org/ensembl/'
         });
 
@@ -280,7 +280,7 @@ describe('create a datasource select (dropdown) element', function() {
         setTimeout(function() {
           assert.equal($node.find('option:selected').text(), 'Ensembl');
 
-          selectedDataset$.onNext({
+          selectedDatasource$.onNext({
             id: 'http://identifiers.org/ncbigene/'
           });
 
@@ -297,15 +297,15 @@ describe('create a datasource select (dropdown) element', function() {
     });
 
     it('programmatically set datasource and then select', function(done) {
-      var selectedDataset$ = new Rx.Subject();
+      var selectedDatasource$ = new Rx.Subject();
       var vnode = h(bridgeDbUI.DatasourceControl, {
-        dataset: selectedDataset$,
+        datasource: selectedDatasource$,
       });
       var result = renderInDocument(vnode);
       var node = result.node;
       var cleanup = result.cleanup;
 
-      selectedDataset$.onNext({
+      selectedDatasource$.onNext({
         id: 'http://identifiers.org/ensembl/'
       });
 
@@ -611,7 +611,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       it('select when prop is array', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          entityReferenceType: ['gpml:Rna']
+          entityReferenceType: ['gpml:Rna'],
         });
         var result = renderInDocument(vnode);
         var node = result.node;
@@ -769,7 +769,7 @@ describe('create a datasource select (dropdown) element', function() {
     describe('when datasource is pre-selected', function() {
       it('select when prop is Observable', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/ensembl/'
           }),
           entityReferenceType: Rx.Observable.return(['gpml:GeneProduct'])
@@ -812,7 +812,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       it('select when prop is array', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/ensembl/'
           }),
           entityReferenceType: ['gpml:GeneProduct']
@@ -935,7 +935,7 @@ describe('create a datasource select (dropdown) element', function() {
     describe('when datasource is pre-selected', function() {
       it('select when prop is Observable', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/ensembl/'
           }),
           entityReferenceType: Rx.Observable.return(['gpml:Complex'])
@@ -978,7 +978,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       it('select when prop is array', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/ensembl/'
           }),
           entityReferenceType: ['gpml:Complex']
@@ -1081,7 +1081,7 @@ describe('create a datasource select (dropdown) element', function() {
     describe('when datasource is pre-selected', function() {
       it('select when prop is Observable', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/cas/'
           }),
           entityReferenceType: Rx.Observable.return(['gpml:Metabolite'])
@@ -1114,7 +1114,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       it('select when prop is array', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/cas/'
           }),
           entityReferenceType: ['gpml:Metabolite']
@@ -1151,7 +1151,7 @@ describe('create a datasource select (dropdown) element', function() {
     describe('when datasource is pre-selected', function() {
       it('select when prop is Observable', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/cas/'
           }),
           entityReferenceType: Rx.Observable.return(['biopax:SmallMoleculeReference'])
@@ -1184,7 +1184,7 @@ describe('create a datasource select (dropdown) element', function() {
 
       it('select when prop is array', function(done) {
         var vnode = h(bridgeDbUI.DatasourceControl, {
-          dataset: Rx.Observable.return({
+          datasource: Rx.Observable.return({
             id: 'http://identifiers.org/cas/'
           }),
           entityReferenceType: ['biopax:SmallMoleculeReference']

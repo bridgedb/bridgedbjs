@@ -8,7 +8,6 @@ var noop = function() {};
 var render = yolk.render;
 var renderInDocument = require('../../render-in-document');
 
-var BridgeDb = require('../../../lib/main.js');
 process.env.MOCKSERVER_PORT = 4522;
 
 var bridgeDbUI = {
@@ -76,7 +75,7 @@ function fireEvent(node, eventName) {
 describe('create an xref search element', function() {
   it('add query and run', function(done) {
     var vnode = h(bridgeDbUI.XrefSearch, {
-      organism: 'Homo sapiens',
+      organism: 'Homo sapiens'
     });
     var result = renderInDocument(vnode);
     var node = result.node;
