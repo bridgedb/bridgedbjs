@@ -12,7 +12,7 @@ var noop = function() {};
 
 var BridgeDbUIElement = require('../../lib/ui-components');
 
-var latestBridgeDbCommitHash = 'c641ab0279dbf6bf3aee8d6d238d77865361e211';
+var latestBridgeDbCommitHash = 'd01b14ea4924a421cf2c604fb550f63cd51d99cf';
 var context = [
   'https://cdn.rawgit.com/bridgedb/BridgeDb/',
   latestBridgeDbCommitHash,
@@ -26,6 +26,12 @@ var context = [
 
 var entity = {
   '@context': context,
+  organism: 'Homo sapiens',
+  type: ['gpml:Metabolite'],
+  'datasource_name': 'CAS',
+  identifier: '50-00-0',
+  name: 'Formaldehyde',
+  displayName: 'formaldehyde',
   entityReference: {
     type: ['biopax:SmallMoleculeReference'],
     isDataItemIn: {
@@ -33,12 +39,6 @@ var entity = {
     },
     identifier: '50-00-0',
   },
-  organism: 'Homo sapiens',
-  type: ['gpml:Metabolite'],
-  'datasource_name': 'CAS',
-  identifier: '50-00-0',
-  name: 'Formaldehyde',
-  displayName: 'formaldehyde'
 };
 
 var vnode = h('div', {},
@@ -49,7 +49,7 @@ var vnode = h('div', {},
       console.log(updatedEntity);
       var code = document.querySelector('code');
       var data = JSON.parse(JSON.stringify(updatedEntity));
-      var context = data['@context'];
+      var context = data.entityReference['@context'];
       delete data['@context'];
       delete data.entityReference['@context'];
       code.innerHTML = jsonldMarkup(data, context);
