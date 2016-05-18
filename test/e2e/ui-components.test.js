@@ -1,9 +1,14 @@
 var Rx = global.Rx = require('rx-extra');
 var yolk = require('yolk');
 var h = yolk.h;
-var noop = function() {};
-var render = yolk.render;
 var renderInDocument = require('../render-in-document');
+
+var fs = require('fs');
+var insertCss = require('insert-css');
+
+var jsonldMarkup = require('jsonld-markup');
+//var jsonldVis = require('jsonld-vis');
+var noop = function() {};
 
 var BridgeDbUIElement = require('../../lib/ui-components');
 
@@ -13,6 +18,11 @@ var context = [
   latestBridgeDbCommitHash,
   '/org.bridgedb.rdf/resources/jsonld-context.jsonld'
 ].join('');
+
+[
+  fs.readFileSync(require.resolve('jsonld-markup/jsonld-markup.css'))
+]
+.map(insertCss);
 
 var entity = {
   '@context': context,
@@ -31,31 +41,24 @@ var entity = {
   displayName: 'formaldehyde'
 };
 
-var vnode = h(BridgeDbUIElement, {
-  entity: entity,
-  onChange: function(updatedEntity) {
-    console.log('updatedEntity');
-    console.log(updatedEntity);
-  },
-});
-//var vnode = h(BridgeDbUIElement, {
-//  organism: 'Homo sapiens'
-//});
+var vnode = h('div', {},
+  h(BridgeDbUIElement, {
+    entity: entity,
+    onChange: function(updatedEntity) {
+      console.log('updatedEntity');
+      console.log(updatedEntity);
+      var code = document.querySelector('code');
+      var data = JSON.parse(JSON.stringify(updatedEntity));
+      var context = data['@context'];
+      delete data['@context'];
+      delete data.entityReference['@context'];
+      code.innerHTML = jsonldMarkup(data, context);
+    },
+  }),
+  h('pre', {},
+    h('code', {
+    }, 'Change a value above and then view JSON result here')
+  )
+);
 
 var result = renderInDocument(vnode);
-
-//var YolkSimpleModal = require('../../index.ts').default;
-//
-//var vnode = h(YolkSimpleModal, {
-//  className: 'placeholder-class-name',
-//  content: new BridgeDb().dataset.query({id: 'http://identifiers.org/ncbigene/'})
-//          .toArray()
-//          .map(function(data) {
-//            //return h('p', {}, data);
-//            return '<p>' + JSON.stringify(data) + '</p>';
-//          }),
-//  title: 'Datasources',
-//});
-//var result = renderInDocument(vnode);
-//var node = result.node;
-//var cleanup = result.cleanup;
