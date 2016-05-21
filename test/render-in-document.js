@@ -1,7 +1,7 @@
 'use strict';
 
-var document = require('global/document');
-//global.document = require('global/document');
+//var document = require('global/document');
+var document = global.document || require('global/document');
 var render = require('yolk').render;
 
 module.exports = function renderInDocument(vnode) {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
-    "manual": "budo test/e2e/ui-components.test.js --live --open -- -t brfs",
+    "manual": "budo test/e2e/ui-components.test.js --live --open -- -t brfs -t deglobalify",
     "manual:datasource": "budo test/e2e/datasource-control.test.js --live --open -- -t brfs",
     "manual:identifier": "budo test/e2e/identifier-control.test.js --live --open -- -t brfs",
     "start": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",

@@ -1,7 +1,9 @@
-var Rx = global.Rx = require('rx-extra');
+var Rx = global.Rx = global.Rx || require('rx-extra');
+Rx.wee = 'wee-is-here';
 var yolk = require('yolk');
 var h = yolk.h;
-var renderInDocument = require('../render-in-document');
+//var renderInDocument = require('../render-in-document');
+var render = yolk.render;
 
 var fs = require('fs');
 var insertCss = require('insert-css');
@@ -41,24 +43,40 @@ var entity = {
   },
 };
 
-var vnode = h('div', {},
-  h(BridgeDbUIElement, {
-    entity: entity,
-    onChange: function(updatedEntity) {
-      console.log('updatedEntity');
-      console.log(updatedEntity);
-      var code = document.querySelector('code');
-      var data = JSON.parse(JSON.stringify(updatedEntity));
-      var context = data.entityReference['@context'];
-      delete data['@context'];
-      delete data.entityReference['@context'];
-      code.innerHTML = jsonldMarkup(data, context);
-    },
-  }),
-  h('pre', {},
-    h('code', {
-    }, 'Change a value above and then view JSON result here')
-  )
-);
+//var vnode = h('div', {},
+//  h(BridgeDbUIElement, {
+//    entity: entity,
+//    onChange: function(updatedEntity) {
+//      console.log('updatedEntity');
+//      console.log(updatedEntity);
+//      var code = document.querySelector('code');
+//      var data = JSON.parse(JSON.stringify(updatedEntity));
+//      var context = data.entityReference['@context'];
+//      delete data['@context'];
+//      delete data.entityReference['@context'];
+//      code.innerHTML = jsonldMarkup(data, context);
+//    },
+//  }),
+//  h('pre', {},
+//    h('code', {
+//    }, 'Change a value above and then view JSON result here')
+//  )
+//);
 
-var result = renderInDocument(vnode);
+var vnode = h(BridgeDbUIElement, {
+  entity: entity,
+  onChange: function(updatedEntity) {
+    console.log('updatedEntity');
+    console.log(updatedEntity);
+  },
+});
+
+//var vnode = h('div', {}, 'hello');
+
+//var result = renderInDocument(vnode);
+
+//var document = window.document;
+var document = require('global/document');
+var node = document.createElement('div');
+document.body.appendChild(node);
+render(vnode, node);
