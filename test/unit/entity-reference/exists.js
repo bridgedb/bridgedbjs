@@ -12,7 +12,7 @@ var wd = require('wd');
 var handleResult = testUtils.handleResult;
 
 var internalContext = JSON.parse(fs.readFileSync(
-  __dirname + '/../../jsonld-context.jsonld'));
+    __dirname + '/../../jsonld-context.jsonld'));
 
 var desired = {'browserName': 'phantomjs'};
 desired.name = 'example with ' + desired.browserName;
@@ -30,26 +30,16 @@ describe('BridgeDb.EntityReference.exists', function() {
   mockserverMocha();
 
   before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
   afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
@@ -59,6 +49,7 @@ describe('BridgeDb.EntityReference.exists', function() {
 
   //*
   it('should check existence of existent entity reference (Latin)', function(done) {
+    var testCoordinator = this;
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -83,6 +74,7 @@ describe('BridgeDb.EntityReference.exists', function() {
 
   //*
   it('should check existence of existent entity reference (English)', function(done) {
+    var testCoordinator = this;
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -108,6 +100,7 @@ describe('BridgeDb.EntityReference.exists', function() {
 
   //*
   it('should check existence of non-existent entity reference (Latin)', function(done) {
+    var testCoordinator = this;
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -133,6 +126,7 @@ describe('BridgeDb.EntityReference.exists', function() {
 
   //*
   it('should check existence of non-existent entity reference (English)', function(done) {
+    var testCoordinator = this;
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',

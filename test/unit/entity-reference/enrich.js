@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
@@ -6,7 +7,7 @@ var expect = chai.expect;
 var fs = require('fs');
 var mockserverMocha  =  require('../../mockserver-mocha.js');
 var sinon      = require('sinon');
-var testUtils = require('../../test-utils');
+var testUtils = require('../../test-utils.js');
 var wd = require('wd');
 
 var handleResult = testUtils.handleResult;
@@ -20,6 +21,38 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.EntityReference.enrich', function() {
+  // NOTE: the following describes the mocha component architecture
+  //
+  // describe
+  //   this (suite)
+  //     same as
+  //       before: this.test.parent
+  //       beforeEach: this.test.parent, this.currentTest.parent
+  //       it: this.test.parent
+  // before
+  //   this (testCoordinator)
+  //     same as
+  //       beforeEach: this
+  //       it: this
+  //   this.test
+  // beforeEach
+  //   this (testCoordinator)
+  //     same as
+  //       before: this
+  //       it: this
+  //   this.test
+  //   this.currentTest
+  //     same as
+  //       it: this.test
+  // it
+  //   this (testCoordinator)
+  //     same as
+  //       beforeEach: this
+  //       before: this
+  //   this.test
+  //     same as
+  //       beforeEach: this.currentTest
+
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
   var suite = this;
   suite.allPassed = true;
@@ -28,25 +61,17 @@ describe('BridgeDb.EntityReference.enrich', function() {
 
   before(function(done) {
     var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
 
     done();
   });
 
   afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
@@ -54,14 +79,15 @@ describe('BridgeDb.EntityReference.enrich', function() {
     done();
   });
 
-  //*
   it('should enrich entity reference by identifier/datasource_name\n' +
       '        xref: false\n' +
       '        context: true\n' +
       '        dataset: true\n' +
       '        organism: false',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
+
         test.expectedPath = __dirname +
               '/Agilent-A_23_P69058-xref-false-context-true-' +
               'dataset-true-organism-false.jsonld';
@@ -76,7 +102,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
 
         bridgeDbInstance.entityReference.enrich({
           identifier: 'A_23_P69058',
-          datasource_name: 'Agilent'
+          'datasource_name': 'Agilent'
         }, {
           xref: false,
           context: true,
@@ -91,19 +117,18 @@ describe('BridgeDb.EntityReference.enrich', function() {
           return result;
         })
         .last()
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-  //*/
 
-  //*
   it('should enrich entity reference by identifier/datasource_name\n' +
       '        xref: false\n' +
       '        context: true\n' +
       '        dataset: true\n' +
       '        organism: true',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
         test.expectedPath = __dirname +
               '/Agilent-A_23_P69058-xref-false-context-true-' +
@@ -119,7 +144,7 @@ describe('BridgeDb.EntityReference.enrich', function() {
 
         bridgeDbInstance.entityReference.enrich({
           identifier: 'A_23_P69058',
-          datasource_name: 'Agilent'
+          'datasource_name': 'Agilent'
         }, {
           xref: false,
           context: true,
@@ -134,19 +159,18 @@ describe('BridgeDb.EntityReference.enrich', function() {
           return result;
         })
         .last()
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-  //*/
 
-  //*
   it('should enrich entity reference by @id\n' +
       '        xref: false\n' +
       '        context: true\n' +
       '        dataset: true\n' +
       '        organism: false',
       function(done) {
+        var testCoordinator = this;
 
         var test = this.test;
         test.expectedPath = __dirname +
@@ -179,19 +203,18 @@ describe('BridgeDb.EntityReference.enrich', function() {
           return result;
         })
         .last()
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-  //*/
 
-  //*
   it('should enrich entity reference by @id\n' +
       '        xref: false\n' +
       '        context: true\n' +
       '        dataset: true\n' +
       '        organism: true',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
 
         test.expectedPath = __dirname +
@@ -224,19 +247,18 @@ describe('BridgeDb.EntityReference.enrich', function() {
           return result;
         })
         .last()
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-      //*/
 
-  //*
   it('should enrich entity reference by @id\n' +
       '        xref: true\n' +
       '        context: false\n' +
       '        dataset: true\n' +
       '        organism: false',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
         test.expectedPath = __dirname +
             '/ncbigene-4292-xref-true-context-false-' +
@@ -275,19 +297,18 @@ describe('BridgeDb.EntityReference.enrich', function() {
           return result;
         })
         .last()
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-      //*/
 
-  //*
   it('should enrich entity reference by @id\n' +
       '        xref: true\n' +
       '        context: false\n' +
       '        dataset: true\n' +
       '        organism: true',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
         test.expectedPath = __dirname +
             '/ncbigene-4292-xref-true-context-false-' +
@@ -326,16 +347,16 @@ describe('BridgeDb.EntityReference.enrich', function() {
           expect(result.organism).to.exist;
           return result;
         })
-        .let(test.handleResult)
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
       });
-  //*/
 
   /* TODO this one no longer works. do we want to still support this functionality?
   it('should enrich entity references using createEnrichmentStream, ' +
       'with options not specified so defaults used.',
       function(done) {
+        var testCoordinator = this;
 
     lkgDataPath = __dirname +
           '/ncbigene-4292-and-bridgedb-L-1234.jsonld';

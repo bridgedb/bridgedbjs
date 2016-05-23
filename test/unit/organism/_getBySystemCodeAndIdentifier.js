@@ -29,35 +29,22 @@ describe('BridgeDb.Organism._getBySystemCodeAndIdentifier', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   it('should get organism by L and 4292', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
@@ -71,7 +58,7 @@ describe('BridgeDb.Organism._getBySystemCodeAndIdentifier', function() {
 
     bridgeDbInstance.organism._getBySystemCodeAndIdentifier('L', 4292)
     .last()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });

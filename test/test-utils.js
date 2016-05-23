@@ -16,13 +16,31 @@ var strcase = require('tower-strcase');
 
 var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
 
+/**
+ * isJSONorJSONParsable
+ *
+ * @param {String|Object} input
+ * @returns {Boolean}
+ */
+var isJSONorJSONParsable = function(input) {
+  if (typeof input === 'object') {
+    return true;
+  }
+  var result;
+  try {
+    JSON.parse(input);
+    result = true;
+  } catch(err) {
+    result = false;
+  }
+  return result;
+};
+
 function stringifyJSON(json) {
   return JSON.stringify(json, null, '  ');
 }
 
 var testUtils = (function() {
-  'use strict';
-
   var kindMappings = {
     'unchanged': {
       name: 'Unchanged',
@@ -371,32 +389,38 @@ var testUtils = (function() {
   }
 
   /**
-   * compareJson
+   * compareJsonAndHandleMismatches
    *
-   * @param {object} expected
-   * @param {object} actual
-   * @param {object} options
-   * @return {function} that creates a multiplex Observable
+   * TODO what should be in "handleResult" and what should be in compareJsonAndHandleMismatches?
+   * This fn is doing more than just comparing expected vs. actual JSON.
+   * It's also displaying the comparison and asking the user for how to handle
+   * unexpected results.
+   *
+   * @this TestCoordinator mocha testCoordinator, which is "this" for fn inside mocha "it," e.g.:
+   *                       it('...', function() {var testCoordinator = this;});
+   * @param {null|Boolean|Number|Object} expectedJson
+   * @param {null|Boolean|Number|Object} actualJson
+   * @return {Observable} eventually either ends or throws an error
    */
-  function compareJson(expectedJson, actualJson, messageOnFailure, suite, currentTest, options) {
-    options = options || {};
-    var ignoreOrder = options.ignoreOrder;
-    var done = currentTest.done;
+  function compareJsonAndHandleMismatches(expectedJson, actualJson) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.test;
+    var ignoreOrder = currentTest.ignoreOrder;
+
+    var messageOnFailure = [
+      'Failed Test:',
+      !!currentTest.parent && currentTest.parent.title,
+      currentTest.title
+    ]
+    .filter(function(str) {
+      return !!str;
+    })
+    .join(' ')
+    .red;
 
     if (deepEqual(expectedJson, actualJson)) {
       // We're good
       return Rx.Observable.empty();
-    }
-
-    if (deepEqual(expectedJson, {})) {
-      console.log('***************************************************');
-      console.log('**      New Test - No Expected JSON Available    **');
-      console.log('** If Actual JSON below is valid, save it as     **');
-      console.log('** Expected JSON with the following command:     **');
-      console.log('** gulp testClass --update=BridgeDb.Class.method **');
-      console.log('***************************************************');
-      displayActualJson(actualJson);
-      return Rx.Observable.throw(new Error('TODO enable user to specify to save.'));
     }
 
     var expectedToCompare;
@@ -434,9 +458,6 @@ var testUtils = (function() {
       expectedToCompare = expectedJson;
       actualToCompare = actualJson;
     }
-
-    // TODO still need to handle case of getting more than one failed test.
-    done(new Error('JSON results do not match.'));
 
     var jsonDiffs = diffDeep(expectedToCompare, actualToCompare)
     .reduce(function(accumulator, diffResult) {
@@ -517,15 +538,18 @@ var testUtils = (function() {
         content: coloredSideStrings.rhs,
         //height: coloredSideStrings.rhs.split('\n').length * 3,
       },
-      delayedRender: function(cb) {
-        after(function(next) {
-          next(null);
-          setTimeout(function() {
-            cb();
-          }, 500);
-        });
-      }
+//      delayedRender: function(cb) {
+//        after(function(next) {
+//          next(null);
+//          setTimeout(function() {
+//            cb();
+//          }, 500);
+//        });
+//      }
     });
+
+    //return Rx.Observable.throw(new Error('JSON results do not match.'));
+
   }
 
   /**
@@ -586,38 +610,70 @@ var testUtils = (function() {
     return updateEnabled;
   }
 
-  function handleResult(suite, currentTest, source) {
-    var messageOnFailure = [
-      'Failed Test:',
-      !!currentTest.parent && currentTest.parent.title,
-      currentTest.title
-    ]
-    .filter(function(str) {
-      return !!str;
-    })
-    .join(' ');
+  /**
+   * handleResult
+   *
+   * @this TestCoordinator mocha testCoordinator, which is "this" for fn inside mocha "it," e.g.:
+   *                       it('...', function() {var testCoordinator = this;});
+   * @param {Observable} source containing actual result
+   * @return {Observable} eventually either ends or throws an error
+   */
+  function handleResult(source) {
+    var testCoordinator = this;
+    var currentTest = testCoordinator.test;
 
     // Find whether user requested to update the expected JSON result
+    var suite = testCoordinator.test.parent;
     var updateAll = getUpdateState(suite.title);
 
     var expected = currentTest.expected;
     var expectedPath = currentTest.expectedPath;
-    if (typeof expected === 'undefined') {
-      var expectedString = getLkgDataString(expectedPath);
-      expected = JSON.parse(expectedString);
+    if (typeof expected === 'undefined' && typeof expectedPath === 'undefined') {
+      var message = [
+        'No expected value provided.',
+        'Suggestion: specify "expected" or "expectedPath" in test, e.g.:',
+        'it(\'...\', function() {this.test.expected = {a: 1};})',
+        'or',
+        'it(\'...\', function() {this.test.expectedPath = __dirname + \'/abc.json\';})',
+      ].join('\n');
+      return Rx.Observable.throw(message);
+    } else if (typeof expected === 'undefined') {
+      var expectedFileExists = fs.existsSync(expectedPath);
+      if (expectedFileExists) {
+        expected = JSON.parse(
+            fs.readFileSync(expectedPath, {
+              encoding: 'utf8'
+            })
+        );
+      }
     }
-    var options = {};
-    options.ignoreOrder = currentTest.ignoreOrder;
-
     return source
     .flatMap(function(actual) {
+      if (!isJSONorJSONParsable(actual)) {
+        console.log('***************************************************');
+        console.log('**      Invalid Actual Result    **');
+        console.log(actual);
+        console.log('***************************************************');
+        return Rx.Observable.throw('actual (above) is neither JSON nor string parsable as JSON');
+      }
+
       if (updateAll) {
         return Rx.Observable.return(JSON.stringify(actual, null, '  '))
         .let(RxFs.createWriteObservable(expectedPath));
       }
 
+      if (typeof expected === 'undefined') {
+        console.log('***************************************************');
+        console.log('**      New Test - No Expected JSON Available    **');
+        console.log('** Saved actual JSON (below) to "' + expectedPath.green.bold + '" **');
+        console.log('***************************************************');
+        displayActualJson(actual);
+        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
+        .let(RxFs.createWriteObservable(expectedPath));
+      }
+
       var outputPath;
-      return compareJson(expected, actual, messageOnFailure.red, suite, currentTest, options)
+      return compareJsonAndHandleMismatches.call(testCoordinator, expected, actual)
       .flatMap(function(userResponseOnFailure) {
         console.log('userResponseOnFailure:"' + userResponseOnFailure + '"');
         if (!expectedPath) {
@@ -637,9 +693,9 @@ var testUtils = (function() {
   }
 
   return {
-    compareJson:compareJson,
-    getLkgDataString:getLkgDataString,
-    getUpdateState:getUpdateState,
+    compareJsonAndHandleMismatches: compareJsonAndHandleMismatches,
+    getLkgDataString: getLkgDataString,
+    getUpdateState: getUpdateState,
     handleResult: handleResult
   };
 })();

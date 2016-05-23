@@ -40,36 +40,23 @@ describe('BridgeDb.Xref.get', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   //*
   it('should get xrefs (input: map w/ Entrez Gene, 4292, Homo sapiens)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
         '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
@@ -98,7 +85,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -106,6 +93,7 @@ describe('BridgeDb.Xref.get', function() {
 
   //*
   it('should get xrefs (input: map w/ systemCode, 4292, nameLanguageMap.la)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
         '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
@@ -140,7 +128,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -148,6 +136,7 @@ describe('BridgeDb.Xref.get', function() {
 
   //*
   it('should get xrefs (input: map w/ Entrez Gene, 1234, Human)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
         '/ncbigene-1234-xrefs-by-datasource_name-identifier-organism-name.jsonld';
@@ -176,7 +165,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -184,8 +173,10 @@ describe('BridgeDb.Xref.get', function() {
 
   /* TODO this might not work
   it('should get xrefs (input: map w/ Homo%20sapiens BridgeDb endpoint)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
+    var testCoordinator = this;
     var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
 
     var bridgeDbInstance = new BridgeDb({
@@ -210,7 +201,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -250,6 +241,7 @@ describe('BridgeDb.Xref.get', function() {
 
   //*
   it('should get xrefs (input: map w/ Human BridgeDb endpoint)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs-human.jsonld';
     test.ignoreOrder = true;
@@ -275,7 +267,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -283,6 +275,7 @@ describe('BridgeDb.Xref.get', function() {
 
   //*
   it('should get xrefs (input: map w/ identifiers IRI)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
@@ -308,7 +301,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -316,6 +309,7 @@ describe('BridgeDb.Xref.get', function() {
 
   /* TODO this does not work
   it('should get xrefs (input: array)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     console.log('test.ctx');
     console.log(test.ctx);
@@ -354,7 +348,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
@@ -362,6 +356,7 @@ describe('BridgeDb.Xref.get', function() {
 
   /* TODO this does not work
   it('should get xrefs (input: Observable)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-1234-4292-xrefs.jsonld';
     test.ignoreOrder = true;
@@ -394,7 +389,7 @@ describe('BridgeDb.Xref.get', function() {
           standardBridgeDbApiUrlStub
         ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });

@@ -1,6 +1,16 @@
 {
   "@context": {
     "@vocab": "http://bridgedb.org/input-vocab/",
+    "id": {
+      "reverse": false,
+      "@id": "@id",
+      "@type": "@id"
+    },
+    "type": {
+      "reverse": false,
+      "@id": "@type",
+      "@type": "@id"
+    },
     "Dataset": {
       "reverse": false,
       "@id": "http://rdfs.org/ns/void#Dataset",
@@ -29,6 +39,21 @@
     "EntityReference": {
       "reverse": false,
       "@id": "http://www.biopax.org/release/biopax-level3.owl#EntityReference",
+      "@type": "@id"
+    },
+    "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+      "reverse": false,
+      "@id": "http://www.biopax.org/release/biopax-level3.owl#entityReference",
+      "@type": "@id"
+    },
+    "biopax:entityReference": {
+      "reverse": false,
+      "@id": "http://www.biopax.org/release/biopax-level3.owl#entityReference",
+      "@type": "@id"
+    },
+    "entityReference": {
+      "reverse": false,
+      "@id": "http://www.biopax.org/release/biopax-level3.owl#entityReference",
       "@type": "@id"
     },
     "xref": {
@@ -230,10 +255,6 @@
       "@id": "http://vocabularies.wikipathways.org/gpml#",
       "@type": "@vocab"
     },
-    "id": {
-      "reverse": false,
-      "@id": "@id"
-    },
     "identifier": {
       "reverse": false,
       "@id": "http://rdaregistry.info/Elements/u/P60052",
@@ -338,10 +359,6 @@
       "reverse": false,
       "@id": "http://purl.org/dc/terms/subject",
       "@type": "@id"
-    },
-    "type": {
-      "reverse": false,
-      "@id": "@type"
     },
     "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
       "reverse": false,

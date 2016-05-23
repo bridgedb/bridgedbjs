@@ -30,37 +30,24 @@ describe('BridgeDb.Organism.get', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   /* TODO Doesn't work yet
   it('should get organism by @id',
       function(done) {
+    var testCoordinator = this;
 
     var expectedPath = __dirname +
           '/ncbigene-4292-organism.jsonld';
@@ -105,6 +92,7 @@ describe('BridgeDb.Organism.get', function() {
   //*/
 
   it('should get organism by name (Latin/string)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -118,12 +106,13 @@ describe('BridgeDb.Organism.get', function() {
 
     bridgeDbInstance.organism.get('Homo sapiens')
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get organism by name (Latin/object)',  function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -140,12 +129,13 @@ describe('BridgeDb.Organism.get', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get organism by name (English)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -164,13 +154,14 @@ describe('BridgeDb.Organism.get', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
 //  TODO this is waiting for entity reference to be Rx-ified.
 //  it('should get organism by entity reference identifiers IRI', function(done) {
+//    var testCoordinator = this;
 //    var expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 //    var handleResultBySource = handleResultWithUpdateSpecified.bind(
 //        null, expectedPath);

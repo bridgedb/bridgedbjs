@@ -107,10 +107,10 @@ describe('create a combo ui element', function() {
       expect(node.tagName).to.equal('DIV');
       //expect(spy.callCount).to.equal(1);
 
-      var xrefSearchEl = node.querySelector('#xref-search-input');
-      var $xrefSearch = $(xrefSearchEl);
-      expect(xrefSearchEl.tagName).to.equal('INPUT');
-      expect($xrefSearch.val()).to.equal('');
+      var entityReferenceSearchEl = node.querySelector('#entity-reference-search-input');
+      var $entityReferenceSearch = $(entityReferenceSearchEl);
+      expect(entityReferenceSearchEl.tagName).to.equal('INPUT');
+      expect($entityReferenceSearch.val()).to.equal('');
 
       var entityTypeEl = node.querySelector('select');
       var $entityType = $(entityTypeEl);
@@ -148,10 +148,10 @@ describe('create a combo ui element', function() {
 //    setTimeout(function() {
 //      expect(node.tagName).to.equal('DIV');
 //
-//      var xrefSearchEl = node.querySelector('#xref-search-input');
-//      var $xrefSearch = $(xrefSearchEl);
-//      expect(xrefSearchEl.tagName).to.equal('INPUT');
-//      expect($xrefSearch.val()).to.equal('');
+//      var entityReferenceSearch = node.querySelector('#entity-reference-search-input');
+//      var $entityReferenceSearch = $(entityReferenceSearch);
+//      expect(entityReferenceSearch.tagName).to.equal('INPUT');
+//      expect($entityReferenceSearch.val()).to.equal('');
 //
 //      var entityTypeEl = node.querySelector('select');
 //      var $entityType = $(entityTypeEl);
@@ -194,10 +194,10 @@ describe('create a combo ui element', function() {
     setTimeout(function() {
       expect(node.tagName).to.equal('DIV');
 
-      var xrefSearchEl = node.querySelector('#xref-search-input');
-      var $xrefSearch = $(xrefSearchEl);
-      expect(xrefSearchEl.tagName).to.equal('INPUT');
-      expect($xrefSearch.val()).to.equal('');
+      var entityReferenceSearchEl = node.querySelector('#entity-referenceSearch-search-input');
+      var $entityReferenceSearch = $(entityReferenceSearchEl);
+      expect(entityReferenceSearchEl.tagName).to.equal('INPUT');
+      expect($entityReferenceSearch.val()).to.equal('');
 
       var entityTypeEl = node.querySelector('select');
       var $entityType = $(entityTypeEl);

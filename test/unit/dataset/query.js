@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
@@ -28,35 +29,22 @@ describe('BridgeDb.Dataset.query', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   it('should fetch metadata for all datasets at BridgeDb', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/datasets.jsonld';
 
@@ -71,12 +59,13 @@ describe('BridgeDb.Dataset.query', function() {
 
     bridgeDbInstance.dataset.query()
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should fetch metadata for datasets by @id', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +  '/query-result-entrez-gene.jsonld';
 
@@ -93,12 +82,13 @@ describe('BridgeDb.Dataset.query', function() {
       '@id': 'http://identifiers.org/ncbigene/'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should fetch metadata for datasets by name', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/query-result-entrez-gene.jsonld';
 
@@ -116,13 +106,14 @@ describe('BridgeDb.Dataset.query', function() {
       name: 'Entrez Gene'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   describe('fetch metadata for datasets by name and exampleIdentifier', function(done) {
     it('should work for Entrez Gene', function(done) {
+      var testCoordinator = this;
       var test = this.test;
       test.expectedPath = __dirname + '/query-result-entrez-gene.jsonld';
 
@@ -141,12 +132,13 @@ describe('BridgeDb.Dataset.query', function() {
         'http://identifiers.org/idot/exampleIdentifier': '1234'
       })
       .toArray()
-      .let(test.handleResult)
+      .let(handleResult.bind(testCoordinator))
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
 
     it('should work for Agilent', function(done) {
+      var testCoordinator = this;
       var test = this.test;
       test.expectedPath = __dirname + '/query-result-agilent.jsonld';
 
@@ -165,7 +157,7 @@ describe('BridgeDb.Dataset.query', function() {
         'http://identifiers.org/idot/exampleIdentifier': 'A_23_P69058'
       })
       .toArray()
-      .let(test.handleResult)
+      .let(handleResult.bind(testCoordinator))
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
@@ -174,6 +166,7 @@ describe('BridgeDb.Dataset.query', function() {
 //  // TODO AP, you can add use cases for pvjs editor dropdowns here
   describe('fetch metadata for datasets by subject', function() {
     it('should work for metabolites', function(done) {
+      var testCoordinator = this;
       var test = this.test;
       // TODO
       test.expectedPath = __dirname + '/query-by-type-subject.jsonld';
@@ -192,7 +185,7 @@ describe('BridgeDb.Dataset.query', function() {
         'http://purl.org/dc/terms/subject': 'http://vocabularies.wikipathways.org/gpml#Metabolite'
       })
       .toArray()
-      .let(test.handleResult)
+      .let(handleResult.bind(testCoordinator))
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
@@ -203,6 +196,7 @@ describe('BridgeDb.Dataset.query', function() {
   describe('should fetch metadata for datasets by exampleIdentifier', function(done) {
 
     it('should work for 1234 (e.g., Entrez Gene)', function(done) {
+      var testCoordinator = this;
       var test = this.test;
       test.expectedPath = __dirname + '/query-example-identifier-1234.jsonld';
 
@@ -219,7 +213,7 @@ describe('BridgeDb.Dataset.query', function() {
         'http://identifiers.org/idot/exampleIdentifier': '1234'
       })
       .toArray()
-      .let(test.handleResult)
+      .let(handleResult.bind(testCoordinator))
       .doOnError(done)
       .subscribeOnCompleted(done);
     });
@@ -228,6 +222,7 @@ describe('BridgeDb.Dataset.query', function() {
 //    // probably bc the probabilities t/f are set poorly
 //    // for the regexes.
 //    it('should work for A_23_P69058 (e.g., Agilent)', function(done) {
+//      var testCoordinator = this;
 //      var test = this.test;
 //      test.expectedPath = __dirname + '/query-example-identifier-A_23_P69058.jsonld';
 //
@@ -244,7 +239,7 @@ describe('BridgeDb.Dataset.query', function() {
 //        'http://identifiers.org/idot/exampleIdentifier': 'A_23_P69058'
 //      })
 //      .toArray()
-//      .let(test.handleResult)
+//      .let(handleResult.bind(testCoordinator))
 //      .doOnError(done)
 //      .subscribeOnCompleted(done);
 //    });

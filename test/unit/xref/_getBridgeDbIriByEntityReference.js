@@ -26,35 +26,22 @@ describe('BridgeDb.Xref._getBridgeDbIriByEntityReference', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   it('should get by plain object with all required properties', function() {
+    var testCoordinator = this;
     var test = this.test;
     test.expected = 'http://webservice.bridgedb.org/Homo%20sapiens/xrefs/L/4292';
 

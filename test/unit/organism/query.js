@@ -29,35 +29,22 @@ describe('BridgeDb.Organism.query', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   it('should fetch all organisms', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/all-organism.jsonld';
 
@@ -71,12 +58,13 @@ describe('BridgeDb.Organism.query', function() {
 
     bridgeDbInstance.organism.query()
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should query organisms by name (Latin/string)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -90,12 +78,13 @@ describe('BridgeDb.Organism.query', function() {
 
     bridgeDbInstance.organism.query('Homo sapiens')
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should query organisms by name (Latin/object)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -112,12 +101,13 @@ describe('BridgeDb.Organism.query', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should query organisms by name (English)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 
@@ -134,13 +124,14 @@ describe('BridgeDb.Organism.query', function() {
       '@type': 'Organism'
     })
     .toArray()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
 // TODO waiting to finish Rxifying EntityReference.js before getting this
 //  it('should query organisms by entity reference identifiers IRI', function(done) {
+//    var testCoordinator = this;
 //    var expectedPath = __dirname + '/ncbigene-4292-organism.jsonld';
 //    var handleResultBySource = handleResultByexpectedPathAndSource.bind(
 //        null, expectedPath);

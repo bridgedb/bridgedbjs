@@ -6,6 +6,7 @@ var Rx = require('rx');
 var blessed = require('blessed');
 
 module.exports = function(options) {
+
   var delayedRender = options.delayedRender;
   var screen;
 

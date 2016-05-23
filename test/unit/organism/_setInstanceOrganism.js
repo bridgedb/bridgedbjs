@@ -32,35 +32,22 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
 
   mockserverMocha();
 
-  before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    done();
+  before(function() {
   });
 
-  beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
-    done();
+  beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
-    done();
+  after(function() {
   });
 
   it('should set as Homo sapiens', function() {
+    var testCoordinator = this;
     var test = this.test;
     test.expected = undefined;
 
@@ -75,6 +62,7 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
   });
 
   it('should set as Homo sapiens, then get', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
@@ -87,12 +75,13 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     bridgeDbInstance.organism._setInstanceOrganism('Homo sapiens');
 
     bridgeDbInstance.organism._getInstanceOrganism()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should _getInstanceOrganism by entity reference', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
@@ -107,12 +96,13 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
       '@type': 'EntityReference'
     })
     .last()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should set by entity reference, then get', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
@@ -128,12 +118,13 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     });
 
     bridgeDbInstance.organism._getInstanceOrganism()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should set as pre-normalized Homo sapiens, then get', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/homo-sapiens.jsonld';
 
@@ -146,7 +137,7 @@ describe('BridgeDb.Organism._setInstanceOrganism', function() {
     bridgeDbInstance.organism._setInstanceOrganism(homoSapiens);
 
     bridgeDbInstance.organism._getInstanceOrganism()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });

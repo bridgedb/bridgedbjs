@@ -32,26 +32,16 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   mockserverMocha();
 
   before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
   afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
@@ -61,9 +51,11 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
 
   //*
   it('should free search for entity references (Latin/single instance)', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/hits-for-pdha1-mus-musculus.jsonld';
 
+    // TODO why are we not using mockserver URLs below?
     var bridgeDb1 = new BridgeDb({
       baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -85,7 +77,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
         standardBridgeDbApiUrlStub
       ));
     })
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
 
@@ -95,6 +87,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   //*
   it('should free search for entity references (English/single instance)',
       function(done) {
+        var testCoordinator = this;
         var test = this.test;
         test.expectedPath = __dirname + '/hits-for-agt-mouse.jsonld';
         var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
@@ -110,20 +103,24 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
           organism: 'Mouse'
         })
         .toArray()
-        .map(function(currentXrefs) {
-          return JSON.parse(JSON.stringify(currentXrefs)
+        .map(function(actualXrefs) {
+          return JSON.parse(JSON.stringify(actualXrefs)
           .replace(
             new RegExp(bridgeDb1.config.baseIri, 'g'),
             standardBridgeDbApiUrlStub
           ));
         })
-        .map(function(currentXrefs) {
-          var currentStringifiedXrefs = currentXrefs.map(JSON.stringify);
-          var expectedStringifiedXrefs = expected.map(JSON.stringify);
-          var intersection = _.intersection(currentStringifiedXrefs, expectedStringifiedXrefs);
-          return expect(intersection.length).to.equal(currentStringifiedXrefs.length);
+        .map(function(actualXrefs) {
+          var actualStringifiedXrefs = actualXrefs
+          .map(JSON.stringify);
+
+          var expectedStringifiedXrefs = expected
+          .map(JSON.stringify);
+
+          var intersection = _.intersection(actualStringifiedXrefs, expectedStringifiedXrefs);
+          return expect(intersection.length).to.equal(actualStringifiedXrefs.length);
         })
-        //.let(test.handleResult)
+        //.let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
 
@@ -133,6 +130,7 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   /*
   it('should free search for entity references (English&Latin/multi-instance)',
       function(done) {
+        var testCoordinator = this;
 
     lkgDataPath = __dirname +
           '/hits-for-nfkb1-and-agt-mouse.jsonld';

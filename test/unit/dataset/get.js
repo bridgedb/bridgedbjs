@@ -13,7 +13,7 @@ var wd = require('wd');
 var handleResult = testUtils.handleResult;
 
 var internalContext = JSON.parse(fs.readFileSync(
-  __dirname + '/../../jsonld-context.jsonld'));
+    __dirname + '/../../jsonld-context.jsonld'));
 
 var desired = {'browserName': 'phantomjs'};
 desired.name = 'example with ' + desired.browserName;
@@ -30,26 +30,16 @@ describe('BridgeDb.Dataset.get', function() {
   mockserverMocha();
 
   before(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
     done();
   });
 
   beforeEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
-
-    currentTest.handleResult = handleResult.bind(
-        null, suite, currentTest);
-
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
   afterEach(function(done) {
-    var testCoordinator = this;
-    var currentTest = testCoordinator.currentTest;
-    suite.allPassed = suite.allPassed && (currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
     done();
   });
 
@@ -58,6 +48,7 @@ describe('BridgeDb.Dataset.get', function() {
   });
 
   it('should get metadata by provider @id', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
@@ -74,12 +65,13 @@ describe('BridgeDb.Dataset.get', function() {
       '@id': 'http://www.ncbi.nlm.nih.gov/gene/'
     })
     .last()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get metadata by identifiers.org @id', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
@@ -96,12 +88,13 @@ describe('BridgeDb.Dataset.get', function() {
       '@id': 'http://identifiers.org/ncbigene/'
     })
     .last()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get metadata by non-normalized identifiers.org @id', function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/entrez-gene-dataset-metadata.jsonld';
 
@@ -118,12 +111,13 @@ describe('BridgeDb.Dataset.get', function() {
       '@id': 'http://identifiers.org/ncbigene'
     })
     .last()
-    .let(test.handleResult)
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
 
   it('should get metadata by datasource_name and exampleIdentifier', function(done) {
+    var testCoordinator = this;
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -149,6 +143,7 @@ describe('BridgeDb.Dataset.get', function() {
   describe('Get BridgeDb system code by BridgeDb conventional name (GPML Datasource)', function() {
 
     it('should get for "Entrez Gene" by datasource_name', function(done) {
+      var testCoordinator = this;
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -171,6 +166,7 @@ describe('BridgeDb.Dataset.get', function() {
     });
 
     it('should get for "Ensembl" by datasource_name', function(done) {
+      var testCoordinator = this;
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -197,6 +193,7 @@ describe('BridgeDb.Dataset.get', function() {
     });
 
     it('should get for "KNApSAcK" by datasource_name', function(done) {
+      var testCoordinator = this;
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -219,6 +216,7 @@ describe('BridgeDb.Dataset.get', function() {
     });
 
     it('should get for "Uniprot-TrEMBL" by datasource_name', function(done) {
+      var testCoordinator = this;
       var bridgeDbInstance = new BridgeDb({
         //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
         baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',

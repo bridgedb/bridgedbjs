@@ -20,24 +20,24 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb', function() {
-  var allPassed = true;
+  var suite = this;
+  suite.allPassed = true;
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org';
   // if we want to update the expected JSON result
   var updateExpectedJson = false;
 
-  before(function(done) {
-    done();
+  before(function() {
   });
 
   beforeEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  afterEach(function(done) {
-    allPassed = allPassed && (this.currentTest.state === 'passed');
-    done();
+  afterEach(function() {
+    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
   });
 
-  after(function(done) {
+  after(function() {
     done();
   });
 
