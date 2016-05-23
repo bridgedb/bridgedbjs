@@ -30,13 +30,113 @@ var isJSONorJSONParsable = function(input) {
   try {
     JSON.parse(input);
     result = true;
-  } catch(err) {
+  } catch (err) {
     result = false;
   }
   return result;
 };
 
-function stringifyJSON(json) {
+/**
+ * normalizedCompareForSort
+ *
+ * both
+ *   {a:1} > {b:1}
+ * and
+ *   {a:1} > {b:1}
+ * return false
+ *
+ * For normalizedSort, I want to be able to sort
+ * by properties where the value(s) is/are plain
+ * objects, meaning one of the above must return
+ * true.
+ *
+ * @param {any} a
+ * @param {any} b
+ * @returns {Boolean}
+ */
+var normalizedCompareForSort = function(a, b) {
+  var aToCompare;
+  var bToCompare;
+  if ((_.isString(a) && _.isString(b)) ||
+      (_.isNumber(a) && _.isNumber(b)) ||
+      (_.isBoolean(a) && _.isBoolean(b))) {
+    aToCompare = a;
+    bToCompare = b;
+  } else {
+    aToCompare = JSON.stringify(a);
+    aToCompare = JSON.stringify(b);
+  }
+
+  if (a > b) {
+    return 1;
+  } else if (a < b) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+/**
+ * normalizedSort
+ *
+ * Used to ignore order for array results from tests
+ * when comparing expected vs. actual
+ *
+ * @param {any} a
+ * @param {any} b
+ * @returns {Boolean}
+ */
+var normalizedSort = function(a, b) {
+  if (!_.isPlainObject(a) || !_.isPlainObject(b)) {
+    return normalizedCompareForSort(a, b);
+  }
+
+  var aKeys = _.keys(a);
+  var bKeys = _.keys(b);
+  var commonKeysWithNonEqualTruthyValues = _.intersection(aKeys, bKeys)
+  .filter(function(key) {
+    return !_.isEmpty(a[key]) && !_.isEmpty(b[key]);
+  })
+  .filter(function(key) {
+    return JSON.stringify(a[key]) !== JSON.stringify(b[key]);
+  })
+  .sort(function(key1, key2) {
+    if (key1 > key2) {
+      return 1;
+    }
+    if (key1 < key2) {
+      return -1;
+    }
+    return 0;
+  });
+
+  var identifyingKeys = [
+    'id',
+    'name',
+    'db',
+    'identifier',
+  ];
+  var primarySortKey = commonKeysWithNonEqualTruthyValues
+  .find(function(key) {
+    return identifyingKeys.indexOf(key) > -1;
+  });
+  if (primarySortKey) {
+    return normalizedCompareForSort(a[primarySortKey], b[primarySortKey]);
+  } else {
+    var nonIdentifyingKeys = ['@context'];
+    var fallbackSortKey = commonKeysWithNonEqualTruthyValues
+    .find(function(key) {
+      return nonIdentifyingKeys.indexOf(key) === -1;
+    });
+    if (fallbackSortKey) {
+      return normalizedCompareForSort(a[fallbackSortKey], b[fallbackSortKey]);
+    } else {
+      return normalizedCompareForSort(a, b);
+    }
+  }
+};
+
+function stringifyJSONReadable(json) {
   return JSON.stringify(json, null, '  ');
 }
 
@@ -109,8 +209,8 @@ var testUtils = (function() {
       expected: expected,
       actual: actual
     };
-    var expectedString = stringifyJSON(expected);
-    var actualString = stringifyJSON(actual);
+    var expectedString = stringifyJSONReadable(expected);
+    var actualString = stringifyJSONReadable(actual);
     if (actualString === expectedString) {
       result.kind = 'unchanged';
       return [result];
@@ -153,8 +253,8 @@ var testUtils = (function() {
           }
         });
       }
-      var expectedArrayStrings = expected.map(stringifyJSON);
-      var actualArrayStrings = actual.map(stringifyJSON);
+      var expectedArrayStrings = expected.map(stringifyJSONReadable);
+      var actualArrayStrings = actual.map(stringifyJSONReadable);
       return _.zip(expected, expectedArrayStrings, actual, actualArrayStrings)
       .map(function(zipped) {
         var expectedItem = zipped[0];
@@ -195,14 +295,14 @@ var testUtils = (function() {
       var editedProperties = [];
       var intersectionResults = intersectionKeys.map(function(intersectionKey) {
         var expectedValue = expected[intersectionKey];
-        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedValueString = stringifyJSONReadable(expectedValue);
         var expectedProperty = {};
         expectedProperty[intersectionKey] = expectedValue;
 
         var actualValue = actual[intersectionKey];
         var actualProperty = {};
         actualProperty[intersectionKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
+        var actualValueString = stringifyJSONReadable(actualValue);
 
         var resultItem = {
           expected: expectedProperty,
@@ -225,7 +325,7 @@ var testUtils = (function() {
       });
       var xorResults = xorKeys.map(function(xorKey) {
         var expectedValue = expected[xorKey];
-        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedValueString = stringifyJSONReadable(expectedValue);
         var expectedProperty = {};
         expectedProperty[xorKey] = expectedValue;
         var expectedHasProperty = expected.hasOwnProperty(xorKey);
@@ -233,7 +333,7 @@ var testUtils = (function() {
         var actualValue = actual[xorKey];
         var actualProperty = {};
         actualProperty[xorKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
+        var actualValueString = stringifyJSONReadable(actualValue);
         var actualHasProperty = actual.hasOwnProperty(xorKey);
 
         var resultItem = {};
@@ -324,14 +424,14 @@ var testUtils = (function() {
 
       var intersectionResults = intersectionKeys.map(function(intersectionKey) {
         var expectedValue = expected[intersectionKey];
-        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedValueString = stringifyJSONReadable(expectedValue);
         var expectedProperty = {};
         expectedProperty[intersectionKey] = expectedValue;
 
         var actualValue = actual[intersectionKey];
         var actualProperty = {};
         actualProperty[intersectionKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
+        var actualValueString = stringifyJSONReadable(actualValue);
 
         var resultItem = {
           expected: expectedProperty,
@@ -347,14 +447,14 @@ var testUtils = (function() {
       });
       var xorResults = xorKeys.map(function(xorKey) {
         var expectedValue = expected[xorKey];
-        var expectedValueString = stringifyJSON(expectedValue);
+        var expectedValueString = stringifyJSONReadable(expectedValue);
         var expectedProperty = {};
         expectedProperty[xorKey] = expectedValue;
 
         var actualValue = actual[xorKey];
         var actualProperty = {};
         actualProperty[xorKey] = actualValue;
-        var actualValueString = stringifyJSON(actualValue);
+        var actualValueString = stringifyJSONReadable(actualValue);
 
         var resultItem = {};
 
@@ -425,29 +525,20 @@ var testUtils = (function() {
 
     var expectedToCompare;
     var actualToCompare;
-    if (ignoreOrder) {
-      var expectedStringifiedList = expectedJson.map(JSON.stringify);
-      var actualStringifiedList = actualJson.map(JSON.stringify);
+    if (ignoreOrder && _.isArray(expectedJson) && _.isArray(actualJson)) {
+      var expectedStringifiedList = expectedJson
+      .map(JSON.stringify);
 
-      var sorter = function(a, b) {
-        if (a.id !== b.id) {
-          return a.id > b.id;
-        } else if (a.name !== b.name) {
-          return a.name > b.name;
-        } else if (a.identifier !== b.identifier) {
-          return a.identifier > b.identifier;
-        } else {
-          return JSON.stringify(a) > JSON.stringify(b);
-        }
-      };
+      var actualStringifiedList = actualJson
+      .map(JSON.stringify);
 
       expectedToCompare = _.difference(expectedStringifiedList, actualStringifiedList)
       .map(JSON.parse)
-      .sort(sorter);
+      .sort(normalizedSort);
 
       actualToCompare = _.difference(actualStringifiedList, expectedStringifiedList)
       .map(JSON.parse)
-      .sort(sorter);
+      .sort(normalizedSort);
 
       if (deepEqual(expectedToCompare, actualToCompare)) {
         // We're good, except for sort order, which we can ignore
@@ -472,9 +563,9 @@ var testUtils = (function() {
 
     var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
       var kindMapping = kindMappings[jsonDiff.kind];
-      var lhsColoredString = stringifyJSON(jsonDiff.expected)
+      var lhsColoredString = stringifyJSONReadable(jsonDiff.expected)
         [kindMapping.lhs.color][kindMapping.lhs.bgColor];
-      var rhsColoredString = stringifyJSON(jsonDiff.actual)
+      var rhsColoredString = stringifyJSONReadable(jsonDiff.actual)
         [kindMapping.rhs.color][kindMapping.rhs.bgColor];
       return {
         lhs: lhsColoredString,
@@ -665,7 +756,7 @@ var testUtils = (function() {
       if (typeof expected === 'undefined') {
         console.log('***************************************************');
         console.log('**      New Test - No Expected JSON Available    **');
-        console.log('** Saved actual JSON (below) to "' + expectedPath.green.bold + '" **');
+        console.log('** Saving actual JSON (below) to "' + expectedPath.green.bold + '..." **');
         console.log('***************************************************');
         displayActualJson(actual);
         return Rx.Observable.return(JSON.stringify(actual, null, '  '))

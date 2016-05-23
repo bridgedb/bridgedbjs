@@ -26,18 +26,6 @@ describe('BridgeDb.Xref.get', function() {
   var suite = this;
   suite.allPassed = true;
 
-  var sorter = function(a, b) {
-    if (a.id !== b.id) {
-      return a.id > b.id;
-    } else if (a.name !== b.name) {
-      return a.name > b.name;
-    } else if (a.identifier !== b.identifier) {
-      return a.identifier > b.identifier;
-    } else {
-      return JSON.stringify(a) > JSON.stringify(b);
-    }
-  };
-
   mockserverMocha();
 
   before(function() {
@@ -76,14 +64,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+            new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+            standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -91,7 +78,7 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: map w/ systemCode, 4292, nameLanguageMap.la)', function(done) {
     var testCoordinator = this;
     var test = this.test;
@@ -134,7 +121,7 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: map w/ Entrez Gene, 1234, Human)', function(done) {
     var testCoordinator = this;
     var test = this.test;
@@ -207,7 +194,7 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: map w/ Homo sapiens BridgeDb endpoint)', function(done) {
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
@@ -239,7 +226,7 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: map w/ Human BridgeDb endpoint)', function(done) {
     var testCoordinator = this;
     var test = this.test;
@@ -273,7 +260,7 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  //*
+  /*
   it('should get xrefs (input: map w/ identifiers IRI)', function(done) {
     var testCoordinator = this;
     var test = this.test;
