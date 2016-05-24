@@ -100,8 +100,8 @@ NP_001245202	RefSeq
 uc062ibf.1	UCSC Genome Browser
 NP_001245203	RefSeq
 GO:0008630	GeneOntology
-NM_001258274	RefSeq
 uc003cgo.4	UCSC Genome Browser
+NM_001258274	RefSeq
 uc011ayd.3	UCSC Genome Browser
 NM_001258273	RefSeq
 P40692	Uniprot-TrEMBL
@@ -116,7 +116,6 @@ GO:0007060	GeneOntology
 GO:0016887	GeneOntology
 GO:0045950	GeneOntology
 A_14_P105437	Agilent
-8078544	Affy
 120436	OMIM
 GO:0005694	GeneOntology
 A_33_P3419720	Agilent

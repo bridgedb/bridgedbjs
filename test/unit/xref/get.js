@@ -47,9 +47,8 @@ describe('BridgeDb.Xref.get', function() {
     var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
-        '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+        '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -78,14 +77,13 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  /*
+  //*
   it('should get xrefs (input: map w/ systemCode, 4292, nameLanguageMap.la)', function(done) {
     var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
-        '/ncbigene-4292-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+        '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -106,14 +104,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -121,14 +118,18 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  /*
-  it('should get xrefs (input: map w/ Entrez Gene, 1234, Human)', function(done) {
+  //*
+  it([
+    'should get xrefs. input is a map w/ these properties:',
+      'organism: Human',
+      'datasource_name: Entrez Gene (ncbigene)',
+      'identifier: 1234',
+  ].join('\n\t\t\t'), function(done) {
     var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname +
-        '/ncbigene-1234-xrefs-by-datasource_name-identifier-organism-name.jsonld';
+        '/ncbigene-1234-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -143,14 +144,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -158,20 +158,24 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  /* TODO this might not work
-  it('should get xrefs (input: map w/ Homo%20sapiens BridgeDb endpoint)', function(done) {
+  //*
+  it([
+    'should get xrefs. input is a map w/ a BridgeDb endpoint:',
+      'organism in endpoint: Homo%20sapiens',
+      'symbol (for datasource) in endpoint: L (ncbigene)',
+      'identifier in endpoint: 4292',
+  ].join('\n\t\t\t'), function(done) {
     var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
-    var testCoordinator = this;
-    var expected = JSON.parse(fs.readFileSync(test.expectedPath, {encoding: 'utf8'}));
+    test.ignoreOrder = true;
 
     var bridgeDbInstance = new BridgeDb({
-      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-        //'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
     });
 
     bridgeDbInstance.xref.get({
@@ -179,14 +183,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -194,12 +197,17 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  /*
-  it('should get xrefs (input: map w/ Homo sapiens BridgeDb endpoint)', function(done) {
+  //*
+  it([
+    'should get xrefs. input is a map w/ a BridgeDb endpoint:',
+      'organism in endpoint: Homo sapiens',
+      'symbol (for datasource) in endpoint: L (ncbigene)',
+      'identifier in endpoint: 4292',
+  ].join('\n\t\t\t'), function(done) {
+    var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -212,27 +220,31 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
-    })
+    .let(handleResult.bind(testCoordinator))
     .doOnError(done)
     .subscribeOnCompleted(done);
   });
   //*/
 
-  /*
-  it('should get xrefs (input: map w/ Human BridgeDb endpoint)', function(done) {
+  //*
+  it([
+    'should get xrefs. input is a map w/ a BridgeDb endpoint:',
+      'organism in endpoint: Human',
+      'symbol (for datasource) in endpoint: L (ncbigene)',
+      'identifier in endpoint: 4292',
+  ].join('\n\t\t\t'), function(done) {
     var testCoordinator = this;
     var test = this.test;
-    test.expectedPath = __dirname + '/ncbigene-4292-xrefs-human.jsonld';
+    test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -245,14 +257,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -260,13 +271,16 @@ describe('BridgeDb.Xref.get', function() {
   });
   //*/
 
-  /*
-  it('should get xrefs (input: map w/ identifiers IRI)', function(done) {
+  //*
+  it([
+    'should get xrefs. input is a map w/ an identifiers IRI:',
+      'preferredPrefix in identifiers IRI: ncbigene',
+      'identifier in identifiers IRI: 4292',
+  ].join('\n\t\t\t'), function(done) {
     var testCoordinator = this;
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -279,14 +293,13 @@ describe('BridgeDb.Xref.get', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
-    .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-        .replace(
-          new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-          standardBridgeDbApiUrlStub
-        ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+              new RegExp(bridgeDbInstance.config.baseIri, 'g'),
+              standardBridgeDbApiUrlStub
+          )
+      );
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -305,7 +318,6 @@ describe('BridgeDb.Xref.get', function() {
 
     test.expectedPath = __dirname + '/ncbigene-1234-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
@@ -323,11 +335,6 @@ describe('BridgeDb.Xref.get', function() {
         bridgeDbXrefsIri: 'http://webservice.bridgedb.org/Human/xrefs/L/1234'
       }
     ])
-    .map(function(currentXrefs) {
-      console.log('currentXrefs');
-      console.log(currentXrefs);
-      return currentXrefs.sort(sorter);
-    })
     .map(function(currentXrefs) {
       return JSON.parse(JSON.stringify(currentXrefs)
         .replace(
@@ -347,7 +354,6 @@ describe('BridgeDb.Xref.get', function() {
     var test = this.test;
     test.expectedPath = __dirname + '/ncbigene-1234-4292-xrefs.jsonld';
     test.ignoreOrder = true;
-    test.done = done;
 
     var bridgeDbInstance = new BridgeDb({
       baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
@@ -366,9 +372,6 @@ describe('BridgeDb.Xref.get', function() {
         ])
     )
     .toArray()
-    .map(function(currentXrefs) {
-      return currentXrefs.sort(sorter);
-    })
     .map(function(currentXrefs) {
       return JSON.parse(JSON.stringify(currentXrefs)
         .replace(

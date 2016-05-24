@@ -21,38 +21,6 @@ chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
 describe('BridgeDb.EntityReference.enrich', function() {
-  // NOTE: the following describes the mocha component architecture
-  //
-  // describe
-  //   this (suite)
-  //     same as
-  //       before: this.test.parent
-  //       beforeEach: this.test.parent, this.currentTest.parent
-  //       it: this.test.parent
-  // before
-  //   this (testCoordinator)
-  //     same as
-  //       beforeEach: this
-  //       it: this
-  //   this.test
-  // beforeEach
-  //   this (testCoordinator)
-  //     same as
-  //       before: this
-  //       it: this
-  //   this.test
-  //   this.currentTest
-  //     same as
-  //       it: this.test
-  // it
-  //   this (testCoordinator)
-  //     same as
-  //       beforeEach: this
-  //       before: this
-  //   this.test
-  //     same as
-  //       beforeEach: this.currentTest
-
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
   var suite = this;
   suite.allPassed = true;

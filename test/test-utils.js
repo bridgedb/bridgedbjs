@@ -16,6 +16,38 @@ var strcase = require('tower-strcase');
 
 var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
 
+// NOTE: the following describes the mocha component architecture
+//
+// describe
+//   this (suite)
+//     same as
+//       before: this.test.parent
+//       beforeEach: this.test.parent, this.currentTest.parent
+//       it: this.test.parent
+// before
+//   this (testCoordinator)
+//     same as
+//       beforeEach: this
+//       it: this
+//   this.test
+// beforeEach
+//   this (testCoordinator)
+//     same as
+//       before: this
+//       it: this
+//   this.test
+//   this.currentTest
+//     same as
+//       it: this.test
+// it
+//   this (testCoordinator)
+//     same as
+//       beforeEach: this
+//       before: this
+//   this.test
+//     same as
+//       beforeEach: this.currentTest
+
 /**
  * isJSONorJSONParsable
  *
@@ -545,6 +577,30 @@ var testUtils = (function() {
         console.warn('    Warning: actual sorted differently from expected'.yellow);
         return Rx.Observable.empty();
       }
+
+      var expectedStringifiedListSanContext = _.cloneDeep(expectedJson)
+      .map(function(x) {
+        delete x['@context'];
+        return x;
+      })
+      .map(JSON.stringify);
+
+      var actualStringifiedListSanContext = _.cloneDeep(actualJson)
+      .map(function(x) {
+        delete x['@context'];
+        return x;
+      })
+      .map(JSON.stringify);
+
+      var equalSanContext = _.difference(
+          expectedStringifiedListSanContext,
+          actualStringifiedListSanContext
+      ).length === 0;
+
+      // TODO make this work when we don't ignore order and also when inputs are not arrays.
+      if (equalSanContext) {
+        console.warn('    actual matches expected, except for sort order and @context'.yellow);
+      }
     } else {
       expectedToCompare = expectedJson;
       actualToCompare = actualJson;
@@ -754,10 +810,11 @@ var testUtils = (function() {
       }
 
       if (typeof expected === 'undefined') {
-        console.log('***************************************************');
-        console.log('**      New Test - No Expected JSON Available    **');
-        console.log('** Saving actual JSON (below) to "' + expectedPath.green.bold + '..." **');
-        console.log('***************************************************');
+        console.log('*********************************************************');
+        console.log('**         New Test - No Expected JSON Available       **');
+        console.log('** Saving actual JSON (below) to:                      **');
+        console.log('** ' + expectedPath.green.bold + ' **');
+        console.log('*********************************************************');
         displayActualJson(actual);
         return Rx.Observable.return(JSON.stringify(actual, null, '  '))
         .let(RxFs.createWriteObservable(expectedPath));

@@ -55,13 +55,16 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
     var test = this.test;
     test.expectedPath = __dirname + '/hits-for-pdha1-mus-musculus.jsonld';
 
-    // TODO why are we not using mockserver URLs below?
+    // TODO monitor the webservice endpoint, because the mock currently
+    // returns multiple results, but the actual webservice just returns one.
+    // Maastricht is planning to update the actual webservice so it will also
+    // return multiple results (as of 2016-05-23).
     var bridgeDb1 = new BridgeDb({
-      baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-      //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
       datasetsMetadataIri:
-        'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
-        //'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
         context: internalContext['@context']
     });
 
