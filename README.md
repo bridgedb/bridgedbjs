@@ -86,6 +86,13 @@ TODO: move the `taxonomy` IRIs from [./lib/organism.js](https://github.com/bridg
 
 TODO: download datasources_headers.txt to get the headers upon loading this library, instead of [hard-coding them here](https://github.com/bridgedb/bridgedbjs/blob/master/lib/dataset.js#L124).
 
+TODO: update npm dependency versions for the libraries we've created. Some of them are just using `npm link` to get the latest on my dev machine.
+TODO: update terms like `dataset` vs. `datasource` with AP to be sure we're using the desired consensus terms.
+TODO: enable caching of results.
+TODO: improve handling of no results returned for entity reference search, including the UI component. Possibly disable searching for strings less than three characters in length.
+TODO: make it possible to use the UI components individually and in any combination.
+TODO: test UI components. Their tests are not currently working.
+
 ## Troubleshooting
 ```npm install``` throws an error like ```library not found for -lgcc_s.10.5```
 * This appears to be particular to certain Node and OS X versions and can be [fixed with a symlink](http://stackoverflow.com/questions/31936170/npm-the-ld-library-not-found-for-lgcc-s-10-5-on-on-os-x-el-capitain): >```cd /usr/local/lib``` >```sudo ln -s ../../lib/libSystem.B.dylib libgcc_s.10.5.dylib```

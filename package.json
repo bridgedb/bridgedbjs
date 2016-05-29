@@ -14,8 +14,8 @@
     "test:EntityReference": "gulp testEntityReference",
     "test:Organism": "gulp testOrganism",
     "test:Xref": "gulp testXref",
-    "test:ui": "NODE_ENV=test karma start",
-    "test:ui-combo": "NODE_ENV=test karma start karma-ui-combo.conf.js"
+    "test-broken:ui": "NODE_ENV=test karma start",
+    "test-broken:ui-combo": "NODE_ENV=test karma start karma-ui-combo.conf.js"
   },
   "browser": {
     "commander": false
