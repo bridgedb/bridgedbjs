@@ -40,14 +40,14 @@
     "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
     "insert-css": "^0.2.0",
-    "jsonld-rx-extra": "ariutta/jsonld-rx-extra#66da18716a526abdcea6c25b865858a26780e204",
+    "jsonld-rx-extra": "git://github.com/ariutta/jsonld-rx-extra#eff25cedd4c007fb3f59e2d2d1ff07c53a3bd0ec",
     "jsonstream": "^1.0.3",
     "levenshtein": "^1.0.5",
     "lodash": "^4.11.1",
-    "rx-extra": "git://github.com/ariutta/rx-extra.git#f9a3bebb51e0ac54d16a62b2d35293376623a152",
+    "rx-extra": "git://github.com/ariutta/rx-extra.git#d8ef18b1af76371f49cf1334cdf24e39bed1dd3d",
     "urijs": "^1.15.1",
     "yolk": "0.10.1",
-    "yolk-simple-modal": "git://github.com/ariutta/yolk-simple-modal.git"
+    "yolk-simple-modal": "git://github.com/ariutta/yolk-simple-modal.git#2fe442d59c6e0e41f8a73f75689de49ecc878139"
   },
   "devDependencies": {
     "bdd-with-opts": "~1.0.0",
