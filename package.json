@@ -47,7 +47,7 @@
     "rx-extra": "git://github.com/ariutta/rx-extra.git#d8ef18b1af76371f49cf1334cdf24e39bed1dd3d",
     "urijs": "^1.15.1",
     "yolk": "0.10.1",
-    "yolk-simple-modal": "~0.0.2"
+    "yolk-simple-modal": "~0.0.3"
   },
   "devDependencies": {
     "bdd-with-opts": "~1.0.0",
