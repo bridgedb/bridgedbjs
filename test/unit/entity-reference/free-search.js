@@ -1,3 +1,4 @@
+// TODO freeSearch and attributeSearch may be mixed up in this library
 var _ = require('lodash');
 var BridgeDb = require('../../../index.js');
 var chai = require('chai');
@@ -23,6 +24,18 @@ desired.tags = ['dev-test'];
 chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+
+var sortById = function(a, b) {
+  var aId = a.id;
+  var bId = b.id;
+  if (aId > bId) {
+    return 1;
+  } else if (aId < bId) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
 
 describe('BridgeDb.EntityReference.freeSearch', function() {
   var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
@@ -74,11 +87,14 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
     })
     .toArray()
     .map(function(currentXrefs) {
-      return JSON.parse(JSON.stringify(currentXrefs)
-      .replace(
-        new RegExp(bridgeDb1.config.baseIri, 'g'),
-        standardBridgeDbApiUrlStub
-      ));
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+            new RegExp(bridgeDb1.config.baseIri, 'g'),
+            standardBridgeDbApiUrlStub
+          )
+      )
+      .sort(sortById);
     })
     .let(handleResult.bind(testCoordinator))
     .doOnError(done)
@@ -98,7 +114,8 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
         var bridgeDb1 = new BridgeDb({
           baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
           datasetsMetadataIri:
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+          context: internalContext['@context']
         });
 
         bridgeDb1.entityReference.freeSearch({
@@ -107,23 +124,16 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
         })
         .toArray()
         .map(function(actualXrefs) {
-          return JSON.parse(JSON.stringify(actualXrefs)
-          .replace(
-            new RegExp(bridgeDb1.config.baseIri, 'g'),
-            standardBridgeDbApiUrlStub
-          ));
+          return JSON.parse(
+              JSON.stringify(actualXrefs)
+              .replace(
+                new RegExp(bridgeDb1.config.baseIri, 'g'),
+                standardBridgeDbApiUrlStub
+              )
+          )
+          .sort(sortById);
         })
-        .map(function(actualXrefs) {
-          var actualStringifiedXrefs = actualXrefs
-          .map(JSON.stringify);
-
-          var expectedStringifiedXrefs = expected
-          .map(JSON.stringify);
-
-          var intersection = _.intersection(actualStringifiedXrefs, expectedStringifiedXrefs);
-          return expect(intersection.length).to.equal(actualStringifiedXrefs.length);
-        })
-        //.let(handleResult.bind(testCoordinator))
+        .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
 

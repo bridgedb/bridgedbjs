@@ -13,7 +13,8 @@ var wd = require('wd');
 var handleResult = testUtils.handleResult;
 
 var internalContext = JSON.parse(fs.readFileSync(
-    __dirname + '/../../jsonld-context.jsonld'));
+    __dirname + '/../../jsonld-context.jsonld'
+));
 
 var desired = {'browserName': 'phantomjs'};
 desired.name = 'example with ' + desired.browserName;

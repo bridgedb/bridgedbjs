@@ -1,0 +1,47 @@
+{
+  "id": "http://identifiers.org/uniprot/P29754",
+  "type": [
+    "EntityReference",
+    "gpml:Protein",
+    "biopax:ProteinReference"
+  ],
+  "identifier": "P29754",
+  "isDataItemIn": {
+    "id": "http://identifiers.org/uniprot/",
+    "type": "Dataset",
+    "alternatePrefix": "S",
+    "exampleIdentifier": "P62158",
+    "identifierPattern": "^([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?|([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])$",
+    "preferredPrefix": "uniprot",
+    "subject": [
+      "gpml:Protein",
+      "biopax:ProteinReference"
+    ],
+    "exampleResource": "http://www.uniprot.org/uniprot/P29754",
+    "name": "UniProtKB/TrEMBL",
+    "primary": true,
+    "systemCode": "S",
+    "entityType": "protein",
+    "uriRegexPattern": "http://www.uniprot.org/uniprot/(([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\\.\\d+)?|([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9]))",
+    "owl:sameAs": [
+      "http://www.uniprot.org/uniprot/",
+      "urn:miriam:uniprot"
+    ],
+    "webPage": "http://www.uniprot.org/",
+    "datasource_name": "Uniprot-TrEMBL",
+    "linkout_pattern": "http://www.uniprot.org/uniprot/$id",
+    "uri": "urn:miriam:uniprot"
+  },
+  "db": "Uniprot-TrEMBL",
+  "displayName": "AGTRA_MOUSE",
+  "organism": {
+    "id": "http://identifiers.org/taxonomy/10090",
+    "type": "http://identifiers.org/snomedct/410607006",
+    "nameLanguageMap": {
+      "en": "Mouse",
+      "la": "Mus musculus"
+    }
+  },
+  "owl:sameAs": "http://www.uniprot.org/uniprot/P29754",
+  "datasource_name": "Uniprot-TrEMBL"
+}

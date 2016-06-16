@@ -10,6 +10,8 @@ var sinon      = require('sinon');
 var testUtils = require('../../test-utils.js');
 var wd = require('wd');
 
+var testContext = JSON.parse(fs.readFileSync(__dirname + '/../../jsonld-context.jsonld'));
+
 var handleResult = testUtils.handleResult;
 
 var desired = {'browserName': 'phantomjs'};
@@ -47,6 +49,51 @@ describe('BridgeDb.EntityReference.enrich', function() {
     done();
   });
 
+  it('should enrich entity reference by identifier & datasource_name (expanded)\n' +
+      '        xref: false\n' +
+      '        context: false\n' +
+      '        dataset: true\n' +
+      '        organism: true',
+      function(done) {
+        var testCoordinator = this;
+        var test = this.test;
+
+        test.expectedPath = __dirname +
+              '/uniprot-P29754-xref-false-context-false-' +
+              'dataset-true-organism-true.jsonld';
+
+        var bridgeDbInstance = new BridgeDb({
+          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+          datasetsMetadataIri:
+            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+          context: testContext
+        });
+
+        bridgeDbInstance.entityReference.enrich({
+          identifier: 'P29754',
+          displayName: 'AGTRA_MOUSE',
+          'https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name': 'Uniprot-TrEMBL'
+        }, {
+          xref: false,
+          context: false,
+          dataset: true,
+          organism: true
+        })
+        .map(function(result) {
+          expect(result.xref).to.not.exist;
+          expect(result['@context']).to.not.exist;
+          expect(result.isDataItemIn).to.exist;
+          expect(result.organism).to.exist;
+          return result;
+        })
+        .last()
+        .let(handleResult.bind(testCoordinator))
+        .doOnError(done)
+        .subscribeOnCompleted(done);
+      });
+
   it('should enrich entity reference by identifier/datasource_name\n' +
       '        xref: false\n' +
       '        context: true\n' +
@@ -65,7 +112,8 @@ describe('BridgeDb.EntityReference.enrich', function() {
           baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
           datasetsMetadataIri:
             //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
+            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+          context: testContext
         });
 
         bridgeDbInstance.entityReference.enrich({

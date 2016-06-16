@@ -23,7 +23,7 @@ gulp.task('testEntityReference', function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 60000,
+    timeout: 60 * 1000,
     // enable colors
     c: true,
     //debug: true

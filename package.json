@@ -5,17 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
-    "manual": "budo test/e2e/ui-components.test.js --live --open -- -t brfs -t deglobalify",
-    "manual:datasource": "budo test/e2e/datasource-control.test.js --live --open -- -t brfs",
-    "manual:identifier": "budo test/e2e/identifier-control.test.js --live --open -- -t brfs",
-    "start": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
+    "start": "echo 'generic start not enabled. try start:ui or start:mockserver'",
+    "start:mockserver": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
+    "start:ui": "budo test/e2e/ui-components.test.js --live --open -- -t brfs -t deglobalify",
+    "start:ui-datasource": "budo test/e2e/datasource-control.test.js --live --open -- -t brfs",
+    "start:ui-identifier": "budo test/e2e/identifier-control.test.js --live --open -- -t brfs",
     "test": "npm-run-all test:*",
     "test:Dataset": "gulp testDataset",
     "test:EntityReference": "gulp testEntityReference",
     "test:Organism": "gulp testOrganism",
     "test:Xref": "gulp testXref",
-    "test-broken:ui": "NODE_ENV=test karma start",
-    "test-broken:ui-combo": "NODE_ENV=test karma start karma-ui-combo.conf.js"
+    "test-broken:ui": "NODE_ENV=test karma start:mockserver",
+    "test-broken:ui-combo": "NODE_ENV=test karma start:mockserver karma-ui-combo.conf.js"
   },
   "browser": {
     "commander": false
@@ -67,7 +68,6 @@
     "gulp-bump": "~0.2.2",
     "gulp-git": "~1.1.0",
     "gulp-jsdoc": "~0.1.4",
-    "gulp-jshint": "~1.11.0",
     "gulp-mocha": "~2.0.0",
     "gulp-modernizr": "~1.0.0-alpha",
     "gulp-notify": "~2.1.0",
@@ -83,7 +83,6 @@
     "inquirer": "~0.8.0",
     "jaguarjs-jsdoc": "0.0.1",
     "jquery": "^2.2.3",
-    "jscs": "~1.7.3",
     "jsdom": "^8.4.0",
     "jsonld-markup": "^0.1.1",
     "jsonld-vis": "^0.2.0",

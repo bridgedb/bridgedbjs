@@ -2,6 +2,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -14,6 +16,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -147,7 +159,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -226,7 +237,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -289,6 +299,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -301,6 +313,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -434,7 +456,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -513,7 +534,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -568,6 +588,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -580,6 +602,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -713,7 +745,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -792,7 +823,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -853,6 +883,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -865,6 +897,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -998,7 +1040,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -1077,7 +1118,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -1140,6 +1180,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -1152,6 +1194,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -1285,7 +1337,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -1364,7 +1415,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -1426,6 +1476,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -1438,6 +1490,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -1571,7 +1633,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -1650,7 +1711,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -1713,6 +1773,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -1725,6 +1787,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -1858,7 +1930,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -1937,7 +2008,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -2000,6 +2070,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -2012,6 +2084,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -2145,7 +2227,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -2224,7 +2305,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -2287,6 +2367,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -2299,6 +2381,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -2432,7 +2524,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -2511,7 +2602,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -2574,6 +2664,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -2586,6 +2678,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -2719,7 +2821,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -2798,7 +2899,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -2861,6 +2961,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -2873,6 +2975,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -3006,7 +3118,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -3085,7 +3196,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -3148,6 +3258,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -3160,6 +3272,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -3293,7 +3415,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -3372,7 +3493,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -3435,6 +3555,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -3447,6 +3569,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -3580,7 +3712,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -3659,7 +3790,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -3721,6 +3851,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -3733,6 +3865,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -3866,7 +4008,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -3945,7 +4086,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -3999,6 +4139,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -4011,6 +4153,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -4144,7 +4296,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -4223,7 +4374,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -4285,6 +4435,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -4297,6 +4449,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -4430,7 +4592,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -4509,7 +4670,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -4572,6 +4732,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -4584,6 +4746,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -4717,7 +4889,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -4796,7 +4967,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -4859,6 +5029,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -4871,6 +5043,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -5004,7 +5186,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -5083,7 +5264,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -5142,6 +5322,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -5154,6 +5336,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -5287,7 +5479,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -5366,7 +5557,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -5430,6 +5620,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -5442,6 +5634,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -5575,7 +5777,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -5654,7 +5855,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -5717,6 +5917,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -5729,6 +5931,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -5862,7 +6074,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -5941,7 +6152,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -6004,6 +6214,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -6016,6 +6228,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -6149,7 +6371,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -6228,7 +6449,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -6289,6 +6509,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -6301,6 +6523,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -6434,7 +6666,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -6513,7 +6744,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -6573,6 +6803,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -6585,6 +6817,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -6718,7 +6960,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -6797,7 +7038,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -6858,6 +7098,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -6870,6 +7112,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -7003,7 +7255,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -7082,7 +7333,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -7143,6 +7393,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -7155,6 +7407,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -7288,7 +7550,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -7367,7 +7628,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -7428,6 +7688,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -7440,6 +7702,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -7573,7 +7845,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -7652,7 +7923,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -7713,6 +7983,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -7725,6 +7997,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -7858,7 +8140,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -7937,7 +8218,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -7998,6 +8278,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -8010,6 +8292,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -8143,7 +8435,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -8222,7 +8513,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -8283,6 +8573,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -8295,6 +8587,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -8428,7 +8730,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -8507,7 +8808,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -8568,6 +8868,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -8580,6 +8882,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -8713,7 +9025,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -8792,7 +9103,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -8853,6 +9163,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -8865,6 +9177,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -8998,7 +9320,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -9077,7 +9398,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -9138,6 +9458,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -9150,6 +9472,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -9283,7 +9615,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -9362,7 +9693,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -9423,6 +9753,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -9435,6 +9767,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -9568,7 +9910,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -9647,7 +9988,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -9708,6 +10048,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -9720,6 +10062,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -9853,7 +10205,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -9932,7 +10283,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -9993,6 +10343,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -10005,6 +10357,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -10138,7 +10500,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -10217,7 +10578,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -10280,6 +10640,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -10292,6 +10654,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -10425,7 +10797,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -10504,7 +10875,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -10565,6 +10935,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -10577,6 +10949,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -10710,7 +11092,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -10789,7 +11170,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -10850,6 +11230,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -10862,6 +11244,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -10995,7 +11387,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -11074,7 +11465,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -11135,6 +11525,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -11147,6 +11539,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -11280,7 +11682,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -11359,7 +11760,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -11420,6 +11820,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -11432,6 +11834,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -11565,7 +11977,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -11644,7 +12055,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -11707,6 +12117,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -11719,6 +12131,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -11852,7 +12274,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -11931,7 +12352,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -11994,6 +12414,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -12006,6 +12428,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -12139,7 +12571,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -12218,7 +12649,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -12281,6 +12711,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -12293,6 +12725,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -12426,7 +12868,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -12505,7 +12946,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -12568,6 +13008,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -12580,6 +13022,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -12713,7 +13165,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -12792,7 +13243,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -12855,6 +13305,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -12867,6 +13319,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -13000,7 +13462,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -13079,7 +13540,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -13142,6 +13602,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -13154,6 +13616,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -13287,7 +13759,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -13366,7 +13837,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -13427,6 +13897,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -13439,6 +13911,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -13572,7 +14054,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -13651,7 +14132,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -13711,6 +14191,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -13723,6 +14205,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -13856,7 +14348,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -13935,7 +14426,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -13994,6 +14484,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -14006,6 +14498,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -14139,7 +14641,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -14218,7 +14719,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -14277,6 +14777,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -14289,6 +14791,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -14422,7 +14934,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -14501,7 +15012,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -14555,6 +15065,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -14567,6 +15079,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -14700,7 +15222,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -14779,7 +15300,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -14838,6 +15358,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -14850,6 +15372,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -14983,7 +15515,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -15062,7 +15593,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -15126,6 +15656,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -15138,6 +15670,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -15271,7 +15813,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -15350,7 +15891,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -15414,6 +15954,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -15426,6 +15968,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -15559,7 +16111,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -15638,7 +16189,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -15701,6 +16251,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -15713,6 +16265,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -15846,7 +16408,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -15925,7 +16486,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -15988,6 +16548,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -16000,6 +16562,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -16133,7 +16705,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -16212,7 +16783,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -16270,6 +16840,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -16282,6 +16854,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -16415,7 +16997,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -16494,7 +17075,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -16549,6 +17129,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -16561,6 +17143,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -16694,7 +17286,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -16773,7 +17364,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -16833,6 +17423,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -16845,6 +17437,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -16978,7 +17580,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -17057,7 +17658,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -17119,6 +17719,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -17131,6 +17733,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -17264,7 +17876,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -17343,7 +17954,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -17406,6 +18016,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -17418,6 +18030,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -17551,7 +18173,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -17630,7 +18251,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -17692,6 +18312,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -17704,6 +18326,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -17837,7 +18469,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -17916,7 +18547,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -17971,6 +18601,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -17983,6 +18615,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -18116,7 +18758,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -18195,7 +18836,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -18258,6 +18898,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -18270,6 +18912,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -18403,7 +19055,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -18482,7 +19133,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -18545,6 +19195,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -18557,6 +19209,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -18690,7 +19352,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -18769,7 +19430,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -18832,6 +19492,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -18844,6 +19506,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -18977,7 +19649,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -19056,7 +19727,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -19119,6 +19789,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -19131,6 +19803,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -19264,7 +19946,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -19343,7 +20024,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -19406,6 +20086,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -19418,6 +20100,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -19551,7 +20243,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -19630,7 +20321,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -19693,6 +20383,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -19705,6 +20397,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -19838,7 +20540,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -19917,7 +20618,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -19980,6 +20680,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -19992,6 +20694,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -20125,7 +20837,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -20204,7 +20915,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -20267,6 +20977,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -20279,6 +20991,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -20412,7 +21134,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -20491,7 +21212,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -20554,6 +21274,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -20566,6 +21288,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -20699,7 +21431,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -20778,7 +21509,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -20841,6 +21571,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -20853,6 +21585,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -20986,7 +21728,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -21065,7 +21806,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -21124,6 +21864,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -21136,6 +21878,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -21269,7 +22021,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -21348,7 +22099,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -21409,6 +22159,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -21421,6 +22173,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -21554,7 +22316,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -21633,7 +22394,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -21691,6 +22451,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -21703,6 +22465,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -21836,7 +22608,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -21915,7 +22686,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -21979,6 +22749,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -21991,6 +22763,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -22124,7 +22906,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -22203,7 +22984,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -22265,6 +23045,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -22277,6 +23059,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -22410,7 +23202,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -22489,7 +23280,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -22552,6 +23342,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -22564,6 +23356,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -22697,7 +23499,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -22776,7 +23577,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -22839,6 +23639,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -22851,6 +23653,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -22984,7 +23796,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -23063,7 +23874,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -23119,6 +23929,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -23131,6 +23943,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -23264,7 +24086,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -23343,7 +24164,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -23406,6 +24226,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -23418,6 +24240,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -23551,7 +24383,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -23630,7 +24461,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -23693,6 +24523,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -23705,6 +24537,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -23838,7 +24680,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -23917,7 +24758,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -23976,6 +24816,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -23988,6 +24830,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -24121,7 +24973,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -24200,7 +25051,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -24263,6 +25113,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -24275,6 +25127,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -24408,7 +25270,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -24487,7 +25348,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -24547,6 +25407,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -24559,6 +25421,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -24692,7 +25564,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -24771,7 +25642,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -24823,6 +25693,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -24835,6 +25707,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -24968,7 +25850,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -25047,7 +25928,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -25110,6 +25990,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -25122,6 +26004,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -25255,7 +26147,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -25334,7 +26225,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -25397,6 +26287,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -25409,6 +26301,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -25542,7 +26444,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -25621,7 +26522,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -25683,6 +26583,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -25695,6 +26597,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -25828,7 +26740,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -25907,7 +26818,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -25970,6 +26880,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -25982,6 +26894,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -26115,7 +27037,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -26194,7 +27115,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -26257,6 +27177,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -26269,6 +27191,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -26402,7 +27334,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -26481,7 +27412,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -26544,6 +27474,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -26556,6 +27488,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -26689,7 +27631,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -26768,7 +27709,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -26831,6 +27771,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -26843,6 +27785,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -26976,7 +27928,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -27055,7 +28006,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -27116,6 +28066,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -27128,6 +28080,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -27261,7 +28223,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -27340,7 +28301,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -27395,6 +28355,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -27407,6 +28369,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -27540,7 +28512,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -27619,7 +28590,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -27682,6 +28652,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -27694,6 +28666,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -27827,7 +28809,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -27906,7 +28887,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -27969,6 +28949,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -27981,6 +28963,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -28114,7 +29106,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -28193,7 +29184,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -28256,6 +29246,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -28268,6 +29260,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -28401,7 +29403,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -28480,7 +29481,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -28543,6 +29543,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -28555,6 +29557,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -28688,7 +29700,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -28767,7 +29778,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -28830,6 +29840,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -28842,6 +29854,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -28975,7 +29997,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -29054,7 +30075,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -29116,6 +30136,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -29128,6 +30150,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -29261,7 +30293,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -29340,7 +30371,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -29399,6 +30429,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -29411,6 +30443,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -29544,7 +30586,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -29623,7 +30664,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -29687,6 +30727,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -29699,6 +30741,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -29832,7 +30884,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -29911,7 +30962,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -29973,6 +31023,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -29985,6 +31037,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -30118,7 +31180,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -30197,7 +31258,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -30257,6 +31317,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -30269,6 +31331,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -30402,7 +31474,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -30481,7 +31552,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -30545,6 +31615,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -30557,6 +31629,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -30690,7 +31772,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -30769,7 +31850,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -30831,6 +31911,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -30843,6 +31925,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -30976,7 +32068,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -31055,7 +32146,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -31118,6 +32208,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -31130,6 +32222,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -31263,7 +32365,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -31342,7 +32443,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -31403,6 +32503,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -31415,6 +32517,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -31548,7 +32660,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -31627,7 +32738,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -31689,6 +32799,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -31701,6 +32813,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -31834,7 +32956,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -31913,7 +33034,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -31976,6 +33096,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -31988,6 +33110,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -32121,7 +33253,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -32200,7 +33331,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -32262,6 +33392,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -32274,6 +33406,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -32407,7 +33549,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -32486,7 +33627,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -32550,6 +33690,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -32562,6 +33704,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -32695,7 +33847,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -32774,7 +33925,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -32837,6 +33987,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -32849,6 +34001,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -32982,7 +34144,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -33061,7 +34222,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -33124,6 +34284,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -33136,6 +34298,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -33269,7 +34441,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -33348,7 +34519,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -33404,6 +34574,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -33416,6 +34588,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -33549,7 +34731,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -33628,7 +34809,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -33690,6 +34870,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -33702,6 +34884,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -33835,7 +35027,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -33914,7 +35105,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -33977,6 +35167,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -33989,6 +35181,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -34122,7 +35324,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -34201,7 +35402,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -34255,6 +35455,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -34267,6 +35469,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -34400,7 +35612,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -34479,7 +35690,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -34542,6 +35752,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -34554,6 +35766,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -34687,7 +35909,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -34766,7 +35987,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -34829,6 +36049,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -34841,6 +36063,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -34974,7 +36206,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -35053,7 +36284,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -35117,6 +36347,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -35129,6 +36361,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -35262,7 +36504,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -35341,7 +36582,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -35401,6 +36641,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -35413,6 +36655,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -35546,7 +36798,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -35625,7 +36876,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -35685,6 +36935,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -35697,6 +36949,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -35830,7 +37092,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -35909,7 +37170,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -35972,6 +37232,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -35984,6 +37246,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -36117,7 +37389,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -36196,7 +37467,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -36259,6 +37529,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -36271,6 +37543,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -36404,7 +37686,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -36483,7 +37764,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -36543,6 +37823,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -36555,6 +37837,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -36688,7 +37980,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -36767,7 +38058,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -36827,6 +38117,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -36839,6 +38131,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -36972,7 +38274,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -37051,7 +38352,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -37111,6 +38411,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -37123,6 +38425,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -37256,7 +38568,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -37335,7 +38646,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -37396,6 +38706,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -37408,6 +38720,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -37541,7 +38863,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -37620,7 +38941,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -37683,6 +39003,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -37695,6 +39017,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -37828,7 +39160,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -37907,7 +39238,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -37970,6 +39300,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -37982,6 +39314,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -38115,7 +39457,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -38194,7 +39535,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -38256,6 +39596,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -38268,6 +39610,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -38401,7 +39753,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -38480,7 +39831,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -38543,6 +39893,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -38555,6 +39907,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -38688,7 +40050,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -38767,7 +40128,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },
@@ -38825,6 +40185,8 @@
   {
     "@context": {
       "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
       "Dataset": {
         "@id": "void:Dataset",
         "@type": "@id"
@@ -38837,6 +40199,16 @@
       },
       "EntityReference": {
         "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
         "@type": "@id"
       },
       "xref": {
@@ -38970,7 +40342,6 @@
         "@id": "http://vocabularies.wikipathways.org/gpml#",
         "@type": "@vocab"
       },
-      "id": "@id",
       "identifier": {
         "@id": "http://rdaregistry.info/Elements/u/P60052",
         "@type": "xsd:string"
@@ -39049,7 +40420,6 @@
         "@id": "dcterms:subject",
         "@type": "@id"
       },
-      "type": "@type",
       "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
         "@type": "@id"
       },

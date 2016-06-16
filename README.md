@@ -43,7 +43,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 ## For Developers
 
 1. Install [Node.js](https://nodejs.org/)
-2. Fork this repo if you don't have commit rights to it
+2. Fork this repo (if you don't have commit rights to it)
 3. `git clone https://github.com/bridgedb/bridgedbjs.git` (or use your fork's URL)
 4. `cd ./bridgedbjs`
 5. `npm install`

@@ -1,0 +1,12 @@
+{
+  "env": {
+    "node": true
+  },
+  "globals": {},
+  "rules": {
+    "max-len": [
+      2,
+      100
+    ]
+  }
+}
