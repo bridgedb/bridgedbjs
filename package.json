@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
-    "start": "echo 'generic start not enabled. try start:ui or start:mockserver'",
+    "start": "npm-run-all -p start:mockserver start:ui-combo-local",
     "start:mockserver": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
-    "start:ui": "budo test/e2e/ui-components.test.js --live --open -- -t brfs -t deglobalify",
+    "start:ui-combo-local": "budo test/e2e/ui-components-local.test.js --live --open -- -t brfs -t deglobalify",
+    "start:ui-combo-remote": "budo test/e2e/ui-components-remote.test.js --live --open -- -t brfs -t deglobalify",
     "start:ui-datasource": "budo test/e2e/datasource-control.test.js --live --open -- -t brfs",
     "start:ui-identifier": "budo test/e2e/identifier-control.test.js --live --open -- -t brfs",
     "test": "npm-run-all test:*",

@@ -1,0 +1,59 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Access-Control-Allow-Origin: *
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+D6RHI5	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas
+A0A0C4DGP6	Uniprot-TrEMBL	Next to BRCA1 gene 1 protein (Fragment)
+E9PHB9	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas
+D6REL5	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas
+M0R3F4	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+F8WCG2	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1
+672	Entrez Gene	BRCA1
+A0A087WWJ9	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas (Fragment)
+A0A087WZ78	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas (Fragment)
+Q3B891	Uniprot-TrEMBL	BRCA1 protein (Fragment)
+M0R2I2	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+D6RC40	Uniprot-TrEMBL	BRCA1-A complex subunit RAP80 (Fragment)
+C6YB45	Uniprot-TrEMBL	BRCA1 isoform E1aA-Delta 2-17
+F8W733	Uniprot-TrEMBL	BRCA1-A complex subunit BRE (Fragment)
+BRCA1	HGNC	BRCA1
+Q14596	Uniprot-TrEMBL	Next to BRCA1 gene 1 protein
+J3KQS6	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1
+B7Z5R6	Uniprot-TrEMBL	Next to BRCA1 gene 1 protein
+A0A075B7D2	Uniprot-TrEMBL	BRCA1-A complex subunit BRE (Fragment)
+ENSG00000012048	Ensembl	BRCA1
+F6MDI1	Uniprot-TrEMBL	BRCA1 associated RING domain 1 isoform delta
+M0QXG9	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1
+A0A024QZ45	Uniprot-TrEMBL	BRCA1 interacting protein C-terminal helicase 1, isoform CRA_a
+D6RDZ5	Uniprot-TrEMBL	BRCA1-A complex subunit RAP80 (Fragment)
+M0R0I0	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+Q6UWZ7	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas
+M0R193	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+Q7Z569	Uniprot-TrEMBL	BRCA1-associated protein
+C9J2G0	Uniprot-TrEMBL	BRCA1-A complex subunit BRE (Fragment)
+C9IYG1	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1 (Fragment)
+Q9NXR7	Uniprot-TrEMBL	BRCA1-A complex subunit BRE
+M0R3H9	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1
+D6R9M3	Uniprot-TrEMBL	BRCA1-A complex subunit RAP80 (Fragment)
+Q99728	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1
+D6RAN3	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas
+Q9NWV8	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1
+Q96RL1	Uniprot-TrEMBL	BRCA1-A complex subunit RAP80
+A0A087X0C6	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1
+Q6PJG6	Uniprot-TrEMBL	BRCA1-associated ATM activator 1
+M0R2K3	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+D6RCQ3	Uniprot-TrEMBL	BRCA1-A complex subunit RAP80
+C9J6M1	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1 (Fragment)
+A0A087WZ19	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1
+M0QYV1	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+M0R2A4	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+A0A024R1V3	Uniprot-TrEMBL	Neighbor of BRCA1 gene 1, isoform CRA_a
+M0QZ44	Uniprot-TrEMBL	BRISC and BRCA1-A complex member 1 (Fragment)
+A0A087X2H0	Uniprot-TrEMBL	BRCA1-associated RING domain protein 1
+J3KNN7	Uniprot-TrEMBL	BRCA1-associated protein
+F8WDN5	Uniprot-TrEMBL	BRCA1-associated ATM activator 1
+A0A087WXK1	Uniprot-TrEMBL	BRCA1-A complex subunit Abraxas (Fragment)

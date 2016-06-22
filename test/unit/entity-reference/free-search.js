@@ -63,6 +63,47 @@ describe('BridgeDb.EntityReference.freeSearch', function() {
   });
 
   //*
+  it('should free search for entity references (Homo sapiens/single instance)', function(done) {
+    var testCoordinator = this;
+    var test = this.test;
+    test.expectedPath = __dirname + '/hits-for-brca1-homo-sapiens.jsonld';
+
+    // TODO monitor the webservice endpoint, because the mock currently
+    // returns multiple results, but the actual webservice just returns one.
+    // Maastricht is planning to update the actual webservice so it will also
+    // return multiple results (as of 2016-05-23).
+    var bridgeDb1 = new BridgeDb({
+      //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+      baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+      datasetsMetadataIri:
+        //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
+        'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+        context: internalContext['@context']
+    });
+
+    bridgeDb1.entityReference.freeSearch({
+      attribute: 'brca1',
+      organism: 'Homo sapiens'
+    })
+    .toArray()
+    .map(function(currentXrefs) {
+      return JSON.parse(
+          JSON.stringify(currentXrefs)
+          .replace(
+            new RegExp(bridgeDb1.config.baseIri, 'g'),
+            standardBridgeDbApiUrlStub
+          )
+      )
+      .sort(sortById);
+    })
+    .let(handleResult.bind(testCoordinator))
+    .doOnError(done)
+    .subscribeOnCompleted(done);
+
+  });
+  //*/
+
+  //*
   it('should free search for entity references (Latin/single instance)', function(done) {
     var testCoordinator = this;
     var test = this.test;
