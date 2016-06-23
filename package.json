@@ -48,11 +48,11 @@
     "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
     "insert-css": "^0.2.0",
-    "jsonld-rx-extra": "git://github.com/ariutta/jsonld-rx-extra#eff25cedd4c007fb3f59e2d2d1ff07c53a3bd0ec",
+    "jsonld-rx-extra": "git://github.com/ariutta/jsonld-rx-extra#961f6543aa160e0595b6e91d6261a90b27dfa67b",
     "jsonstream": "^1.0.3",
     "levenshtein": "^1.0.5",
     "lodash": "^4.11.1",
-    "rx-extra": "git://github.com/ariutta/rx-extra.git#d8ef18b1af76371f49cf1334cdf24e39bed1dd3d",
+    "rx-extra": "git://github.com/ariutta/rx-extra.git#117359e7101c328187c648637c38c69aa60751d2",
     "urijs": "^1.15.1",
     "yolk": "0.10.1",
     "yolk-simple-modal": "~0.0.4"
