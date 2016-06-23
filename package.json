@@ -19,9 +19,6 @@
     "test-broken:ui": "NODE_ENV=test karma start:mockserver",
     "test-broken:ui-combo": "NODE_ENV=test karma start:mockserver karma-ui-combo.conf.js"
   },
-  "browserify-shim": {
-    "rx": "global:Rx"
-  },
   "browserify": {
     "transform": [
       "brfs",
