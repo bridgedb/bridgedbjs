@@ -43,17 +43,14 @@
   },
   "homepage": "https://bridgedb.github.io/bridgedbjs/docs/",
   "dependencies": {
-    "brfs": "^1.4.3",
     "csv-streamify": "~1.0.0",
-    "gulp": "^3.8.11",
     "hyperquest": "^1.2.x",
     "insert-css": "^0.2.0",
     "jsonld-rx-extra": "git://github.com/ariutta/jsonld-rx-extra#961f6543aa160e0595b6e91d6261a90b27dfa67b",
-    "jsonstream": "^1.0.3",
+    "JSONStream": "^1.0.3",
     "levenshtein": "^1.0.5",
     "lodash": "^4.11.1",
     "rx-extra": "git://github.com/ariutta/rx-extra.git#117359e7101c328187c648637c38c69aa60751d2",
-    "urijs": "^1.15.1",
     "yolk": "0.10.1",
     "yolk-simple-modal": "~0.0.4"
   },

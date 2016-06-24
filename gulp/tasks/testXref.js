@@ -12,7 +12,7 @@ gulp.task('testXref', function(done) {
     // module to require
     r: './test/wd-test-config.js',
     reporter: 'spec',
-    timeout: 60 * 1000, // ms
+    timeout: 100 * 1000, // ms
     // enable colors
     c: true,
     //debug: true
