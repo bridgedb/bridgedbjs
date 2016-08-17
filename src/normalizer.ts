@@ -1,4 +1,8 @@
-var _ = require('lodash');
+/// <reference path="../index.d.ts" />
+
+/* @module normalizer */
+
+import * as _ from 'lodash';
 
 /**
  * @private
@@ -8,7 +12,7 @@ var _ = require('lodash');
  * @param {undefined|null|string|number|object|boolean|date} inputText
  * @return {string} normalizedText
  */
-function normalizeText(inputText) {
+export const normalizeText = function(inputText) {
   var stringifiedInput = inputText;
   if (!_.isString(inputText)) {
     if (_.isNumber(inputText) || _.isRegExp(inputText) ||
@@ -36,8 +40,4 @@ function normalizeText(inputText) {
     normalizedText = alphanumericText.toUpperCase();
   }
   return normalizedText;
-}
-
-module.exports = {
-  normalizeText: normalizeText
 };

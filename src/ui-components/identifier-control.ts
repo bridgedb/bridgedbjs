@@ -1,9 +1,13 @@
+/// <reference path="../../index.d.ts" />
+
 /******************************
   * identifier control
   *****************************/
 
-var Rx = global.Rx = global.Rx || require('rx-extra');
-var yolk = require('yolk');
+import Rx = require('rx-extra');
+var RxNode = Rx.RxNode;
+
+import yolk = require('yolk');
 var h = yolk.h;
 
 function IdentifierControl(args) {
@@ -46,4 +50,4 @@ function IdentifierControl(args) {
   });
 }
 
-module.exports = IdentifierControl;
+export default IdentifierControl;

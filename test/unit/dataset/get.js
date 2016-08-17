@@ -4,10 +4,10 @@ var chaiAsPromised = require('chai-as-promised');
 var colors = require('colors');
 var expect = chai.expect;
 var fs = require('fs');
-var mockserverMocha  =  require('../../mockserver-mocha.js');
+var mockserverMocha  =  require('../../helpers/mockserver-mocha.js');
 var RxFs = require('rx-fs');
 var sinon      = require('sinon');
-var testUtils = require('../../test-utils');
+var testUtils = require('../../helpers/test-utils');
 var wd = require('wd');
 
 var handleResult = testUtils.handleResult;

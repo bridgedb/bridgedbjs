@@ -1,3 +1,5 @@
+/// <reference path="../../index.d.ts" />
+
 /***********************************
  * Datasource Control
  **********************************/
@@ -8,15 +10,14 @@
 
 // TODO add the CSS
 
-var _ = require('lodash');
-var Rx = global.Rx = global.Rx || require('rx-extra');
-var BridgeDb = require('../../index.js');
-var JsonldRx = require('jsonld-rx-extra');
-var yolk = require('yolk');
+import * as _ from 'lodash';
+import Rx = require('rx-extra');
+import * as BridgeDb from '../main.js';
+import yolk = require('yolk');
 
 var h = yolk.h;
 
-var entityTypeTermsByGpmlTerm = {
+var entityReferenceTypeTermsByGpmlTerm = {
   'gpml:Pathway': [
     'gpml:Pathway',
     'biopax:Pathway',
@@ -49,21 +50,21 @@ var entityTypeTermsByGpmlTerm = {
   ],
 };
 
-var expandEntityTypes = function(entityTypes) {
-  if (_.isEmpty(entityTypes)) {
-    return entityTypes;
+var expandEntityReferenceTypes = function(entityReferenceTypes) {
+  if (_.isEmpty(entityReferenceTypes)) {
+    return entityReferenceTypes;
   }
-  return entityTypes.reduce(function(acc, entityType) {
+  return entityReferenceTypes.reduce(function(acc, entityReferenceType) {
     var mappedTerms;
-    if (entityType.indexOf('gpml') === 1) {
-      mappedTerms = entityTypeTermsByGpmlTerm[entityType];
+    if (entityReferenceType.indexOf('gpml') === 1) {
+      mappedTerms = entityReferenceTypeTermsByGpmlTerm[entityReferenceType];
     } else {
-      // e.g., if entityType is a BioPAX term
-      mappedTerms = _.toPairs(entityTypeTermsByGpmlTerm)
+      // e.g., if entityReferenceType is a BioPAX term
+      mappedTerms = _.toPairs(entityReferenceTypeTermsByGpmlTerm)
       .reduce(function(acc, pair) {
         var gpmlTerm = pair[0];
         var allTerms = pair[1];
-        if (allTerms.indexOf(entityType) > -1) {
+        if (allTerms.indexOf(entityReferenceType) > -1) {
           acc = acc.concat(allTerms);
         }
         return acc;
@@ -154,7 +155,7 @@ function DatasourceControl(args) {
         .concatMap(function(candidateDatasources) {
           var candidateDatasource$ = Rx.Observable.from(candidateDatasources);
 
-          // return all if no entity type specified
+          // return all if no entityReference type specified
           if (_.isEmpty(selectedTypes)) {
             return candidateDatasource$;
           }
@@ -164,11 +165,11 @@ function DatasourceControl(args) {
             // Filtering datasources based on the currently
             // selected GPML DataNode Type
 
-            var candidateDatasourceSubjects = expandEntityTypes(jsonldRx.arrayifyClean(
+            var candidateDatasourceSubjects = expandEntityReferenceTypes(jsonldRx.arrayifyClean(
                 candidateDatasource.subject));
 
             // If the IRIs are the same, we include the entry
-            // regardless of entity type
+            // regardless of entityReference type
             if (candidateDatasource.id === selectedDatasource.id) {
               return true;
             }
@@ -184,19 +185,19 @@ function DatasourceControl(args) {
               return true;
             }
 
-            var pathwayTerms = entityTypeTermsByGpmlTerm['gpml:Pathway'];
+            var pathwayTerms = entityReferenceTypeTermsByGpmlTerm['gpml:Pathway'];
             if (_.intersection(selectedTypes, pathwayTerms).length > 0 &&
                 _.intersection(candidateDatasourceSubjects, pathwayTerms).length > 0) {
               return true;
             }
 
-            var metaboliteTerms = entityTypeTermsByGpmlTerm['gpml:Metabolite'];
+            var metaboliteTerms = entityReferenceTypeTermsByGpmlTerm['gpml:Metabolite'];
             if (_.intersection(selectedTypes, metaboliteTerms).length > 0 &&
                 _.intersection(candidateDatasourceSubjects, metaboliteTerms).length > 0) {
               return true;
             }
 
-            var geneProductTerms = entityTypeTermsByGpmlTerm['gpml:GeneProduct'];
+            var geneProductTerms = entityReferenceTypeTermsByGpmlTerm['gpml:GeneProduct'];
             if (_.intersection(selectedTypes, geneProductTerms).length > 0 &&
                 _.intersection(candidateDatasourceSubjects, geneProductTerms).length > 0) {
               return true;
@@ -211,9 +212,9 @@ function DatasourceControl(args) {
     .toArray();
   };
 
-  var entityTypeList$ = (props.entityType || Rx.Observable.return('gpml:GeneProduct'))
+  var entityReferenceTypeList$ = (props.entityReferenceType || Rx.Observable.return('gpml:GeneProduct'))
   .map(jsonldRx.arrayifyClean)
-  .map(expandEntityTypes);
+  .map(expandEntityReferenceTypes);
 
   return h('select', {
     'className': 'pvjs-editor-dataset form-control input input-sm',
@@ -224,7 +225,7 @@ function DatasourceControl(args) {
     style: 'max-width: 135px; '
   },
     Rx.Observable.merge(
-        entityTypeList$
+        entityReferenceTypeList$
         .withLatestFrom(selectedDatasource$)
         .concatMap(function(result) {
           var selectedTypes = result[0];
@@ -238,7 +239,7 @@ function DatasourceControl(args) {
           });
         }),
         selectedDatasource$
-        .withLatestFrom(entityTypeList$)
+        .withLatestFrom(entityReferenceTypeList$)
         .concatMap(function(result) {
           var selectedDatasource = result[0];
           var selectedTypes = result[1];
@@ -268,4 +269,4 @@ function DatasourceControl(args) {
   );
 }
 
-module.exports = DatasourceControl;
+export default DatasourceControl;

@@ -4,7 +4,10 @@
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "index.js",
   "scripts": {
-    "build": "browserify ./src/main.dummy.ts -o ./dist/bridgedb.js -d -p [ tsify --target 'es6' ] -t [ babelify --extensions '.ts' --extensions '.tsx' ] -t brfs -t deglobalify",
+    "tsc:compile": "npm run tsc:clean && mkdir lib && cp -r ./src/ ./lib && tsc ./lib/*.ts && echo ok || echo not ok",
+    "tsc:clean": "rm -rf ./lib",
+    "build": "npm run tsc:compile && browserify ./lib/datasource.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify && npm run tsc:clean",
+    "build.notworking": "browserify ./src/dataset.ts -o ./dist/bridgedb.js -d -p [ tsify --target 'es6' ] -t [ babelify --extensions '.ts' --extensions '.tsx' ] -t brfs -t deglobalify",
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
     "start": "npm-run-all -p start:mockserver start:ui-combo-local",
     "start:mockserver": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",

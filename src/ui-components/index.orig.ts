@@ -1,4 +1,4 @@
-var Rx = require('rx-extra');
+var Rx = global.Rx = global.Rx || require('rx-extra');
 var bridgeDbConfig = require('../config.js');
 var BridgeDb = require('../main.js');
 var JsonldRx = require('jsonld-rx-extra');
@@ -35,14 +35,10 @@ function BridgeDbUIElement(args) {
 
   var onChange$ = props.onChange;
   var entityIn$ = props.entity;
-
-  return h('p', null, 'hello from bdb');
-
   var organismIn$ = props.organism;
 
   bridgeDbConfig.organism = null;
-  var bridgeDbInstance$ = new Rx.BehaviorSubject();
-  Rx.Observable.pairs(bridgeDbConfig)
+  var bridgeDbInstance$ = Rx.Observable.pairs(bridgeDbConfig)
   .flatMap(function(pair) {
     var key = pair[0];
     var value$;
@@ -62,12 +58,13 @@ function BridgeDbUIElement(args) {
     acc[key] = value;
     return acc;
   }, {})
-  .subscribe(function(bridgeDbConfig) {
-    bridgeDbInstance$.onNext(new BridgeDb(bridgeDbConfig));
-  }, function(err) {
+  .doOnError(function(err) {
     err.message = err.message || '';
     err.message += ', observed when getting bridgeDbConfig';
     throw err;
+  })
+  .map(function(bridgeDbConfig) {
+    return new BridgeDb(bridgeDbConfig)
   });
 
   var convertEntityTypesToEntityReferenceTypes = function(entityTypes) {
@@ -213,12 +210,7 @@ function BridgeDbUIElement(args) {
   var latestEntity$ = new Rx.BehaviorSubject();
 
   entityIn$
-  .withLatestFrom(
-      bridgeDbInstance$,
-      function(entity, bridgeDbInstance) {
-        return [entity, bridgeDbInstance];
-      }
-  )
+  .withLatestFrom(bridgeDbInstance$)
   .concatMap(function(result) {
     var entity = result[0];
     var bridgeDbInstance = result[1];
@@ -236,14 +228,10 @@ function BridgeDbUIElement(args) {
   });
 
   var entityOut$ = new Rx.Subject();
+
   entityOut$
   .debounce(300)
-  .withLatestFrom(
-      bridgeDbInstance$,
-      function(entity, bridgeDbInstance) {
-        return [entity, bridgeDbInstance];
-      }
-  )
+  .withLatestFrom(bridgeDbInstance$)
   .concatMap(function(result) {
     var entity = result[0];
     var bridgeDbInstance = result[1];
@@ -262,6 +250,32 @@ function BridgeDbUIElement(args) {
     err.message += ', observed in entityOut$';
     throw err;
   });
+
+//  return h('div.ln42', {
+////      entity: entityIn$,
+////      onChange: onChange$,
+//      organism: organismIn$,
+//    }, [
+//      //'c-el'
+//      //h('p', null, organismIn$),
+//      //h('p', null, Rx.Observable.combineLatest(organismIn$, bridgeDbInstance$)
+//      h('p', null, '', Rx.Observable.return('hi')
+//          .map(function(latestEntity) {
+//            console.log('latestEntity');
+//            console.log(latestEntity);
+//            return latestEntity;
+//          })
+//          .delay(200)
+//      )
+////      h('p', null, latestEntity$
+////          .map(function(entity) {
+////            console.log('latestEntity');
+////            console.log(latestEntity);
+////            return JSON.stringify(latestEntity);
+////          })
+////      )
+//    ]
+//  );
 
   return h('nav', {
           'className': 'bridgedb kaavio-editor-annotation navbar ' +

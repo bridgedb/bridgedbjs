@@ -1,11 +1,13 @@
+/// <reference path="../index.d.ts" />
+
 /* @module Organism */
 
-var _ = require('lodash');
-var httpErrors = require('./http-errors.js');
-var hyperquest = require('hyperquest');
-var csv = require('csv-streamify');
-var normalizer = require('./normalizer.js');
-var Rx = require('rx-extra');
+import * as _ from 'lodash';
+import csv = require('csv-streamify');
+import httpErrors from './http-errors.ts';
+import hyperquest = require('hyperquest');
+import normalizer from './normalizer.js';
+import Rx = require('rx-extra');
 var RxNode = Rx.RxNode;
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
@@ -186,7 +188,11 @@ var Organism = function(instance) {
       err.message = err.message || '';
       err.message += ' in BridgeDb.Organism._getAll';
       throw err;
-    });
+    })
+    .timeout(
+        4 * 1000,
+        Rx.Observable.throw(new Error('BridgeDb.entityReference.enrich timed out handling organism.'))
+    );
   }
 
   /**
@@ -298,9 +304,11 @@ var Organism = function(instance) {
    * @param {Object|String} searchCriteria
    * @return {Observable<Organism>} Organism
    */
-  function _getInstanceOrganism(searchCriteria) {
+  function _getInstanceOrganism(searchCriteria): organism {
+    var timeout = 6 * 1000;
     var organismNormalized = instance.organismNormalized;
     var organismNormalizedSource = instance.organismNormalizedSource;
+    var source;
     if (organismNormalized) {
       return Rx.Observable.return(organismNormalized)
       .doOnError(function(err) {
@@ -312,7 +320,11 @@ var Organism = function(instance) {
       .doOnError(function(err) {
         err.message = (err.message || '') + 'in BridgeDb.Organism._getInstanceOrganism (getting)';
         throw err;
-      });
+      })
+      .timeout(
+          timeout,
+          Rx.Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
+      );
     }
 
     var searchCriteriaUsed = instance.organismNonNormalized || searchCriteria;
@@ -334,7 +346,11 @@ var Organism = function(instance) {
     .doOnError(function(err) {
       err.message = (err.message || '') + 'in BridgeDb.Organism._getInstanceOrganism';
       throw err;
-    });
+    })
+    .timeout(
+        timeout,
+        Rx.Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
+    );
   }
 
   /**
@@ -467,6 +483,10 @@ var Organism = function(instance) {
 
     if (!!supportedType) {
       return typeToFunctionMapping[supportedType](searchCriteria)
+      .timeout(
+          10 * 1000,
+          Rx.Observable.throw(new Error('BridgeDb.organism.query timed out.'))
+      )
       .doOnError(function(err) {
         err.message = err.message || '';
         err.message += ' in BridgeDb.Organism.query';
@@ -487,7 +507,7 @@ var Organism = function(instance) {
    *                                 preferably the full Latin name. If you need to work
    *                                 with another organism, create another bridgedbjs instance.
    */
-  function _setInstanceOrganism(organism) {
+  function _setInstanceOrganism(organism: string|organism) {
     instance.organismNonNormalized = organism;
   }
 
@@ -505,4 +525,4 @@ var Organism = function(instance) {
   };
 };
 
-exports = module.exports = Organism;
+export default Organism;

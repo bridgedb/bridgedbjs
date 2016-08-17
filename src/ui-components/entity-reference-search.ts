@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var Rx = global.Rx = global.Rx || require('rx-extra');
-var BridgeDb = require('../../index.js');
+var BridgeDb = require('../main.js');
 var Levenshtein = require('levenshtein');
 var YolkSimpleModal = require('yolk-simple-modal').default;
 

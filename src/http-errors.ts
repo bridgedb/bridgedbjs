@@ -1,4 +1,4 @@
-var config = require('./config.js');
+import config from './config.ts';
 
 var httpErrors = function(args) {
   var error = args.error;
@@ -34,4 +34,4 @@ var httpErrors = function(args) {
   }, config.http.retryDelay);
 };
 
-module.exports = httpErrors;
+export default httpErrors;

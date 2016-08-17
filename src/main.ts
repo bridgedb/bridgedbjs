@@ -1,12 +1,14 @@
-var _ = require('lodash');
-var config = require('./config.js');
-var EntityReference = require('./entity-reference.js');
-var JsonldRx = require('jsonld-rx-extra');
-var JsonldMatcher = require('jsonld-rx-extra/lib/matcher.js');
-var Dataset = require('./dataset.js');
-var Organism = require('./organism.js');
-var Rx = require('rx-extra');
-var Xref = require('./xref.js');
+/// <reference path="../index.d.ts" />
+
+/* @module main */
+
+import * as _ from 'lodash';
+import config from './config.ts';
+import EntityReference from './entity-reference.ts';
+import Datasource from './datasource.ts';
+import Organism from './organism.ts';
+import Rx = require('rx-extra');
+import Xref from './xref.ts';
 
 /**
  * The keyword {@link http://www.w3.org/TR/json-ld/#the-context|@context} indicates
@@ -79,35 +81,10 @@ var BridgeDb = function(options) {
   var internalContext = options.context;
 
   var jsonldRx = instance.jsonldRx = new JsonldRx({
-    defaultContext: internalContext
+    transformerContext: internalContext
   });
 
   var jsonldMatcher = jsonldRx._matcher = new JsonldMatcher(jsonldRx);
-  //jsonldRx.normalizeText = jsonldMatcher._normalizeText;
-  //jsonldRx.tieredFind = jsonldMatcher.tieredFind;
-
-  instance.addContext = function(inputDoc) {
-    // our BridgeDbJs context, internal to this library
-    internalContext = _.isArray(internalContext) ? internalContext : [internalContext];
-    var externalContext = inputDoc['@context'] || [{'@vocab': 'http://bridgedb.org/input-vocab/'}];
-    externalContext = _.isArray(externalContext) ? externalContext : [externalContext];
-    var unionContext = internalContext.concat(externalContext);
-
-    return jsonldRx.mergeContexts(unionContext)
-    .map(function(mergedContexts) {
-      // this looks awkward, but it is needed in order to put the @context property first
-      var outputDoc = {
-        '@context': mergedContexts
-      };
-      _.defaults(outputDoc, inputDoc);
-      // TODO why do we need to stringify it here and parse it in the next step?
-      return JSON.stringify(outputDoc);
-    })
-    .map(function(value) {
-      var parsedValue = JSON.parse(value);
-      return parsedValue;
-    });
-  };
 
   instance.entityReference = Object.create(EntityReference(instance));
   instance.entityReference = Object.create(EntityReference(instance));
@@ -116,7 +93,7 @@ var BridgeDb = function(options) {
     instance.organism._setInstanceOrganism(options.organism, false);
   }
 
-  instance.dataset = Object.create(Dataset(instance));
+  instance.dataset = Object.create(Datasource(instance));
   instance.xref = Object.create(Xref(instance));
 };
 
