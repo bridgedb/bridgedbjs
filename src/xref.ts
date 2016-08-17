@@ -1,18 +1,15 @@
+/// <reference path="../index.d.ts" />
+
 /* @module Xref */
 
-var _ = require('lodash');
-var csv = require('csv-streamify');
-var httpErrors = require('./http-errors.js');
-var hyperquest = require('hyperquest');
-var Rx = require('rx-extra');
+import * as _ from 'lodash';
+import csv = require('csv-streamify');
+import httpErrors from './http-errors.ts';
+import hyperquest = require('hyperquest');
+import Rx = require('rx-extra');
 var RxNode = Rx.RxNode;
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
-
-var DATASOURCES_HEADERS_NS = [
-  'https://github.com/bridgedb/BridgeDb/blob/master/',
-  'org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#'
-].join('');
 
 /**
  * Used internally to create a new Xref instance
@@ -32,10 +29,11 @@ var Xref = function(instance) {
    * Currently limited to biopax:UnificationXrefs and biopax:RelationshipXrefs.
    *
    * @param {String|Object|String[]|Object[]|Observable} input entity reference(s)
+   * @param {Object} [options]
    * @return {Observable<EntityReference>} entityReferenceSource containing enriched
    *                              {@link EntityReference|EntityReferences}.
    */
-  function get(input, options) {
+  function get(input: entityReference, options?): Rx.Observable<entityReference> {
     // First: from on the input entity reference(s), get the correct BridgeDb webservice
     // endpoint(s) required to get xrefs.
     // NOTE: entityReference.enrich handles the different forms of input.
@@ -43,7 +41,7 @@ var Xref = function(instance) {
     .shareReplay();
 
     // This section gets, enriches and formats the xrefs
-    var fullEntityReferenceSource = Rx.Observable.catch(
+    var fullEntityReferenceSource: Rx.Observable<entityReference> = Rx.Observable.catch(
         normalizedEntityReferenceSource
         .flatMap(function(normalizedEntityReference) {
           var sourceIri = _getBridgeDbIriByEntityReference(normalizedEntityReference);
@@ -67,21 +65,19 @@ var Xref = function(instance) {
           console.error(err.message);
           console.error(err.stack);
         })
-        .map(function(array) {
-          var result = {};
-          result.identifier = array[0];
-          result.conventionalName = array[1];
-          return result;
+        .map(function(array): entityReferenceEnrichInput {
+					return {
+						identifier: array[0],
+						isDataItemIn: {
+							conventionalName: array[1]
+						}
+					};
         })
         //.flatMap(instance.entityReference.enrich)
-        .flatMap(function(xref) {
+        .flatMap(function(xref: entityReferenceEnrichInput): entityReference {
           return instance.entityReference.enrich(xref, {
             context: false, organism: false, xrefs: false
-          })
-          .doOnNext(function(enriched) {
-            console.log('enriched');
-            console.log(enriched);
-          })
+          });
           //return instance.entityReference.normalize(xref);
         })
         .doOnError(function(err) {
@@ -146,59 +142,6 @@ var Xref = function(instance) {
       // if we can't expand, we at least return exactly what the user provided.
       return Rx.Observable.return(input);
     });
-
-//    return Rx.Observable.catch(
-//      // TODO once batch mode is working for the API, re-enable this.
-//      // Right now, it's too slow.
-//        fullEntityReferenceSource
-//        .doOnError(function(err) {
-//          err.message = (err.message || '') +
-//            ' BridgeDb.Xref.get fullEntityReferenceSource failed.';
-//      console.error(err.message);
-//      console.error(err.stack);
-//        })
-//        .timeout(
-//            timeout,
-//            Rx.Observable.throw(new Error(timeoutErrorMessage))
-//        )
-//        .doOnError(function(err) {
-//          err.message = (err.message || '') +
-//            ' BridgeDb.Xref.get fullEntityReferenceSource timed out.';
-//      console.error(err.message);
-//      console.error(err.stack);
-//        }),
-//        // if we can at least expand the user input, we return that.
-//        normalizedEntityReferenceSource
-//        .doOnError(function(err) {
-//          err.message = (err.message || '') +
-//            ' BridgeDb.Xref.get normalizedEntityReferenceSource failed.';
-//      console.error(err.message);
-//      console.error(err.stack);
-//        })
-//        .timeout(
-//            timeout + 50,
-//            Rx.Observable.throw(new Error(timeoutErrorMessage + '; returning normalized input.'))
-//        )
-//        .doOnError(function(err) {
-//          err.message = (err.message || '') +
-//            ' BridgeDb.Xref.get normalizedEntityReferenceSource timed out.';
-//      console.error(err.message);
-//      console.error(err.stack);
-//        }),
-//        // if we can't expand, we at least return exactly what the user provided.
-//        Rx.Observable.return(input)
-//        .concat(
-//            Rx.Observable.throw(
-//                new Error('BridgeDb.Xref.get 100% failed; returning input.')
-//            )
-//            .doOnError(function(err) {
-//              err.message = (err.message || '') +
-//                ' BridgeDb.Xref.get 100% failed; returning input.';
-//      console.error(err.message);
-//      console.error(err.stack);
-//            })
-//        )
-//    );
   }
 
   /**
@@ -213,7 +156,7 @@ var Xref = function(instance) {
    * @param {String} entityReference.isDataItemIn.systemCode
    * @return {String} iri IRI (URL) for getting Xrefs from BridgeDb webservices
    */
-  function _getBridgeDbIriByEntityReference(entityReference) {
+  function _getBridgeDbIriByEntityReference(entityReference: entityReference): BridgeDbXrefsIri {
     var systemCode = entityReference.isDataItemIn.systemCode;
     var path = encodeURIComponent(entityReference.organism.nameLanguageMap.la) +
       '/xrefs/' + encodeURIComponent(systemCode) + '/' +
@@ -227,4 +170,4 @@ var Xref = function(instance) {
   };
 };
 
-exports = module.exports = Xref;
+export default Xref;

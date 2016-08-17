@@ -22,11 +22,12 @@ declare class BridgeDbXrefsIri extends String{}
 declare class MyGeneInfoXrefsIri extends String{}
 declare interface entityReference {
 	id?: string,
-	identifier?: string,
+	identifier: string,
 	isDataItemIn?: datasource,
-	organism: organism,
-	xref: [BridgeDbXrefsIri, MyGeneInfoXrefsIri]
-	type: string|string[]
+	displayName?: string,
+	organism?: organism,
+	xref?: [BridgeDbXrefsIri, MyGeneInfoXrefsIri]
+	type?: string[]
 }
 
 declare class IdentifiersIri extends String{}

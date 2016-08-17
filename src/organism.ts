@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import csv = require('csv-streamify');
 import httpErrors from './http-errors.ts';
 import hyperquest = require('hyperquest');
-import normalizer from './normalizer.js';
+import * as normalizer from './normalizer.ts';
 import Rx = require('rx-extra');
 var RxNode = Rx.RxNode;
 
@@ -452,7 +452,7 @@ var Organism = function(instance) {
    * @param {String|String[]} [searchCriteria.type='Organism']
    * @return {Observable<Organism>} organismObservable
    */
-  function query(searchCriteria) {
+  function query(searchCriteria?) {
     if (_.isEmpty(searchCriteria)) {
       return _getAll()
       .doOnError(function(err) {
@@ -477,7 +477,7 @@ var Organism = function(instance) {
     }
     providedType = jsonldRx.arrayify(providedType);
 
-    var supportedType = _(typeToFunctionMapping).keys()
+    var supportedType: string = _(typeToFunctionMapping).keys()
     .intersection(providedType)
     .first();
 
@@ -512,10 +512,6 @@ var Organism = function(instance) {
   }
 
   return {
-    /*
-    createEntityReferenceToOrganismTransformationStream:
-      createEntityReferenceToOrganismTransformationStream,
-    //*/
     get: get,
     _getByEntityReference: _getByEntityReference,
     _getBySystemCodeAndIdentifier: _getBySystemCodeAndIdentifier,

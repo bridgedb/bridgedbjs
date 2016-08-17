@@ -26,7 +26,7 @@ var EntityReference = function(instance) {
   var jsonldRx = instance.jsonldRx;
   var internalContext = config.context;
 
-  // We currently only support identifiers.org and BridgeDb IRIs in this library.
+  // We currently support identifiers.org and BridgeDb IRIs in this library.
   var iriParsers: Object = {
     'identifiers.org': function(iri) {
       iri = decodeURI(iri);
@@ -221,20 +221,29 @@ var EntityReference = function(instance) {
    * @return {Observable<EntityReference>} entityReference {@link EntityReference} with as many
    *                    properties as possible added, unless otherwise specified by options.
    */
-  function enrich(input: entityReferenceEnrichInput, options);
-  function enrich(input: Rx.Observable<entityReferenceEnrichInput>, options);
-  function enrich(input, options: {
+//	// TODO look at specifying default params for options
+//  function enrich(input, options: {
+//			organism?: boolean,
+//			context?: boolean,
+//			datasource?: boolean,
+//			xref?: boolean,
+//			timeout?:number
+//	}={
+//      organism: true,
+//      context: true,
+//      datasource: true,
+//      xref: true,
+//      timeout: 10 * 1000
+//	}): Rx.Observable<entityReference> {
+//	}
+  function enrich(input: entityReferenceEnrichInput, options?);
+  function enrich(input: Rx.Observable<entityReferenceEnrichInput>, options?);
+  function enrich(input, options?: {
 			organism?: boolean,
 			context?: boolean,
 			datasource?: boolean,
 			xref?: boolean,
 			timeout?:number
-	}={
-      organism: true,
-      context: true,
-      datasource: true,
-      xref: true,
-      timeout: 10 * 1000
 	}): Rx.Observable<entityReference> {
     var inputSource;
     if (_.isPlainObject(input)) {
@@ -505,9 +514,9 @@ var EntityReference = function(instance) {
    * @return {EntityReference} EntityReference Entity reference converted to object,
    *                      if required, and normalized.
    */
-  function _expand(entityReferenceRaw: string|Object): entityReference {
+  function _expand(entityReference: string|entityReference): entityReference {
     // TODO should we even do this here?
-    var entityReference = _handleStringInput(entityReferenceRaw);
+    entityReference = _handleStringInput(entityReference);
 
     entityReference.type = jsonldRx.arrayifyClean(entityReference.type);
     if (entityReference.type.indexOf('EntityReference') === -1) {
@@ -543,30 +552,31 @@ var EntityReference = function(instance) {
       instance.organism._setInstanceOrganism(organism, false);
     }
 
-		var isDataItemIn = entityReference.isDataItemIn;
-    if (_.isEmpty(isDataItemIn)) {
-      isDataItemIn = entityReference.isDataItemIn = {};
-    } else if (_.isString(isDataItemIn)) {
-      isDataItemIn = entityReference.isDataItemIn = {
-        id: entityReference.isDataItemIn
+		var datasource = entityReference.isDataItemIn;
+    if (_.isEmpty(datasource)) {
+      datasource = {};
+    } else if (_.isString(datasource)) {
+      datasource = {
+        id: datasource
       };
     }
 
 		var conventionalName;
     var name;
-		if (!_.isEmpty(isDataItemIn)) {
-			name = entityReference.isDataItemIn.name ||
-				entityReference.isDataItemIn.conventionalName;
+		if (!_.isEmpty(datasource)) {
+			name = datasource.name || datasource.conventionalName;
 
 			if (!!name) {
-				entityReference.isDataItemIn.name = name;
+				datasource.name = name;
 			}
 		}
 
     var identifier = entityReference.identifier;
     if (!!identifier) {
-      entityReference.isDataItemIn.exampleIdentifier = identifier;
+      datasource.exampleIdentifier = identifier;
     }
+
+		entityReference.isDataItemIn = datasource;
 
     return entityReference;
   }
@@ -648,31 +658,29 @@ var EntityReference = function(instance) {
       err.message += ', observed in BridgeDb.EntityReference.freeSearch';
       throw err;
     })
-    .map(function(array) {
-      var result = {
+    .map(function(array): entityReference {
+      return {
         identifier: array[0],
-        displayName: array[2]
+        displayName: array[2],
+				isDataItemIn: {
+					conventionalName: array[1]
+				}
       };
-
-      result.conventionalName = array[1];
-      return result;
     })
-    .map(function(searchResult) {
+    .map(function(searchResult): entityReference {
       // remove empty properties
-      searchResult = _.omit(searchResult, function(value) {
+      return _.omit(searchResult, function(value) {
         // Note: I intentionally used 'null' as
         // a string, not a native value, because
         // BridgeDb returns the string value
         return value === 'null';
       });
-
-      return searchResult;
     })
     .flatMap(function(searchResult) {
       // NOTE if we just call enrich like
-      //.flatMap(enrich);
+      // .flatMap(enrich);
       // then the index gets passed in
-      // (as the second parameter).
+      // as the second parameter.
       return enrich(searchResult);
     })
     .doOnError(function(err) {
@@ -696,9 +704,7 @@ var EntityReference = function(instance) {
     return directIri;
   }
 
-  function _handleStringInput(entityReference: string): entityReference;
-  function _handleStringInput(entityReference: entityReference): entityReference;
-  function _handleStringInput(entityReference) {
+  function _handleStringInput(entityReference: string|entityReference): entityReference {
     if (!_.isPlainObject(entityReference)) {
       if (typeof entityReference === 'string') {
         // Convert input from IRI string to object
