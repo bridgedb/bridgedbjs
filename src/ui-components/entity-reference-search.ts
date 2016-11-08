@@ -233,25 +233,25 @@ function EntityReferenceSearch(args) {
         .toArray()
         .map(function(entityReferenceGroups) {
           return entityReferenceGroups.sort(function(entityReferenceGroup1, entityReferenceGroup2) {
-            var datasetPreferredPrefix1 = entityReferenceGroup1[0].isDataItemIn.preferredPrefix;
-            var datasetPreferredPrefix2 = entityReferenceGroup2[0].isDataItemIn.preferredPrefix;
+            var datasourcePreferredPrefix1 = entityReferenceGroup1[0].isDataItemIn.preferredPrefix;
+            var datasourcePreferredPrefix2 = entityReferenceGroup2[0].isDataItemIn.preferredPrefix;
 
             // Ensembl shows up first
-            if (datasetPreferredPrefix1 === 'ensembl') {
+            if (datasourcePreferredPrefix1 === 'ensembl') {
               return -1;
-            } else if (datasetPreferredPrefix2 === 'ensembl') {
+            } else if (datasourcePreferredPrefix2 === 'ensembl') {
               return 1;
             }
 
             // Entrez Gene shows up next
-            if (datasetPreferredPrefix1 === 'ncbigene') {
+            if (datasourcePreferredPrefix1 === 'ncbigene') {
               return -1;
-            } else if (datasetPreferredPrefix2 === 'ncbigene') {
+            } else if (datasourcePreferredPrefix2 === 'ncbigene') {
               return 1;
             }
 
             // The rest are sorted alphabetically
-            return datasetPreferredPrefix1 > datasetPreferredPrefix2;
+            return datasourcePreferredPrefix1 > datasourcePreferredPrefix2;
           })
           .reduce(function(entityReferences, entityReferenceGroup) {
             return entityReferences.concat(entityReferenceGroup);

@@ -1,4 +1,4 @@
-import config from './config.ts';
+import config from './config';
 
 var httpErrors = function(args) {
   var error = args.error;

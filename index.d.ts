@@ -1,87 +1,66 @@
+///<reference path="./typings/jsonld/index.d.ts" />
 ///<reference path="./typings/rx/rx.experimental.d.ts" />
-///<reference path="./node_modules/@types/rx-node/rx-node.d.ts" />
+///<reference path="./node_modules/@types/lodash/index.d.ts" />
 
-declare interface nameLanguageMap {
-	la?: string,
-	en?: string,
-}
-
-declare interface organism {
+declare interface Organism {
 	name?: string,
-	nameLanguageMap?: nameLanguageMap
+	nameLanguageMap?: NameLanguageMap
 }
 
-declare interface datasource {
+declare interface Datasource {
+	'@context'?: any,
+	alternatePrefix?: string|string[],
+	entityType: string,
+	hasPrimaryUriPattern?: string,
+	id: string,
+	identifierPattern?: string,
+	uriRegexPattern?: string,
 	name?: string,
 	conventionalName: string,
 	exampleIdentifier?: string,
 	preferredPrefix: string,
+	type: any,
+	subject?: string|string[],
 	systemCode: string,
+	uri?: string,
 }
 declare class BridgeDbXrefsIri extends String{}
 declare class MyGeneInfoXrefsIri extends String{}
-declare interface entityReference {
+declare interface EntityReference {
 	id?: string,
 	identifier: string,
-	isDataItemIn?: datasource,
+	isDataItemIn?: Datasource,
 	displayName?: string,
-	organism?: organism,
+	organism?: Organism,
 	xref?: [BridgeDbXrefsIri, MyGeneInfoXrefsIri]
 	type?: string[]
 }
 
 declare class IdentifiersIri extends String{}
-declare interface entityReferenceEnrichInput1 {
+declare interface EntityReferenceEnrichInput1 {
 	id: IdentifiersIri
 }
-declare interface entityReferenceEnrichInput2 {
+declare interface EntityReferenceEnrichInput2 {
 	bridgeDbXrefsIri: BridgeDbXrefsIri
 }
-declare interface entityReferenceEnrichInput3 {
+declare interface EntityReferenceEnrichInput3 {
 	xref: [BridgeDbXrefsIri]
 }
-declare interface entityReferenceEnrichInput4 {
+declare interface EntityReferenceEnrichInput4 {
 	isDataItemIn: {
 		name: string
 	},
 	identifier: string
 }
-declare interface entityReferenceEnrichInput5 {
+declare interface EntityReferenceEnrichInput5 {
 	isDataItemIn: {
 		conventionalName: string
 	},
 	identifier: string
 }
-declare type entityReferenceEnrichInput = IdentifiersIri|BridgeDbXrefsIri|entityReferenceEnrichInput1|entityReferenceEnrichInput2|entityReferenceEnrichInput3|entityReferenceEnrichInput4|entityReferenceEnrichInput5
+declare type EntityReferenceEnrichInput = IdentifiersIri|BridgeDbXrefsIri|EntityReferenceEnrichInput1|EntityReferenceEnrichInput2|EntityReferenceEnrichInput3|EntityReferenceEnrichInput4|EntityReferenceEnrichInput5
 
 declare function csv(any): any;
 declare module 'csv-streamify' {
-	export = csv;
-}
-
-// TODO this isn't quite right, and it's losing
-// information from original 'rx-node' module.
-declare interface RxNode {fromUnpausableStream: any}
-
-declare namespace Rx {
-	interface Observable<T> {
-		 streamThrough<TResult>(selector: (source: Observable<T>) => Observable<TResult>): Observable<TResult>;   
-	}
-
-	export const BehaviorSubject: any
-	export const RxNode: RxNode
-}
-declare module 'rx-extra' {
-	export = Rx;
-}
-
-declare function hyperquest(any, object?): any;
-declare module 'hyperquest' {
-	export = hyperquest;
-}
-
-declare function yolk(any): any;
-declare module 'yolk' {
-	export const h: any;
-	export default yolk;
+	export default csv;
 }

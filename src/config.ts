@@ -9,12 +9,12 @@ var config = {
       bridgeDbCommitHash,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/jsonld-context.jsonld',
     ].join(''),
-  datasetsMetadataIri: [
+  datasourcesMetadataIri: [
       bridgeDbRepoCdn,
       bridgeDbCommitHash,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt',
     ].join(''),
-  datasetsHeadersIri: [
+  datasourcesHeadersIri: [
       bridgeDbRepoCdn,
       bridgeDbCommitHash,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt',

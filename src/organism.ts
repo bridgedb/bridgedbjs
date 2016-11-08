@@ -2,12 +2,19 @@
 
 /* @module Organism */
 
-import * as _ from 'lodash';
-import csv = require('csv-streamify');
-import httpErrors from './http-errors.ts';
-import hyperquest = require('hyperquest');
-import * as normalizer from './normalizer.ts';
-import Rx = require('rx-extra');
+import * as keys from 'lodash/keys';
+import * as first from 'lodash/first';
+import * as intersection from 'lodash/intersection';
+import * as isArray from 'lodash/isArray';
+import * as isEmpty from 'lodash/isEmpty';
+import * as isPlainObject from 'lodash/isPlainObject';
+import * as isString from 'lodash/isString';
+
+import csv from 'csv-streamify';
+import httpErrors from './http-errors';
+import hyperquest from 'hyperquest';
+import * as normalizer from './normalizer';
+import Rx from 'rx-extra';
 var RxNode = Rx.RxNode;
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
@@ -117,7 +124,7 @@ var Organism = function(instance) {
    * @return {Observable<Organism>} organismObservable
    */
   function get(searchCriteria) {
-    if (_.isEmpty(searchCriteria)) {
+    if (isEmpty(searchCriteria)) {
       var err = new Error('No searchCriteria specified for BridgeDb.Organism.get');
       return Rx.Observable.throw(err);
     }
@@ -156,17 +163,25 @@ var Organism = function(instance) {
     })
     .streamThrough(csv(csvOptions))
     .map(function(array) {
-      var nameLanguageMap = {};
+      var nameLanguageMap: NameLanguageMap;
       var englishName = array[0];
       var latinName = array[1];
 
       // Note: I intentionally used 'null' as a string, not a native value,
       // because BridgeDb returns the string value
-      if (englishName !== 'null') {
-        nameLanguageMap.en = englishName;
-      }
-      if (latinName !== 'null') {
-        nameLanguageMap.la = latinName;
+      if (englishName !== 'null' && latinName !== 'null') {
+        nameLanguageMap = {
+					en: englishName,
+					la: latinName
+				};
+			} else if (englishName !== 'null') {
+        nameLanguageMap = {
+					en: englishName
+				};
+      } else if (latinName !== 'null') {
+        nameLanguageMap = {
+					la: latinName
+				};
       }
 
       var normalizedOrganism = {
@@ -244,7 +259,7 @@ var Organism = function(instance) {
     // TODO as part of the build process, query all species like this:
     // http://webservice.bridgedb.org/Human/sourceDataSources
     // http://webservice.bridgedb.org/Human/targetDataSources
-    // to get a listing of which datasets go with which species.
+    // to get a listing of which datasources go with which species.
     // Save that data as a JSON file.
     // Then use those limitations in this query.
 
@@ -252,13 +267,13 @@ var Organism = function(instance) {
 
     var systemCodeExists = !!entityReference.isDataItemIn &&
       (!!entityReference.isDataItemIn.systemCode ||
-      _.isArray(entityReference.isDataItemIn.alternatePrefix) &&
+      isArray(entityReference.isDataItemIn.alternatePrefix) &&
       !!entityReference.isDataItemIn.alternatePrefix[0]);
 
     if (!systemCodeExists) {
       entityReferenceSource = instance.entityReference.enrich(entityReference, {
         bridgeDbXrefsUrl: false,
-        dataset: true,
+        datasource: true,
         organism: false,
         xref: false,
       });
@@ -275,7 +290,7 @@ var Organism = function(instance) {
 
       var systemCode =
         entityReference.isDataItemIn.systemCode ||
-        _.isArray(entityReference.isDataItemIn.alternatePrefix) &&
+        isArray(entityReference.isDataItemIn.alternatePrefix) &&
         entityReference.isDataItemIn.alternatePrefix[0];
 
       var identifier = entityReference.identifier;
@@ -304,7 +319,7 @@ var Organism = function(instance) {
    * @param {Object|String} searchCriteria
    * @return {Observable<Organism>} Organism
    */
-  function _getInstanceOrganism(searchCriteria): organism {
+  function _getInstanceOrganism(searchCriteria): Organism {
     var timeout = 6 * 1000;
     var organismNormalized = instance.organismNormalized;
     var organismNormalizedSource = instance.organismNormalizedSource;
@@ -383,13 +398,13 @@ var Organism = function(instance) {
     var organismName;
     var normalizedOrganismName;
     var organismIri;
-    if (_.isString(organism)) {
+    if (isString(organism)) {
       if (organism.indexOf('http://identifiers.org/taxonomy/') === 0) {
         organismIri = organism;
       } else {
         organismName = organism;
       }
-    } else if (_.isPlainObject(organism)) {
+    } else if (isPlainObject(organism)) {
       if (organism.id || organism['@id']) {
         organismIri = organism.id || organism['@id'];
       }
@@ -453,7 +468,7 @@ var Organism = function(instance) {
    * @return {Observable<Organism>} organismObservable
    */
   function query(searchCriteria?) {
-    if (_.isEmpty(searchCriteria)) {
+    if (isEmpty(searchCriteria)) {
       return _getAll()
       .doOnError(function(err) {
         err.message = (err.message || '') + 'in BridgeDb.Organism.query';
@@ -470,16 +485,19 @@ var Organism = function(instance) {
         typeToFunctionMapping.Organism;
 
     var providedType;
-    if (_.isString(searchCriteria)) {
+    if (isString(searchCriteria)) {
       providedType = 'Organism';
     } else {
       providedType = searchCriteria.type || searchCriteria['@type'] || 'Organism';
     }
     providedType = jsonldRx.arrayify(providedType);
 
-    var supportedType: string = _(typeToFunctionMapping).keys()
-    .intersection(providedType)
-    .first();
+		var supportedType: string = first(
+				intersection(
+						keys(typeToFunctionMapping),
+						providedType
+				)
+		);
 
     if (!!supportedType) {
       return typeToFunctionMapping[supportedType](searchCriteria)
@@ -507,7 +525,7 @@ var Organism = function(instance) {
    *                                 preferably the full Latin name. If you need to work
    *                                 with another organism, create another bridgedbjs instance.
    */
-  function _setInstanceOrganism(organism: string|organism) {
+  function _setInstanceOrganism(organism: string|Organism) {
     instance.organismNonNormalized = organism;
   }
 

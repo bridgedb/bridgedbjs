@@ -2,13 +2,14 @@
 
 /* @module main */
 
+
 import * as _ from 'lodash';
-import config from './config.ts';
-import EntityReference from './entity-reference.ts';
-import Datasource from './datasource.ts';
-import Organism from './organism.ts';
-import Rx = require('rx-extra');
-import Xref from './xref.ts';
+import * as config from './config';
+import EntityReference from './entity-reference';
+import Datasource from './datasource';
+import Organism from './organism';
+import Rx from 'rx-extra';
+import Xref from './xref';
 
 /**
  * The keyword {@link http://www.w3.org/TR/json-ld/#the-context|@context} indicates
@@ -50,7 +51,7 @@ import Xref from './xref.ts';
  * BridgeDb = require('bridgedb'); // Only needed if using Node.js.
  * var myBridgeDbInstance = new BridgeDb({
  *   baseIri: 'http://webservice.bridgedb.org/', // Optional
- *   datasetsMetadataIri:
+ *   datasourcesMetadataIri:
  *    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'  // Optional
  * });
  *
@@ -60,10 +61,10 @@ import Xref from './xref.ts';
  *    TODO Enable CORS at bridgedb.org, because the default should be
  *    'http://webservice.bridgedb.org/', but we are forced to use pointer as
  *    a proxy for now for CORS so that web browsers can access the data.
- * @param {string} [options.datasetsMetadataIri=
+ * @param {string} [options.datasourcesMetadataIri=
  *    'https://cdn.rawgit.com/bridgedb/BridgeDb/master/org.bridgedb.bio/
  *        resources/org/bridgedb/bio/datasources.txt'] Location
- *    (URL) of the datasources.txt file that contains metadata for selected biological datasets.
+ *    (URL) of the datasources.txt file that contains metadata for selected biological datasources.
  *    This metadata includes information such as name (e.g., Entrez Gene),
  *    Miriam identifier (e.g., urn:miriam:ncbigene) and BridgeDb system code (e.g., L).
  * @param {string} [options.organism] Full name in Latin, e.g., Homo sapiens.
@@ -80,12 +81,6 @@ var BridgeDb = function(options) {
 
   var internalContext = options.context;
 
-  var jsonldRx = instance.jsonldRx = new JsonldRx({
-    transformerContext: internalContext
-  });
-
-  var jsonldMatcher = jsonldRx._matcher = new JsonldMatcher(jsonldRx);
-
   instance.entityReference = Object.create(EntityReference(instance));
   instance.entityReference = Object.create(EntityReference(instance));
   instance.organism = Object.create(Organism(instance));
@@ -93,18 +88,8 @@ var BridgeDb = function(options) {
     instance.organism._setInstanceOrganism(options.organism, false);
   }
 
-  instance.dataset = Object.create(Datasource(instance));
+  instance.datasource = Object.create(Datasource(instance));
   instance.xref = Object.create(Xref(instance));
 };
 
-(function() {
-  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    //in browser environment
-    window.BridgeDb = BridgeDb;
-  }
-
-  if (!!module && !!module.exports) {
-    //in node and/or CommonJS environment
-    module.exports = BridgeDb;
-  }
-})();
+export default BridgeDb;

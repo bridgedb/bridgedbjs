@@ -94,7 +94,7 @@ function DatasourceControl(args) {
     'name': 'Select datasource'
   };
 
-  var primaryDatasourceList$ = bridgeDbInstance.dataset.query()
+  var primaryDatasourceList$ = bridgeDbInstance.datasource.query()
   .map(function(datasource) {
     datasource.subject = jsonldRx.arrayifyClean(datasource.subject);
     return datasource;
@@ -217,7 +217,7 @@ function DatasourceControl(args) {
   .map(expandEntityReferenceTypes);
 
   return h('select', {
-    'className': 'pvjs-editor-dataset form-control input input-sm',
+    'className': 'pvjs-editor-datasource form-control input input-sm',
     data: selectedDatasource$,
     disabled: disabled$,
     onChange: handleChange,

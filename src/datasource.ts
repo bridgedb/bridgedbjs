@@ -2,12 +2,17 @@
 
 /* @module Datasource */
 
-import * as _ from 'lodash';
+import * as omitBy from 'lodash/omitBy';
+import * as isNaN from 'lodash/isNaN';
+import * as isNull from 'lodash/isNull';
+import * as isUndefined from 'lodash/isUndefined';
+import * as isEmpty from 'lodash/isEmpty';
+
 import * as assert from 'assert';
-import csv = require('csv-streamify');
-import httpErrors from './http-errors.ts';
-import hyperquest = require('hyperquest');
-import Rx = require('rx-extra');
+import csv from 'csv-streamify';
+import httpErrors from './http-errors';
+import hyperquest from 'hyperquest';
+import Rx from 'rx-extra';
 var RxNode = Rx.RxNode;
 import * as URI from 'urijs';
 
@@ -204,11 +209,14 @@ var Datasource = function(instance) {
 //      });
 
       // TODO use headers code above instead
-      return Rx.Observable.from(rows).map(function(fields) {
-        var result = {
+      return Rx.Observable.from(rows)
+			.map(function(fields) {
+        return {
           '@context': internalContext,
+					conventionalName: fields[0],
           systemCode: fields[1],
           webPage: fields[2],
+					hasPrimaryUriPattern: fields[3],
           exampleIdentifier: fields[4],
           entityType: fields[5],
           // TODO this is returning organism as a string
@@ -216,51 +224,42 @@ var Datasource = function(instance) {
           // object. Will that cause problems?
           organism: fields[6],
           primary: fields[7] === '1',
+					uri: fields[8],
           identifierPattern: fields[9],
           name: fields[10]
         };
-
-        // jscs: disable
-        result.conventionalName = fields[0];
-        result.linkout_pattern = fields[3];
-        result.uri = fields[8];
-        // jscs: enable
-
-        return result;
       });
     })
     .map(function(datasource) {
 
-      // remove empty properties, ie., propeties with these values:
+      // remove empty properties, ie., properties with these values:
       // ''
       // NaN
       // null
       // undefined
       // TODO what about empty plain object {} or array []
 
-      return _.omitBy(datasource, function(value) {
+      return omitBy(datasource, function(value) {
         return value === '' ||
-          _.isNaN(value) ||
-        _.isNull(value) ||
-        _.isUndefined(value);
+          isNaN(value) ||
+					isNull(value) ||
+					isUndefined(value);
       });
     })
-    .map(function(datasource) {
-      // jscs: disable
-      var linkoutPattern = datasource.linkout_pattern;
-      // jscs: enable
+    .map(function(datasource: Datasource) {
+      var primaryUriPattern = datasource.hasPrimaryUriPattern;
       var identifierPattern = datasource.identifierPattern;
-      if (!!linkoutPattern) {
-        datasource.uriRegexPattern = linkoutPattern.replace(
+      if (!!primaryUriPattern) {
+        datasource.uriRegexPattern = primaryUriPattern.replace(
           '$id',
           _getIdentifierPatternWithoutBeginEndRestriction(identifierPattern)
         );
 
-        // if '$id' is at the end of the linkoutPattern
-        var indexOfDollaridWhenAtEnd = linkoutPattern.length - 3;
-        if (linkoutPattern.indexOf('$id') === indexOfDollaridWhenAtEnd) {
+        // if '$id' is at the end of the primaryUriPattern
+        var indexOfDollaridWhenAtEnd = primaryUriPattern.length - 3;
+        if (primaryUriPattern.indexOf('$id') === indexOfDollaridWhenAtEnd) {
           datasource[OWL + 'sameAs'] = datasource[OWL + 'sameAs'] || [];
-          datasource[OWL + 'sameAs'].push(linkoutPattern.substr(0, indexOfDollaridWhenAtEnd));
+          datasource[OWL + 'sameAs'].push(primaryUriPattern.substr(0, indexOfDollaridWhenAtEnd));
         }
       }
 
@@ -405,7 +404,7 @@ var Datasource = function(instance) {
     //assert(args.hasOwnProperty('@id') || args.hasOwnProperty('id'), '');
     var timeout = 10 * 1000;
 
-    if (_.isEmpty(args)) {
+    if (isEmpty(args)) {
       return _getAll()
       .doOnError(function(err) {
         err.message = err.message || '';
@@ -414,22 +413,6 @@ var Datasource = function(instance) {
       });
     }
 
-    var parsedArgs = _.fromPairs(
-        _.toPairs(args)
-        .map(function(pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var mapping = datasourcesHeadersMappings[key];
-          var updatedKey;
-          if (!mapping) {
-            updatedKey = key;
-          } else {
-            updatedKey = mapping;
-          }
-          return [updatedKey, value];
-        })
-    );
-
     //*
     var options = {
       threshold: 1,
@@ -437,7 +420,8 @@ var Datasource = function(instance) {
     };
     //*/
 
-    return jsonldRx.matcher.filter(parsedArgs, _getAllProcessedForMatcher(), matchers, options)
+		// TODO use bitmask here instead of jsonldRx.matcher
+    return jsonldRx.matcher.filter(args, _getAllProcessedForMatcher(), matchers, options)
     .timeout(
         4 * 1000,
         Rx.Observable.throw(new Error('BridgeDb.datasource.query timed out in jsonldRx.matcher.filter.'))
@@ -522,7 +506,7 @@ var Datasource = function(instance) {
     .concatMap(function(sortedResults) {
       // TODO We should distinguish between exact and fuzzy matches.
       return Rx.Observable.from(sortedResults)
-      .map(function(result) {
+      .map(function(result: any) {
         return result.value;
       });
       /*

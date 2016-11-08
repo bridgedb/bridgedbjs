@@ -3,10 +3,10 @@
 /* @module Xref */
 
 import * as _ from 'lodash';
-import csv = require('csv-streamify');
-import httpErrors from './http-errors.ts';
-import hyperquest = require('hyperquest');
-import Rx = require('rx-extra');
+import csv from 'csv-streamify';
+import httpErrors from './http-errors';
+import hyperquest from 'hyperquest';
+import Rx from 'rx-extra';
 var RxNode = Rx.RxNode;
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
@@ -152,7 +152,7 @@ var Xref = function(instance) {
    * @param {String|Organism} entityReference.organism map, the name or the IRI
    * @param {Object} entityReference.organism.nameLanguageMap
    * @param {String} entityReference.organism.nameLanguageMap.la
-   * @param {Dataset} entityReference.isDataItemIn
+   * @param {Datasource} entityReference.isDataItemIn
    * @param {String} entityReference.isDataItemIn.systemCode
    * @return {String} iri IRI (URL) for getting Xrefs from BridgeDb webservices
    */

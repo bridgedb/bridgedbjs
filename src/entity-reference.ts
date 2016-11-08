@@ -3,10 +3,10 @@
 /* @module EntityReference */
 
 import * as _ from 'lodash';
-import csv = require('csv-streamify');
-import httpErrors from './http-errors.ts';
-import hyperquest = require('hyperquest');
-import Rx = require('rx-extra');
+import csv from 'csv-streamify';
+import httpErrors from './http-errors';
+import hyperquest from 'hyperquest';
+import Rx from 'rx-extra';
 var RxNode = Rx.RxNode;
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
@@ -80,7 +80,7 @@ var EntityReference = function(instance) {
    * @property {String} displayName See
    *    {@link http://www.biopax.org/release/biopax-level3.owl#displayName|biopax:displayName}
    * @property {String} db See {@link http://www.biopax.org/release/biopax-level3.owl#db|biopax:db}
-   * @property {Dataset} isDataItemIn The datasource (database) for the identifier. See
+   * @property {Datasource} isDataItemIn The datasource (database) for the identifier. See
    *                  {@link http://semanticscience.org/resource/SIO_001278|SIO:001278}
    * @property {Array<String>} xref List of IRIs (URLs) for getting Xrefs,
    *                      such as from the BridgeDb webservices or from mygene.info.
@@ -97,7 +97,7 @@ var EntityReference = function(instance) {
    *
    * @param {EntityReference} entityReference
    * @param {String} entityReference.identifier
-   * @param {Dataset} entityReference.isDataItemIn
+   * @param {Datasource} entityReference.isDataItemIn
    * @param {String} entityReference.isDataItemIn.preferredPrefix
    * @return {EntityReference} {@link EntityReference} with an identifiers.org {@link Iri|id}.
    *                Additionally, "owl:sameAs" will be added if a previous, non-identifiers.org IRI
@@ -148,7 +148,7 @@ var EntityReference = function(instance) {
    * @param {EntityReference} entityReference
    * @param {String} entityReference.identifier
    * @param {Organism} [organism]
-   * @param {Dataset} entityReference.isDataItemIn
+   * @param {Datasource} entityReference.isDataItemIn
    * @param {String} entityReference.isDataItemIn.systemCode
    * @return {EntityReference} entityReference {@link EntityReference} with
    *                    BridgeDb IRI (URL) added.
@@ -299,7 +299,7 @@ var EntityReference = function(instance) {
       }
 
       if (options.datasource) {
-        return _enrichFromDataset(entityReference);
+        return _enrichFromDatasource(entityReference);
       } else {
         return Rx.Observable.return(entityReference);
       }
@@ -402,21 +402,21 @@ var EntityReference = function(instance) {
    * @return {Observable<EntityReference>} entityReference {@link EntityReference}
    *                                            enriched from data-sources.txt
    */
-  function _enrichFromDataset(entityReference: entityReference) {
+  function _enrichFromDatasource(entityReference: entityReference) {
     var timeout = 5 * 1000;
     return instance.datasource.get(entityReference.isDataItemIn)
     .timeout(
         timeout * 0.9,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDataset timed out getting datasources.'))
+        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out getting datasources.'))
     )
     .map(function(datasource) {
       entityReference.isDataItemIn = datasource;
-      var typeFromDataset = datasource.subject;
-      if (!_.isEmpty(typeFromDataset)) {
-        typeFromDataset = _.isArray(typeFromDataset) ? typeFromDataset : [typeFromDataset];
+      var typeFromDatasource = datasource.subject;
+      if (!_.isEmpty(typeFromDatasource)) {
+        typeFromDatasource = _.isArray(typeFromDatasource) ? typeFromDatasource : [typeFromDatasource];
         entityReference.type = _.union(
 						jsonldRx.arrayify(entityReference.type),
-						typeFromDataset
+						typeFromDatasource
 				);
       }
 
@@ -439,12 +439,12 @@ var EntityReference = function(instance) {
     .map(_addIdentifiersIri)
     .doOnError(function(err) {
       err.message = err.message || '';
-      err.message += ', observed in BridgeDb.EntityReference._enrichFromDataset';
+      err.message += ', observed in BridgeDb.EntityReference._enrichFromDatasource';
       throw err;
     })
     .timeout(
         timeout,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDataset timed out.'))
+        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out.'))
     );
   }
 
