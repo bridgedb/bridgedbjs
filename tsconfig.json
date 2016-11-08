@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"moduleResolution": "node",
+		"noEmitOnError": true,
+		"outDir": "./dist/",
+		"rootDir": ".",
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"module": "commonjs",
+		"target": "es5",
+		"types": [
+			"node"
+		],
+		"jsx": "react"
+	},
+	"files": [
+		"./src/ui/react-demo.tsx"
+	],
+	"exclude": [
+		"dist/**/*",
+		"node_modules/**/*",
+		"tmp/**/*"
+    ]
+}

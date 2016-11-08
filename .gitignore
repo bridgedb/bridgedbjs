@@ -2,3 +2,5 @@
 ./dist
 ./docs
 lib/
+lib-esnext/
+lib-es5/
