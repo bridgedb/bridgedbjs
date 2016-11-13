@@ -63,6 +63,7 @@
     "@types/assert": "0.0.28",
     "@types/jsonstream": "^0.8.27",
     "@types/lodash": "^4.14.36",
+    "@types/node": "^6.0.46",
     "@types/react": "^0.14.43",
     "@types/react-dom": "^0.14.18",
     "@types/rx": "^2.5.29",
@@ -81,7 +82,8 @@
     "redux": "^3.6.0",
     "redux-form": "^6.1.1",
     "redux-localstorage": "^0.4.1",
-    "rx-extra": "git://github.com/ariutta/rx-extra.git#117359e7101c328187c648637c38c69aa60751d2",
+    "rx-extra": "^2.0.0-1",
+    "rxjs": "^5.0.0-rc.2",
     "urijs": "^1.18.1",
     "yolk": "0.10.1",
     "yolk-simple-modal": "~0.0.4"
