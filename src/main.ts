@@ -3,12 +3,12 @@
 /* @module main */
 
 
-import * as _ from 'lodash';
+import * as clone from 'lodash/clone';
+import * as defaultsDeep from 'lodash/defaultsDeep';
 import * as config from './config';
 import EntityReference from './entity-reference';
 import Datasource from './datasource';
 import Organism from './organism';
-import Rx from 'rx-extra';
 import Xref from './xref';
 
 /**
@@ -76,8 +76,8 @@ import Xref from './xref';
 var BridgeDb = function(options) {
   var instance = this;
   options = options || {};
-  instance.config = _.clone(config);
-  instance.config = _.defaultsDeep(options, instance.config);
+  instance.config = clone(config);
+  instance.config = defaultsDeep(options, instance.config);
 
   var internalContext = options.context;
 
