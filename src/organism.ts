@@ -82,9 +82,9 @@ var Organism = function(instance) {
     return _getAll()
     // TODO sort organisms by number of pathways at WikiPathways.
     // Get that data as part of build step for this library.
-    .flatMap(function(organism) {
+    .mergeMap(function(organism) {
       return instance.entityReference.exists(systemCode, identifier, organism)
-      .flatMap(function(exists) {
+      .mergeMap(function(exists) {
         if (exists) {
           return Observable.of(organism);
         } else {
