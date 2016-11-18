@@ -2,13 +2,17 @@
 ///<reference path="./typings/rx/rx.experimental.d.ts" />
 ///<reference path="./node_modules/@types/lodash/index.d.ts" />
 
-declare interface Organism {
-	name?: string,
-	nameLanguageMap?: NameLanguageMap
+declare type organism = 'Frog' | 'Xenopus tropicalis' | 'Western Balsam Poplar' | 'Populus trichocarpa' | 'Arabidopsis thaliana' | 'Rice' | 'Oryza sativa' | 'Dog' | 'Canis familiaris' | 'Fruit fly' | 'Drosophila melanogaster' | 'Rat' | 'Rattus norvegicus' | 'Zebra fish' | 'Danio rerio' | 'Rhesus Monkey' | 'Macaca mulatta' | 'Worm' | 'Caenorhabditis elegans' | 'Tomato' | 'Solanum lycopersicum' | 'Cow' | 'Bos taurus' | 'Soybean' | 'Glycine max' | 'Escherichia coli' | 'Sea Squirt' | 'Ciona intestinalis' | 'Yeast' | 'Saccharomyces cerevisiae' | 'Human' | 'Homo sapiens' | 'Fusarium graminearum' | 'Gibberella zeae' | 'Indian Rice' | 'Oryza indica' | 'Horse' | 'Equus caballus' | 'Barley' | 'Hordeum vulgare' | 'Maize' | 'Zea mays' | 'Tuberculosis' | 'Mycobacterium tuberculosis' | 'Chicken' | 'Gallus gallus' | 'Mosquito' | 'Anopheles gambiae' | 'Black mold' | 'Aspergillus niger' | 'Chimpanzee' | 'Pan troglodytes' | 'Wine Grape' | 'Vitis vinifera' | 'Bacillus subtilis' | 'Mouse' | 'Mus musculus' | 'Pig' | 'Sus scrofa' | 'Platypus' | 'Ornithorhynchus anatinus';
+
+declare interface CsvOptions {
+	objectMode: boolean,
+	delimiter: string
+}
+declare class Csv {
+	constructor(options?: CsvOptions)
 }
 
 declare interface Datasource {
-	'@context'?: any,
 	alternatePrefix?: string|string[],
 	entityType: string,
 	hasPrimaryUriPattern?: string,
@@ -31,7 +35,7 @@ declare interface EntityReference {
 	identifier: string,
 	isDataItemIn?: Datasource,
 	displayName?: string,
-	organism?: Organism,
+	organism?: organism,
 	xref?: [BridgeDbXrefsIri, MyGeneInfoXrefsIri]
 	type?: string[]
 }

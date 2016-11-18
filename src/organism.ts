@@ -2,20 +2,21 @@
 
 /* @module Organism */
 
-import * as keys from 'lodash/keys';
-import * as first from 'lodash/first';
-import * as intersection from 'lodash/intersection';
-import * as isArray from 'lodash/isArray';
-import * as isEmpty from 'lodash/isEmpty';
-import * as isPlainObject from 'lodash/isPlainObject';
-import * as isString from 'lodash/isString';
-
 import csv from 'csv-streamify';
-import httpErrors from './http-errors';
-import hyperquest from 'hyperquest';
-import * as normalizer from './normalizer';
-import Rx from 'rx-extra';
-var RxNode = Rx.RxNode;
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/of';
+
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/throw';
+
+import 'rx-extra/add/operator/throughNodeStream';
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
 
@@ -31,182 +32,37 @@ var Organism = function(instance) {
 
   var config = instance.config;
 
-  var jsonldRx = instance.jsonldRx;
-  var normalizeText = normalizer.normalizeText;
-
-  /**
-   * See {@link http://identifiers.org/snomedct/410607006|snomedct:Organism}
-   * @typedef {Object} Organism Organism with as many as possible of the properties listed below.
-   * @property {JsonldContext} @context JSON-LD context.
-   * @property {Iri} id Preferred IRI for identifying an organism,
-   *    using {@link http://identifiers.org/taxonomy/|Taxonomy ontology}
-   * @property {Object} nameLanguageMap
-   * @property {String} nameLanguageMap.en English name, when available.
-   * @property {String} nameLanguageMap.la Full Latin name.
-   */
-
-  var latinNameToIriMappings = {
-    'Anopheles gambiae': 'http://identifiers.org/taxonomy/7165',
-    'Arabidopsis thaliana': 'http://identifiers.org/taxonomy/3702',
-    'Aspergillus niger': 'http://identifiers.org/taxonomy/5061',
-    'Bacillus subtilis': 'http://identifiers.org/taxonomy/1423',
-    'Bos taurus': 'http://identifiers.org/taxonomy/9913',
-    'Caenorhabditis elegans': 'http://identifiers.org/taxonomy/6239',
-    'Canis familiaris': 'http://identifiers.org/taxonomy/9615',
-    'Ciona intestinalis': 'http://identifiers.org/taxonomy/7719',
-    'Danio rerio': 'http://identifiers.org/taxonomy/7955',
-    'Drosophila melanogaster': 'http://identifiers.org/taxonomy/7227',
-    'Escherichia coli': 'http://identifiers.org/taxonomy/562',
-    'Equus caballus': 'http://identifiers.org/taxonomy/9796',
-    'Gallus gallus': 'http://identifiers.org/taxonomy/9031',
-    'Gibberella zeae': 'http://identifiers.org/taxonomy/5518',
-    'Glycine max': 'http://identifiers.org/taxonomy/3847',
-    'Homo sapiens': 'http://identifiers.org/taxonomy/9606',
-    'Hordeum vulgare': 'http://identifiers.org/taxonomy/4513',
-    'Macaca mulatta': 'http://identifiers.org/taxonomy/9544',
-    'Mus musculus': 'http://identifiers.org/taxonomy/10090',
-    'Mycobacterium tuberculosis': 'http://identifiers.org/taxonomy/1773',
-    'Ornithorhynchus anatinus': 'http://identifiers.org/taxonomy/9258',
-    'Oryza indica': 'http://identifiers.org/taxonomy/39946',
-    'Oryza sativa': 'http://identifiers.org/taxonomy/4530',
-    'Oryza sativa Indica Group': 'http://identifiers.org/taxonomy/39946',
-    'Populus trichocarpa': 'http://identifiers.org/taxonomy/3694',
-    'Pan troglodytes': 'http://identifiers.org/taxonomy/9598',
-    'Rattus norvegicus': 'http://identifiers.org/taxonomy/10116',
-    'Saccharomyces cerevisiae': 'http://identifiers.org/taxonomy/4932',
-    'Solanum lycopersicum': 'http://identifiers.org/taxonomy/4081',
-    'Sus scrofa': 'http://identifiers.org/taxonomy/9823',
-    'Vitis vinifera': 'http://identifiers.org/taxonomy/29760',
-    'Xenopus tropicalis': 'http://identifiers.org/taxonomy/8364',
-    'Zea mays': 'http://identifiers.org/taxonomy/4577'
-  };
-
-  /**
-   * @private
-   *
-   * Convert organismIdentifier to Latin name.
-   *
-   * @param {String} organismIdentifier - Can be name in Latin (full like "Escherichia coli"
-   *      or abbreviated like "E. coli") or English. In the future, we might include IRIs
-   *      for organisms.
-   * @return {Observable<String>} organismLatinName Full name in Latin
-   */
-  function _convertToLatinName(organismIdentifier) {
-    return _normalize(organismIdentifier)
-    .map(function(organism) {
-      // returns either the organism name or false
-      return !!organism.nameLanguageMap && !!organism.nameLanguageMap.la &&
-          organism.nameLanguageMap.la;
-    })
-    .doOnError(function(err) {
-      err.message = (err.message || '') + 'in BridgeDb.Organism._convertToLatinName';
-      throw err;
-    });
-  }
-
-//  /**
-//   * Create a Node.js/Highland stream through which entity references
-//   * can be piped to return their associated organism.
-//   *
-//   * @return {Stream} entityReferenceToOrganismTransformationStream
-//   */
-//  var createEntityReferenceToOrganismTransformationStream = function() {
-//    return highland.pipeline(function(sourceStream) {
-//      return highland(sourceStream).flatMap(_getByEntityReference);
-//    });
-//  };
-
-  /**
-   * Get one organism.
-   *
-   * @param {Object|String} searchCriteria
-   * @param {String|String[]} [searchCriteria.type='Organism']
-   * @return {Observable<Organism>} organismObservable
-   */
-  function get(searchCriteria) {
-    if (isEmpty(searchCriteria)) {
-      var err = new Error('No searchCriteria specified for BridgeDb.Organism.get');
-      return Rx.Observable.throw(err);
-    }
-
-    return query(searchCriteria)
-    .first()
-    .doOnError(function(err) {
-      err.message = err.message || '';
-      err.message += ' in BridgeDb.Organism.get';
-      throw err;
-    });
-  }
-
   /**
    * @private
    *
    * Get all organisms currently supported by BridgeDb.
    *
-   * @return {Observable<Organism>} organism
+   * @return {Observable<organism>} organism
    */
-  function _getAll() {
+  function _getAll(): Observable<organism> {
     var path = 'contents';
-    var sourceUrl = config.baseIri + path;
+    var sourceUrl: string = config.baseIri + path;
 
-    // TODO this is actually pausable
-    return RxNode.fromUnpausableStream(
-      hyperquest(sourceUrl, {
-        withCredentials: false
-      })
-    )
-    .doOnError(function(err) {
+		return Observable.ajax(sourceUrl)
+    .map((ajaxResponse): string => ajaxResponse.xhr.responseText)
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ' in BridgeDb.Organism._getAll from XHR request.';
       console.error(err.message);
       console.error(err.stack);
     })
-    .streamThrough(csv(csvOptions))
-    .map(function(array) {
-      var nameLanguageMap: NameLanguageMap;
-      var englishName = array[0];
-      var latinName = array[1];
-
-      // Note: I intentionally used 'null' as a string, not a native value,
-      // because BridgeDb returns the string value
-      if (englishName !== 'null' && latinName !== 'null') {
-        nameLanguageMap = {
-					en: englishName,
-					la: latinName
-				};
-			} else if (englishName !== 'null') {
-        nameLanguageMap = {
-					en: englishName
-				};
-      } else if (latinName !== 'null') {
-        nameLanguageMap = {
-					la: latinName
-				};
-      }
-
-      var normalizedOrganism = {
-        '@context': [{
-          'name': {
-            '@id':'biopax:name',
-            '@container':'@language'
-          },
-          'Organism': 'http://identifiers.org/snomedct/410607006'
-        }],
-        'id': latinNameToIriMappings[latinName],
-        'type': 'Organism',
-        nameLanguageMap: nameLanguageMap
-      };
-
-      return normalizedOrganism;
+    .throughNodeStream(csv(csvOptions))
+    .map(function(array: [organism, organism]): organism {
+      return array[1]; // latin name
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ' in BridgeDb.Organism._getAll';
       throw err;
     })
     .timeout(
         4 * 1000,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference.enrich timed out handling organism.'))
+        Observable.throw(new Error('BridgeDb.Organism._getAll timed out.'))
     );
   }
 
@@ -220,92 +76,26 @@ var Organism = function(instance) {
    *
    * @param systemCode
    * @param identifier
-   * @return {Observable<Organism>} organismObservable
+   * @return {Observable<organism>} organismObservable
    */
-  function _getBySystemCodeAndIdentifier(systemCode, identifier) {
-    return query()
+  function _getBySystemCodeAndIdentifier(systemCode: string, identifier: string): Observable<organism> {
+    return _getAll()
     // TODO sort organisms by number of pathways at WikiPathways.
     // Get that data as part of build step for this library.
     .flatMap(function(organism) {
-      return instance.entityReference.exists(systemCode, identifier, organism.nameLanguageMap.la)
+      return instance.entityReference.exists(systemCode, identifier, organism)
       .flatMap(function(exists) {
         if (exists) {
-          return Rx.Observable.return(organism);
+          return Observable.of(organism);
         } else {
-          return Rx.Observable.empty();
+          return Observable.empty();
         }
       });
     })
     .first()
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ' in BridgeDb.Organism._getBySystemCodeAndIdentifier';
-      throw err;
-    });
-  }
-
-  /**
-   * @private
-   *
-   * Identifies the organism for the provided entity reference and returns all
-   * the data BridgeDb has about that organism, which currently is the Latin name
-   * and, when available, the English name.
-   *
-   * @param {Object} entityReference See bridgeDb.entityReference.enrich for information
-   *                                  on acceptable entity reference inputs.
-   * @return {Observable<Organism>} organismObservable
-   */
-  function _getByEntityReference(entityReference) {
-    // TODO as part of the build process, query all species like this:
-    // http://webservice.bridgedb.org/Human/sourceDataSources
-    // http://webservice.bridgedb.org/Human/targetDataSources
-    // to get a listing of which datasources go with which species.
-    // Save that data as a JSON file.
-    // Then use those limitations in this query.
-
-    var entityReferenceSource;
-
-    var systemCodeExists = !!entityReference.isDataItemIn &&
-      (!!entityReference.isDataItemIn.systemCode ||
-      isArray(entityReference.isDataItemIn.alternatePrefix) &&
-      !!entityReference.isDataItemIn.alternatePrefix[0]);
-
-    if (!systemCodeExists) {
-      entityReferenceSource = instance.entityReference.enrich(entityReference, {
-        bridgeDbXrefsUrl: false,
-        datasource: true,
-        organism: false,
-        xref: false,
-      });
-    } else {
-      entityReferenceSource = Rx.Observable.return(entityReference);
-    }
-
-    return entityReferenceSource
-    .flatMap(function(entityReference) {
-      var organism = entityReference.organism;
-      if (!!organism) {
-        return _normalize(organism);
-      }
-
-      var systemCode =
-        entityReference.isDataItemIn.systemCode ||
-        isArray(entityReference.isDataItemIn.alternatePrefix) &&
-        entityReference.isDataItemIn.alternatePrefix[0];
-
-      var identifier = entityReference.identifier;
-
-      if (!!systemCode && !!identifier) {
-        return _getBySystemCodeAndIdentifier(
-          systemCode, identifier);
-      } else {
-        console.warn('Cannot get organism by entityReference.');
-        return Rx.Observable.return(entityReference);
-      }
-    })
-    .doOnError(function(err) {
-      err.message = err.message || '';
-      err.message += ' in BridgeDb.Organism._getByEntityReference';
       throw err;
     });
   }
@@ -316,204 +106,53 @@ var Organism = function(instance) {
    * Each BridgeDb instance has one organism associated with it. This
    * function gets the organism once and then always returns that organism.
    *
-   * @param {Object|String} searchCriteria
-   * @return {Observable<Organism>} Organism
+   * @param {String} systemCode
+   * @param {String} identifier
+   * @return {Observable<organism>} organism
    */
-  function _getInstanceOrganism(searchCriteria): Organism {
+  function _getInstanceOrganism(systemCode?: string, identifier?: string): Observable<organism> {
     var timeout = 6 * 1000;
-    var organismNormalized = instance.organismNormalized;
-    var organismNormalizedSource = instance.organismNormalizedSource;
+    var organism = instance.organism;
+    var organismSource = instance.organismSource;
     var source;
-    if (organismNormalized) {
-      return Rx.Observable.return(organismNormalized)
-      .doOnError(function(err) {
+    if (organism) {
+      return Observable.of(organism)
+      .do(null, function(err) {
         err.message = (err.message || '') + 'in BridgeDb.Organism._getInstanceOrganism (cached)';
         throw err;
       });
-    } else if (organismNormalizedSource) {
-      return organismNormalizedSource
-      .doOnError(function(err) {
+    } else if (organismSource) {
+      return organismSource
+      .do(null, function(err) {
         err.message = (err.message || '') + 'in BridgeDb.Organism._getInstanceOrganism (getting)';
         throw err;
       })
       .timeout(
           timeout,
-          Rx.Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
+          Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
       );
     }
 
-    var searchCriteriaUsed = instance.organismNonNormalized || searchCriteria;
-
-    organismNormalizedSource = get(searchCriteriaUsed)
-    .doOnNext(function(organism) {
-      instance.organismNormalized = organism;
-    })
-    .doOnError(function(err) {
+    organismSource = _getBySystemCodeAndIdentifier(systemCode, identifier)
+    .do(function(organism) {
+      instance.organism = organism;
+    }, function(err) {
       err.message = err.message || '';
       err.message += ' in BridgeDb.Organism._getInstanceOrganism';
       throw err;
     });
 
-    //instance.organismNormalizedSource = organismNormalizedSource.replay(null, 1);
-    instance.organismNormalizedSource = organismNormalizedSource.share();
+    instance.organismSource = organismSource.share();
 
-    return organismNormalizedSource
-    .doOnError(function(err) {
+    return organismSource
+    .do(null, function(err) {
       err.message = (err.message || '') + 'in BridgeDb.Organism._getInstanceOrganism';
       throw err;
     })
     .timeout(
         timeout,
-        Rx.Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
+        Observable.throw(new Error('BridgeDb.organism._getInstanceOrganism timed out.'))
     );
-  }
-
-  /**
-   * @private
-   *
-   * Normalize organism.
-   *
-   * @param {String|Object|Organism} organism - Can be any one of the following:
-   *    * IRI from the (@link http://identifiers.org/taxonomy/|Taxonomy ontology}
-   *    * name in Latin
-   *      - full like "Escherichia coli" or
-   *      - abbreviated like "E. coli" or
-   *    * name in English
-   *    * an object with the key being the language and the value being the name
-   *    * a full or partial Organism object
-   * @param {Iri} [organism['id']] Taxonomy ontology IRI
-   * @param {String} [organism.name] name in Latin (preferred) or English
-   * @param {String} [organism.en] name in English - deprecated
-   * @param {String} [organism.english] name in English - deprecated
-   * @param {String} [organism.la] name in Latin - deprecated
-   * @param {String} [organism.latin] name in Latin - deprecated
-   * @param {Object} [organism.nameLanguageMap] {@link
-   *    http://www.w3.org/TR/json-ld/#language-maps|language map}
-   * @param {String} [organism.nameLanguageMap.en] name in English
-   * @param {String} [organism.nameLanguageMap.la] name in Latin
-   * @return {Observable<Organism>} organismObservable
-   */
-  function _normalize(organism) {
-    // TODO has the input been transformed to use the internalContext yet?
-    var organismName;
-    var normalizedOrganismName;
-    var organismIri;
-    if (isString(organism)) {
-      if (organism.indexOf('http://identifiers.org/taxonomy/') === 0) {
-        organismIri = organism;
-      } else {
-        organismName = organism;
-      }
-    } else if (isPlainObject(organism)) {
-      if (organism.id || organism['@id']) {
-        organismIri = organism.id || organism['@id'];
-      }
-      var nameLanguageMap = organism.nameLanguageMap;
-      if (nameLanguageMap) {
-        organismName = nameLanguageMap.la || nameLanguageMap.en;
-      } else {
-        organismName = organism.name || organism.la || organism.latin ||
-          organism.en || organism.english;
-      }
-    }
-
-    if (!organismIri && !organismName) {
-      console.error(organism);
-      throw new Error('Cannot normalize provided organism (above).');
-    }
-
-    if (organismName) {
-      normalizedOrganismName = normalizeText(organismName);
-    }
-
-    return _getAll()
-    .filter(function(organism) {
-      var organismIriMatch;
-      if (organismIri) {
-        organismIriMatch = organismIri === (organism.id || organism['@id']);
-      }
-      var normalizedOrganismNameMatch;
-      if (normalizedOrganismName) {
-        var nameLanguageMap = organism.nameLanguageMap;
-        var latinName = nameLanguageMap.la;
-        var latinNameComponents = latinName.split(' ');
-        var latinNameAbbreviated = latinNameComponents[0][0] +
-          latinNameComponents[1];
-        var englishName = nameLanguageMap.en;
-        var normalizedNameCandidates = [
-          latinName,
-          latinNameAbbreviated,
-          englishName
-        ]
-        .map(function(value) {
-          return normalizeText(value);
-        });
-        normalizedOrganismNameMatch = normalizedNameCandidates.indexOf(normalizedOrganismName) > -1;
-      }
-      return organismIriMatch || normalizedOrganismNameMatch;
-    })
-    .first()
-    .doOnError(function(err) {
-      err.message = err.message || '';
-      err.message += ' in BridgeDb.Organism._normalize';
-      throw err;
-    });
-  }
-
-  /**
-   * Find organisms, either all or a subset by search criteria.
-   *)
-   * @param {Object|String} searchCriteria
-   * @param {String|String[]} [searchCriteria.type='Organism']
-   * @return {Observable<Organism>} organismObservable
-   */
-  function query(searchCriteria?) {
-    if (isEmpty(searchCriteria)) {
-      return _getAll()
-      .doOnError(function(err) {
-        err.message = (err.message || '') + 'in BridgeDb.Organism.query';
-        throw err;
-      });
-    }
-
-    var typeToFunctionMapping = {
-      Organism: _normalize,
-      EntityReference: _getByEntityReference,
-    };
-
-    typeToFunctionMapping['http://identifiers.org/snomedct/410607006'] =
-        typeToFunctionMapping.Organism;
-
-    var providedType;
-    if (isString(searchCriteria)) {
-      providedType = 'Organism';
-    } else {
-      providedType = searchCriteria.type || searchCriteria['@type'] || 'Organism';
-    }
-    providedType = jsonldRx.arrayify(providedType);
-
-		var supportedType: string = first(
-				intersection(
-						keys(typeToFunctionMapping),
-						providedType
-				)
-		);
-
-    if (!!supportedType) {
-      return typeToFunctionMapping[supportedType](searchCriteria)
-      .timeout(
-          10 * 1000,
-          Rx.Observable.throw(new Error('BridgeDb.organism.query timed out.'))
-      )
-      .doOnError(function(err) {
-        err.message = err.message || '';
-        err.message += ' in BridgeDb.Organism.query';
-        throw err;
-      });
-    } else {
-      return Rx.Observable.throw(new Error('Cannot get organism by specified type(s): "' +
-          providedType + '"'));
-    }
   }
 
   /**
@@ -521,20 +160,17 @@ var Organism = function(instance) {
    *
    * Set the current organism for this instance so we don't have to look it up every time.
    *
-   * @param {String|Object} organism The single organism for this bridgedbjs instance. It is
-   *                                 preferably the full Latin name. If you need to work
-   *                                 with another organism, create another bridgedbjs instance.
+   * @param {String} organism The single organism for this bridgedbjs instance as the full Latin or English name.
+	 *  															 If you need to work with another organism, create another bridgedbjs
+	 *  															 instance.
    */
-  function _setInstanceOrganism(organism: string|Organism) {
-    instance.organismNonNormalized = organism;
+  function _setInstanceOrganism(organism: organism): void {
+    instance.organism = organism;
   }
 
   return {
-    get: get,
-    _getByEntityReference: _getByEntityReference,
     _getBySystemCodeAndIdentifier: _getBySystemCodeAndIdentifier,
     _getInstanceOrganism: _getInstanceOrganism,
-    query: query,
     _setInstanceOrganism: _setInstanceOrganism
   };
 };
