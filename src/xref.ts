@@ -2,12 +2,22 @@
 
 /* @module Xref */
 
-import * as _ from 'lodash';
 import csv from 'csv-streamify';
-import httpErrors from './http-errors';
-import hyperquest from 'hyperquest';
-import Rx from 'rx-extra';
-var RxNode = Rx.RxNode;
+
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/catch';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/dom/ajax';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/throw';
+
+import 'rx-extra/add/operator/throughNodeStream';
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
 
@@ -19,8 +29,6 @@ var csvOptions = {objectMode: true, delimiter: '\t'};
  * @param {Object} instance
  */
 var Xref = function(instance) {
-  'use strict';
-
   var config = instance.config;
   var options = instance.options || {};
 
@@ -33,7 +41,7 @@ var Xref = function(instance) {
    * @return {Observable<EntityReference>} entityReferenceSource containing enriched
    *                              {@link EntityReference|EntityReferences}.
    */
-  function get(input: entityReference, options?): Rx.Observable<entityReference> {
+  function get(input: EntityReference, options?): Observable<entityReference> {
     // First: from on the input entity reference(s), get the correct BridgeDb webservice
     // endpoint(s) required to get xrefs.
     // NOTE: entityReference.enrich handles the different forms of input.
@@ -41,31 +49,27 @@ var Xref = function(instance) {
     .shareReplay();
 
     // This section gets, enriches and formats the xrefs
-    var fullEntityReferenceSource: Rx.Observable<entityReference> = Rx.Observable.catch(
+    var fullEntityReferenceSource: Observable<entityReference> = Observable.catch(
         normalizedEntityReferenceSource
-        .flatMap(function(normalizedEntityReference) {
-          var sourceIri = _getBridgeDbIriByEntityReference(normalizedEntityReference);
-          // TODO this is actually pausable
-          return RxNode.fromUnpausableStream(
-              hyperquest(sourceIri, {
-                withCredentials: false
-              })
-          );
+        .mergeMap(function(normalizedEntityReference) {
+          var sourceUrl = _getBridgeDbIriByEntityReference(normalizedEntityReference);
+					return Observable.ajax(sourceUrl)
+					.map((ajaxResponse): string => ajaxResponse.xhr.responseText);
         })
-        .doOnError(function(err) {
+        .do(null, function(err) {
           err.message = (err.message || '') + ' observed in ' +
             'BridgeDb.Xref.get from XHR request';
           console.error(err.message);
           console.error(err.stack);
         })
-        .streamThrough(csv(csvOptions))
-        .doOnError(function(err) {
+        .throughNodeStream(csv(csvOptions))
+        .do(null, function(err) {
           err.message = (err.message || '') + ' observed in ' +
             'BridgeDb.Xref.get from csv parsing';
           console.error(err.message);
           console.error(err.stack);
         })
-        .map(function(array): entityReferenceEnrichInput {
+        .map(function(array): EntityReferenceEnrichInput {
 					return {
 						identifier: array[0],
 						isDataItemIn: {
@@ -73,27 +77,27 @@ var Xref = function(instance) {
 						}
 					};
         })
-        //.flatMap(instance.entityReference.enrich)
-        .flatMap(function(xref: entityReferenceEnrichInput): entityReference {
+        //.mergeMap(instance.entityReference.enrich)
+        .mergeMap(function(xref: EntityReferenceEnrichInput): EntityReference {
           return instance.entityReference.enrich(xref, {
             context: false, organism: false, xrefs: false
           });
           //return instance.entityReference.normalize(xref);
         })
-        .doOnError(function(err) {
+        .do(null, function(err) {
           err.message = (err.message || '') + ' observed in ' +
             'BridgeDb.Xref.get from entityReference.enrich';
           console.error(err.message);
           console.error(err.stack);
         }),
-//        .flatMap(instance.addContext)
-//        .doOnError(function(err) {
+//        .mergeMap(instance.addContext)
+//        .do(null, function(err) {
 //          err.message = (err.message || '') + ' observed in ' +
 //            'BridgeDb.Xref.get after adding context';
 //          console.error(err.message);
 //          console.error(err.stack);
 //        }),
-        Rx.Observable.throw(
+        Observable.throw(
             new Error('BridgeDb.Xref.get failed to get xrefs from fullEntityReferenceSource')
         )
     );
@@ -105,7 +109,7 @@ var Xref = function(instance) {
     // TODO how do we both catch (to return an alternate)
     // but also still display the error in the console?
     return fullEntityReferenceSource
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = (err.message || '') +
         ' BridgeDb.Xref.get fullEntityReferenceSource failed.';
       console.error(err.message);
@@ -113,7 +117,7 @@ var Xref = function(instance) {
     })
 //    .timeout(
 //        timeout,
-//        Rx.Observable.throw(new Error(timeoutErrorMessage))
+//        Observable.throw(new Error(timeoutErrorMessage))
 //    )
     .catch(function(err) {
       err.message = (err.message || '') +
@@ -122,7 +126,7 @@ var Xref = function(instance) {
       console.error(err.stack);
       // if we can at least expand the user input, we return that.
       return normalizedEntityReferenceSource
-      .doOnError(function(err) {
+      .do(null, function(err) {
         err.message = (err.message || '') +
           ' BridgeDb.Xref.get normalizedEntityReferenceSource failed.';
         console.error(err.message);
@@ -130,7 +134,7 @@ var Xref = function(instance) {
       })
       .timeout(
           500,
-          Rx.Observable.throw(new Error('BridgeDb.Xref.get normalizedEntityReferenceSource timed out.'))
+          Observable.throw(new Error('BridgeDb.Xref.get normalizedEntityReferenceSource timed out.'))
       );
     })
     .catch(function(err) {
@@ -140,7 +144,7 @@ var Xref = function(instance) {
       console.error(err.message);
       console.error(err.stack);
       // if we can't expand, we at least return exactly what the user provided.
-      return Rx.Observable.return(input);
+      return Observable.of(input);
     });
   }
 
@@ -156,7 +160,7 @@ var Xref = function(instance) {
    * @param {String} entityReference.isDataItemIn.systemCode
    * @return {String} iri IRI (URL) for getting Xrefs from BridgeDb webservices
    */
-  function _getBridgeDbIriByEntityReference(entityReference: entityReference): BridgeDbXrefsIri {
+  function _getBridgeDbIriByEntityReference(entityReference: EntityReference): BridgeDbXrefsIri {
     var systemCode = entityReference.isDataItemIn.systemCode;
     var path = encodeURIComponent(entityReference.organism.nameLanguageMap.la) +
       '/xrefs/' + encodeURIComponent(systemCode) + '/' +

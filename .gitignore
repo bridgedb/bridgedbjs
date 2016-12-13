@@ -2,5 +2,8 @@
 ./dist
 ./docs
 lib/
-lib-esnext/
-lib-es5/
+esnext/
+main.js
+main.d.ts
+index.js.map
+index.js

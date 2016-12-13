@@ -3,11 +3,31 @@
 /* @module EntityReference */
 
 import * as _ from 'lodash';
+import * as union from 'lodash/union';
+import * as isPlainObject from 'lodash/isPlainObject';
+import * as isString from 'lodash/isString';
+import * as isArray from 'lodash/isArray';
+import * as isFunction from 'lodash/isFunction';
+import * as defaults from 'lodash/defaults';
+import * as isEmpty from 'lodash/isEmpty';
+import * as toPairs from 'lodash/toPairs';
+import * as omit from 'lodash/omit';
+import * as defaultsDeep from 'lodash/defaultsDeep';
 import csv from 'csv-streamify';
-import httpErrors from './http-errors';
-import hyperquest from 'hyperquest';
-import Rx from 'rx-extra';
-var RxNode = Rx.RxNode;
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/throw';
+
+import 'rx-extra/add/operator/throughNodeStream';
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
 
@@ -19,8 +39,6 @@ var csvOptions = {objectMode: true, delimiter: '\t'};
  * @param {Object} instance
  */
 var EntityReference = function(instance) {
-  'use strict';
-
   var config = instance.config;
 
   var jsonldRx = instance.jsonldRx;
@@ -103,7 +121,7 @@ var EntityReference = function(instance) {
    *                Additionally, "owl:sameAs" will be added if a previous, non-identifiers.org IRI
    *                was present. @example: "http://bio2rdf.org/ncbigene/1234".
    */
-  function _addIdentifiersIri(entityReference: entityReference) {
+  function _addIdentifiersIri(entityReference: EntityReference) {
     var datasource = entityReference.isDataItemIn;
     if (!datasource || !datasource.preferredPrefix || !entityReference.identifier) {
       if (instance.debug) {
@@ -124,7 +142,7 @@ var EntityReference = function(instance) {
         entityReference['owl:sameAs'] = [];
       }
       entityReference['owl:sameAs'] =
-        _.union(entityReference['owl:sameAs'], [entityReference.id]);
+        union(entityReference['owl:sameAs'], [entityReference.id]);
     }
 
     entityReference.id = encodeURI('http://identifiers.org/' +
@@ -153,7 +171,7 @@ var EntityReference = function(instance) {
    * @return {EntityReference} entityReference {@link EntityReference} with
    *                    BridgeDb IRI (URL) added.
    */
-  var _addBridgeDbXrefsIri = function(entityReference: entityReference) {
+  var _addBridgeDbXrefsIri = function(entityReference: EntityReference) {
     if (!entityReference ||
         !entityReference.organism ||
         !entityReference.isDataItemIn ||
@@ -178,221 +196,6 @@ var EntityReference = function(instance) {
   };
 
   /**
-   * Enrich entity reference. Default is to enrich as much as possible with data from BridgeDb,
-   * with the exception of not dereferencing any xref IRIs, but this enrichment can be controlled
-   * by setting the relevant option(s) to false.
-   *
-   * @param {(String|Object|String[]|Object[]|Observable)} input Entity reference(s).
-   *    Each one must have an identifier (e.g. ENSG00000160791) and a
-   *    means for identifying the datasource, such as one of the following
-   *    acceptable entityReference input arguments:
-   *      1. BridgeDb xref IRI (URL) or identifiers.org IRI as string
-   *        BridgeDb xref IRI @example:
-   *        'http://webservice.bridgedb.org/Human/xrefs/L/1234'
-   *        identifiers.org IRI @example:
-   *        'http://identifiers.org/ncbigene/1234'
-   *      2. Object with at least one of these properties:
-   *        a. { 'id': identifiers.org IRI }
-   *        b. { bridgeDbXrefsIri: BridgeDb xref IRI }
-   *        c. { xref: [
-   *               BridgeDb xref IRI
-   *               ...
-   *             ]
-   *           }
-   *      3. Object with both of these properties:
-   *        {
-   *          name: official, standardized database name
-   *          identifier: entity reference identifier, such as ChEBI:1234
-   *        }
-   *      4. Object with both of these properties:
-   *        {
-   *          conventionalName: database name as used in BridgeDb
-   *          identifier: entity reference identifier, such as ChEBI:1234
-   *        }
-   *
-   * @param {Object} [options]
-   * @param {Boolean} [options.organism=true] Enrich with organism name.
-   * @param {Boolean} [options.context=true] Enrich with JSON-LD @context.
-   * @param {Boolean} [options.datasource=true] Enrich from data-sources.txt
-   *                         (metadata about biological datasources).
-   * @param {Boolean} [options.xref=true] Enrich with IRI (URL) for BridgeDb webservices
-   *                                        to enable getting xrefs for this entity reference.
-   * @param {Number} [options.timeout=5000] timeout in ms
-   * @return {Observable<EntityReference>} entityReference {@link EntityReference} with as many
-   *                    properties as possible added, unless otherwise specified by options.
-   */
-//	// TODO look at specifying default params for options
-//  function enrich(input, options: {
-//			organism?: boolean,
-//			context?: boolean,
-//			datasource?: boolean,
-//			xref?: boolean,
-//			timeout?:number
-//	}={
-//      organism: true,
-//      context: true,
-//      datasource: true,
-//      xref: true,
-//      timeout: 10 * 1000
-//	}): Rx.Observable<entityReference> {
-//	}
-  function enrich(input: entityReferenceEnrichInput, options?);
-  function enrich(input: Rx.Observable<entityReferenceEnrichInput>, options?);
-  function enrich(input, options?: {
-			organism?: boolean,
-			context?: boolean,
-			datasource?: boolean,
-			xref?: boolean,
-			timeout?:number
-	}): Rx.Observable<entityReference> {
-    var inputSource;
-    if (_.isPlainObject(input)) {
-      inputSource = Rx.Observable.return(input);
-    } else if (_.isString(input)) {
-      inputSource = Rx.Observable.return(_handleStringInput(input));
-    } else if (_.isArray(input)) {
-      inputSource = Rx.Observable.from(input);
-    } else if (input && _.isFunction(input.subscribe)) {
-      // Test above from
-      // https://github.com/Reactive-Extensions/RxJS/blob/master/src/modular/observable.js#L13
-      inputSource = input;
-    } else {
-      throw new Error('input not of a recognized type: string|object|string[]|object[]|Observable');
-    }
-    // NOTE: using this fn as ".map(fn)" results in options unintentionally being the map index.
-    options = _.isPlainObject(options) ? options : {};
-    options = _.defaults(options, {
-      organism: true,
-      context: true,
-      datasource: true,
-      xref: true,
-      timeout: 10 * 1000
-    });
-
-    var timeout = options.timeout;
-
-    return inputSource
-    .timeout(
-        50,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference.enrich timed out at inputSource.'))
-    )
-    .map(function(entityReference) {
-      if (!entityReference.isDataItemIn || typeof entityReference.identifier === 'undefined') {
-        console.error('Insufficiently-specified entity reference:');
-        console.error(JSON.stringify(entityReference, null, '  '));
-        var message = 'Not enough data provided to identify' +
-          ' the specified entity reference (above)';
-        throw new Error(message);
-      }
-
-      return entityReference;
-    })
-    .flatMap(function(entityReference) {
-      var source;
-      // TODO can we get rid of this checking to ensure removal of empty type values?
-      var entityReferenceType = entityReference.type;
-      if (entityReferenceType) {
-        entityReferenceType = jsonldRx.arrayifyClean(entityReference.type);
-        entityReference.type = entityReferenceType.filter(function(value) {
-          return value;
-        });
-      }
-
-      if (options.datasource) {
-        return _enrichFromDatasource(entityReference);
-      } else {
-        return Rx.Observable.return(entityReference);
-      }
-    })
-    .flatMap(function(entityReference) {
-      var source;
-      if (options.organism || options.xref) {
-        return instance.organism._getInstanceOrganism(entityReference)
-        .map(function(organism) {
-          if (!!organism) {
-            entityReference.organism = organism;
-          }
-          return entityReference;
-        });
-      } else {
-        return Rx.Observable.return(entityReference);
-      }
-
-    })
-    .map(function(entityReference) {
-      // TODO need to get xrefs working
-      if (options.xref) {
-        var entityReferenceWithBridgeDbXrefsIri =
-          _addBridgeDbXrefsIri(entityReference);
-
-        var datasource = entityReference.isDataItemIn;
-        var preferredPrefix = datasource && datasource.preferredPrefix;
-        var preferredPrefixesSupportedByMyGeneInfo = [
-          'ensembl',
-          'ncbigene'
-        ];
-        if (preferredPrefixesSupportedByMyGeneInfo.indexOf(preferredPrefix) > -1) {
-          var xrefs = entityReference.xref = jsonldRx.arrayifyClean(entityReference.xref);
-          var myGeneInfoXrefsIri = encodeURI(
-              'http://mygene.info/v2/gene/' + entityReference.identifier
-          );
-          if (xrefs.indexOf(myGeneInfoXrefsIri) === -1) {
-            xrefs.push(myGeneInfoXrefsIri);
-          }
-        }
-
-        if (!options.organism) {
-          // We needed to get the organism in order to get the BridgeDb Xrefs IRI,
-          // but we delete it here if the user didn't want it.
-          delete entityReferenceWithBridgeDbXrefsIri.organism;
-        }
-        return entityReferenceWithBridgeDbXrefsIri;
-      } else {
-        return entityReference;
-      }
-      //*/
-    })
-    .flatMap(function(entityReference) {
-      var bridgeDbInputOriginalContext = entityReference.bridgeDbInputOriginalContext;
-      delete entityReference.bridgeDbInputOriginalContext;
-      // TODO can we get rid of this checking to ensure removal of empty type values?
-      var entityReferenceType = entityReference.type;
-      if (entityReferenceType) {
-        entityReferenceType = jsonldRx.arrayifyClean(entityReference.type);
-        entityReference.type = entityReferenceType.filter(function(value) {
-          return value;
-        });
-      }
-
-      return jsonldRx.replaceContext(entityReference, bridgeDbInputOriginalContext)
-      .map(function(value) {
-        if (!options.context) {
-          delete value['@context'];
-        }
-
-        // TODO can we get rid of this checking to ensure removal of empty type values?
-        var entityReferenceType = entityReference.type;
-        if (entityReferenceType) {
-          entityReferenceType = jsonldRx.arrayifyClean(entityReference.type);
-          entityReference.type = entityReferenceType.filter(function(value) {
-            return value;
-          });
-        }
-        return value;
-      });
-    })
-    .doOnError(function(err) {
-      err.message = err.message || '';
-      err.message += ', observed in BridgeDb.EntityReference.enrich';
-      throw err;
-    });
-//    .timeout(
-//        timeout,
-//        Rx.Observable.throw(new Error('BridgeDb.entityReference.enrich timed out handling context (final).'))
-//    );
-  }
-
-  /**
    * @private
    *
    * Enrich an entity reference using the metadata
@@ -402,19 +205,19 @@ var EntityReference = function(instance) {
    * @return {Observable<EntityReference>} entityReference {@link EntityReference}
    *                                            enriched from data-sources.txt
    */
-  function _enrichFromDatasource(entityReference: entityReference) {
+  function _enrichFromDatasource(entityReference: EntityReference) {
     var timeout = 5 * 1000;
     return instance.datasource.get(entityReference.isDataItemIn)
     .timeout(
         timeout * 0.9,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out getting datasources.'))
+        Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out getting datasources.'))
     )
     .map(function(datasource) {
       entityReference.isDataItemIn = datasource;
       var typeFromDatasource = datasource.subject;
-      if (!_.isEmpty(typeFromDatasource)) {
-        typeFromDatasource = _.isArray(typeFromDatasource) ? typeFromDatasource : [typeFromDatasource];
-        entityReference.type = _.union(
+      if (!isEmpty(typeFromDatasource)) {
+        typeFromDatasource = isArray(typeFromDatasource) ? typeFromDatasource : [typeFromDatasource];
+        entityReference.type = union(
 						jsonldRx.arrayify(entityReference.type),
 						typeFromDatasource
 				);
@@ -437,14 +240,14 @@ var EntityReference = function(instance) {
       return entityReference;
     })
     .map(_addIdentifiersIri)
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference._enrichFromDatasource';
       throw err;
     })
     .timeout(
         timeout,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out.'))
+        Observable.throw(new Error('BridgeDb.entityReference._enrichFromDatasource timed out.'))
     );
   }
 
@@ -459,19 +262,15 @@ var EntityReference = function(instance) {
    * @return {Observable<Boolean>} exists Whether specified entity reference exists.
    */
   function exists(systemCode, identifier, organism) {
-    return Rx.Observable.return(organism)
-    .flatMap(function(organismName) {
+    return Observable.of(organism)
+    .mergeMap(function(organismName) {
       var path = encodeURIComponent(organismName) +
         '/xrefExists/' + systemCode + '/' + identifier;
       var sourceUrl = config.baseIri + path;
 
-      // TODO this is actually pausable
-      return RxNode.fromUnpausableStream(
-        hyperquest(sourceUrl, {
-          withCredentials: false
-        })
-      )
-      .doOnError(function(err) {
+			return Observable.ajax(sourceUrl)
+			.map((ajaxResponse): string => ajaxResponse.xhr.responseText)
+      .do(null, function(err) {
         err.message = err.message || '';
         err.message += ', observed in BridgeDb.EntityReference.exists from XHR request.';
         console.error(err.message);
@@ -493,7 +292,7 @@ var EntityReference = function(instance) {
         }
       });
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference.exists';
       throw err;
@@ -514,7 +313,7 @@ var EntityReference = function(instance) {
    * @return {EntityReference} EntityReference Entity reference converted to object,
    *                      if required, and normalized.
    */
-  function _expand(entityReference: string|entityReference): entityReference {
+  function _expand(entityReference: string|EntityReference): EntityReference {
     // TODO should we even do this here?
     entityReference = _handleStringInput(entityReference);
 
@@ -527,22 +326,22 @@ var EntityReference = function(instance) {
     // which could be refactored to normalize just once to speed things up.
 
     // Check for existence of and attempt to parse identifiers.org IRI or BridgeDb Xref IRI (URL).
-		_.toPairs(iriParsers)
+		toPairs(iriParsers)
     .find(function(iriParserPair: [string, Function]) {
       var iriPattern = new RegExp(iriParserPair[0]);
-      var iri = _.toPairs(entityReference)
+      var iri = toPairs(entityReference)
 			.filter(function(pair) {
-				return _.isString(pair[1]);
+				return isString(pair[1]);
 			})
 			.find(function(value: string) {
         var valueNormalized = String(encodeURI(decodeURI(value))).toLowerCase();
         return iriPattern.test(valueNormalized);
       });
 
-      if (!_.isEmpty(iri)) {
+      if (!isEmpty(iri)) {
         iri = encodeURI(decodeURI(iri));
         var parsedIri = iriParserPair[1](iri);
-        _.defaultsDeep(entityReference, parsedIri);
+        defaultsDeep(entityReference, parsedIri);
       }
       return iri;
     });
@@ -553,9 +352,9 @@ var EntityReference = function(instance) {
     }
 
 		var datasource = entityReference.isDataItemIn;
-    if (_.isEmpty(datasource)) {
+    if (isEmpty(datasource)) {
       datasource = {};
-    } else if (_.isString(datasource)) {
+    } else if (isString(datasource)) {
       datasource = {
         id: datasource
       };
@@ -563,7 +362,7 @@ var EntityReference = function(instance) {
 
 		var conventionalName;
     var name;
-		if (!_.isEmpty(datasource)) {
+		if (!isEmpty(datasource)) {
 			name = datasource.name || datasource.conventionalName;
 
 			if (!!name) {
@@ -619,14 +418,14 @@ var EntityReference = function(instance) {
   function freeSearch(args) {
     var attributeValue = args.attribute;
     var type = args.type;
-    var organism = args.organism || instance.organismNonNormalized;
+    var organism = args.organism || instance.organism;
 
     if (!organism) {
       throw new Error('Missing argument "organism"');
     }
 
-    return Rx.Observable.return(organism)
-    .flatMap(instance.organism._getInstanceOrganism)
+    return Observable.of(organism)
+    .mergeMap(instance.organism._getInstanceOrganism)
 		// TODO why do I need to specify organism as type below?
 		// why doesn't it get that from instance.organism._getInstanceOrganism?
     .map(function(organism: organism) {
@@ -638,7 +437,7 @@ var EntityReference = function(instance) {
         encodeURIComponent(attributeValue);
       return config.baseIri + path;
     })
-    .flatMap(function(sourceUrl) {
+    .mergeMap(function(sourceUrl) {
       // TODO this is actually pausable
       return RxNode.fromUnpausableStream(
         hyperquest(sourceUrl, {
@@ -646,19 +445,19 @@ var EntityReference = function(instance) {
         })
       );
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference.freeSearch from XHR request.';
       console.error(err.message);
       console.error(err.stack);
     })
     .streamThrough(csv(csvOptions))
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference.freeSearch';
       throw err;
     })
-    .map(function(array): entityReference {
+    .map(function(array): EntityReference {
       return {
         identifier: array[0],
         displayName: array[2],
@@ -667,23 +466,23 @@ var EntityReference = function(instance) {
 				}
       };
     })
-    .map(function(searchResult): entityReference {
+    .map(function(searchResult): EntityReference {
       // remove empty properties
-      return _.omit(searchResult, function(value) {
+      return omit(searchResult, function(value) {
         // Note: I intentionally used 'null' as
         // a string, not a native value, because
         // BridgeDb returns the string value
         return value === 'null';
       });
     })
-    .flatMap(function(searchResult) {
+    .mergeMap(function(searchResult) {
       // NOTE if we just call enrich like
-      // .flatMap(enrich);
+      // .mergeMap(enrich);
       // then the index gets passed in
       // as the second parameter.
       return enrich(searchResult);
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference.freeSearch';
       throw err;
@@ -704,8 +503,8 @@ var EntityReference = function(instance) {
     return directIri;
   }
 
-  function _handleStringInput(entityReference: string|entityReference): entityReference {
-    if (!_.isPlainObject(entityReference)) {
+  function _handleStringInput(entityReference: string|EntityReference): EntityReference {
+    if (!isPlainObject(entityReference)) {
       if (typeof entityReference === 'string') {
         // Convert input from IRI string to object
         return {
@@ -744,7 +543,7 @@ var EntityReference = function(instance) {
       return entityReferenceXref.isDataItemIn.preferredPrefix ===
         targetPreferredPrefix;
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.EntityReference.map';
       throw err;
@@ -762,20 +561,20 @@ var EntityReference = function(instance) {
 
     var organism = entityReference.organism;
     if (!!organism) {
-      return Rx.Observable.return(entityReference)
-      .flatMap(instance.organism._getInstanceOrganism)
+      return Observable.of(entityReference)
+      .mergeMap(instance.organism._getInstanceOrganism)
       .map(function(organism) {
         entityReference.organism = organism;
         return entityReference;
       })
-      .doOnError(function(err) {
+      .do(null, function(err) {
         err.message = err.message || '';
         err.message += ', observed in BridgeDb.EntityReference.normalize';
         throw err;
       });
     } else {
-      return Rx.Observable.return(entityReference)
-      .doOnError(function(err) {
+      return Observable.of(entityReference)
+      .do(null, function(err) {
         err.message = err.message || '';
         err.message += ', observed in BridgeDb.EntityReference.normalize';
         throw err;
@@ -785,7 +584,6 @@ var EntityReference = function(instance) {
   }
 
   return {
-    enrich:enrich,
     exists:exists,
     _expand:_expand,
     freeSearch:freeSearch,

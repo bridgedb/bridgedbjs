@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"declaration": true,
+		"experimentalDecorators": true,
+		"inlineSourceMap": true,
+		"jsx": "react",
+		"moduleResolution": "node",
+		"noEmitOnError": true,
+		"noImplicitAny": false,
+		"pretty": true,
+		"rootDir": "."
+	},
+	"files": [
+		"main.ts",
+		"index.d.ts",
+		"organism.d.ts"
+	],
+	"exclude": [
+		"dist/**/*",
+		"node_modules/**/*",
+		"tmp/**/*"
+    ]
+}

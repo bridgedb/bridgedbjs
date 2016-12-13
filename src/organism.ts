@@ -28,8 +28,6 @@ var csvOptions = {objectMode: true, delimiter: '\t'};
  * @param {Object} instance
  */
 var Organism = function(instance) {
-  'use strict';
-
   var config = instance.config;
 
   /**

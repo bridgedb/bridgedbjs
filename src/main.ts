@@ -2,7 +2,6 @@
 
 /* @module main */
 
-
 import * as clone from 'lodash/clone';
 import * as defaultsDeep from 'lodash/defaultsDeep';
 import * as config from './config';

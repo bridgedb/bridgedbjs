@@ -7,14 +7,25 @@ import * as isNaN from 'lodash/isNaN';
 import * as isNull from 'lodash/isNull';
 import * as isUndefined from 'lodash/isUndefined';
 import * as isEmpty from 'lodash/isEmpty';
-
-import * as assert from 'assert';
 import csv from 'csv-streamify';
-import httpErrors from './http-errors';
-import hyperquest from 'hyperquest';
-import Rx from 'rx-extra';
-var RxNode = Rx.RxNode;
-import * as URI from 'urijs';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/throw';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/reduce';
+// TODO what is the latest for shareReplay?
+import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/toArray';
+
+import 'rx-extra/add/operator/throughNodeStream';
 
 var csvOptions = {objectMode: true, delimiter: '\t'};
 
@@ -40,10 +51,14 @@ var OWL = 'http://www.w3.org/2002/07/owl#';
  * @memberof BridgeDb
  * @param {Object} instance
  */
-var Datasource = function(instance) {
+export default function(instance) {
   var config = instance.config;
-
-  var internalContext = config.context;
+	var propertiesThatUniquelyIdentifyDatasource = [
+		'@id',
+		'conventionalName',
+		'preferredPrefix',
+		'systemCode',
+	];
 
   /**
    * getIdentifiersIriFromMiriamUrnInDatasource
@@ -141,20 +156,10 @@ var Datasource = function(instance) {
    */
   function _getAll() {
     var timeout = 5 * 1000;
-    return Rx.Observable.forkJoin(
-				// TODO this is actually pausable
-        RxNode.fromUnpausableStream(
-          hyperquest(config.datasourcesHeadersIri, {
-            withCredentials: false,
-          })
-        )
-        .doOnError(function(err) {
-          err.message = err.message || '';
-          err.message += ', observed in BridgeDb.Datasource._getAll from datasourcesHeadersIri XHR request.';
-          console.error(err.message);
-          console.error(err.stack);
-        })
-        .streamThrough(csv(csvOptions))
+    return Observable.forkJoin(
+				Observable.ajax(config.datasourcesHeadersIri)
+				.map((ajaxResponse): string => ajaxResponse.xhr.responseText)
+        .throughNodeStream(csv(csvOptions))
         .map(function(row) {
           return {
             column: row[0],
@@ -172,47 +177,38 @@ var Datasource = function(instance) {
           return header;
         })
         .toArray(),
-        RxNode.fromUnpausableStream(
-          hyperquest(config.datasourcesMetadataIri, {
-            withCredentials: false,
-          })
-        )
-        .doOnError(function(err) {
-          err.message = err.message || '';
-          err.message += ', observed in BridgeDb.Datasource._getAll from datasourcesMetadataIri XHR request.';
-          console.error(err.message);
-          console.error(err.stack);
-        })
-        .streamThrough(csv(csvOptions))
+				Observable.ajax(config.datasourcesMetadataIri)
+				.map((ajaxResponse): string => ajaxResponse.xhr.responseText)
+        .throughNodeStream(csv(csvOptions))
         .toArray()
     )
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.Datasource._getAll from XHR request.';
       console.error(err.message);
       console.error(err.stack);
     })
-    .flatMap(function(results) {
+    .mergeMap(function(results) {
       var headers = results[0];
       var rows = results[1];
 
-//      var headersByColumn = headers.reduce(function(acc, header) {
-//        acc[header.column] = header;
-//        return acc;
-//      }, []);
-//      return Rx.Observable.from(rows).map(function(fields) {
-//        return fields.map(function(field, i) {
-//          var header = headersByColumn[i];
-//          var property = {};
-//          property[header['@id']] = field;
-//        });
-//      });
+      var headersByColumn = headers.reduce(function(acc, header) {
+        acc[header.column] = header;
+        return acc;
+      }, []);
+      return Observable.from(rows).map(function(fields) {
+        return fields.map(function(field, i) {
+          var header = headersByColumn[i];
+          var property = {};
+          property[header['@id']] = field;
+        });
+      });
 
-      // TODO use headers code above instead
-      return Rx.Observable.from(rows)
+			/*
+      // TODO test that headers code above works
+      return Observable.from(rows)
 			.map(function(fields) {
         return {
-          '@context': internalContext,
 					conventionalName: fields[0],
           systemCode: fields[1],
           webPage: fields[2],
@@ -229,9 +225,9 @@ var Datasource = function(instance) {
           name: fields[10]
         };
       });
+		 //*/
     })
     .map(function(datasource) {
-
       // remove empty properties, ie., properties with these values:
       // ''
       // NaN
@@ -339,15 +335,23 @@ var Datasource = function(instance) {
 
       return datasource;
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.Datasource._getAll';
       throw err;
     })
+		.reduce(function(acc, datasource) {
+			return propertiesThatUniquelyIdentifyDatasource
+			.filter((property) => datasource.hasOwnProperty(property))
+			.reduce(function(subacc, property) {
+				subacc[property] = datasource;
+				return subacc;
+			}, acc);
+		}, {})
     .shareReplay()
     .timeout(
         timeout,
-        Rx.Observable.throw(new Error('BridgeDb.entityReference.enrich timed out.'))
+        Observable.throw(new Error('BridgeDb.datasource._getAll timed out.'))
     );
   }
 
@@ -368,7 +372,7 @@ var Datasource = function(instance) {
   function get(args) {
     return query(args)
     .first()
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.Datasource.get';
       throw err;
@@ -401,12 +405,11 @@ var Datasource = function(instance) {
    * @return {Stream<Datasource>} datasourcesStream
    */
   function query(args) {
-    //assert(args.hasOwnProperty('@id') || args.hasOwnProperty('id'), '');
     var timeout = 10 * 1000;
 
     if (isEmpty(args)) {
       return _getAll()
-      .doOnError(function(err) {
+      .do(null, function(err) {
         err.message = err.message || '';
         err.message += ', observed in BridgeDb.Datasource.query';
         throw err;
@@ -420,11 +423,11 @@ var Datasource = function(instance) {
     };
     //*/
 
-		// TODO use bitmask here instead of jsonldRx.matcher
+		// TODO don't use jsonldRx.matcher
     return jsonldRx.matcher.filter(args, _getAllProcessedForMatcher(), matchers, options)
     .timeout(
         4 * 1000,
-        Rx.Observable.throw(new Error('BridgeDb.datasource.query timed out in jsonldRx.matcher.filter.'))
+        Observable.throw(new Error('BridgeDb.datasource.query timed out in jsonldRx.matcher.filter.'))
     )
     .toArray()
     .map(function(matcherResults) {
@@ -505,7 +508,7 @@ var Datasource = function(instance) {
     })
     .concatMap(function(sortedResults) {
       // TODO We should distinguish between exact and fuzzy matches.
-      return Rx.Observable.from(sortedResults)
+      return Observable.from(sortedResults)
       .map(function(result: any) {
         return result.value;
       });
@@ -532,23 +535,16 @@ var Datasource = function(instance) {
       });
       //*/
     })
-    .doOnError(function(err) {
+    .do(null, function(err) {
       err.message = err.message || '';
       err.message += ', observed in BridgeDb.Datasource.query';
       throw err;
     })
     .timeout(
         timeout,
-        Rx.Observable.throw(new Error('BridgeDb.datasource.query timed out.'))
+        Observable.throw(new Error('BridgeDb.datasource.query timed out.'))
     );
   }
 
-  return {
-    get:get,
-    _getIdentifierPatternWithoutBeginEndRestriction:
-      _getIdentifierPatternWithoutBeginEndRestriction,
-    query:query
-  };
+  return get;
 };
-
-export default Datasource;
