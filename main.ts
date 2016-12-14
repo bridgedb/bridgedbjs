@@ -16,6 +16,7 @@ if (!global.hasOwnProperty('XMLHttpRequest')) {
 }
 
 import * as at from 'lodash/at';
+import * as camelCase from 'lodash/camelCase';
 import * as compact from 'lodash/compact';
 import * as defaultsDeep from 'lodash/defaultsDeep';
 import * as isNaN from 'lodash/isNaN';
@@ -319,13 +320,39 @@ export default class BridgeDb {
 				return acc;
 			}, {})
 			.publishReplay().refCount();
+	} // end constructor
+
+	attributeSearch(organism: organism, query: string, attrName?: string): Observable<EntityReference> {
+		let bridgeDb = this;
+		const attrNameParamSection = attrName ? '?attrName=' + attrName : '';
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributeSearch/' + query + attrNameParamSection)
+			.mergeMap(function(fields) {
+				const conventionalName = fields[1];
+				return bridgeDb.datasourceMappings$
+					.map((mapping) => mapping[conventionalName])
+					.map(function(datasource: Datasource) {
+						let entityReference: EntityReference = {
+							identifier: fields[0],
+							isDataItemIn: datasource,
+							symbol: fields[2],
+						};
+
+						if (datasource.hasOwnProperty('about')) {
+							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
+						}
+
+						return entityReference;
+					});
+			});
 	}
 
 	getAttributes(organism: organism, conventionalName: string, identifier: string) {
 		let bridgeDb = this;
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributes/' + conventionalName + '/' + identifier)
 			.reduce(function(acc, fields) {
-				acc[fields[0]] = fields[1];
+				const key = camelCase(fields[0]);
+				const value = fields[1];
+				acc[key] = value;
 				return acc;
 			}, {});
 	}
@@ -344,6 +371,28 @@ export default class BridgeDb {
 					en: fields[0],
 					la: fields[1],
 				};
+			});
+	}
+
+	search(organism: organism, query: string): Observable<EntityReference> {
+		let bridgeDb = this;
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/search/' + query)
+			.mergeMap(function(fields) {
+				const conventionalName = fields[1];
+				return bridgeDb.datasourceMappings$
+					.map((mapping) => mapping[conventionalName])
+					.map(function(datasource: Datasource) {
+						let entityReference: EntityReference = {
+							identifier: fields[0],
+							isDataItemIn: datasource
+						};
+
+						if (datasource.hasOwnProperty('about')) {
+							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
+						}
+
+						return entityReference;
+					});
 			});
 	}
 
@@ -366,5 +415,28 @@ export default class BridgeDb {
 			})
 			.mergeMap(getDatasource);
 	}
+
+	xrefs(organism: organism, conventionalName: string, identifier: string): Observable<EntityReference> {
+		let bridgeDb = this;
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/xrefs/' + conventionalName + '/' + identifier)
+			.mergeMap(function(fields) {
+				const conventionalName = fields[1];
+				return bridgeDb.datasourceMappings$
+					.map((mapping) => mapping[conventionalName])
+					.map(function(datasource: Datasource) {
+						let entityReference: EntityReference = {
+							identifier: fields[0],
+							isDataItemIn: datasource
+						};
+
+						if (datasource.hasOwnProperty('about')) {
+							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
+						}
+
+						return entityReference;
+					});
+			});
+	}
+
 }
 

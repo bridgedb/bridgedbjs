@@ -27,8 +27,8 @@ declare interface Datasource {
 
 declare interface EntityReference {
 	identifier: string;
-	displayName?: string;
-	id?: string;
+	symbol?: string;
+	about?: string;
 	isDataItemIn?: Datasource;
 	organism?: organism;
 	type?: string[];
