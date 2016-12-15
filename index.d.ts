@@ -6,7 +6,7 @@
 
 // for details on vocab, see http://vocabularies.bridgedb.org/ops#
 
-declare interface Datasource {
+declare interface DataSource {
 	about: string;
 	conventionalName: string;
 	entityType: string; // http://vocabularies.bridgedb.org/ops#type
@@ -25,11 +25,11 @@ declare interface Datasource {
 	subject?: string|string[];
 }
 
-declare interface EntityReference {
+declare interface Xref {
 	identifier: string;
 	symbol?: string;
 	about?: string;
-	isDataItemIn?: Datasource;
+	isDataItemIn?: DataSource;
 	organism?: organism;
 	type?: string[];
 	xref?: [string, string];

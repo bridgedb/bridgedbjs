@@ -19,35 +19,47 @@ import * as at from 'lodash/at';
 import * as camelCase from 'lodash/camelCase';
 import * as compact from 'lodash/compact';
 import * as defaultsDeep from 'lodash/defaultsDeep';
+import * as fill from 'lodash/fill';
+import * as isArray from 'lodash/isArray';
 import * as isNaN from 'lodash/isNaN';
 import * as isNull from 'lodash/isNull';
 import * as isUndefined from 'lodash/isUndefined';
 import * as isEmpty from 'lodash/isEmpty';
 import * as omitBy from 'lodash/omitBy';
+import * as zip from 'lodash/zip';
 
 import * as values from 'lodash/values';
 import * as intersection from 'lodash/intersection';
 
 import csv = require('csv-streamify');
 import { Observable } from 'rxjs/Observable';
+
+// TODO should I need to import the interface type definition like this?
+import { AjaxRequest } from  'rxjs/observable/dom/AjaxObservable';
+
 import 'rxjs/add/observable/dom/ajax';
+import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/zip';
 
-import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/find';
-import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/mergeAll';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/multicast';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/windowWhen';
 
 import 'rx-extra/add/operator/throughNodeStream';
+
+import { Subject } from 'rxjs/Subject';
 
 const BIOPAX = 'http://www.biopax.org/release/biopax-level3.owl#';
 const GPML = 'http://vocabularies.wikipathways.org/gpml#'
@@ -55,25 +67,25 @@ const IDENTIFIERS = 'http://identifiers.org/';
 const OWL = 'http://www.w3.org/2002/07/owl#';
 const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
-let csvOptions = {objectMode: true, delimiter: '\t'};
+const CSV_OPTIONS = {objectMode: true, delimiter: '\t'};
 
-const bridgeDbRepoCdn = 'https://cdn.rawgit.com/bridgedb/BridgeDb/';
-const bridgeDbCommitHash = '7bb5058221eb3537a2c04965089de1521a5ed691';
-const configDefault = {
+const BRIDGE_DB_REPO_CDN = 'https://cdn.rawgit.com/bridgedb/BridgeDb/';
+const BRIDGE_DB_COMMIT_HASH = '7bb5058221eb3537a2c04965089de1521a5ed691';
+const CONFIG_DEFAULT = {
   baseIri: 'http://webservice.bridgedb.org/',
   context: [
-      bridgeDbRepoCdn,
-      bridgeDbCommitHash,
+      BRIDGE_DB_REPO_CDN,
+      BRIDGE_DB_COMMIT_HASH,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/jsonld-context.jsonld',
     ].join(''),
-  datasourcesMetadataIri: [
-      bridgeDbRepoCdn,
-      bridgeDbCommitHash,
+  dataSourcesMetadataIri: [
+      BRIDGE_DB_REPO_CDN,
+      BRIDGE_DB_COMMIT_HASH,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt',
     ].join(''),
-  datasourcesHeadersIri: [
-      bridgeDbRepoCdn,
-      bridgeDbCommitHash,
+  dataSourcesHeadersIri: [
+      BRIDGE_DB_REPO_CDN,
+      BRIDGE_DB_COMMIT_HASH,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt',
     ].join(''),
   http: {
@@ -83,7 +95,7 @@ const configDefault = {
   }
 };
 
-const propertiesThatUniquelyIdentifyDatasource = [
+const propertiesThatUniquelyIdentifyDataSource = [
 	'about',
 	'miriamUrn',
 	'conventionalName',
@@ -128,23 +140,51 @@ const parseAsDatatype = {
 
 export default class BridgeDb {
 	config;
-	datasources$;
-	datasourceMappings$;
+	dataSourceMappings$;
 	getTSV;
-	constructor(config = configDefault) {
+	private xrefsRequestQueue;
+	private xrefsResponseQueue;
+	constructor(config = CONFIG_DEFAULT) {
 		let bridgeDb = this;
-		defaultsDeep(config, configDefault);
+		defaultsDeep(config, CONFIG_DEFAULT);
 		bridgeDb.config = config;
 
-		const getTSV = bridgeDb.getTSV = function(url: string): Observable<string[]> {
-			return Observable.ajax({
-				url: url,
-				method: 'GET',
-				responseType: 'text',
-				timeout: config.http.timeout
+		let xrefsRequestQueue = bridgeDb.xrefsRequestQueue = new Subject();
+		const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
+		let debounceSignal = xrefsRequestQueue.debounceTime(XREF_REQUEST_DEBOUNCE_TIME);
+
+		bridgeDb.xrefsResponseQueue = xrefsRequestQueue
+			.windowWhen(() => debounceSignal)
+			.map(win => win.toArray())
+			.mergeAll()
+			.filter((x) => !isEmpty(x))
+			.mergeMap(function(inputs: any[]) {
+				const firstInput = inputs[0];
+				const organism = firstInput.organism;
+				const conventionalNames = inputs.map((input) => input.conventionalName);
+				const identifiers = inputs.map((input) => input.identifier);
+				const dataSourceFilter = firstInput.dataSourceFilter;
+				return bridgeDb.xrefsBatch(organism, conventionalNames, identifiers, dataSourceFilter);
 			})
+			.multicast(new Subject());
+
+		bridgeDb.xrefsResponseQueue.connect();
+
+		const getTSV = bridgeDb.getTSV = function(url: string, method: string = 'GET', body?: string): Observable<string[]> {
+			const ajaxRequest: AjaxRequest = {
+				url: url,
+				method: method,
+				responseType: 'text',
+				timeout: config.http.timeout,
+			};
+			if (body) {
+				ajaxRequest.body = body;
+				ajaxRequest.headers = ajaxRequest.headers || {};
+				ajaxRequest.headers['Content-Type'] = 'text/plain';
+			}
+			return Observable.ajax(ajaxRequest)
 				.map((ajaxResponse): string => ajaxResponse.xhr.response)
-				.throughNodeStream(csv(csvOptions))
+				.throughNodeStream(csv(CSV_OPTIONS))
 				// each row is an array of fields
 				.filter(function(fields) {
 					// Remove commented out rows
@@ -152,8 +192,8 @@ export default class BridgeDb {
 				});
 		};
 
-		bridgeDb.datasources$ = Observable.forkJoin(
-				getTSV(config.datasourcesHeadersIri)
+		bridgeDb.dataSourceMappings$ = Observable.forkJoin(
+				getTSV(config.dataSourcesHeadersIri)
 					.map(function(fields) {
 						return {
 							// NOTE: the column number could be confusing, because it's one-based,
@@ -168,7 +208,7 @@ export default class BridgeDb {
 						};
 					})
 					.toArray(),
-				getTSV(config.datasourcesMetadataIri)
+				getTSV(config.dataSourcesMetadataIri)
 					.toArray()
 		)
 			.mergeMap(function(results) {
@@ -184,7 +224,7 @@ export default class BridgeDb {
 						}, {});
 					});
 			})
-			.map(function(datasource) {
+			.map(function(dataSource) {
 				// remove empty properties, ie., properties with these values:
 				// ''
 				// NaN
@@ -192,44 +232,44 @@ export default class BridgeDb {
 				// undefined
 				// TODO what about empty plain object {} or array []
 
-				return omitBy(datasource, function(value) {
+				return omitBy(dataSource, function(value) {
 					return value === '' ||
 						isNaN(value) ||
 						isNull(value) ||
 						isUndefined(value);
 				});
 			})
-			.map(function(datasource: Datasource) {
+			.map(function(dataSource: DataSource) {
 				// If the Miriam URN is unknown or unspecified, datasources.txt uses
 				// the BridgeDb system code as a placeholder value.
 				// So here we make sure "about" is actually a Miriam URN.
-				if (datasource.hasOwnProperty('about') && datasource.about.indexOf('urn:miriam:') > -1) {
+				if (dataSource.hasOwnProperty('about') && dataSource.about.indexOf('urn:miriam:') > -1) {
 					// switch "about" property from Miriam URN to identifiers.org IRI
-					const miriamUrn = datasource.about;
-					datasource.miriamUrn = miriamUrn;
+					const miriamUrn = dataSource.about;
+					dataSource.miriamUrn = miriamUrn;
 					const preferredPrefix = miriamUrnToPreferredPrefix(miriamUrn);
 					if (preferredPrefix) {
-						datasource.preferredPrefix = preferredPrefix;
+						dataSource.preferredPrefix = preferredPrefix;
 
-						datasource.sameAs = datasource.sameAs || [];
-						datasource.sameAs.push(miriamUrn);
+						dataSource.sameAs = dataSource.sameAs || [];
+						dataSource.sameAs.push(miriamUrn);
 
 						const identifiersIri = miriamUrnToIdentifiersIri(miriamUrn);
 						if (identifiersIri) {
-							datasource.about = datasource.hasIdentifiersOrgPattern = identifiersIri;
+							dataSource.about = dataSource.hasIdentifiersOrgPattern = identifiersIri;
 						}
 					}
 				} else {
-					delete datasource.about;
+					delete dataSource.about;
 				}
-				return datasource;
+				return dataSource;
 			})
-			.map(function(datasource: Datasource) {
-				const primaryUriPattern = datasource.hasPrimaryUriPattern;
+			.map(function(dataSource: DataSource) {
+				const primaryUriPattern = dataSource.hasPrimaryUriPattern;
 				if (!!primaryUriPattern) {
-					const regexIdentifierPattern = datasource.hasRegexPattern || '.*';;
+					const regexIdentifierPattern = dataSource.hasRegexPattern || '.*';;
 
-					datasource.hasRegexUriPattern = primaryUriPattern.replace(
+					dataSource.hasRegexUriPattern = primaryUriPattern.replace(
 						'$id',
 						// removing ^ (start) and $ (end) from regexIdentifierPattern
 						'(' + regexIdentifierPattern.replace(/(^\^|\$$)/g, '') + ')'
@@ -238,18 +278,18 @@ export default class BridgeDb {
 					// if '$id' is at the end of the primaryUriPattern
 					var indexOfDollaridWhenAtEnd = primaryUriPattern.length - 3;
 					if (primaryUriPattern.indexOf('$id') === indexOfDollaridWhenAtEnd) {
-						datasource.sameAs = datasource.sameAs || [];
-						datasource.sameAs.push(primaryUriPattern.substr(0, indexOfDollaridWhenAtEnd));
+						dataSource.sameAs = dataSource.sameAs || [];
+						dataSource.sameAs.push(primaryUriPattern.substr(0, indexOfDollaridWhenAtEnd));
 					}
 				}
 
-				datasource.type = 'Dataset';
+				dataSource.type = 'Dataset';
 
-				return datasource;
+				return dataSource;
 			})
-			.map(function(datasource) {
-				if (!!datasource.entityType) {
-					datasource.subject = [];
+			.map(function(dataSource) {
+				if (!!dataSource.entityType) {
+					dataSource.subject = [];
 					/* Example of using 'subject' (from the VOID docs <http://www.w3.org/TR/void/#subject>):
 							:Bio2RDF a void:Dataset;
 									dcterms:subject <http://purl.uniprot.org/core/Gene>;
@@ -269,84 +309,62 @@ export default class BridgeDb {
 					but I'm going with biopax:DnaReference for now because it appears to be analogous to
 					ProteinReference and SmallMoleculeReference.
 					//*/
-					if (datasource.entityType === 'gene' ||
+					if (dataSource.entityType === 'gene' ||
 							// TODO should the following two conditions be removed?
-							datasource.entityType === 'probe' ||
-							datasource.preferredPrefix === 'go') {
-						datasource.subject.push(GPML + 'GeneProduct');
-						datasource.subject.push(BIOPAX + 'DnaReference');
-					} else if (datasource.entityType === 'probe') {
-						datasource.subject.push('probe');
-					} else if (datasource.entityType === 'rna') {
-						datasource.subject.push(GPML + 'Rna');
-						datasource.subject.push(BIOPAX + 'RnaReference');
-					} else if (datasource.entityType === 'protein') {
-						datasource.subject.push(GPML + 'Protein');
-						datasource.subject.push(BIOPAX + 'ProteinReference');
-					} else if (datasource.entityType === 'metabolite') {
-						datasource.subject.push(GPML + 'Metabolite');
-						datasource.subject.push(BIOPAX + 'SmallMoleculeReference');
-					} else if (datasource.entityType === 'pathway') {
+							dataSource.entityType === 'probe' ||
+							dataSource.preferredPrefix === 'go') {
+						dataSource.subject.push(GPML + 'GeneProduct');
+						dataSource.subject.push(BIOPAX + 'DnaReference');
+					} else if (dataSource.entityType === 'probe') {
+						dataSource.subject.push('probe');
+					} else if (dataSource.entityType === 'rna') {
+						dataSource.subject.push(GPML + 'Rna');
+						dataSource.subject.push(BIOPAX + 'RnaReference');
+					} else if (dataSource.entityType === 'protein') {
+						dataSource.subject.push(GPML + 'Protein');
+						dataSource.subject.push(BIOPAX + 'ProteinReference');
+					} else if (dataSource.entityType === 'metabolite') {
+						dataSource.subject.push(GPML + 'Metabolite');
+						dataSource.subject.push(BIOPAX + 'SmallMoleculeReference');
+					} else if (dataSource.entityType === 'pathway') {
 						// BioPAX does not have a term for pathways that is analogous to
 						// biopax:ProteinReference for proteins.
-						datasource.subject.push(GPML + 'Pathway');
-						datasource.subject.push(BIOPAX + 'Pathway');
-					} else if (datasource.entityType === 'ontology') {
-						datasource.subject.push(OWL + 'Ontology');
-					} else if (datasource.entityType === 'interaction') {
-						datasource.subject.push(BIOPAX + 'Interaction');
+						dataSource.subject.push(GPML + 'Pathway');
+						dataSource.subject.push(BIOPAX + 'Pathway');
+					} else if (dataSource.entityType === 'ontology') {
+						dataSource.subject.push(OWL + 'Ontology');
+					} else if (dataSource.entityType === 'interaction') {
+						dataSource.subject.push(BIOPAX + 'Interaction');
 					}
 				}
 
-				datasource.alternatePrefix = [
-					datasource.systemCode
+				dataSource.alternatePrefix = [
+					dataSource.systemCode
 				];
 
-				return datasource;
+				return dataSource;
 			})
-			.do(null, function(err) {
-				err.message = err.message || '';
-				err.message += ', observed in BridgeDb.datasources()';
-				throw err;
-			})
-			.publishReplay().refCount();
-
-		bridgeDb.datasourceMappings$ = bridgeDb.datasources$
-			.reduce(function(acc, datasource) {
-				propertiesThatUniquelyIdentifyDatasource.forEach(function(propertyName) {
-					const propertyValue = datasource[propertyName];
-					acc[propertyValue] = datasource;
+			.reduce(function(acc, dataSource) {
+				propertiesThatUniquelyIdentifyDataSource.forEach(function(propertyName) {
+					const propertyValue = dataSource[propertyName];
+					acc[propertyValue] = dataSource;
 				});
 				return acc;
 			}, {})
-			.publishReplay().refCount();
+			.publishReplay();
+
+			// toggle bridgeDb.dataSourceMappings$ from cold to hot
+			bridgeDb.dataSourceMappings$.connect();
 	} // end constructor
 
-	attributeSearch(organism: organism, query: string, attrName?: string): Observable<EntityReference> {
+	attributeSearch(organism: organism, query: string, attrName?: string): Observable<Xref> {
 		let bridgeDb = this;
 		const attrNameParamSection = attrName ? '?attrName=' + attrName : '';
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributeSearch/' + query + attrNameParamSection)
-			.mergeMap(function(fields) {
-				const conventionalName = fields[1];
-				return bridgeDb.datasourceMappings$
-					.map((mapping) => mapping[conventionalName])
-					.map(function(datasource: Datasource) {
-						let entityReference: EntityReference = {
-							identifier: fields[0],
-							isDataItemIn: datasource,
-							symbol: fields[2],
-						};
-
-						if (datasource.hasOwnProperty('about')) {
-							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
-						}
-
-						return entityReference;
-					});
-			});
+			.mergeMap(bridgeDb.parseXrefRow);
 	}
 
-	getAttributes(organism: organism, conventionalName: string, identifier: string) {
+	attributes(organism: organism, conventionalName: string, identifier: string) {
 		let bridgeDb = this;
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributes/' + conventionalName + '/' + identifier)
 			.reduce(function(acc, fields) {
@@ -357,13 +375,13 @@ export default class BridgeDb {
 			}, {});
 	}
 
-	datasource(input: string): Observable<Datasource> {
+	dataSourceProperties = (input: string): Observable<DataSource> => {
 		let bridgeDb = this;
-		return bridgeDb.datasourceMappings$
+		return bridgeDb.dataSourceMappings$
 			.map((mapping) => mapping[input]);
 	}
 
-	organisms(): Observable<Datasource> {
+	organisms(): Observable<DataSource> {
 		let bridgeDb = this;
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + 'contents')
 			.map(function(fields) {
@@ -374,69 +392,140 @@ export default class BridgeDb {
 			});
 	}
 
-	search(organism: organism, query: string): Observable<EntityReference> {
+	private parseXrefRow = ([identifier, conventionalName, symbol]: [string, string, string|undefined]): Observable<Xref> => {
 		let bridgeDb = this;
-		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/search/' + query)
-			.mergeMap(function(fields) {
-				const conventionalName = fields[1];
-				return bridgeDb.datasourceMappings$
-					.map((mapping) => mapping[conventionalName])
-					.map(function(datasource: Datasource) {
-						let entityReference: EntityReference = {
-							identifier: fields[0],
-							isDataItemIn: datasource
-						};
+		if (!identifier || !conventionalName) {
+			return Observable.empty();
+		}
 
-						if (datasource.hasOwnProperty('about')) {
-							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
-						}
+		return bridgeDb.dataSourceMappings$
+			.map((mapping) => mapping[conventionalName])
+			.map(function(dataSource: DataSource) {
+				let xref: Xref = {
+					identifier: identifier,
+					isDataItemIn: dataSource
+				};
 
-						return entityReference;
-					});
+				if (symbol) {
+					xref.symbol = symbol;
+				}
+
+				if (dataSource.hasOwnProperty('about')) {
+					xref.about = encodeURI(dataSource.about + xref.identifier);
+				}
+
+				return xref;
 			});
 	}
 
-	sourceDataSources(organism: organism): Observable<Datasource> {
+	search(organism: organism, query: string): Observable<Xref> {
 		let bridgeDb = this;
-		const getDatasource = bridgeDb.datasource.bind(bridgeDb);
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/search/' + query)
+			.mergeMap(bridgeDb.parseXrefRow);
+	}
+
+	sourceDataSources(organism: organism): Observable<DataSource> {
+		let bridgeDb = this;
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/sourceDataSources')
 			.map(function(fields) {
 				return fields[0];
 			})
-			.mergeMap(getDatasource);
+			.mergeMap(bridgeDb.dataSourceProperties);
 	}
 
-	targetDataSources(organism: organism): Observable<Datasource> {
+	targetDataSources(organism: organism): Observable<DataSource> {
 		let bridgeDb = this;
-		const getDatasource = bridgeDb.datasource.bind(bridgeDb);
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/targetDataSources')
 			.map(function(fields) {
 				return fields[0];
 			})
-			.mergeMap(getDatasource);
+			.mergeMap(bridgeDb.dataSourceProperties);
 	}
 
-	xrefs(organism: organism, conventionalName: string, identifier: string): Observable<EntityReference> {
+	xrefsSimple(organism: organism, conventionalName: string, identifier: string, dataSourceFilter?: string): Observable<Xref> {
 		let bridgeDb = this;
-		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/xrefs/' + conventionalName + '/' + identifier)
-			.mergeMap(function(fields) {
-				const conventionalName = fields[1];
-				return bridgeDb.datasourceMappings$
-					.map((mapping) => mapping[conventionalName])
-					.map(function(datasource: Datasource) {
-						let entityReference: EntityReference = {
-							identifier: fields[0],
-							isDataItemIn: datasource
-						};
+		const dataSourceFilterParamSection = dataSourceFilter ? '?dataSource=' + dataSourceFilter : '';
 
-						if (datasource.hasOwnProperty('about')) {
-							entityReference.about = encodeURI(datasource.about + entityReference.identifier);
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/xrefs/' + conventionalName + '/' + identifier + dataSourceFilterParamSection)
+			.mergeMap(bridgeDb.parseXrefRow);
+	}
+
+	xrefs(organism: organism, conventionalName: string, identifier: string, dataSourceFilter?: string): Observable<Xref> {
+		let bridgeDb = this;
+		let xrefsRequestQueue = bridgeDb.xrefsRequestQueue;
+		let xrefsResponseQueue = bridgeDb.xrefsResponseQueue;
+		const dataSourceFilterParamSection = dataSourceFilter ? '?dataSource=' + dataSourceFilter : '';
+
+		xrefsRequestQueue.next({organism, conventionalName, identifier, dataSourceFilter});
+
+		return xrefsResponseQueue
+			.filter(function(xrefBatchEnvelope) {
+				return xrefBatchEnvelope.organism === organism &&
+					// NOTE: we are not using the dataSource test right below. Instead, we are matching
+					// dataSources in the mergeMap further below. The reason is that the inputDataSource
+					// and the returned dataSource may not match, e.g., 'L' vs. 'Entrez Gene'.
+					//x.inputDataSource === conventionalName &&
+					xrefBatchEnvelope.inputIdentifier === identifier &&
+					(!dataSourceFilter || xrefBatchEnvelope.dataSourceFilter === dataSourceFilter)
+			})
+			.find(function(xrefBatchEnvelope) {
+				return Observable.zip(
+						bridgeDb.dataSourceMappings$
+							.map((mapping) => mapping[xrefBatchEnvelope.inputDataSource].conventionalName),
+						bridgeDb.dataSourceMappings$
+							.map((mapping) => mapping[conventionalName].conventionalName),
+						function(inputDataSourceAsConventionalName, conventionalNameAsConventionalName) {
+							return inputDataSourceAsConventionalName === conventionalNameAsConventionalName;
 						}
+				);
+			})
+			.mergeMap((x) => Observable.from(x.xrefs));
+	}
 
-						return entityReference;
+	xrefsBatch = (organism: organism, conventionalNameOrNames: string|string[], identifiers: string[], dataSourceFilter?: string): Observable<{
+		organism: string,
+		inputIdentifier: string,
+		inputDataSource: string,
+		xrefs: Xref[],
+		dataSourceFilter?: string,
+	}> => {
+		let bridgeDb = this;
+		const dataSourceFilterParamSection = dataSourceFilter ? '?dataSource=' + dataSourceFilter : '';
+
+		const conventionalNames = isArray(conventionalNameOrNames) ?
+			conventionalNameOrNames : fill(new Array(identifiers.length), conventionalNameOrNames);
+
+		const body = zip(identifiers, conventionalNames)
+			.map((x) => x.join('\t'))
+			.join('\n');
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/xrefsBatch' + dataSourceFilterParamSection, 'POST', body)
+			.mergeMap(function(xrefStringsByInput) {
+				const inputIdentifier = xrefStringsByInput[0];
+				const inputDataSource = xrefStringsByInput[1];
+				const xrefsString = xrefStringsByInput[2];
+
+				// NOTE: splitting by comma, e.g.:
+				//       'T:GO:0031966,Il:ILMN_1240829' -> ['T:GO:0031966', 'Il:ILMN_1240829']
+				return Observable.from(xrefsString.split(','))
+					.mergeMap(function(xrefString: string): Observable<Xref> {
+						if (xrefString === 'N/A') {
+							return Observable.empty();
+						}
+						// NOTE: splitting by FIRST colon, e.g.:
+						//       'T:GO:0031966' -> ['T', 'GO:0031966']
+						let xrefFields = xrefString.split(/:(.+)/);
+						return bridgeDb.parseXrefRow([xrefFields[1], xrefFields[0], undefined]);
+					})
+					.toArray()
+					.map(function(xrefs) {
+						return {
+							organism: organism,
+							inputDataSource: inputDataSource,
+							inputIdentifier: inputIdentifier,
+							xrefs: xrefs,
+							dataSourceFilter: dataSourceFilter,
+						};
 					});
 			});
 	}
-
 }
-
