@@ -26,8 +26,6 @@ import * as isEmpty from 'lodash/isEmpty';
 import * as omitBy from 'lodash/omitBy';
 import * as zip from 'lodash/zip';
 
-import csv = require('csv-streamify');
-
 import { Observable } from 'rxjs/Observable';
 
 // TODO should I need to import the interface type definition like this?
@@ -57,6 +55,8 @@ import 'rx-extra/add/operator/throughNodeStream';
 
 import { Subject } from 'rxjs/Subject';
 
+const csv = require('csv-streamify');
+
 const BIOPAX = 'http://www.biopax.org/release/biopax-level3.owl#';
 const GPML = 'http://vocabularies.wikipathways.org/gpml#'
 const IDENTIFIERS = 'http://identifiers.org/';
@@ -78,15 +78,15 @@ const CONFIG_DEFAULT = {
       BRIDGE_DB_COMMIT_HASH,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/jsonld-context.jsonld',
     ].join(''),
-  dataSourcesMetadataIri: [
-      BRIDGE_DB_REPO_CDN,
-      BRIDGE_DB_COMMIT_HASH,
-      '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt',
-    ].join(''),
   dataSourcesHeadersIri: [
       BRIDGE_DB_REPO_CDN,
       BRIDGE_DB_COMMIT_HASH,
       '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt',
+    ].join(''),
+  dataSourcesMetadataIri: [
+      BRIDGE_DB_REPO_CDN,
+      BRIDGE_DB_COMMIT_HASH,
+      '/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt',
     ].join(''),
   http: {
 		timeout: 3 * 1000,

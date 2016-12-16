@@ -16,15 +16,16 @@
   "scripts": {
     "build": "npm-run-all -p build:*",
     "build:es5": "npm run compile:es5 && browserify ./main.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify",
-    "build:esnext": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
-    "build:babelify": "npm run compile:esnext && browserify ./lib/main.js -o ./dist/bridgedb.js -d -t [ babelify --extensions '.js' --extensions '.jsx' ] -t brfs -t deglobalify",
-    "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
+    "build-broken:esnext": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
+    "build-broken:babelify": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.js -d -t [ babelify --extensions '.js' --extensions '.jsx' ] -t brfs -t deglobalify",
+    "build-broken:demo": "browserify ./test/e2e/ui-components-local.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
     "clean": "npm-run-all clean:*",
     "clean:es5": "rm -rf main.js main.d.ts ui",
     "clean:esnext": "rm -rf esnext",
+    "compile": "npm-run-all -p compile:*",
     "compile:es5": "npm run clean:es5 && tsc --project tsconfig.json && echo ok || echo not ok",
-    "compile-broken:es5:ui": "tsc src/ui/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir dist/ && echo ok || echo not ok",
     "compile:esnext": "npm run clean:esnext && tsc --project tsconfig.esnext.json && echo ok || echo not ok",
+    "compile-broken:es5:ui": "tsc src/ui/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir dist/ && echo ok || echo not ok",
     "dev": "npm run compile:es5",
     "start": "npm-run-all -p start:mockserver start:ui-combo-local",
     "start:webpack": "webpack-dev-server --progress --colors --watch",
@@ -47,11 +48,15 @@
   },
   "watch": {
     "dev": [
-      "lib/*.ts",
       "index.d.ts",
-      "{test}/*.{ts,js}"
+      "src/*.{ts,tsx}",
+      "test/*.{ts,tsx,js,jsx}"
     ],
-    "test": "{lib,test}/*.{js}"
+    "test": [
+	  "main.js",
+	  "ui/*.{js,jsx}",
+	  "test/*.{js,jsx}"
+    ]
   },
   "browserify": {
     "transform": [

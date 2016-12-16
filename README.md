@@ -1,8 +1,7 @@
 bridgedb-5.0.13
 ===================
 
-JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://bridgedb.org/wiki/BridgeWebservice/).
-Not all the functionality of the BridgeDb webservice are exposed by this library yet. Pull requests are welcome!
+JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://webservice.bridgedb.org/).
 
 ##[API Documentation](https://bridgedb.github.io/bridgedbjs/docs/)
 
@@ -15,28 +14,43 @@ Not all the functionality of the BridgeDb webservice are exposed by this library
 
 **Node.js**
 ```
-npm install bridgedb
+npm install --save bridgedb
 ```
 
-## Example
+## Simple Example
 ```js
-var BridgeDb = require('bridgedb'); // Omit this line unless you're using Node.js
+var BridgeDb = require('bridgedb').default; // Omit this line unless you're using Node.js
 
-var myBridgeDbInstance = new BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-  datasetsMetadataIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-});
-myBridgeDbInstance.entityReference.freeSearch({
-  attribute: 'Nfkb1',
-  organism: 'Mouse'
-})
-.subscribe(function(searchResult) {
-  console.log('Result for Nfkb1');
-  console.log(searchResult);
-});
+var bridgeDbInstance = new BridgeDb();
+bridgeDbInstance.search('Mouse', 'Nfkb1')
+  .subscribe(function(searchResult) {
+    console.log('Result for Nfkb1');
+    console.log(searchResult);
+  });
 ```
 
-Most methods return [RxJS Observablves](https://github.com/Reactive-Extensions/RxJS). Anywhere the return type is listed as an `Observable`, you can use ```subscribe``` as shown above.
+## More Complex Example
+Use ES2015, options and error handling.
+```js
+import BridgeDb from 'bridgedb';
+
+const bridgeDbInstance = new BridgeDb({
+  baseIri: 'http://example.org/',
+  dataSourcesHeadersIri: 'http://example.org/data-sources-headers.txt'
+  dataSourcesMetadataIri 'http://example.org/data-sources.txt',
+});
+bridgeDbInstance.search('Mouse', 'Nfkb1')
+  .subscribe(function(searchResult) {
+    console.log('Result for Nfkb1');
+    console.log(searchResult);
+  }, function(err) {
+    throw err;
+  }, function() {
+    console.log('complete');
+  });
+```
+
+Most methods return [RxJS Observables](https://github.com/Reactive-Extensions/RxJS). Anywhere the return type is listed as an `Observable`, you can use ```subscribe``` as shown above.
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
 
@@ -68,30 +82,20 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 
 ## Dependencies
 
-Currently, this library uses http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/ as a proxy to allow for making CORS requests to the BridgeDb webservice.
+Each time this library is instantiated, it downloads the following files:
 
-This library actively relies on the following files (downloads them each time it's loaded):
-
-* [jsonld-context.jsonld](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.rdf/resources/jsonld-context.jsonld)
+* [datasources_headers.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt)
 * [datasources.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt)
 
-These files are accessed via the [RawGit CDN](http://rawgit.com/), frozen to the latest commit as of the time of the latest release of `bridgedbjs`, e.g.:
-https://cdn.rawgit.com/bridgedb/BridgeDb/24186142d05b5f811893970b9a5d61a06f241f68/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt
+These files are accessed via the [RawGit CDN](http://rawgit.com/). The desired version of the files to download is specified in `src/main.ts` as the commit hash of the latest release of `bridgedbjs`, e.g/, `24186142d05b5f811893970b9a5d61a06f241f68` to produce a URL like https://cdn.rawgit.com/bridgedb/BridgeDb/24186142d05b5f811893970b9a5d61a06f241f68/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt
 
-This library also passively relies on these files (does not download, but some code is based on their content):
-* [datasources_headers.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt)
-* [organisms.txt](https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/organisms.txt)
-
-TODO: move the `taxonomy` IRIs from [./lib/organism.js](https://github.com/bridgedb/bridgedbjs/blob/master/lib/organism.js#L35) into the organisms.txt file and then download that file upon loading this library to get the mappings.
-
-TODO: download datasources_headers.txt to get the headers upon loading this library, instead of [hard-coding them here](https://github.com/bridgedb/bridgedbjs/blob/master/lib/dataset.js#L124).
-
-TODO: update npm dependency versions for the libraries we've created. Some of them are just using `npm link` to get the latest on my dev machine.
-TODO: update terms like `dataset` vs. `datasource` with AP to be sure we're using the desired consensus terms.
-TODO: enable caching of results.
-TODO: improve handling of no results returned for entity reference search, including the UI component. Possibly disable searching for strings less than three characters in length.
-TODO: make it possible to use the UI components individually and in any combination.
-TODO: test UI components. Their tests are not currently working.
+## TODOs
+* [ ] UI components: use React without Redux.
+* [ ] UI components: currently using the old version of the webservice code. Update to use the new code in src/main.js
+* [ ] UI components: make it possible to use the UI components individually and in any combination.
+* [ ] UI components: test. Their tests are not currently working.
+* [ ] test handling of no results returned for `attributeSearch`, including for the UI component. Possibly disable searching for strings less than three characters in length.
+* [ ] enable caching of results?
 
 ## Troubleshooting
 ```npm install``` throws an error like ```library not found for -lgcc_s.10.5```

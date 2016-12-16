@@ -8,7 +8,7 @@ var render = yolk.render;
 var fs = require('fs');
 var insertCss = require('insert-css');
 
-var BridgeDbUIElement = require('../../lib/ui-components');
+var BridgeDbUIElement = require('../../ui');
 
 var context = JSON.parse(
     fs.readFileSync(__dirname + '/../../test/jsonld-context.jsonld')
