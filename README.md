@@ -30,7 +30,7 @@ bridgeDbInstance.search('Mouse', 'Nfkb1')
 ```
 
 ## More Complex Example
-Use ES2015, options and error handling.
+Use ES2015, options and error catching.
 ```js
 import BridgeDb from 'bridgedb';
 
@@ -50,7 +50,7 @@ bridgeDbInstance.search('Mouse', 'Nfkb1')
   });
 ```
 
-Most methods return [RxJS Observables](https://github.com/Reactive-Extensions/RxJS). Anywhere the return type is listed as an `Observable`, you can use ```subscribe``` as shown above.
+The methods return [RxJS Observables](https://github.com/ReactiveX/rxjs), meaning can use ```subscribe``` as shown above to get the next values, catch errors and be notified when the observable is complete.
 
 For more examples, see the [test directory](https://github.com/bridgedb/bridgedbjs/tree/master/test).
 
