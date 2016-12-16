@@ -11,11 +11,12 @@
 		"rootDir": "."
 	},
 	"files": [
-		"main.ts",
+		"src/main.ts",
 		"index.d.ts",
 		"organism.d.ts"
 	],
 	"exclude": [
+		"ui/**/*",
 		"dist/**/*",
 		"tmp/**/*"
     ]

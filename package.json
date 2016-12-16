@@ -2,19 +2,18 @@
   "name": "bridgedb",
   "version": "5.0.13",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
-  "main": "main.js",
+  "main": "index.js",
   "main:esnext": "esnext/main.js",
   "scripts": {
     "build": "npm-run-all -p build:*",
-    "build:es5": "npm run compile:es5 && browserify ./main.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify",
-    "build:esnext": "npm run compile:esnext && browserify ./main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
+    "build:es5": "npm run compile:es5 && browserify ./index.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify",
+    "build:esnext": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
     "build:babelify": "npm run compile:esnext && browserify ./lib/main.js -o ./dist/bridgedb.js -d -t [ babelify --extensions '.js' --extensions '.jsx' ] -t brfs -t deglobalify",
-    "build.tsify.broken": "browserify ./src/datasource.ts -o ./dist/bridgedb.js -d -p [ tsify --target 'es6' ] -t [ babelify --extensions '.ts' --extensions '.tsx' ] -t brfs -t deglobalify",
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
     "clean": "npm-run-all clean:*",
-    "clean:es5": "rm main.js main.d.ts && echo ok || echo not ok",
+    "clean:es5": "rm -rf lib",
     "clean:esnext": "rm -rf esnext",
-    "compile:es5": "npm run clean:es5 && tsc --project tsconfig.json && echo ok || echo not ok",
+    "compile:es5": "npm run clean:es5 && tsc --project tsconfig.json && mkdir lib && mv ./src/*.js lib/ && echo ok || echo not ok",
     "compile:es5:ui": "tsc src/ui/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir dist/ && echo ok || echo not ok",
     "compile:esnext": "npm run clean:esnext && tsc --project tsconfig.esnext.json && echo ok || echo not ok",
     "dev": "npm run compile:es5",
@@ -39,7 +38,7 @@
   },
   "watch": {
     "dev": [
-      "main.ts",
+      "lib/*.ts",
       "index.d.ts",
       "{test}/*.{ts,js}"
     ],
