@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "npm-run-all -p build:*",
-    "build:es5": "npm run compile:es5 && browserify ./index.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify",
+    "build:es5": "npm run compile:es5 && browserify ./main.js -o ./dist/bridgedb.js -d -t brfs -t deglobalify",
     "build:esnext": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
     "build:babelify": "npm run compile:esnext && browserify ./lib/main.js -o ./dist/bridgedb.js -d -t [ babelify --extensions '.js' --extensions '.jsx' ] -t brfs -t deglobalify",
     "build:demo": "browserify ./test/e2e/ui-components.test.js -o ./demo/ui-combo.bundle.js -d -t brfs -t deglobalify",
