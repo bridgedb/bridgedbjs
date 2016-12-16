@@ -15,9 +15,7 @@ if (!global.hasOwnProperty('XMLHttpRequest')) {
 	global.XMLHttpRequest = require('xhr2');
 }
 
-import * as at from 'lodash/at';
 import * as camelCase from 'lodash/camelCase';
-import * as compact from 'lodash/compact';
 import * as defaultsDeep from 'lodash/defaultsDeep';
 import * as fill from 'lodash/fill';
 import * as isArray from 'lodash/isArray';
@@ -28,10 +26,8 @@ import * as isEmpty from 'lodash/isEmpty';
 import * as omitBy from 'lodash/omitBy';
 import * as zip from 'lodash/zip';
 
-import * as values from 'lodash/values';
-import * as intersection from 'lodash/intersection';
-
 import csv = require('csv-streamify');
+
 import { Observable } from 'rxjs/Observable';
 
 // TODO should I need to import the interface type definition like this?
@@ -45,6 +41,7 @@ import 'rxjs/add/observable/zip';
 
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/find';
 import 'rxjs/add/operator/mergeAll';
@@ -68,6 +65,10 @@ const OWL = 'http://www.w3.org/2002/07/owl#';
 const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
 const CSV_OPTIONS = {objectMode: true, delimiter: '\t'};
+
+// time to wait for no new calls to xrefs() before we
+// batch up all calls in the queue and send to xrefsBatch()
+const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 
 const BRIDGE_DB_REPO_CDN = 'https://cdn.rawgit.com/bridgedb/BridgeDb/';
 const BRIDGE_DB_COMMIT_HASH = '7bb5058221eb3537a2c04965089de1521a5ed691';
@@ -95,7 +96,9 @@ const CONFIG_DEFAULT = {
   }
 };
 
-const propertiesThatUniquelyIdentifyDataSource = [
+// these properties can be trusted to
+// uniquely identify a data source.
+const DATASOURCE_ID_PROPERTIES = [
 	'about',
 	'miriamUrn',
 	'conventionalName',
@@ -150,7 +153,6 @@ export default class BridgeDb {
 		bridgeDb.config = config;
 
 		let xrefsRequestQueue = bridgeDb.xrefsRequestQueue = new Subject();
-		const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 		let debounceSignal = xrefsRequestQueue.debounceTime(XREF_REQUEST_DEBOUNCE_TIME);
 
 		bridgeDb.xrefsResponseQueue = xrefsRequestQueue
@@ -345,7 +347,7 @@ export default class BridgeDb {
 				return dataSource;
 			})
 			.reduce(function(acc, dataSource) {
-				propertiesThatUniquelyIdentifyDataSource.forEach(function(propertyName) {
+				DATASOURCE_ID_PROPERTIES.forEach(function(propertyName) {
 					const propertyValue = dataSource[propertyName];
 					acc[propertyValue] = dataSource;
 				});
@@ -356,13 +358,6 @@ export default class BridgeDb {
 			// toggle bridgeDb.dataSourceMappings$ from cold to hot
 			bridgeDb.dataSourceMappings$.connect();
 	} // end constructor
-
-	attributeSearch(organism: organism, query: string, attrName?: string): Observable<Xref> {
-		let bridgeDb = this;
-		const attrNameParamSection = attrName ? '?attrName=' + attrName : '';
-		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributeSearch/' + query + attrNameParamSection)
-			.mergeMap(bridgeDb.parseXrefRow);
-	}
 
 	attributes(organism: organism, conventionalName: string, identifier: string) {
 		let bridgeDb = this;
@@ -375,13 +370,70 @@ export default class BridgeDb {
 			}, {});
 	}
 
+	attributeSearch(organism: organism, query: string, attrName?: string): Observable<Xref> {
+		let bridgeDb = this;
+		const attrNameParamSection = attrName ? '?attrName=' + attrName : '';
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributeSearch/' + query + attrNameParamSection)
+			.mergeMap(bridgeDb.parseXrefRow);
+	}
+
+	attributeSet(organism: organism): Observable<string[]> {
+		let bridgeDb = this;
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/attributeSet')
+			.reduce(function(acc, row) {
+				acc.push(row[0]);
+				return acc;
+			}, []);
+	}
+
 	dataSourceProperties = (input: string): Observable<DataSource> => {
 		let bridgeDb = this;
 		return bridgeDb.dataSourceMappings$
 			.map((mapping) => mapping[input]);
 	}
 
-	organisms(): Observable<DataSource> {
+	isFreeSearchSupported(organism: organism): Observable<boolean> {
+		let bridgeDb = this;
+
+		const ajaxRequest: AjaxRequest = {
+			url: bridgeDb.config.baseIri + organism + '/isFreeSearchSupported',
+			method: 'GET',
+			responseType: 'text',
+			timeout: bridgeDb.config.http.timeout,
+		};
+		return Observable.ajax(ajaxRequest)
+			.map((ajaxResponse): string => ajaxResponse.xhr.response)
+			// NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
+			.map((res) => res === 'true');
+	}
+
+	isMappingSupported(organism: organism, sourceConventionalName: string, targetConventionalName: string): Observable<boolean> {
+		let bridgeDb = this;
+
+		const ajaxRequest: AjaxRequest = {
+			url: bridgeDb.config.baseIri + organism + '/isMappingSupported/' + sourceConventionalName + '/' + targetConventionalName,
+			method: 'GET',
+			responseType: 'text',
+			timeout: bridgeDb.config.http.timeout,
+		};
+		return Observable.ajax(ajaxRequest)
+			.map((ajaxResponse): string => ajaxResponse.xhr.response)
+			// NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
+			.map((res) => res === 'true');
+	}
+
+	organismProperties(organism: organism): Observable<{}> {
+		let bridgeDb = this;
+		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/properties')
+			.reduce(function(acc, fields) {
+				const key = camelCase(fields[0]);
+				const value = fields[1];
+				acc[key] = value;
+				return acc;
+			}, {});
+	}
+
+	organisms(): Observable<{}> {
 		let bridgeDb = this;
 		return bridgeDb.getTSV(bridgeDb.config.baseIri + 'contents')
 			.map(function(fields) {
@@ -442,12 +494,19 @@ export default class BridgeDb {
 			.mergeMap(bridgeDb.dataSourceProperties);
 	}
 
-	xrefsSimple(organism: organism, conventionalName: string, identifier: string, dataSourceFilter?: string): Observable<Xref> {
+	xrefExists(organism: organism, conventionalName: string, identifier: string): Observable<boolean> {
 		let bridgeDb = this;
-		const dataSourceFilterParamSection = dataSourceFilter ? '?dataSource=' + dataSourceFilter : '';
 
-		return bridgeDb.getTSV(bridgeDb.config.baseIri + organism + '/xrefs/' + conventionalName + '/' + identifier + dataSourceFilterParamSection)
-			.mergeMap(bridgeDb.parseXrefRow);
+		const ajaxRequest: AjaxRequest = {
+			url: bridgeDb.config.baseIri + organism + '/xrefExists/' + conventionalName + '/' + identifier,
+			method: 'GET',
+			responseType: 'text',
+			timeout: bridgeDb.config.http.timeout,
+		};
+		return Observable.ajax(ajaxRequest)
+			.map((ajaxResponse): string => ajaxResponse.xhr.response)
+			// NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
+			.map((res) => res === 'true');
 	}
 
 	xrefs(organism: organism, conventionalName: string, identifier: string, dataSourceFilter?: string): Observable<Xref> {
@@ -511,7 +570,7 @@ export default class BridgeDb {
 						if (xrefString === 'N/A') {
 							return Observable.empty();
 						}
-						// NOTE: splitting by FIRST colon, e.g.:
+						// NOTE: splitting by FIRST colon only, e.g.:
 						//       'T:GO:0031966' -> ['T', 'GO:0031966']
 						let xrefFields = xrefString.split(/:(.+)/);
 						return bridgeDb.parseXrefRow([xrefFields[1], xrefFields[0], undefined]);
