@@ -95,6 +95,7 @@ These files are accessed via the [RawGit CDN](http://rawgit.com/). The desired v
 * [ ] UI components: make it possible to use the UI components individually and in any combination.
 * [ ] UI components: test. Their tests are not currently working.
 * [ ] test handling of no results returned for `attributeSearch`, including for the UI component. Possibly disable searching for strings less than three characters in length.
+* [ ] update tests to use examples similar to what's in `try.js`. Current tests are based on old API.
 * [ ] enable caching of results?
 
 ## Troubleshooting
