@@ -1,0 +1,44 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Access-Control-Allow-Origin: *
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+HMDB
+RefSeq
+WikiGenes
+Reactome
+OMIM
+CAS
+Entrez Gene
+UCSC Genome Browser
+UniGene
+KEGG Reaction
+Enzyme Nomenclature
+InChIKey
+PubChem-compound
+KNApSAcK
+Agilent
+miRBase Sequence
+Chemspider
+Rfam
+EcoCyc
+KEGG Drug
+MACiE
+ChEBI
+Uniprot-TrEMBL
+GeneOntology
+Wikidata
+Rhea
+KEGG Compound
+HGNC
+Ensembl
+Illumina
+Wikipedia
+Unipathway
+LIPID MAPS
+PDB
+Affy
+MetaCyc

@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 ReactDOM.render(
 	<div>
 		<h1>Hello, world!</h1>
-		<p>This is React.</p>
+		<p>This is a React demo, yay!</p>
 	</div>,
   document.querySelector('body')
 );

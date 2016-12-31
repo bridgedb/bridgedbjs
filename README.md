@@ -59,7 +59,7 @@ For more examples, see the [test directory](https://github.com/bridgedb/bridgedb
 1. Install [Node.js](https://nodejs.org/)
 2. Fork this repo (if you don't have commit rights to it)
 3. `git clone https://github.com/bridgedb/bridgedbjs.git` (or use your fork's URL)
-4. `cd ./bridgedbjs`
+4. `cd bridgedbjs`
 5. `npm install`
 6. Make sure the tests pass: [test documentation](./test/README.md).
 7. Refactor the code. Add new tests for your changes if not already covered by the existing tests.
@@ -90,6 +90,7 @@ Each time this library is instantiated, it downloads the following files:
 These files are accessed via the [RawGit CDN](http://rawgit.com/). The desired version of the files to download is specified in `src/main.ts` as the commit hash of the latest release of `bridgedbjs`, e.g/, `24186142d05b5f811893970b9a5d61a06f241f68` to produce a URL like https://cdn.rawgit.com/bridgedb/BridgeDb/24186142d05b5f811893970b9a5d61a06f241f68/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt
 
 ## TODOs
+* [ ] Get dev working nicely for UI. Currently appears we use `npm run start` to launch mockserver and react-dev-server. How does this relate to dev for API client? Also, get mockserver to cache data.
 * [ ] UI components: use React without Redux.
 * [ ] UI components: currently using the old version of the webservice code. Update to use the new code in src/main.js
 * [ ] UI components: make it possible to use the UI components individually and in any combination.

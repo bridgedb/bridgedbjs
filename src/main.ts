@@ -71,7 +71,7 @@ const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 
 const BRIDGE_DB_REPO_CDN = 'https://cdn.rawgit.com/bridgedb/BridgeDb/';
 const BRIDGE_DB_COMMIT_HASH = '7bb5058221eb3537a2c04965089de1521a5ed691';
-const CONFIG_DEFAULT = {
+export const CONFIG_DEFAULT = {
   baseIri: 'http://webservice.bridgedb.org/',
   context: [
       BRIDGE_DB_REPO_CDN,
@@ -146,7 +146,7 @@ export default class BridgeDb {
 	getTSV;
 	private xrefsRequestQueue;
 	private xrefsResponseQueue;
-	constructor(config = CONFIG_DEFAULT) {
+	constructor(config: Partial<typeof CONFIG_DEFAULT> = CONFIG_DEFAULT) {
 		let bridgeDb = this;
 		defaultsDeep(config, CONFIG_DEFAULT);
 		bridgeDb.config = config;
@@ -177,6 +177,7 @@ export default class BridgeDb {
 				method: method,
 				responseType: 'text',
 				timeout: config.http.timeout,
+				crossDomain: true,
 			};
 			if (body) {
 				ajaxRequest.body = body;

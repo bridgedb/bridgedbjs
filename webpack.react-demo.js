@@ -1,16 +1,15 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
-  entry: './test/e2e/ui-components-local.test.tsx',
+  entry: './src/ui/react-demo.tsx',
   output: {
     path: 'dist',
     filename: 'index_bundle.js'
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json']
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     loaders: [
-      { test: /\.json$/, loader: 'json-loader'},
       { test: /\.ts(x?)$/, loader: 'ts-loader' }
     ]
   },
