@@ -400,6 +400,7 @@ export default class BridgeDb {
 			method: 'GET',
 			responseType: 'text',
 			timeout: bridgeDb.config.http.timeout,
+			crossDomain: true,
 		};
 		return Observable.ajax(ajaxRequest)
 			.map((ajaxResponse): string => ajaxResponse.xhr.response)
@@ -415,6 +416,7 @@ export default class BridgeDb {
 			method: 'GET',
 			responseType: 'text',
 			timeout: bridgeDb.config.http.timeout,
+			crossDomain: true,
 		};
 		return Observable.ajax(ajaxRequest)
 			.map((ajaxResponse): string => ajaxResponse.xhr.response)
@@ -502,6 +504,7 @@ export default class BridgeDb {
 			method: 'GET',
 			responseType: 'text',
 			timeout: bridgeDb.config.http.timeout,
+			crossDomain: true,
 		};
 		return Observable.ajax(ajaxRequest)
 			.map((ajaxResponse): string => ajaxResponse.xhr.response)

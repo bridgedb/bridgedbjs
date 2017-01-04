@@ -25,7 +25,7 @@
     "compile:es5": "npm run clean:es5 && tsc --project tsconfig.json && echo ok || echo not ok",
     "compile:esnext": "npm run clean:esnext && tsc --project tsconfig.esnext.json && echo ok || echo not ok",
     "compile:es5:ui": "tsc src/ui/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir ui/ && echo ok || echo not ok",
-    "dev": "echo 'this script might be in conflict with start:ui, which might be newer???' && npm-run-all build:*",
+    "dev": "npm run build:es5",
     "start": "npm-run-all -p start:mockserver start:ui",
     "start:mockserver": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
     "start:ui": "webpack-dev-server --config webpack.config.js --progress --colors --watch",
@@ -43,7 +43,9 @@
     "test:Xref": "gulp testXref",
     "test-broken:ui": "NODE_ENV=test karma start:mockserver",
     "test-broken:ui-combo": "NODE_ENV=test karma start:mockserver karma-ui-combo.conf.js",
-    "watch": "npm-watch"
+    "watch": "npm-run-all -p start:mockserver watch:*",
+    "watch:client": "npm-watch",
+    "watch:ui": "npm run start:ui"
   },
   "watch": {
     "dev": [

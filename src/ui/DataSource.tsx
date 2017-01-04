@@ -9,15 +9,39 @@ let bridgedb = new Bridgedb({
 });
 
 class DataSource extends React.Component<any, any> {
+	constructor(props) {
+		super(props);
+		this.state = {
+			names: [props.value],
+			values: [props.value],
+			selected: props.value
+		};
+	}
   render() {
-		return <span>DataSource: {this.props.value}, </span>;
+		let that = this;
+		return <span> DataSource:
+			<select name="select" value={that.state.selected}>
+				{that.state.values.map((value) => <option key={value} value={value}>{value}</option>)}
+			</select>
+		</span> ;
 	}
 	componentDidMount() {
 		let that = this;
-		//*
 		bridgedb.sourceDataSources('Human')
+			.reduce(function(acc, ds) {
+				acc.names.push(ds.conventionalName);
+				acc.values.push(ds.conventionalName);
+				return acc;
+			}, {
+				names: [],
+				values: [],
+				selected: that.props.value
+			})
+			.do(function(state) {
+				state.selected = that.state.selected;
+				that.setState(state);
+			})
 			.subscribe(console.log, console.log);
-		//*/
 	}
 }
 
