@@ -15,7 +15,7 @@ import Xref from '../../src/ui/Xref';
 var entity = {
   //'@context': context['@context'],
   organism: 'Homo sapiens',
-  type: ['gpml:Metabolite'],
+  type: ['Metabolite'],
   'datasource_name': 'CAS',
   identifier: '50-00-0',
   name: 'Formaldehyde',
@@ -33,7 +33,7 @@ var entity = {
 process.env.MOCKSERVER_PORT = '4522';
 
 ReactDOM.render(
-	<Xref type={'Metabolite'} dataSource={'Ensembl'} identifier={'ENSG0001234'}></Xref>,
+	<Xref organism={'Homo sapiens'} entityType={'Metabolite'} dataSource={'Ensembl'} identifier={'ENSG0001234'}></Xref>,
   document.querySelector('body')
 );
 

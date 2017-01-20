@@ -1,13 +1,61 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import DataSource from './DataSource';
+import DataSourceSelect from './DataSourceSelect';
+import { WPEntityTypeSelect } from './EntityTypeSelect';
 
 class Xref extends React.Component<any, any> {
+	handleEntityTypeUpdate: Function;
+	handleDataSourceUpdate: Function;
+  constructor(props) {
+		super(props);
+    this.state = {
+			organism: props.organism,
+			entityType: props.entityType,
+			dataSource: props.dataSource,
+			identifier: props.identifier,
+		};
+  }
   render() {
+		let that = this;
+		that.handleEntityTypeUpdate = function(entityType) {
+			that.setState({entityType: entityType});
+		};
+		that.handleDataSourceUpdate = function(dataSource) {
+			that.setState({dataSource: dataSource});
+		};
+		let entityTypeSelectStyle = {
+			float: 'left'
+		};
+		let dataSourceSelectStyle = {
+			float: 'left'
+		};
+		let identifierStyle = {
+			float: 'left'
+		};
 		return <div>
-			<span>Type: {this.props.type}, </span>
-			<DataSource value={this.props.dataSource}></DataSource>
-			<span>Identifier: {this.props.identifier}</span>
+			<WPEntityTypeSelect
+				style={entityTypeSelectStyle}
+				// TODO shouldn't this be that.state.entityType
+				entityType={that.state.entityType}
+				updateHandler={that.handleEntityTypeUpdate}></WPEntityTypeSelect>
+			<DataSourceSelect
+				style={dataSourceSelectStyle}
+				organism={that.state.organism}
+				entityType={that.state.entityType}
+				dataSource={that.state.dataSource}
+				updateHandler={that.handleDataSourceUpdate}></DataSourceSelect>
+			<span style={identifierStyle}>Identifier:
+				<input value={that.state.identifier}
+					onChange={function(e) {
+						that.setState({identifier: e.currentTarget.value});
+					}}></input>
+			</span>
+			<br/>
+			<br/>
+			<br/>
+			<div>props: {JSON.stringify(that.props)}</div>
+			<br/>
+			<div>state: {JSON.stringify(that.state)}</div>
 		</div>;
 	}
 }

@@ -23,6 +23,7 @@ import * as isNaN from 'lodash/isNaN';
 import * as isNull from 'lodash/isNull';
 import * as isUndefined from 'lodash/isUndefined';
 import * as isEmpty from 'lodash/isEmpty';
+import * as isString from 'lodash/isString';
 import * as omitBy from 'lodash/omitBy';
 import * as zip from 'lodash/zip';
 
@@ -57,8 +58,8 @@ import { Subject } from 'rxjs/Subject';
 
 const csv = require('csv-streamify');
 
+const BDB = 'http://vocabularies.bridgedb.org/ops#';
 const BIOPAX = 'http://www.biopax.org/release/biopax-level3.owl#';
-const GPML = 'http://vocabularies.wikipathways.org/gpml#'
 const IDENTIFIERS = 'http://identifiers.org/';
 const OWL = 'http://www.w3.org/2002/07/owl#';
 const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
@@ -135,7 +136,10 @@ function miriamUrnToPreferredPrefix(miriamUrn: string): string {
 const parseAsDatatype = {
 	'http://www.w3.org/2001/XMLSchema#string': String,
 	'http://www.w3.org/2001/XMLSchema#anyURI': String,
-	'http://www.w3.org/2001/XMLSchema#boolean': Boolean,
+	// parseFloat when isString in order to handle cases like '0', which should be parsed as false
+	'http://www.w3.org/2001/XMLSchema#boolean': function(x) {
+		 return Boolean(isString(x) ? parseFloat(x) : x);
+	},
 	'http://www.w3.org/2001/XMLSchema#integer': parseInt,
 	'http://www.w3.org/2001/XMLSchema#float': parseFloat,
 };
@@ -285,19 +289,24 @@ export default class BridgeDb {
 					}
 				}
 
+				if (dataSource.type) {
+					dataSource[BDB + 'type'] = dataSource.type;
+				}
 				dataSource.type = 'Dataset';
 
 				return dataSource;
 			})
 			.map(function(dataSource) {
-				if (!!dataSource.entityType) {
+				const bdbType = dataSource[BDB + 'type'];
+				if (!!bdbType) {
 					dataSource.subject = [];
 					/* Example of using 'subject' (from the VOID docs <http://www.w3.org/TR/void/#subject>):
 							:Bio2RDF a void:Dataset;
 									dcterms:subject <http://purl.uniprot.org/core/Gene>;
 									.
 
-					The closest concepts from the GPML, BioPAX and MESH vocabularies are included below.
+					The closest concepts from the WP, BioPAX and MESH vocabularies are included below,
+				  with the default vocabulary being WP.
 
 					Note that in BioPAX, 'ProteinReference' is to 'Protein' as
 							'Class' is to 'Instance' or
@@ -311,31 +320,30 @@ export default class BridgeDb {
 					but I'm going with biopax:DnaReference for now because it appears to be analogous to
 					ProteinReference and SmallMoleculeReference.
 					//*/
-					if (dataSource.entityType === 'gene' ||
+					if (bdbType === 'gene' ||
 							// TODO should the following two conditions be removed?
-							dataSource.entityType === 'probe' ||
+							bdbType === 'probe' ||
 							dataSource.preferredPrefix === 'go') {
-						dataSource.subject.push(GPML + 'GeneProduct');
+						dataSource.subject.push('GeneProduct');
 						dataSource.subject.push(BIOPAX + 'DnaReference');
-					} else if (dataSource.entityType === 'probe') {
-						dataSource.subject.push('probe');
-					} else if (dataSource.entityType === 'rna') {
-						dataSource.subject.push(GPML + 'Rna');
+					} else if (bdbType === 'rna') {
+						dataSource.subject.push('Rna');
 						dataSource.subject.push(BIOPAX + 'RnaReference');
-					} else if (dataSource.entityType === 'protein') {
-						dataSource.subject.push(GPML + 'Protein');
+					} else if (bdbType === 'protein') {
+						dataSource.subject.push('Protein');
 						dataSource.subject.push(BIOPAX + 'ProteinReference');
-					} else if (dataSource.entityType === 'metabolite') {
-						dataSource.subject.push(GPML + 'Metabolite');
+					} else if (bdbType === 'metabolite') {
+						dataSource.subject.push('Metabolite');
 						dataSource.subject.push(BIOPAX + 'SmallMoleculeReference');
-					} else if (dataSource.entityType === 'pathway') {
+					} else if (bdbType === 'pathway') {
 						// BioPAX does not have a term for pathways that is analogous to
 						// biopax:ProteinReference for proteins.
-						dataSource.subject.push(GPML + 'Pathway');
+						dataSource.subject.push('Pathway');
 						dataSource.subject.push(BIOPAX + 'Pathway');
-					} else if (dataSource.entityType === 'ontology') {
+					} else if (bdbType === 'ontology') {
 						dataSource.subject.push(OWL + 'Ontology');
-					} else if (dataSource.entityType === 'interaction') {
+					} else if (bdbType === 'interaction') {
+						dataSource.subject.push('Interaction');
 						dataSource.subject.push(BIOPAX + 'Interaction');
 					}
 				}

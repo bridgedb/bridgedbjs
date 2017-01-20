@@ -17,6 +17,7 @@ declare interface DataSource {
 	hasRegexUriPattern: string;
 	idExample: string;
 	miriamUrn: string;
+	primary: boolean;
 	preferredPrefix: string;
 	systemCode: string;
 	type: string; // http://www.w3.org/1999/02/22-rdf-syntax-ns#type
