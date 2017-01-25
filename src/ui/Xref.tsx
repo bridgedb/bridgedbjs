@@ -1,3 +1,5 @@
+// this is still in progress; not done yet.
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import DataSourceSelect from './DataSourceSelect';
@@ -35,7 +37,6 @@ class Xref extends React.Component<any, any> {
 		return <div>
 			<WPEntityTypeSelect
 				style={entityTypeSelectStyle}
-				// TODO shouldn't this be that.state.entityType
 				entityType={that.state.entityType}
 				updateHandler={that.handleEntityTypeUpdate}></WPEntityTypeSelect>
 			<DataSourceSelect
@@ -44,7 +45,7 @@ class Xref extends React.Component<any, any> {
 				entityType={that.state.entityType}
 				dataSource={that.state.dataSource}
 				updateHandler={that.handleDataSourceUpdate}></DataSourceSelect>
-			<span style={identifierStyle}>Identifier:
+			<span style={identifierStyle}>
 				<input value={that.state.identifier}
 					onChange={function(e) {
 						that.setState({identifier: e.currentTarget.value});
