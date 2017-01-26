@@ -12,6 +12,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as Rx from 'rxjs';
 
+// TODO we don't need everything from these files,
+// so remove the unused parts. I'm just using the
+// files in their entirety now to save time.
 require('./kaavio.css');
 require('./stripped-bootstrap.css');
 require('./annotation-panel.css');
@@ -102,6 +105,7 @@ function addWikiPathwaysSearch(entityReference, listItems: ListItem[]): ListItem
 }
 
 class XrefsAnnotationPanel extends React.Component<any, any> {
+	xrefsRequest: Rx.Observable<any>;
   constructor(props) {
 		super(props);
 		this.state = {
@@ -109,7 +113,7 @@ class XrefsAnnotationPanel extends React.Component<any, any> {
 		};
   }
 
-	componentDidMount() {
+	updateXrefs() {
 		let that = this;
 		let props = that.props;
 
@@ -123,7 +127,9 @@ class XrefsAnnotationPanel extends React.Component<any, any> {
 			}
 		};
 
-		bridgedb.xrefs(props.organism, props.dataSource, props.identifier)
+		let xrefsRequest = that.xrefsRequest = bridgedb.xrefs(props.organism, props.dataSource, props.identifier);
+
+		xrefsRequest
 			.map(function(entityReference): ListItemValueRaw {
 				const identifier = entityReference.identifier;
 				let listItem: ListItemValueRaw = {
@@ -206,6 +212,27 @@ class XrefsAnnotationPanel extends React.Component<any, any> {
 			})
 			.subscribe(null, console.error);
 	}
+
+	componentDidMount() {
+		let that = this;
+		that.updateXrefs();
+	}
+
+	// TODO is this correct? Or should we use componentWillUpdate?
+	componentDidUpdate(prevProps, prevState) {
+		let that = this;
+		let props = that.props;
+		let state = that.state;
+		if (prevProps.dataSource !== props.dataSource || prevProps.identifier !== props.identifier) {
+			that.updateXrefs();
+		}
+	}
+
+	componentWillUnmount() {
+		let that = this;
+		// TODO cancel any pending network requests, possibly something like this:
+		//that.xrefsRequest.dispose();
+	}	
 
   render() {
 		let that = this;

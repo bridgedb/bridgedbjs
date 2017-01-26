@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "5.0.13",
+  "version": "6.0.0-0",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "main.js",
   "main:esnext": "esnext/main.js",

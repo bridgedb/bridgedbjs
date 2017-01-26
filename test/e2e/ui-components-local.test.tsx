@@ -57,12 +57,6 @@ class Demo extends React.Component<any, any> {
 		let state = that.state;
 		const selected = state.selected;
 
-		console.log('state');
-		console.log(state);
-
-		console.log('selected');
-		console.log(selected);
-
 		return <div onClick={that.handleClick.bind(that)}>
 			{
 				values(that.state.entities)
