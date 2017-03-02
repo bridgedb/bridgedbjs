@@ -15,17 +15,7 @@ if (!global.hasOwnProperty('XMLHttpRequest')) {
 	global.XMLHttpRequest = require('xhr2');
 }
 
-import * as camelCase from 'lodash/camelCase';
-import * as defaultsDeep from 'lodash/defaultsDeep';
-import * as fill from 'lodash/fill';
-import * as isArray from 'lodash/isArray';
-import * as isNaN from 'lodash/isNaN';
-import * as isNull from 'lodash/isNull';
-import * as isUndefined from 'lodash/isUndefined';
-import * as isEmpty from 'lodash/isEmpty';
-import * as isString from 'lodash/isString';
-import * as omitBy from 'lodash/omitBy';
-import * as zip from 'lodash/zip';
+import {camelCase, defaultsDeep, fill, isArray, isNaN, isNull, isUndefined, isEmpty, isString, omitBy, zip} from 'lodash';
 
 import { Observable } from 'rxjs/Observable';
 
