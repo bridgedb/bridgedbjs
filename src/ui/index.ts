@@ -1,4 +1,4 @@
-/// <reference path="../../index.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 import * as _ from 'lodash';
 import Rx = require('rx-extra');
