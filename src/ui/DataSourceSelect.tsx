@@ -1,4 +1,4 @@
-/// <reference path="../../index.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 import Bridgedb from '../main';
 import * as intersection from 'lodash/intersection';
