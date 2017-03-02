@@ -5,13 +5,7 @@
   "main": "dist/main.js",
   "main:esnext": "esnext/main.js",
   "files": [
-    "index.d.ts",
-    "organism.d.ts",
-    "csv-streamify.d.ts",
-    "main.js",
-    "main.d.ts",
-    "ui/",
-    "esnext/"
+    "/"
   ],
   "scripts": {
     "prepublish": "npm run build",
