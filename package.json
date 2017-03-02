@@ -2,8 +2,9 @@
   "name": "bridgedb",
   "version": "6.0.0-1",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
-  "main": "dist/main.js",
-  "typings": "dist/main.d.ts",
+  "main": "lib/main.js",
+  "browser": "dist/main.js",
+  "typings": "lib/main.d.ts",
   "main:esnext": "esnext/main.js",
   "files": [
     "dist/",
@@ -71,9 +72,6 @@
       "brfs",
       "deglobalify"
     ]
-  },
-  "browser": {
-    "commander": false
   },
   "repository": {
     "type": "git",
