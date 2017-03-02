@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as values from 'lodash/values';
+import {values} from 'lodash';
 import XrefsAnnotationPanel from '../../src/ui/XrefsAnnotationPanel';
 
 // TODO do we need to specify this here? Seems wrong.

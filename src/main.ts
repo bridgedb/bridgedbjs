@@ -17,6 +17,7 @@ if (!global.hasOwnProperty('XMLHttpRequest')) {
 
 import {camelCase, defaultsDeep, fill, isArray, isNaN, isNull, isUndefined, isEmpty, isString, omitBy, zip} from 'lodash';
 
+
 import { Observable } from 'rxjs/Observable';
 
 // TODO should I need to import the interface type definition like this?

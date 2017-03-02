@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "pretty": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es5",
+      "es6",
+      "scripthost"
+    ],
+    "module": "system",
+    "outFile": "test/e2e/ui-components-local.test.js",
+    "target": "es5"
+  },
+  "include": [
+    "typings/**/*",
+    "test/e2e/ui-components-local.test.tsx"
+  ],
+  "exclude": [
+    "ui/**/*",
+    "dist/**/*",
+    "tmp/**/*"
+  ]
+}

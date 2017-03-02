@@ -1,12 +1,7 @@
 // TODO when we add the editor back, make sure this does what it's supposed to when the editor is open
 // TODO what happens when the user selects another node without closing the panel?
 
-import * as concat from 'lodash/concat';
-import * as compact from 'lodash/compact';
-import * as groupBy from 'lodash/groupBy';
-import * as pick from 'lodash/pick';
-import * as remove from 'lodash/remove';
-import * as toPairs from 'lodash/toPairs';
+import {concat, compact, groupBy, pick, remove, toPairs} from 'lodash';
 import Bridgedb from '../main';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -15,9 +10,9 @@ import * as Rx from 'rxjs';
 // TODO we don't need everything from these files,
 // so remove the unused parts. I'm just using the
 // files in their entirety now to save time.
-require('./kaavio.css');
-require('./stripped-bootstrap.css');
-require('./annotation-panel.css');
+import './kaavio.css';
+import './stripped-bootstrap.css';
+import './annotation-panel.css';
 
 let bridgedb = new Bridgedb();
 

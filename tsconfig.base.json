@@ -9,10 +9,9 @@
 		"noImplicitAny": false,
 		"pretty": true
 	},
-	"files": [
-		"src/main.ts",
-		"index.d.ts",
-		"organism.d.ts"
+	"include": [
+		"typings/**/*",
+		"src/main.ts"
 	],
 	"exclude": [
 		"ui/**/*",
