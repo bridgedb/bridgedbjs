@@ -99,7 +99,7 @@ function addWikiPathwaysSearch(entityReference, listItems: ListItem[]): ListItem
 	return listItems;
 }
 
-class XrefsAnnotationPanel extends React.Component<any, any> {
+export class XrefsAnnotationPanel extends React.Component<any, any> {
 	xrefsRequest: Rx.Observable<any>;
   constructor(props) {
 		super(props);
@@ -277,5 +277,3 @@ class XrefsAnnotationPanel extends React.Component<any, any> {
 		</div>;
 	}
 }
-
-export default XrefsAnnotationPanel;

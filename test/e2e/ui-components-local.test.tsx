@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {values} from 'lodash';
-import XrefsAnnotationPanel from '../../src/ui/XrefsAnnotationPanel';
+import {XrefsAnnotationPanel} from '../../src/ui/XrefsAnnotationPanel';
 
 // TODO do we need to specify this here? Seems wrong.
 process.env.MOCKSERVER_PORT = '4522';
