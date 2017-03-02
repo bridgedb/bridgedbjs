@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "prepublish": "npm run build",
-    "postinstall": "npm run build",
+    "postinstall": "npm run build:es5",
     "build": "npm-run-all -p build:*",
     "build:es5": "npm run compile:es5 && browserify ./src/main.js -o ./dist/main.js -d -t brfs -t deglobalify",
     "build-broken:esnext": "npm run compile:esnext && browserify ./esnext/main.js -o ./dist/bridgedb.esnext.js -d -t brfs -t deglobalify",
