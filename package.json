@@ -7,7 +7,13 @@
   "main:esnext": "esnext/main.js",
   "files": [
     "dist/",
-    "lib/"
+    "lib/",
+    "src/",
+    "tsconfig.json",
+    "tsconfig.base.json",
+    "tsconfig.demo.json",
+    "tsconfig.esnext.json",
+    "typings/"
   ],
   "scripts": {
     "prepublish": "npm run build",
