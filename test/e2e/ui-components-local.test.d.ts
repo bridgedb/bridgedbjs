@@ -71,10 +71,9 @@ declare module "src/main" {
 declare module "src/ui/XrefsAnnotationPanel" {
     import * as React from 'react';
     import * as Rx from 'rxjs';
-    import './kaavio.css';
     import './stripped-bootstrap.css';
     import './annotation-panel.css';
-    class XrefsAnnotationPanel extends React.Component<any, any> {
+    export class XrefsAnnotationPanel extends React.Component<any, any> {
         xrefsRequest: Rx.Observable<any>;
         constructor(props: any);
         updateXrefs(): void;
@@ -83,7 +82,6 @@ declare module "src/ui/XrefsAnnotationPanel" {
         componentWillUnmount(): void;
         render(): JSX.Element;
     }
-    export default XrefsAnnotationPanel;
 }
 declare module "test/e2e/ui-components-local.test" {
 }
