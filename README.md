@@ -1,9 +1,9 @@
-bridgedb-5.0.13
+bridgedb-6.0.0-2
 ===================
 
-JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://webservice.bridgedb.org/).
+JS client for the [BridgeDb](http://bridgedb.org) ID mapping framework [webservice](http://webservice.bridgedb.org/). If you want to use the version, see the `5x` branch.
 
-##[API Documentation](https://bridgedb.github.io/bridgedbjs/docs/)
+~~##[API Documentation](https://bridgedb.github.io/bridgedbjs/docs/)~~
 
 ## Installation
 
