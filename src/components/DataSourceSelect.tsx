@@ -1,6 +1,6 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import Bridgedb from '../main';
+import {BridgeDb} from '../BridgeDb';
 import {intersection, isArray, union} from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -15,7 +15,7 @@ const BDB = 'http://vocabularies.bridgedb.org/ops#';
 
 var SimpleSelect = require('react-selectize').SimpleSelect;
 
-let bridgedb = new Bridgedb({
+let bridgedb = new BridgeDb({
   baseIri: 'http://localhost:4522/',
 	dataSourcesHeadersIri: 'http://localhost:4522/datasources_headers.txt',
 	dataSourcesMetadataIri: 'http://localhost:4522/datasources.txt',

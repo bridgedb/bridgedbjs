@@ -11,8 +11,7 @@
 	},
 	"include": [
 		"typings/**/*",
-		"src/main.ts",
-		"./src/ui/index.ts"
+		"src/index.ts"
 	],
 	"exclude": [
 		"dist/**/*",

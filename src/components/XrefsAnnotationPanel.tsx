@@ -2,7 +2,7 @@
 // TODO what happens when the user selects another node without closing the panel?
 
 import {concat, compact, groupBy, pick, remove, toPairs} from 'lodash';
-import Bridgedb from '../main';
+import {BridgeDb} from '../BridgeDb';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as Rx from 'rxjs';
@@ -13,7 +13,7 @@ import * as Rx from 'rxjs';
 //import './stripped-bootstrap.css';
 import './annotation-panel.css';
 
-let bridgedb = new Bridgedb();
+let bridgedb = new BridgeDb();
 
 declare interface ListItemValueRaw {
 	key: string;

@@ -1,3 +1,5 @@
+/// <reference path="../typings/index.d.ts" />
+
 declare global {
   // Augment Node.js `global`
   namespace NodeJS {
@@ -135,7 +137,7 @@ const parseAsDatatype = {
 	'http://www.w3.org/2001/XMLSchema#float': parseFloat,
 };
 
-export default class BridgeDb {
+export class BridgeDb {
 	config;
 	dataSourceMappings$;
 	getTSV;
