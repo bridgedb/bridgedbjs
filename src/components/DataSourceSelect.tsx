@@ -1,6 +1,5 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import {BridgeDb} from '../BridgeDb';
 import {intersection, isArray, union} from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -14,12 +13,6 @@ require('react-selectize/themes/default.css');
 const BDB = 'http://vocabularies.bridgedb.org/ops#';
 
 var SimpleSelect = require('react-selectize').SimpleSelect;
-
-let bridgedb = new BridgeDb({
-  baseIri: 'http://localhost:4522/',
-	dataSourcesHeadersIri: 'http://localhost:4522/datasources_headers.txt',
-	dataSourcesMetadataIri: 'http://localhost:4522/datasources.txt',
-});
 
 function arrayifyClean(input: any|any[]): any[] {
 	if (isArray(input)) {
@@ -37,6 +30,7 @@ export class DataSourceSelect extends React.Component<any, any> {
 	constructor(props) {
 		super(props);
 		this.state = {
+			bridgeDb: props.bridgeDb,
 			dataSources: [],
 			selected: {
 				label: props.dataSource,
@@ -138,7 +132,7 @@ export class DataSourceSelect extends React.Component<any, any> {
 			'Rna',
 		];
 
-		bridgedb.sourceDataSources(props.organism)
+		that.state.bridgeDb.sourceDataSources(props.organism)
 			.filter(function(ds: DataSource) {
 				// a datasource must have an ID (RDF:about) from identifiers.org to be useful here
 				return !!ds.about;
