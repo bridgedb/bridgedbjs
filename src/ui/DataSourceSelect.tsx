@@ -1,11 +1,9 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import Bridgedb from '../main';
-import * as intersection from 'lodash/intersection';
-import * as isArray from 'lodash/isArray';
+import {intersection, isArray, union} from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as union from 'lodash/union';
 
 // TODO investigate these options for future CSS work:
 // http://typestyle.io/
@@ -35,7 +33,7 @@ function arrayifyClean(input: any|any[]): any[] {
 	return [];
 }
 
-class DataSourceSelect extends React.Component<any, any> {
+export class DataSourceSelect extends React.Component<any, any> {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -194,5 +192,3 @@ class DataSourceSelect extends React.Component<any, any> {
 			.subscribe(null, console.error);
 	}
 }
-
-export default DataSourceSelect;

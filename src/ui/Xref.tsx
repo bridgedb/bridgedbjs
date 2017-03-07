@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import DataSourceSelect from './DataSourceSelect';
-import { WPEntityTypeSelect } from './EntityTypeSelect';
+import {DataSourceSelect} from './DataSourceSelect';
+import {WPEntityTypeSelect} from './EntityTypeSelect';
 
-class Xref extends React.Component<any, any> {
+export class Xref extends React.Component<any, any> {
 	handleEntityTypeUpdate: Function;
 	handleDataSourceUpdate: Function;
   constructor(props) {
@@ -60,5 +60,3 @@ class Xref extends React.Component<any, any> {
 		</div>;
 	}
 }
-
-export default Xref;
