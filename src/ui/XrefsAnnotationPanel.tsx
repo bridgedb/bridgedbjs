@@ -10,7 +10,7 @@ import * as Rx from 'rxjs';
 // TODO we don't need everything from these files,
 // so remove the unused parts. I'm just using the
 // files in their entirety now to save time.
-import './stripped-bootstrap.css';
+//import './stripped-bootstrap.css';
 import './annotation-panel.css';
 
 let bridgedb = new Bridgedb();
