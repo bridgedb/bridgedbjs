@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "6.0.0-2",
+  "version": "6.0.0-3",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "lib/main.js",
   "browser": "dist/main.js",
@@ -9,6 +9,7 @@
   "files": [
     "dist/",
     "lib/",
+    "ui/",
     "src/",
     "tsconfig.json",
     "tsconfig.base.json",

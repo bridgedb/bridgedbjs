@@ -14,7 +14,6 @@
 		"src/main.ts"
 	],
 	"exclude": [
-		"ui/**/*",
 		"dist/**/*",
 		"tmp/**/*"
     ]
