@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "6.0.0-11",
+  "version": "6.0.0-12",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "lib/index.js",
   "main:esnext": "esnext/index.js",
@@ -20,8 +20,8 @@
     "build": "npm run compile && mkdirp dist && rm -rf dist/* && browserify ./lib/index.js -o ./dist/index.js -d -t cssify -t deglobalify",
     "build-demo": "npm run compile:es5:ui && npm run compile:es5:ui:test && browserify ./test/e2e/ui-components-local.test.js -o ./demo/ui-combo.bundle.js -d -t deglobalify",
     "compile": "npm-run-all -p compile:*",
-    "compile:es5": "mkdirp lib && rm -rf lib/* && tsc --project tsconfig.json && echo ok || echo not ok",
-    "compile:esnext": "mkdirp esnext && rm -rf esnext/* && tsc --project tsconfig.esnext.json && echo ok || echo not ok",
+    "compile:es5": "mkdirp lib && rm -rf lib/* && tsc --project tsconfig.json && cp ./node_modules/react-selectize/themes/default.css ./lib/components/react-selectize-theme-default.css && echo ok || echo not ok",
+    "compile:esnext": "mkdirp esnext && rm -rf esnext/* && tsc --project tsconfig.esnext.json && cp ./node_modules/react-selectize/themes/default.css ./esnext/components/react-selectize-theme-default.css && echo ok || echo not ok",
     "compile-demo:es5:ui": "tsc src/components/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir components/ && echo ok || echo not ok",
     "compile-demo:es5:ui:test": "tsc --project tsconfig.demo.json && echo ok || echo not ok",
     "dev": "npm run build:es5",

@@ -11,7 +11,11 @@ import * as ReactDOM from 'react-dom';
 // Possibly related issue: https://github.com/davidguttman/cssify/issues/46
 // browserify-css has the same problem:
 // https://github.com/cheton/browserify-css/issues/46
-require('../../node_modules/react-selectize/themes/default.css');
+// NOTE: requires copying the files
+require('./react-selectize-theme-default.css');
+
+// this doesn't work when bridgedb is a dependency:
+//require('../../node_modules/react-selectize/themes/default.css');
 
 const BDB = 'http://vocabularies.bridgedb.org/ops#';
 
