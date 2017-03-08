@@ -9,8 +9,7 @@
 		"noImplicitAny": false,
 		"pretty": true
 	},
-	"include": [
-		"typings/**/*",
+	"files": [
 		"src/index.ts"
 	],
 	"exclude": [

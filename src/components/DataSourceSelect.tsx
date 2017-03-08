@@ -4,11 +4,14 @@ import {intersection, isArray, union} from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-// TODO investigate these options for future CSS work:
-// http://typestyle.io/
-// https://github.com/Quramy/typed-css-modules (in conjunction with css-modules)
-
-require('react-selectize/themes/default.css');
+//require('react-selectize/themes/default.css');
+// TODO we should be able to use the line above, but it cssify doesn't handle it,
+// so we need to use the line below.
+// Issue: https://github.com/davidguttman/cssify/issues/23
+// Possibly related issue: https://github.com/davidguttman/cssify/issues/46
+// browserify-css has the same problem:
+// https://github.com/cheton/browserify-css/issues/46
+require('../../node_modules/react-selectize/themes/default.css');
 
 const BDB = 'http://vocabularies.bridgedb.org/ops#';
 
