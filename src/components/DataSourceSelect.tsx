@@ -12,7 +12,8 @@ import * as ReactDOM from 'react-dom';
 // browserify-css has the same problem:
 // https://github.com/cheton/browserify-css/issues/46
 // NOTE: requires copying the files
-require('./react-selectize-theme-default.css');
+//require('./react-selectize-theme-default.css');
+import reactSelectizeThemeDefault = require('../placeholder');
 
 // this doesn't work when bridgedb is a dependency:
 //require('../../node_modules/react-selectize/themes/default.css');
