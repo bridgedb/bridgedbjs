@@ -6,13 +6,23 @@ module.exports = {
     filename: 'index_bundle.js'
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json']
+    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json']
   },
   module: {
-    loaders: [
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
-      { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.ts(x?)$/, loader: 'ts-loader' }
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.ts(x?)$/,
+        use: [
+          { loader: 'ts-loader'}
+        ]
+      }
     ]
   },
   plugins: [new HtmlWebpackPlugin()]

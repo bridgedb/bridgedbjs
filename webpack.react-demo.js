@@ -8,7 +8,7 @@ module.exports = {
     filename: 'index_bundle.js'
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json'],
+    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json'],
     alias: {
       'fs': 'browserfs/dist/shims/fs.js',
       'buffer': 'browserfs/dist/shims/buffer.js',
@@ -19,8 +19,13 @@ module.exports = {
     }
   },
   module: {
-    loaders: [
-      { test: /\.ts(x?)$/, loader: 'ts-loader' }
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        use: [
+          {loader: 'ts-loader'}
+        ]
+      }
     ]
   },
   plugins: [
