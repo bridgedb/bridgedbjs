@@ -1,6 +1,8 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require("webpack");
+
 module.exports = {
-  entry: './src/ui/react-demo.tsx',
+  entry: './test/e2e/ui-components-local.test.tsx',
   output: {
     path: 'dist',
     filename: 'index_bundle.js'

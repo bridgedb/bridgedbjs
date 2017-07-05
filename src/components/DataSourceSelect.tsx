@@ -4,22 +4,10 @@ import {intersection, isArray, union} from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-//require('react-selectize/themes/default.css');
-// TODO we should be able to use the line above, but it cssify doesn't handle it,
-// so we need to use the line below.
-// Issue: https://github.com/davidguttman/cssify/issues/23
-// Possibly related issue: https://github.com/davidguttman/cssify/issues/46
-// browserify-css has the same problem:
-// https://github.com/cheton/browserify-css/issues/46
-// NOTE: requires copying the files
-require('./react-selectize-theme-default.css');
-
-// this doesn't work when bridgedb is a dependency:
-//require('../../node_modules/react-selectize/themes/default.css');
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 const BDB = 'http://vocabularies.bridgedb.org/ops#';
-
-var SimpleSelect = require('react-selectize').SimpleSelect;
 
 function arrayifyClean(input: any|any[]): any[] {
 	if (isArray(input)) {
@@ -111,10 +99,11 @@ export class DataSourceSelect extends React.Component<any, any> {
 
 		const currentOptions = that.getOptionsByEntityType(that.props.entityType);
 
-		return <SimpleSelect
+		return <Select
 			ref = "select"
+			name="select"
 			value={state.selected}
-			onValueChange={function(selected){
+			onChange={function(selected){
 				if (!!selected && selected.hasOwnProperty('value')) {
 					that.setState({selected: selected});
 					that.props.updateHandler(selected.value);
@@ -126,7 +115,7 @@ export class DataSourceSelect extends React.Component<any, any> {
 			placeholder="Select datasource"
 			theme="default">
 				{currentOptions.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-			</SimpleSelect>
+			</Select>
 	}
 	componentDidMount() {
 		let that = this;
