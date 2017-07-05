@@ -40,26 +40,30 @@ export class WPEntityTypeSelect extends React.Component<any, any> {
 		};
 	}
   render() {
-		let that = this;
-		let state = that.state;
+	  const { options, selected } = this.state;
+	  const selectOptions = options.map(singleOption => {
+		  return {
+			  value: singleOption.value,
+			  label: singleOption.label
+		  }
+	  });
 
 		return <Select
 			ref = "select"
 			name="select"
-			value={state.selected}
-			onChange={function(selected){
+			value={selected}
+			onChange={(selected) => {
 				if (!!selected && selected.hasOwnProperty('value')) {
-					that.setState({selected: selected});
-					that.props.updateHandler(selected.value);
+					this.setState({selected: selected});
+					this.props.updateHandler(selected.value);
 				} else {
-					that.setState({selected: undefined});
-					that.props.updateHandler(undefined);
+					this.setState({selected: undefined});
+					this.props.updateHandler(undefined);
 				}
 			}}
 			placeholder="Select datasource"
-			theme="default">
-				{state.options.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-			</Select>
+			options={selectOptions}
+			/>
 	}
 }
 
@@ -93,24 +97,29 @@ export class BioPAXEntityTypeSelect extends React.Component<any, any> {
 		};
 	}
   render() {
-		let that = this;
-		let state = that.state;
+		const { options, selected } = this.state;
+		const selectOptions = options.map(singleOption => {
+			return {
+				value: singleOption.value,
+				label: singleOption.label
+			}
+		});
+
 		return <Select
 			ref = "select"
 			name="select"
-			value={state.selected}
-			onChange={function(selected){
+			value={selected}
+			onChange={(selected) => {
 				if (!!selected && selected.hasOwnProperty('value')) {
-					that.setState({selected: selected});
-					that.props.updateHandler(selected.value);
+					this.setState({selected: selected});
+					this.props.updateHandler(selected.value);
 				} else {
-					that.setState({selected: undefined});
-					that.props.updateHandler(undefined);
+					this.setState({selected: undefined});
+					this.props.updateHandler(undefined);
 				}
 			}}
 			placeholder="Select datasource"
-			theme="default">
-				{state.options.map((o) => <option key={o.label} value={o.value}>{o.label}</option>)}
-			</Select>
+			options={selectOptions}
+		/>
 	}
 }
