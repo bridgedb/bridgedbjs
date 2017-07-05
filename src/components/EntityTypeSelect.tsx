@@ -3,7 +3,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+//require('react-select/dist/react-select.css');
+// TODO we should be able to use the line above, but it cssify doesn't handle it,
+// so we need to use the line below.
+// Issue: https://github.com/davidguttman/cssify/issues/23
+// Possibly related issue: https://github.com/davidguttman/cssify/issues/46
+// browserify-css has the same problem:
+// https://github.com/cheton/browserify-css/issues/4
+require('./react-select.css');
 
 export class WPEntityTypeSelect extends React.Component<any, any> {
 	constructor(props) {
