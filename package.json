@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "main:esnext": "esnext/index.js",
   "typings": "lib/index.d.ts",
-  "bin": "./bin/cli.js",
+  "bin": "./bin/bridgedb",
   "files": [
     "lib/",
     "src/",
@@ -17,7 +17,7 @@
     "typings/organism.d.ts"
   ],
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "npm run compile && mkdirp dist && rm -rf dist/* && browserify ./lib/index.js -o ./dist/index.js -d -t cssify -t deglobalify",
     "build-demo": "npm run compile:es5:ui && npm run compile:es5:ui:test && browserify ./test/e2e/ui-components-local.test.js -o ./demo/ui-combo.bundle.js -d -t deglobalify",
     "compile": "npm-run-all -p compile:*",

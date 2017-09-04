@@ -1,0 +1,6470 @@
+[
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/cas/",
+    "type": "Dataset",
+    "alternatePrefix": "Ca",
+    "exampleIdentifier": "50-00-0",
+    "identifierPattern": "^\\d{1,7}\\-\\d{2}\\-\\d$",
+    "preferredPrefix": "cas",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "CAS",
+    "primary": true,
+    "systemCode": "Ca",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://commonchemistry.org/ChemicalDetail.aspx?ref=(\\d{1,7}\\-\\d{2}\\-\\d)",
+    "owl:sameAs": [
+      "http://commonchemistry.org/ChemicalDetail.aspx?ref=",
+      "urn:miriam:cas"
+    ],
+    "webPage": "http://commonchemistry.org",
+    "datasource_name": "CAS",
+    "linkout_pattern": "http://commonchemistry.org/ChemicalDetail.aspx?ref=$id",
+    "uri": "urn:miriam:cas"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/chebi/",
+    "type": "Dataset",
+    "alternatePrefix": "Ce",
+    "exampleIdentifier": "CHEBI:36927",
+    "identifierPattern": "^CHEBI:\\d+$",
+    "preferredPrefix": "chebi",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "ChEBI",
+    "primary": true,
+    "systemCode": "Ce",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=(CHEBI:\\d+)",
+    "owl:sameAs": [
+      "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=",
+      "urn:miriam:chebi"
+    ],
+    "webPage": "http://www.ebi.ac.uk/chebi/",
+    "datasource_name": "ChEBI",
+    "linkout_pattern": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=$id",
+    "uri": "urn:miriam:chebi"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/hmdb/",
+    "type": "Dataset",
+    "alternatePrefix": "Ch",
+    "exampleIdentifier": "HMDB00001",
+    "identifierPattern": "^HMDB\\d{5}$",
+    "preferredPrefix": "hmdb",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "HMDB",
+    "primary": true,
+    "systemCode": "Ch",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.hmdb.ca/metabolites/(HMDB\\d{5})",
+    "owl:sameAs": [
+      "http://www.hmdb.ca/metabolites/",
+      "urn:miriam:hmdb"
+    ],
+    "webPage": "http://www.hmdb.ca/",
+    "datasource_name": "HMDB",
+    "linkout_pattern": "http://www.hmdb.ca/metabolites/$id",
+    "uri": "urn:miriam:hmdb"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/kegg.compound/",
+    "type": "Dataset",
+    "alternatePrefix": "Ck",
+    "exampleIdentifier": "C12345",
+    "identifierPattern": "^C\\d+$",
+    "preferredPrefix": "kegg.compound",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "KEGG Compound",
+    "primary": true,
+    "systemCode": "Ck",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?cpd:(C\\d+)",
+    "owl:sameAs": [
+      "http://www.genome.jp/dbget-bin/www_bget?cpd:",
+      "urn:miriam:kegg.compound"
+    ],
+    "webPage": "http://www.genome.jp/kegg/ligand.html",
+    "datasource_name": "KEGG Compound",
+    "linkout_pattern": "http://www.genome.jp/dbget-bin/www_bget?cpd:$id",
+    "uri": "urn:miriam:kegg.compound"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/drugbank/",
+    "type": "Dataset",
+    "alternatePrefix": "Dr",
+    "exampleIdentifier": "DB00001",
+    "identifierPattern": "^DB\\d{5}$",
+    "preferredPrefix": "drugbank",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "DrugBank",
+    "primary": true,
+    "systemCode": "Dr",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.drugbank.ca/drugs/(DB\\d{5})",
+    "owl:sameAs": [
+      "http://www.drugbank.ca/drugs/",
+      "urn:miriam:drugbank"
+    ],
+    "webPage": "http://www.drugbank.ca/",
+    "datasource_name": "DrugBank",
+    "linkout_pattern": "http://www.drugbank.ca/drugs/$id",
+    "uri": "urn:miriam:drugbank"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/lipidmaps/",
+    "type": "Dataset",
+    "alternatePrefix": "Lm",
+    "exampleIdentifier": "LMPR0102010012",
+    "identifierPattern": "^LM(FA|GL|GP|SP|ST|PR|SL|PK)[0-9]{4}([0-9a-zA-Z]{4,6})?$",
+    "preferredPrefix": "lipidmaps",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "LIPID MAPS",
+    "primary": true,
+    "systemCode": "Lm",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.lipidmaps.org/data/get_lm_lipids_dbgif.php?LM_ID=(LM(FA|GL|GP|SP|ST|PR|SL|PK)[0-9]{4}([0-9a-zA-Z]{4,6})?)",
+    "owl:sameAs": [
+      "http://www.lipidmaps.org/data/get_lm_lipids_dbgif.php?LM_ID=",
+      "urn:miriam:lipidmaps"
+    ],
+    "webPage": "http://www.lipidmaps.org",
+    "datasource_name": "LIPID MAPS",
+    "linkout_pattern": "http://www.lipidmaps.org/data/get_lm_lipids_dbgif.php?LM_ID=$id",
+    "uri": "urn:miriam:lipidmaps"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/inchikey/",
+    "type": "Dataset",
+    "alternatePrefix": "Ik",
+    "exampleIdentifier": "QTBSBXVTEAMEQO-UHFFFAOYSA-N",
+    "identifierPattern": "^[A-Z]{14}\\-[A-Z]{10}(\\-[A-P])?",
+    "preferredPrefix": "inchikey",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "Standard InChIKey",
+    "primary": true,
+    "systemCode": "Ik",
+    "entityType": "metabolite",
+    "owl:sameAs": "urn:miriam:inchikey",
+    "webPage": "http://inchi.org/",
+    "datasource_name": "InChIKey",
+    "uri": "urn:miriam:inchikey"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/chemspider/",
+    "type": "Dataset",
+    "alternatePrefix": "Cs",
+    "exampleIdentifier": "56586",
+    "identifierPattern": "^\\d+$",
+    "preferredPrefix": "chemspider",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "ChemSpider",
+    "primary": true,
+    "systemCode": "Cs",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.chemspider.com/Chemical-Structure.(\\d+).html",
+    "owl:sameAs": "urn:miriam:chemspider",
+    "webPage": "http://www.chemspider.com/",
+    "datasource_name": "Chemspider",
+    "linkout_pattern": "http://www.chemspider.com/Chemical-Structure.$id.html",
+    "uri": "urn:miriam:chemspider"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/kegg.drug/",
+    "type": "Dataset",
+    "alternatePrefix": "Kd",
+    "exampleIdentifier": "D00123",
+    "identifierPattern": "^D\\d+$",
+    "preferredPrefix": "kegg.drug",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "KEGG Drug",
+    "primary": true,
+    "systemCode": "Kd",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?dr:(D\\d+)",
+    "owl:sameAs": [
+      "http://www.genome.jp/dbget-bin/www_bget?dr:",
+      "urn:miriam:kegg.drug"
+    ],
+    "webPage": "http://www.genome.jp/kegg/drug/",
+    "datasource_name": "KEGG Drug",
+    "linkout_pattern": "http://www.genome.jp/dbget-bin/www_bget?dr:$id",
+    "uri": "urn:miriam:kegg.drug"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/kegg.glycan/",
+    "type": "Dataset",
+    "alternatePrefix": "Kl",
+    "exampleIdentifier": "G00123",
+    "identifierPattern": "^G\\d+$",
+    "preferredPrefix": "kegg.glycan",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "KEGG Glycan",
+    "primary": true,
+    "systemCode": "Kl",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.genome.jp/dbget-bin/www_bget?gl:(G\\d+)",
+    "owl:sameAs": [
+      "http://www.genome.jp/dbget-bin/www_bget?gl:",
+      "urn:miriam:kegg.glycan"
+    ],
+    "webPage": "http://www.genome.jp/kegg/glycan/",
+    "datasource_name": "KEGG Glycan",
+    "linkout_pattern": "http://www.genome.jp/dbget-bin/www_bget?gl:$id",
+    "uri": "urn:miriam:kegg.glycan"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/knapsack/",
+    "type": "Dataset",
+    "alternatePrefix": "Cks",
+    "exampleIdentifier": "C00000001",
+    "identifierPattern": "^C\\d{8}",
+    "preferredPrefix": "knapsack",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "KNApSAcK",
+    "primary": true,
+    "systemCode": "Cks",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=(C\\d{8})",
+    "owl:sameAs": [
+      "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=",
+      "urn:miriam:knapsack"
+    ],
+    "webPage": "http://kanaya.aist-nara.ac.jp/KNApSAcK/",
+    "datasource_name": "KNApSAcK",
+    "linkout_pattern": "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=$id",
+    "uri": "urn:miriam:knapsack"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/chembl.compound/",
+    "type": "Dataset",
+    "alternatePrefix": "Cl",
+    "exampleIdentifier": "CHEMBL308052",
+    "identifierPattern": "^CHEMBL\\d+$",
+    "preferredPrefix": "chembl.compound",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "ChEMBL compound",
+    "primary": true,
+    "systemCode": "Cl",
+    "entityType": "metabolite",
+    "uriRegexPattern": "https://www.ebi.ac.uk/chembl/compound/inspect/(CHEMBL\\d+)",
+    "owl:sameAs": [
+      "https://www.ebi.ac.uk/chembl/compound/inspect/",
+      "urn:miriam:chembl.compound"
+    ],
+    "webPage": "https://www.ebi.ac.uk/chembldb/",
+    "datasource_name": "ChEMBL compound",
+    "linkout_pattern": "https://www.ebi.ac.uk/chembl/compound/inspect/$id",
+    "uri": "urn:miriam:chembl.compound"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/lipidbank/",
+    "type": "Dataset",
+    "alternatePrefix": "Lb",
+    "exampleIdentifier": "BBA0001",
+    "identifierPattern": "^\\w+\\d+$",
+    "preferredPrefix": "lipidbank",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "LipidBank",
+    "primary": true,
+    "systemCode": "Lb",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://lipidbank.jp/cgi-bin/detail.cgi?id=(\\w+\\d+)",
+    "owl:sameAs": [
+      "http://lipidbank.jp/cgi-bin/detail.cgi?id=",
+      "urn:miriam:lipidbank"
+    ],
+    "webPage": "http://lipidbank.jp/index.html",
+    "datasource_name": "LipidBank",
+    "linkout_pattern": "http://lipidbank.jp/cgi-bin/detail.cgi?id=$id",
+    "uri": "urn:miriam:lipidbank"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/pharmgkb.drug/",
+    "type": "Dataset",
+    "alternatePrefix": "Pgd",
+    "exampleIdentifier": "PA448710",
+    "identifierPattern": "^PA\\d+$",
+    "preferredPrefix": "pharmgkb.drug",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "PharmGKB Drug",
+    "primary": true,
+    "systemCode": "Pgd",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.pharmgkb.org/drug/(PA\\d+)",
+    "owl:sameAs": [
+      "http://www.pharmgkb.org/drug/",
+      "urn:miriam:pharmgkb.drug"
+    ],
+    "webPage": "http://www.pharmgkb.org/",
+    "datasource_name": "PharmGKB Drug",
+    "linkout_pattern": "http://www.pharmgkb.org/drug/$id",
+    "uri": "urn:miriam:pharmgkb.drug"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/pubchem.compound/",
+    "type": "Dataset",
+    "alternatePrefix": "Cpc",
+    "exampleIdentifier": "100101",
+    "identifierPattern": "^\\d+$",
+    "preferredPrefix": "pubchem.compound",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "PubChem-compound",
+    "primary": true,
+    "systemCode": "Cpc",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=(\\d+)",
+    "owl:sameAs": [
+      "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=",
+      "urn:miriam:pubchem.compound"
+    ],
+    "webPage": "http://pubchem.ncbi.nlm.nih.gov/",
+    "datasource_name": "PubChem-compound",
+    "linkout_pattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=$id",
+    "uri": "urn:miriam:pubchem.compound"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/pubchem.substance/",
+    "type": "Dataset",
+    "alternatePrefix": "Cps",
+    "exampleIdentifier": "100101",
+    "identifierPattern": "^\\d+$",
+    "preferredPrefix": "pubchem.substance",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "PubChem-substance",
+    "primary": true,
+    "systemCode": "Cps",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?sid=(\\d+)",
+    "owl:sameAs": [
+      "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?sid=",
+      "urn:miriam:pubchem.substance"
+    ],
+    "webPage": "http://pubchem.ncbi.nlm.nih.gov/",
+    "datasource_name": "PubChem-substance",
+    "linkout_pattern": "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?sid=$id",
+    "uri": "urn:miriam:pubchem.substance"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/ttd.drug/",
+    "type": "Dataset",
+    "alternatePrefix": "Td",
+    "exampleIdentifier": "DAP000773",
+    "identifierPattern": "^DAP\\d+$",
+    "preferredPrefix": "ttd.drug",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "TTD Drug",
+    "primary": true,
+    "systemCode": "Td",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDRUG.asp?ID=(DAP\\d+)",
+    "owl:sameAs": [
+      "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDRUG.asp?ID=",
+      "urn:miriam:ttd.drug"
+    ],
+    "webPage": "http://bidd.nus.edu.sg/group/cjttd/TTD_HOME.asp",
+    "datasource_name": "TTD Drug",
+    "linkout_pattern": "http://bidd.nus.edu.sg/group/cjttd/ZFTTDDRUG.asp?ID=$id",
+    "uri": "urn:miriam:ttd.drug"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "type": "Dataset",
+    "alternatePrefix": "Sl",
+    "exampleIdentifier": "SLM:000048885",
+    "identifierPattern": "^SML:\\d+$",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "SwissLipids",
+    "primary": true,
+    "systemCode": "Sl",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.swisslipids.org/#/entity/(SML:\\d+)/",
+    "webPage": "http://www.swisslipids.org/",
+    "datasource_name": "SwissLipids",
+    "linkout_pattern": "http://www.swisslipids.org/#/entity/$id/"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/pubchem.bioassay/",
+    "type": "Dataset",
+    "alternatePrefix": "Cpb",
+    "exampleIdentifier": "1018",
+    "identifierPattern": "^\\d+$",
+    "preferredPrefix": "pubchem.bioassay",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "PubChem-bioassay",
+    "primary": false,
+    "systemCode": "Cpb",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=(\\d+)",
+    "owl:sameAs": [
+      "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=",
+      "urn:miriam:pubchem.bioassay"
+    ],
+    "webPage": "http://www.ncbi.nlm.nih.gov/sites/entrez?db=pcassay ",
+    "datasource_name": "PubChem-bioassay",
+    "linkout_pattern": "http://pubchem.ncbi.nlm.nih.gov/assay/assay.cgi?aid=$id",
+    "uri": "urn:miriam:pubchem.bioassay"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/wikidata/",
+    "type": "Dataset",
+    "alternatePrefix": "Wd",
+    "exampleIdentifier": "Q407962",
+    "identifierPattern": "^Q\\d+$",
+    "preferredPrefix": "wikidata",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "Wikidata",
+    "primary": false,
+    "systemCode": "Wd",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://www.wikidata.org/wiki/(Q\\d+)",
+    "owl:sameAs": [
+      "http://www.wikidata.org/wiki/",
+      "urn:miriam:wikidata"
+    ],
+    "webPage": "http://www.wikidata.org",
+    "datasource_name": "Wikidata",
+    "linkout_pattern": "http://www.wikidata.org/wiki/$id",
+    "uri": "urn:miriam:wikidata"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "id": "http://identifiers.org/wikipedia.en/",
+    "type": "Dataset",
+    "alternatePrefix": "Wi",
+    "exampleIdentifier": "Acetate",
+    "preferredPrefix": "wikipedia.en",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "Wikipedia",
+    "primary": false,
+    "systemCode": "Wi",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://en.wikipedia.org/wiki/(.*)",
+    "owl:sameAs": [
+      "http://en.wikipedia.org/wiki/",
+      "urn:miriam:wikipedia.en"
+    ],
+    "webPage": "http://www.wikipedia.org",
+    "datasource_name": "Wikipedia",
+    "linkout_pattern": "http://en.wikipedia.org/wiki/$id",
+    "uri": "urn:miriam:wikipedia.en"
+  },
+  {
+    "@context": {
+      "@vocab": "http://vocabularies.bridgedb.org/ops#",
+      "id": "@id",
+      "type": "@type",
+      "Dataset": {
+        "@id": "void:Dataset",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#EntityReference": {
+        "@type": "@id"
+      },
+      "biopax:EntityReference": {
+        "@type": "@id"
+      },
+      "EntityReference": {
+        "@id": "biopax:EntityReference",
+        "@type": "@id"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#entityReference": {
+        "@type": "@id"
+      },
+      "biopax:entityReference": {
+        "@type": "@id"
+      },
+      "entityReference": {
+        "@id": "biopax:entityReference",
+        "@type": "@id"
+      },
+      "xref": {
+        "@id": "biopax:xref",
+        "@type": "@id"
+      },
+      "SIO": {
+        "@id": "http://semanticscience.org/resource/",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:alternatePrefix": {
+        "@type": "xsd:string"
+      },
+      "alternatePrefix": {
+        "@id": "idot:alternatePrefix",
+        "@type": "xsd:string"
+      },
+      "baseIri": "@base",
+      "biopax": {
+        "@id": "http://www.biopax.org/release/biopax-level3.owl#",
+        "@type": "@vocab"
+      },
+      "bridgeDbDatasourceHeaders": {
+        "@id": "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:datasource_name": {
+        "@type": "xsd:string"
+      },
+      "datasource_name": {
+        "@id": "bridgeDbDatasourceHeaders:datasource_name",
+        "@type": "xsd:string"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:linkout_pattern": {
+        "@type": "xsd:string"
+      },
+      "linkout_pattern": {
+        "@id": "bridgeDbDatasourceHeaders:linkout_pattern",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#type": {
+        "@type": "xsd:string"
+      },
+      "entityType": {
+        "@id": "http://vocabularies.bridgedb.org/ops#type",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#primary": {
+        "@type": "xsd:string"
+      },
+      "primary": {
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#systemCode": {
+        "@type": "xsd:string"
+      },
+      "systemCode": {
+        "@type": "xsd:string"
+      },
+      "bridgeDbDatasourceHeaders:system_code": {
+        "@type": "xsd:string"
+      },
+      "system_code": {
+        "@id": "bridgeDbDatasourceHeaders:system_code",
+        "@type": "xsd:string"
+      },
+      "http://vocabularies.bridgedb.org/ops#uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "uriRegexPattern": {
+        "@type": "xsd:string"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#db": {
+        "@type": "xsd:string"
+      },
+      "biopax:db": {
+        "@type": "xsd:string"
+      },
+      "db": {
+        "@id": "biopax:db",
+        "@type": "xsd:string"
+      },
+      "dcterms": {
+        "@id": "http://purl.org/dc/terms/",
+        "@type": "@vocab"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#displayName": {
+        "@type": "xsd:string"
+      },
+      "biopax:displayName": {
+        "@type": "xsd:string"
+      },
+      "displayName": {
+        "@id": "biopax:displayName",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "idot:exampleIdentifier": {
+        "@type": "xsd:string"
+      },
+      "exampleIdentifier": {
+        "@id": "idot:exampleIdentifier",
+        "@type": "xsd:string"
+      },
+      "http://rdfs.org/ns/void#exampleResource": {
+        "@type": "@id"
+      },
+      "void:exampleResource": {
+        "@type": "@id"
+      },
+      "exampleResource": {
+        "@id": "void:exampleResource",
+        "@type": "@id"
+      },
+      "foaf": {
+        "@id": "http://xmlns.com/foaf/0.1/",
+        "@type": "@vocab"
+      },
+      "gpml": {
+        "@id": "http://vocabularies.wikipathways.org/gpml#",
+        "@type": "@vocab"
+      },
+      "identifier": {
+        "@id": "http://rdaregistry.info/Elements/u/P60052",
+        "@type": "xsd:string"
+      },
+      "http://identifiers.org/idot/identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "idot:identifierPattern": {
+        "@type": "xsd:string"
+      },
+      "identifierPattern": {
+        "@id": "idot:identifierPattern",
+        "@type": "xsd:string"
+      },
+      "idot": {
+        "@id": "http://identifiers.org/idot/",
+        "@type": "@vocab"
+      },
+      "isDataItemIn": {
+        "@id": "SIO:SIO_001278",
+        "@type": "@id"
+      },
+      "http://schema/name": {
+        "@type": "xsd:string"
+      },
+      "schema:name": {
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "schema:name",
+        "@type": "xsd:string"
+      },
+      "nameLanguageMap": {
+        "@container": "@language",
+        "@id": "name"
+      },
+      "http://www.biopax.org/release/biopax-level3.owl#organism": {
+        "@type": "@id"
+      },
+      "biopax:organism": {
+        "@type": "@id"
+      },
+      "organism": {
+        "@id": "biopax:organism",
+        "@type": "@id"
+      },
+      "owl": {
+        "@id": "http://www.w3.org/2002/07/owl#",
+        "@type": "@vocab"
+      },
+      "http://identifiers.org/idot/preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "idot:preferredPrefix": {
+        "@type": "xsd:string"
+      },
+      "preferredPrefix": {
+        "@id": "idot:preferredPrefix",
+        "@type": "xsd:string"
+      },
+      "probe": {
+        "@id": "http://www.sequenceontology.org/miso/release_2.4/term/SO:0000051",
+        "@type": "@id"
+      },
+      "schema": {
+        "@id": "http://schema.org/",
+        "@type": "@vocab"
+      },
+      "http://purl.org/dc/terms/subject": {
+        "@type": "@id"
+      },
+      "dcterms:subject": {
+        "@type": "@id"
+      },
+      "subject": {
+        "@id": "dcterms:subject",
+        "@type": "@id"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#uri": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:uri": {
+        "@type": "@id"
+      },
+      "uri": {
+        "@id": "bridgeDbDatasourceHeaders:uri",
+        "@type": "@id"
+      },
+      "void": {
+        "@id": "http://rdfs.org/ns/void#",
+        "@type": "@vocab"
+      },
+      "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#website_url": {
+        "@type": "@id"
+      },
+      "bridgeDbDatasourceHeaders:website_url": {
+        "@type": "@id"
+      },
+      "website_url": {
+        "@id": "bridgeDbDatasourceHeaders:website_url",
+        "@type": "@id"
+      },
+      "webPage": {
+        "@id": "foaf:page",
+        "@type": "@id"
+      },
+      "xsd": {
+        "@id": "http://www.w3.org/2001/XMLSchema#",
+        "@type": "@id"
+      }
+    },
+    "type": "Dataset",
+    "alternatePrefix": "Nw",
+    "exampleIdentifier": "HMDB00001",
+    "subject": [
+      "gpml:Metabolite",
+      "biopax:SmallMoleculeReference"
+    ],
+    "name": "NuGO wiki",
+    "primary": false,
+    "systemCode": "Nw",
+    "entityType": "metabolite",
+    "uriRegexPattern": "http://wiki.nugo.org/index.php/(.*)",
+    "owl:sameAs": "http://wiki.nugo.org/index.php/",
+    "webPage": "http://wiki.nugo.org",
+    "datasource_name": "NuGO wiki",
+    "linkout_pattern": "http://wiki.nugo.org/index.php/$id",
+    "uri": "Nw"
+  }
+]
