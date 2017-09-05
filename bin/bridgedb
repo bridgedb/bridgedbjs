@@ -10,6 +10,7 @@ var ndjson = require("ndjson");
 var npmPackage = require("../package.json");
 var program = require("commander");
 var Rx = require("rx-extra");
+require("../lib/topublish/pipeToStdout");
 var VError = require("verror");
 
 program
@@ -31,7 +32,7 @@ program.on("--help", function() {
     /* TODO why doesn't the following work?
     [
       "    $ bridgedb xrefsBatch ",
-      "--organism='Homo sapiens' --database='Entrez Gene' ",
+      "--organism='Homo sapiens' --dbConventionalName='Entrez Gene' ",
       "< ./test/dbNamesAndIds.csv > ./xrefs.json"
     ].join("")
     //*/
@@ -40,26 +41,15 @@ program.on("--help", function() {
 
 // npm run compile:es5 && ./bin/bridgedb xrefs 'Homo sapiens' 'Entrez Gene' '1234'
 program
-  .command("xrefs <organism> <database> <identifier>")
-  .action(function(organism, database, identifier) {
+  .command("xrefs <organism> <dbConventionalName> <dbId>")
+  .action(function(organism, dbConventionalName, dbId) {
     var bridgeDb = new BridgeDb();
 
     var serialize = ndjson.serialize();
     bridgeDb
-      .xrefs(organism, database, identifier)
+      .xrefs(organism, dbConventionalName, dbId)
       .throughNodeStream(serialize)
-      .subscribe(
-        function(output) {
-          process.stdout.write(output);
-        },
-        function(err) {
-          console.error(err);
-          process.exit(1);
-        },
-        function() {
-          process.exit(0);
-        }
-      );
+      .pipeToStdout();
   });
 
 /*
@@ -68,21 +58,23 @@ npm run compile:es5
 
 Run it, as in one of the following examples:
 
-echo $'1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --database 'Entrez Gene'
+echo $'1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene'
 
-./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --database 'Entrez Gene' <<< $'1234\n1235\n'
+./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' <<< $'1234\n1235\n'
 
-echo $'identifier\n1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens'
-    --database 'Entrez Gene' --headers=true
+echo $'dbId\n1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens'
+    --dbConventionalName 'Entrez Gene' --headers=true
 
-cat test/dbIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens" --database="Entrez Gene"
+cat test/dbIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens" --dbConventionalName="Entrez Gene"
 
 ./bin/bridgedb xrefsBatch --organism="Homo sapiens" < test/dbNamesAndIds.csv
 
 cat test/dbNamesAndIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens"
 */
 program
-  .command("xrefsBatch [identifierColumn] [databaseColumn] [organismColumn]")
+  .command(
+    "xrefsBatch [dbIdColumn] [dbConventionalNameColumn] [organismColumn]"
+  )
   .description("Get xrefs for entities in a delimited file (CSV, TSV, etc.)")
   .option(
     "-d, --delimiter [string]",
@@ -93,18 +85,18 @@ program
     'If organismColumn not specified, set organism, e.g., "Homo sapiens"'
   )
   .option(
-    "--database [string]",
-    'If databaseColumn not specified, set database, e.g., "Entrez Gene"'
+    "--dbConventionalName [string]",
+    'If dbConventionalNameColumn not specified, set dbConventionalName, e.g., "Entrez Gene"'
   )
   .option("--headers [boolean]", "First row of file is headers")
   .action(function(
-    identifierColumnStr,
-    databaseColumnStr,
+    dbIdColumnStr,
+    dbConventionalNameColumnStr,
     organismColumnStr,
     options
   ) {
     var organismOption = options.organism;
-    var databaseOption = options.database;
+    var dbConventionalNameOption = options.dbConventionalName;
     var headersOption = options.hasOwnProperty("headers")
       ? Boolean(options.headers)
       : false;
@@ -116,16 +108,17 @@ program
       ? parseInt(organismColumnStr)
       : typeof organismOption === "undefined" ? 0 : null;
 
-    var databaseColumn = typeof databaseColumnStr !== "undefined"
-      ? parseInt(databaseColumnStr)
-      : typeof databaseOption === "undefined"
+    var dbConventionalNameColumn = typeof dbConventionalNameColumnStr !==
+      "undefined"
+      ? parseInt(dbConventionalNameColumnStr)
+      : typeof dbConventionalNameOption === "undefined"
         ? organismColumn === null ? 0 : organismColumn + 1
         : null;
 
-    var identifierColumn = typeof identifierColumnStr !== "undefined"
-      ? parseInt(identifierColumnStr)
-      : typeof identifierOption === "undefined"
-        ? databaseColumn === null ? 0 : databaseColumn + 1
+    var dbIdColumn = typeof dbIdColumnStr !== "undefined"
+      ? parseInt(dbIdColumnStr)
+      : typeof dbIdOption === "undefined"
+        ? dbConventionalNameColumn === null ? 0 : dbConventionalNameColumn + 1
         : null;
 
     var bridgeDb = new BridgeDb();
@@ -137,6 +130,8 @@ program
       objectMode: true
     });
 
+    var serialize = ndjson.serialize();
+
     Rx.Observable
       .fromNodeReadableStream(
         hl(process.stdin).through(parser).drop(headersOption ? 1 : 0)
@@ -145,38 +140,32 @@ program
         var organism = typeof organismOption !== "undefined"
           ? organismOption
           : row[organismColumn];
-        var database = typeof databaseOption !== "undefined"
-          ? databaseOption
-          : row[databaseColumn];
-        var identifier = typeof identifierOption !== "undefined"
-          ? identifierOption
-          : row[identifierColumn];
-        var serialize = ndjson.serialize();
+        var dbConventionalName = typeof dbConventionalNameOption !== "undefined"
+          ? dbConventionalNameOption
+          : row[dbConventionalNameColumn];
+        var dbId = typeof dbIdOption !== "undefined"
+          ? dbIdOption
+          : row[dbIdColumn];
         return bridgeDb
-          .xrefs(organism, database, identifier)
-          .toArray()
-          .map(function(xrefs) {
-            return {
-              organism: organism,
-              database: database,
-              identifier: identifier,
-              xrefs: xrefs
-            };
-          })
-          .throughNodeStream(serialize);
+          .dataSourceProperties(dbConventionalName)
+          .mergeMap(function(dataSource) {
+            var id = dataSource.id + dbId;
+            return bridgeDb
+              .xrefs(organism, dbConventionalName, dbId)
+              .toArray()
+              .map(function(xrefs) {
+                return {
+                  id: id,
+                  dbConventionalName: dbConventionalName,
+                  dbId: dbId,
+                  organism: organism,
+                  xrefs: xrefs
+                };
+              });
+          });
       })
-      .subscribe(
-        function(output) {
-          process.stdout.write(output);
-        },
-        function(err) {
-          console.error(err);
-          process.exit(1);
-        },
-        function() {
-          process.exit(0);
-        }
-      );
+      .throughNodeStream(serialize)
+      .pipeToStdout();
   });
 
 program.parse(process.argv);

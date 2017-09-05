@@ -80,6 +80,8 @@
     "highland": "~2.5.1",
     "insert-css": "^0.2.0",
     "json-loader": "^0.5.4",
+    "level-browserify": "^1.1.1",
+    "levelgraph": "^2.1.1",
     "levenshtein": "^1.0.5",
     "lodash": "^4.11.1",
     "ndjson": "^1.5.0",

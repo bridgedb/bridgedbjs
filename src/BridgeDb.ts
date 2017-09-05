@@ -30,18 +30,14 @@ import {
   omitBy,
   zip
 } from "lodash";
-
 import { Observable } from "rxjs/Observable";
-
 // TODO should I need to import the interface type definition like this?
 import { AjaxRequest } from "rxjs/observable/dom/AjaxObservable";
-
 import "rxjs/add/observable/dom/ajax";
 import "rxjs/add/observable/empty";
 import "rxjs/add/observable/forkJoin";
 import "rxjs/add/observable/from";
 import "rxjs/add/observable/zip";
-
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/filter";
@@ -55,12 +51,10 @@ import "rxjs/add/operator/publishReplay";
 import "rxjs/add/operator/timeout";
 import "rxjs/add/operator/toArray";
 import "rxjs/add/operator/windowWhen";
-
 import "rx-extra/add/operator/throughNodeStream";
-
 import { Subject } from "rxjs/Subject";
-
-const csv = require("csv-streamify");
+import { TSVGetter } from "./topublish/TSVGetter";
+import { dataTypeParsers } from "./topublish/dataTypeParsers";
 
 const BDB = "http://vocabularies.bridgedb.org/ops#";
 const BIOPAX = "http://www.biopax.org/release/biopax-level3.owl#";
@@ -103,12 +97,16 @@ export const CONFIG_DEFAULT = {
 // these properties can be trusted to
 // uniquely identify a data source.
 const DATASOURCE_ID_PROPERTIES = [
-  "about",
+  "id",
   "miriamUrn",
   "conventionalName",
   "preferredPrefix",
   "systemCode"
 ];
+
+const IRI_TO_TERM_MAPPINGS = {
+  "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": "id"
+};
 
 /**
  * miriamUrnToIdentifiersIri
@@ -137,17 +135,6 @@ function miriamUrnToPreferredPrefix(miriamUrn: string): string {
   }
 }
 
-const parseAsDatatype = {
-  "http://www.w3.org/2001/XMLSchema#string": String,
-  "http://www.w3.org/2001/XMLSchema#anyURI": String,
-  // parseFloat when isString in order to handle cases like '0', which should be parsed as false
-  "http://www.w3.org/2001/XMLSchema#boolean": function(x) {
-    return Boolean(isString(x) ? parseFloat(x) : x);
-  },
-  "http://www.w3.org/2001/XMLSchema#integer": parseInt,
-  "http://www.w3.org/2001/XMLSchema#float": parseFloat
-};
-
 export class BridgeDb {
   config;
   dataSourceMappings$;
@@ -173,12 +160,12 @@ export class BridgeDb {
         const firstInput = inputs[0];
         const organism = firstInput.organism;
         const conventionalNames = inputs.map(input => input.conventionalName);
-        const identifiers = inputs.map(input => input.identifier);
+        const dbIds = inputs.map(input => input.dbId);
         const dataSourceFilter = firstInput.dataSourceFilter;
         return bridgeDb.xrefsBatch(
           organism,
           conventionalNames,
-          identifiers,
+          dbIds,
           dataSourceFilter
         );
       })
@@ -186,38 +173,12 @@ export class BridgeDb {
 
     bridgeDb.xrefsResponseQueue.connect();
 
-    const getTSV = (bridgeDb.getTSV = function(
-      url: string,
-      method: string = "GET",
-      body?: string
-    ): Observable<string[]> {
-      const ajaxRequest: AjaxRequest = {
-        url: url,
-        method: method,
-        responseType: "text",
-        timeout: config.http.timeout,
-        crossDomain: true
-      };
-      if (body) {
-        ajaxRequest.body = body;
-        ajaxRequest.headers = ajaxRequest.headers || {};
-        ajaxRequest.headers["Content-Type"] = "text/plain";
-      }
-      return (
-        Observable.ajax(ajaxRequest)
-          .map((ajaxResponse): string => ajaxResponse.xhr.response)
-          .throughNodeStream(csv(CSV_OPTIONS))
-          // each row is an array of fields
-          .filter(function(fields) {
-            // Remove commented out rows
-            return fields[0].indexOf("#") !== 0;
-          })
-      );
-    });
+    const getTSV = (bridgeDb.getTSV = new TSVGetter(config.http).get);
 
     bridgeDb.dataSourceMappings$ = Observable.forkJoin(
       getTSV(config.dataSourcesHeadersIri)
         .map(function(fields) {
+          const id = fields[4];
           return {
             // NOTE: the column number could be confusing, because it's one-based,
             // so I'll just use the index instead and ignore the column number.
@@ -225,8 +186,10 @@ export class BridgeDb {
             header: fields[1],
             description: fields[2],
             example_entry: fields[3],
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": fields[4],
-            term: fields[4].split(/[\/|#]/).pop(),
+            id: id,
+            term: IRI_TO_TERM_MAPPINGS.hasOwnProperty(id)
+              ? IRI_TO_TERM_MAPPINGS[id]
+              : id.split(/[\/|#]/).pop(),
             "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": fields[5]
           };
         })
@@ -240,7 +203,7 @@ export class BridgeDb {
         return Observable.from(rows).map(function(fields) {
           return fields.reduce(function(acc, field, i) {
             const metadata = metadataByColumnIndex[i];
-            acc[metadata.term] = parseAsDatatype[metadata[RDF + "datatype"]](
+            acc[metadata.term] = dataTypeParsers[metadata[RDF + "datatype"]](
               field
             );
             return acc;
@@ -264,13 +227,13 @@ export class BridgeDb {
       .map(function(dataSource: DataSource) {
         // If the Miriam URN is unknown or unspecified, datasources.txt uses
         // the BridgeDb system code as a placeholder value.
-        // So here we make sure "about" is actually a Miriam URN.
+        // So here we make sure "id" is actually a Miriam URN.
         if (
-          dataSource.hasOwnProperty("about") &&
-          dataSource.about.indexOf("urn:miriam:") > -1
+          dataSource.hasOwnProperty("id") &&
+          dataSource.id.indexOf("urn:miriam:") > -1
         ) {
-          // switch "about" property from Miriam URN to identifiers.org IRI
-          const miriamUrn = dataSource.about;
+          // switch "id" property from Miriam URN to identifiers.org IRI
+          const miriamUrn = dataSource.id;
           dataSource.miriamUrn = miriamUrn;
           const preferredPrefix = miriamUrnToPreferredPrefix(miriamUrn);
           if (preferredPrefix) {
@@ -281,23 +244,23 @@ export class BridgeDb {
 
             const identifiersIri = miriamUrnToIdentifiersIri(miriamUrn);
             if (identifiersIri) {
-              dataSource.about = dataSource.hasIdentifiersOrgPattern = identifiersIri;
+              dataSource.id = dataSource.hasIdentifiersOrgPattern = identifiersIri;
             }
           }
         } else {
-          delete dataSource.about;
+          delete dataSource.id;
         }
         return dataSource;
       })
       .map(function(dataSource: DataSource) {
         const primaryUriPattern = dataSource.hasPrimaryUriPattern;
         if (!!primaryUriPattern) {
-          const regexIdentifierPattern = dataSource.hasRegexPattern || ".*";
+          const regexDbIdPattern = dataSource.hasRegexPattern || ".*";
 
           dataSource.hasRegexUriPattern = primaryUriPattern.replace(
             "$id",
-            // removing ^ (start) and $ (end) from regexIdentifierPattern
-            "(" + regexIdentifierPattern.replace(/(^\^|\$$)/g, "") + ")"
+            // removing ^ (start) and $ (end) from regexDbIdPattern
+            "(" + regexDbIdPattern.replace(/(^\^|\$$)/g, "") + ")"
           );
 
           // if '$id' is at the end of the primaryUriPattern
@@ -388,7 +351,7 @@ export class BridgeDb {
     bridgeDb.dataSourceMappings$.connect();
   } // end constructor
 
-  attributes(organism: organism, conventionalName: string, identifier: string) {
+  attributes(organism: organism, conventionalName: string, dbId: string) {
     let bridgeDb = this;
     return bridgeDb
       .getTSV(
@@ -397,7 +360,7 @@ export class BridgeDb {
           "/attributes/" +
           conventionalName +
           "/" +
-          identifier
+          dbId
       )
       .reduce(function(acc, fields) {
         const key = camelCase(fields[0]);
@@ -511,10 +474,10 @@ export class BridgeDb {
   }
 
   private parseXrefRow = (
-    [identifier, conventionalName, symbol]: [string, string, string | undefined]
+    [dbId, conventionalName, symbol]: [string, string, string | undefined]
   ): Observable<Xref> => {
     let bridgeDb = this;
-    if (!identifier || !conventionalName) {
+    if (!dbId || !conventionalName) {
       return Observable.empty();
     }
 
@@ -522,7 +485,7 @@ export class BridgeDb {
       .map(mapping => mapping[conventionalName])
       .map(function(dataSource: DataSource) {
         let xref: Xref = {
-          identifier: identifier,
+          dbId: dbId,
           isDataItemIn: dataSource
         };
 
@@ -530,8 +493,8 @@ export class BridgeDb {
           xref.symbol = symbol;
         }
 
-        if (dataSource.hasOwnProperty("about")) {
-          xref.about = encodeURI(dataSource.about + xref.identifier);
+        if (dataSource.hasOwnProperty("id")) {
+          xref.id = encodeURI(dataSource.id + xref.dbId);
         }
 
         return xref;
@@ -568,7 +531,7 @@ export class BridgeDb {
   xrefExists(
     organism: organism,
     conventionalName: string,
-    identifier: string
+    dbId: string
   ): Observable<boolean> {
     let bridgeDb = this;
 
@@ -579,7 +542,7 @@ export class BridgeDb {
           "/xrefExists/" +
           conventionalName +
           "/" +
-          identifier,
+          dbId,
       method: "GET",
       responseType: "text",
       timeout: bridgeDb.config.http.timeout,
@@ -596,7 +559,7 @@ export class BridgeDb {
   xrefs(
     organism: organism,
     conventionalName: string,
-    identifier: string,
+    dbId: string,
     dataSourceFilter?: string
   ): Observable<Xref> {
     let bridgeDb = this;
@@ -609,7 +572,7 @@ export class BridgeDb {
     xrefsRequestQueue.next({
       organism,
       conventionalName,
-      identifier,
+      dbId,
       dataSourceFilter
     });
 
@@ -621,7 +584,7 @@ export class BridgeDb {
           // dataSources in the mergeMap further below. The reason is that the inputDataSource
           // and the returned dataSource may not match, e.g., 'L' vs. 'Entrez Gene'.
           //x.inputDataSource === conventionalName &&
-          xrefBatchEnvelope.inputIdentifier === identifier &&
+          xrefBatchEnvelope.inputDbId === dbId &&
           (!dataSourceFilter ||
             xrefBatchEnvelope.dataSourceFilter === dataSourceFilter)
         );
@@ -652,11 +615,11 @@ export class BridgeDb {
   xrefsBatch = (
     organism: organism,
     conventionalNameOrNames: string | string[],
-    identifiers: string[],
+    dbIds: string[],
     dataSourceFilter?: string
   ): Observable<{
     organism: string;
-    inputIdentifier: string;
+    inputDbId: string;
     inputDataSource: string;
     xrefs: Xref[];
     dataSourceFilter?: string;
@@ -668,9 +631,9 @@ export class BridgeDb {
 
     const conventionalNames = isArray(conventionalNameOrNames)
       ? conventionalNameOrNames
-      : fill(new Array(identifiers.length), conventionalNameOrNames);
+      : fill(new Array(dbIds.length), conventionalNameOrNames);
 
-    const body = zip(identifiers, conventionalNames)
+    const body = zip(dbIds, conventionalNames)
       .map(x => x.join("\t"))
       .join("\n");
     return bridgeDb
@@ -683,7 +646,7 @@ export class BridgeDb {
         body
       )
       .mergeMap(function(xrefStringsByInput) {
-        const inputIdentifier = xrefStringsByInput[0];
+        const inputDbId = xrefStringsByInput[0];
         const inputDataSource = xrefStringsByInput[1];
         const xrefsString = xrefStringsByInput[2];
 
@@ -708,7 +671,7 @@ export class BridgeDb {
             return {
               organism: organism,
               inputDataSource: inputDataSource,
-              inputIdentifier: inputIdentifier,
+              inputDbId: inputDbId,
               xrefs: xrefs,
               dataSourceFilter: dataSourceFilter
             };

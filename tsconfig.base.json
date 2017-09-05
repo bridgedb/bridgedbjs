@@ -1,20 +1,21 @@
 {
-	"compilerOptions": {
-		"declaration": true,
-		"experimentalDecorators": true,
-		"inlineSourceMap": true,
-		"jsx": "react",
-		"moduleResolution": "node",
-		"noEmitOnError": true,
-		"noImplicitAny": false,
-		"pretty": true
-	},
-	"files": [
-		"src/index.ts"
-	],
-	"exclude": [
-		"dist/**/*",
-		"tmp/**/*",
-		"src/**/*.css"
-    ]
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "pretty": true
+  },
+  "files": [
+    "src/index.ts",
+    "src/topublish/pipeToStdout.ts"
+  ],
+  "exclude": [
+    "dist/**/*",
+    "tmp/**/*",
+    "src/**/*.css"
+  ]
 }
