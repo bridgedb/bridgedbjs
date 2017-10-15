@@ -9,4 +9,6 @@ index.js.map
 index.js
 coverage/
 todelete
-./src/components/react-select.css
+src/components/react-select.css
+.idea
+node_modules
