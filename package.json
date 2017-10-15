@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "6.0.0-15",
+  "version": "6.0.0-16",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "lib/index.js",
   "main:esnext": "esnext/index.js",
@@ -18,13 +18,12 @@
   ],
   "scripts": {
     "assets": "mkdir -p lib/components && mkdir -p esnext/components && cp ./node_modules/react-select/dist/react-select.css ./lib/components/react-select.css && cp ./node_modules/react-select/dist/react-select.css ./src/components/react-select.css && cp ./node_modules/react-select/dist/react-select.css ./esnext/components/react-select.css && echo ok || echo not ok",
-    "prepare": "npm run build",
-    "build1": "echo 'make build work again'",
+    "prepare": "npm run build && npm run test",
     "build": "npm run compile && mkdir -p dist && rm -rf dist/* && browserify ./lib/index.js -o ./dist/index.js -d -t cssify -t deglobalify",
     "build-demo": "npm run compile:es5:ui && npm run compile:es5:ui:test && browserify ./test/e2e/ui-components-local.test.js -o ./demo/ui-combo.bundle.js -d -t deglobalify",
     "compile": "npm-run-all -p compile:*",
     "compile:es5": "mkdir -p lib && rm -rf lib/* && npm run assets && tsc --project tsconfig.json && echo ok || echo not ok",
-    "compile:esnext": "mkdir -p esnext && rm -rf esnext/* && npm run assets && tsc --project tsconfig.esnext.json && cp ./node_modules/react-selectize/themes/default.css ./esnext/components/react-selectize-theme-default.css && echo ok || echo not ok",
+    "compile:esnext": "mkdir -p esnext && rm -rf esnext/* && npm run assets && tsc --project tsconfig.esnext.json && echo ok || echo not ok",
     "compile-demo:es5:ui": "tsc src/components/react-demo.tsx --jsx react --sourceMap --lib dom,es5,scripthost --module commonjs --outDir components/ && echo ok || echo not ok",
     "compile-demo:es5:ui:test": "tsc --project tsconfig.demo.json && echo ok || echo not ok",
     "dev": "npm run build:es5",
@@ -32,7 +31,8 @@
     "start:mockserver": "./node_modules/mockserver/bin/mockserver.js -p 4522 -m './test/input-data'",
     "start:ui": "webpack-dev-server --config webpack.config.js --progress --colors --watch",
     "test": "npm-run-all test:*",
-    "test:cli": "echo $'1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene'",
+    "test:cli": "echo '1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene'",
+    "test:ui": "echo 'TODO: Add tests for UI!'",
     "watch": "npm-run-all -p start:mockserver watch:*",
     "watch:client": "npm-watch",
     "watch:ui": "npm run start:ui"
