@@ -9,3 +9,4 @@ index.js.map
 index.js
 coverage/
 todelete
+./src/components/react-select.css

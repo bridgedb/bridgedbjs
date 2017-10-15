@@ -4,23 +4,17 @@ import { intersection, isArray, union } from "lodash";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-//require('react-selectize/themes/default.css');
+import Select from "react-select";
+//require('react-select/dist/react-select.css');
 // TODO we should be able to use the line above, but it cssify doesn't handle it,
 // so we need to use the line below.
 // Issue: https://github.com/davidguttman/cssify/issues/23
 // Possibly related issue: https://github.com/davidguttman/cssify/issues/46
 // browserify-css has the same problem:
-// https://github.com/cheton/browserify-css/issues/46
-// NOTE: requires copying the files
-//require('./react-selectize-theme-default.css');
-const reactSelectizeThemeDefault = require("../placeholder");
-
-// this doesn't work when bridgedb is a dependency:
-//require('../../node_modules/react-selectize/themes/default.css');
+// https://github.com/cheton/browserify-css/issues/4
+require("./react-select.css");
 
 const BDB = "http://vocabularies.bridgedb.org/ops#";
-
-const SimpleSelect = require("react-selectize").SimpleSelect;
 
 function arrayifyClean(input: any | any[]): any[] {
   if (isArray(input)) {
@@ -105,31 +99,33 @@ export class DataSourceSelect extends React.Component<any, any> {
   }
 
   render() {
-    let that = this;
-    let state = that.state;
+    const { options, selected } = this.state;
+    const selectOptions = options.map(singleOption => {
+      return {
+        value: singleOption.value,
+        label: singleOption.label
+      };
+    });
 
-    const currentOptions = that.getOptionsByEntityType(that.props.entityType);
+    const currentOptions = this.getOptionsByEntityType(this.props.entityType);
 
     return (
-      <SimpleSelect
+      <Select
         ref="select"
-        value={state.selected}
-        onValueChange={function(selected) {
+        name="select"
+        value={selected}
+        onChange={selected => {
           if (!!selected && selected.hasOwnProperty("value")) {
-            that.setState({ selected: selected });
-            that.props.updateHandler(selected.value);
+            this.setState({ selected: selected });
+            this.props.updateHandler(selected.value);
           } else {
-            that.setState({ selected: undefined });
-            that.props.updateHandler(undefined);
+            this.setState({ selected: undefined });
+            this.props.updateHandler(undefined);
           }
         }}
         placeholder="Select datasource"
-        theme="default"
-      >
-        {currentOptions.map(o =>
-          <option key={o.label} value={o.value}>{o.label}</option>
-        )}
-      </SimpleSelect>
+        options={selectOptions}
+      />
     );
   }
   componentDidMount() {
@@ -142,7 +138,7 @@ export class DataSourceSelect extends React.Component<any, any> {
     that.state.bridgeDb
       .sourceDataSources(props.organism)
       .filter(function(ds: DataSource) {
-        // a datasource must have an id (RDF:about) from identifiers.org to be useful here
+        // a datasource must have an ID (RDF:about) from identifiers.org to be useful here
         return !!ds.id;
       })
       .filter(function(ds) {

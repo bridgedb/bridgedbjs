@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "useBuiltIns": true,
+      "targets": {
+        "node": "current",
+	"browsers": ["last 2 versions", "ie >= 10"]
+      }
+    }]
+  ]
+}

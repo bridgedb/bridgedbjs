@@ -442,7 +442,8 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
-        .catch(err => {
+        // TODO is this TS correct?
+        .catch((err): Observable<any> => {
           throw new VError(err, "calling bridgedb.isFreeSearchSupported");
         })
     );
@@ -468,7 +469,8 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
-        .catch(err => {
+        // TODO is this TS correct?
+        .catch((err): Observable<any> => {
           throw new VError(err, "calling bridgedb.isMappingSupported");
         })
     );
@@ -590,7 +592,8 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
-        .catch(err => {
+        // TODO is this TS correct?
+        .catch((err): Observable<any> => {
           throw new VError(err, "calling bridgedb.xrefExists");
         })
     );
