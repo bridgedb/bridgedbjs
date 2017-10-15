@@ -39,6 +39,79 @@ program.on("--help", function() {
   );
 });
 
+/*
+echo '[{"dbId": "1234", "dbConventionalName": "Entrez Gene"},{"dbId": "1235", "dbConventionalName": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrichBatch " Homo sapiens" dbConventionalName dbId
+
+cat data.txt | jq -rc . | bin/bridgedb enrichBatch "Homo sapiens" dbConventionalName dbId
+
+echo '[{"dbId": "1234", "dbConventionalName": "Entrez Gene"},{"dbId": "1235", "dbConventionalName": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrich "Homo sapiens" dbConventionalName dbId ncbigene ensembl wikidata
+//*/
+program
+  .command(
+    "enrich <organism> <dbConventionalNameProperty> <dbIdProperty> [unificationDataSources...]"
+  )
+  .action(function(
+    organism,
+    dbConventionalNameProperty,
+    dbIdProperty,
+    unificationDataSources
+  ) {
+    var bridgeDb = new BridgeDb();
+
+    if (unificationDataSources.length === 0) {
+      unificationDataSources = "*";
+    }
+
+    hl(process.stdin)
+      .through(ndjson.parse())
+      .flatMap(function(input) {
+        var outStream = hl();
+
+        var dbConventionalName = input[dbConventionalNameProperty];
+        var dbId = input[dbIdProperty];
+
+        bridgeDb
+          .xrefExists(organism, dbConventionalName, dbId)
+          .mergeMap(function(exists) {
+            return exists
+              ? bridgeDb
+                  .xrefs(organism, dbConventionalName, dbId)
+                  .filter(function(xref) {
+                    return (
+                      unificationDataSources === "*" ||
+                      unificationDataSources.indexOf(
+                        xref.isDataItemIn.preferredPrefix
+                      ) > -1
+                    );
+                  })
+                  .map(function(xref) {
+                    var preferredPrefix = xref.isDataItemIn.preferredPrefix;
+                    var dbId = xref.dbId;
+                    input[preferredPrefix] = dbId;
+                    input.type = input.type || [];
+                    input.type.push(preferredPrefix + ":" + dbId);
+                    return input;
+                  })
+              : Rx.Observable.empty();
+          })
+          .subscribe(
+            null,
+            function(err) {
+              throw err;
+              //outStream.write(err);
+              outStream.error(err);
+            },
+            function() {
+              outStream.write(input);
+              outStream.end();
+            }
+          );
+        return outStream;
+      })
+      .through(ndjson.serialize())
+      .pipe(process.stdout);
+  });
+
 // npm run compile:es5 && ./bin/bridgedb xrefs 'Homo sapiens' 'Entrez Gene' '1234'
 program
   .command("xrefs <organism> <dbConventionalName> <dbId>")
@@ -62,8 +135,7 @@ echo $'1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbC
 
 ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' <<< $'1234\n1235\n'
 
-echo $'dbId\n1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens'
-    --dbConventionalName 'Entrez Gene' --headers=true
+echo $'dbId\n1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' --headers=true
 
 cat test/dbIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens" --dbConventionalName="Entrez Gene"
 
@@ -136,19 +208,29 @@ program
       .fromNodeReadableStream(
         hl(process.stdin).through(parser).drop(headersOption ? 1 : 0)
       )
-      .mergeMap(function(row) {
-        var organism = typeof organismOption !== "undefined"
-          ? organismOption
-          : row[organismColumn];
-        var dbConventionalName = typeof dbConventionalNameOption !== "undefined"
-          ? dbConventionalNameOption
-          : row[dbConventionalNameColumn];
-        var dbId = typeof dbIdOption !== "undefined"
-          ? dbIdOption
-          : row[dbIdColumn];
+      .map(function(row) {
+        return {
+          organism: typeof organismOption !== "undefined"
+            ? organismOption
+            : row[organismColumn],
+          dbConventionalName: typeof dbConventionalNameOption !== "undefined"
+            ? dbConventionalNameOption
+            : row[dbConventionalNameColumn],
+          dbId: typeof dbIdOption !== "undefined" ? dbIdOption : row[dbIdColumn]
+        };
+      })
+      .mergeMap(function(x) {
+        var organism = x.organism;
+        var dbConventionalName = x.dbConventionalName;
+        var dbId = x.dbId;
         return bridgeDb
           .dataSourceProperties(dbConventionalName)
           .mergeMap(function(dataSource) {
+            if (!dataSource || !dataSource.id) {
+              return Rx.Observable.throw(
+                new Error(`Cannot process "${dbConventionalName}:${dbId}"`)
+              );
+            }
             var id = dataSource.id + dbId;
             return bridgeDb
               .xrefs(organism, dbConventionalName, dbId)

@@ -1,5 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
+// TODO use a cache, such as
+// https://github.com/levelgraph/levelgraph
+
+import "source-map-support/register";
+
 declare global {
   // Augment Node.js `global`
   namespace NodeJS {
@@ -22,11 +27,11 @@ import {
   defaultsDeep,
   fill,
   isArray,
+  isEmpty,
   isNaN,
   isNull,
-  isUndefined,
-  isEmpty,
   isString,
+  isUndefined,
   omitBy,
   zip
 } from "lodash";
@@ -37,7 +42,9 @@ import "rxjs/add/observable/dom/ajax";
 import "rxjs/add/observable/empty";
 import "rxjs/add/observable/forkJoin";
 import "rxjs/add/observable/from";
+import "rxjs/add/observable/throw";
 import "rxjs/add/observable/zip";
+import "rxjs/add/operator/catch";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/filter";
@@ -55,6 +62,7 @@ import "rx-extra/add/operator/throughNodeStream";
 import { Subject } from "rxjs/Subject";
 import { TSVGetter } from "./topublish/TSVGetter";
 import { dataTypeParsers } from "./topublish/dataTypeParsers";
+const VError = require("verror");
 
 const BDB = "http://vocabularies.bridgedb.org/ops#";
 const BIOPAX = "http://www.biopax.org/release/biopax-level3.owl#";
@@ -69,7 +77,7 @@ const CSV_OPTIONS = { objectMode: true, delimiter: "\t" };
 const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 
 const BRIDGE_DB_REPO_CDN = "https://cdn.rawgit.com/bridgedb/BridgeDb/";
-const BRIDGE_DB_COMMIT_HASH = "7bb5058221eb3537a2c04965089de1521a5ed691";
+const BRIDGE_DB_COMMIT_HASH = "2d248d637ff6fe6285fcf34f89d9fe22a2326a67";
 export const CONFIG_DEFAULT = {
   baseIri: "http://webservice.bridgedb.org/",
   context: [
@@ -345,6 +353,9 @@ export class BridgeDb {
         });
         return acc;
       }, {})
+      .catch(err => {
+        throw new VError(err, "Setting up dataSourceMappings$ in constructor");
+      })
       .publishReplay();
 
     // toggle bridgeDb.dataSourceMappings$ from cold to hot
@@ -367,7 +378,10 @@ export class BridgeDb {
         const value = fields[1];
         acc[key] = value;
         return acc;
-      }, {});
+      }, {})
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.attributes");
+      });
   }
 
   attributeSearch(
@@ -385,7 +399,10 @@ export class BridgeDb {
           query +
           attrNameParamSection
       )
-      .mergeMap(bridgeDb.parseXrefRow);
+      .mergeMap(bridgeDb.parseXrefRow)
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.attributeSearch");
+      });
   }
 
   attributeSet(organism: organism): Observable<string[]> {
@@ -395,12 +412,19 @@ export class BridgeDb {
       .reduce(function(acc, row) {
         acc.push(row[0]);
         return acc;
-      }, []);
+      }, [])
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.attributeSet");
+      });
   }
 
   dataSourceProperties = (input: string): Observable<DataSource> => {
     let bridgeDb = this;
-    return bridgeDb.dataSourceMappings$.map(mapping => mapping[input]);
+    return bridgeDb.dataSourceMappings$
+      .map(mapping => mapping[input])
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.dataSourceProperties");
+      });
   };
 
   isFreeSearchSupported(organism: organism): Observable<boolean> {
@@ -418,6 +442,9 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
+        .catch(err => {
+          throw new VError(err, "calling bridgedb.isFreeSearchSupported");
+        })
     );
   }
 
@@ -429,13 +456,8 @@ export class BridgeDb {
     let bridgeDb = this;
 
     const ajaxRequest: AjaxRequest = {
-      url:
-        bridgeDb.config.baseIri +
-          organism +
-          "/isMappingSupported/" +
-          sourceConventionalName +
-          "/" +
-          targetConventionalName,
+      url: `${bridgeDb.config.baseIri +
+        organism}/isMappingSupported/${sourceConventionalName}/${targetConventionalName}`,
       method: "GET",
       responseType: "text",
       timeout: bridgeDb.config.http.timeout,
@@ -446,6 +468,9 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
+        .catch(err => {
+          throw new VError(err, "calling bridgedb.isMappingSupported");
+        })
     );
   }
 
@@ -458,7 +483,10 @@ export class BridgeDb {
         const value = fields[1];
         acc[key] = value;
         return acc;
-      }, {});
+      }, {})
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.organismProperties");
+      });
   }
 
   organisms(): Observable<{}> {
@@ -470,6 +498,9 @@ export class BridgeDb {
           en: fields[0],
           la: fields[1]
         };
+      })
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.organisms");
       });
   }
 
@@ -505,7 +536,10 @@ export class BridgeDb {
     let bridgeDb = this;
     return bridgeDb
       .getTSV(bridgeDb.config.baseIri + organism + "/search/" + query)
-      .mergeMap(bridgeDb.parseXrefRow);
+      .mergeMap(bridgeDb.parseXrefRow)
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.search");
+      });
   }
 
   sourceDataSources(organism: organism): Observable<DataSource> {
@@ -515,7 +549,10 @@ export class BridgeDb {
       .map(function(fields) {
         return fields[0];
       })
-      .mergeMap(bridgeDb.dataSourceProperties);
+      .mergeMap(bridgeDb.dataSourceProperties)
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.sourceDataSources");
+      });
   }
 
   targetDataSources(organism: organism): Observable<DataSource> {
@@ -525,9 +562,14 @@ export class BridgeDb {
       .map(function(fields) {
         return fields[0];
       })
-      .mergeMap(bridgeDb.dataSourceProperties);
+      .mergeMap(bridgeDb.dataSourceProperties)
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.targetDataSources");
+      });
   }
 
+  // TODO check whether dataSource exists before calling webservice re:
+  // dataSource AND identifier
   xrefExists(
     organism: organism,
     conventionalName: string,
@@ -536,13 +578,8 @@ export class BridgeDb {
     let bridgeDb = this;
 
     const ajaxRequest: AjaxRequest = {
-      url:
-        bridgeDb.config.baseIri +
-          organism +
-          "/xrefExists/" +
-          conventionalName +
-          "/" +
-          dbId,
+      url: `${bridgeDb.config.baseIri +
+        organism}/xrefExists/${conventionalName}/${dbId}`,
       method: "GET",
       responseType: "text",
       timeout: bridgeDb.config.http.timeout,
@@ -553,6 +590,9 @@ export class BridgeDb {
         .map((ajaxResponse): string => ajaxResponse.xhr.response)
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
+        .catch(err => {
+          throw new VError(err, "calling bridgedb.xrefExists");
+        })
     );
   }
 
@@ -609,7 +649,10 @@ export class BridgeDb {
           }
         );
       })
-      .mergeMap(x => Observable.from(x.xrefs));
+      .mergeMap(x => Observable.from(x.xrefs))
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.xrefs");
+      });
   }
 
   xrefsBatch = (
@@ -636,15 +679,26 @@ export class BridgeDb {
     const body = zip(dbIds, conventionalNames)
       .map(x => x.join("\t"))
       .join("\n");
+
+    const callString = `Called xrefsBatch(
+	${organism},
+	${conventionalNameOrNames},
+	${dbIds},
+	${dataSourceFilter}
+)`;
+
+    if (isEmpty(body.replace(/[\ \n\t]/g, ""))) {
+      return Observable.throw(new Error(`Error: body is empty. ${callString}`));
+    }
+
+    const postURL =
+      bridgeDb.config.baseIri +
+      organism +
+      "/xrefsBatch" +
+      dataSourceFilterParamSection;
+
     return bridgeDb
-      .getTSV(
-        bridgeDb.config.baseIri +
-          organism +
-          "/xrefsBatch" +
-          dataSourceFilterParamSection,
-        "POST",
-        body
-      )
+      .getTSV(postURL, "POST", body)
       .mergeMap(function(xrefStringsByInput) {
         const inputDbId = xrefStringsByInput[0];
         const inputDataSource = xrefStringsByInput[1];
@@ -676,6 +730,9 @@ export class BridgeDb {
               dataSourceFilter: dataSourceFilter
             };
           });
+      })
+      .catch(null, function(err) {
+        throw new VError(err, `Error: ${callString}`);
       });
   };
 }

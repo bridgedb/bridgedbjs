@@ -13,14 +13,14 @@ import * as ReactDOM from "react-dom";
 // https://github.com/cheton/browserify-css/issues/46
 // NOTE: requires copying the files
 //require('./react-selectize-theme-default.css');
-import reactSelectizeThemeDefault = require("../placeholder");
+const reactSelectizeThemeDefault = require("../placeholder");
 
 // this doesn't work when bridgedb is a dependency:
 //require('../../node_modules/react-selectize/themes/default.css');
 
 const BDB = "http://vocabularies.bridgedb.org/ops#";
 
-var SimpleSelect = require("react-selectize").SimpleSelect;
+const SimpleSelect = require("react-selectize").SimpleSelect;
 
 function arrayifyClean(input: any | any[]): any[] {
   if (isArray(input)) {
