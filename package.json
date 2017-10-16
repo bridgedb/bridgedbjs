@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "6.0.0-16",
+  "version": "6.0.0-17",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "lib/index.js",
   "main:esnext": "esnext/index.js",
@@ -9,6 +9,11 @@
   "files": [
     "lib/",
     "src/",
+    "dist/",
+    "esnext/",
+    "bin/",
+    "package.json",
+    "package-lock.json",
     "tsconfig.json",
     "tsconfig.base.json",
     "tsconfig.demo.json",
