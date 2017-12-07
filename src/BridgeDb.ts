@@ -79,7 +79,7 @@ const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 const BRIDGE_DB_REPO_CDN = "https://cdn.rawgit.com/bridgedb/BridgeDb/";
 const BRIDGE_DB_COMMIT_HASH = "2d248d637ff6fe6285fcf34f89d9fe22a2326a67";
 export const CONFIG_DEFAULT = {
-  baseIri: "http://webservice.bridgedb.org/",
+  baseIri: "https://webservice.bridgedb.org/",
   context: [
     BRIDGE_DB_REPO_CDN,
     BRIDGE_DB_COMMIT_HASH,
