@@ -11,7 +11,7 @@
   },
   "files": [
     "src/index.ts",
-    "src/topublish/pipeToStdout.ts"
+    "src/spinoffs/pipeToStdout.ts"
   ],
   "exclude": [
     "dist/**/*",

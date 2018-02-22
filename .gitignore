@@ -1,7 +1,7 @@
 demo/
 dist/
 docs/
-lib/
+es5/
 esnext/
 main.js
 main.d.ts

@@ -4,14 +4,109 @@ var _ = require("lodash");
 var crypto = require("crypto");
 var csv = require("csv-streamify");
 var fs = require("fs");
-var BridgeDb = require("../lib/BridgeDb").BridgeDb;
+var path = require("path");
+var BridgeDb = require("../es5/BridgeDb").BridgeDb;
 var hl = require("highland");
 var ndjson = require("ndjson");
 var npmPackage = require("../package.json");
 var program = require("commander");
 var Rx = require("rx-extra");
-require("../lib/topublish/pipeToStdout");
+require("../es5/spinoffs/pipeToStdout");
 var VError = require("verror");
+var ipc = require('node-ipc');
+
+// time to wait for no new calls to xrefs() before we
+// batch up all calls in the queue and send to xrefsBatch()
+var XREF_REQUEST_DEBOUNCE_TIME = 100; // ms
+var IPC_SERVER_PROCESS_NAME = 'bridgeDbProcess';
+ipc.config.retry = 1500;
+ipc.config.silent = true;
+var IPC_SERVER_ON_FILE = path.join(__dirname, '.ipc-listening');
+
+function makeXrefsRequest(organism, dbConventionalName, dbId) {
+  var primaryBridgeDbProcess = !fs.existsSync(IPC_SERVER_ON_FILE);
+  var xrefsResponseQueue = new Rx.Subject();
+
+  if (primaryBridgeDbProcess) {
+    fs.writeFileSync(IPC_SERVER_ON_FILE, '');
+    ipc.config.id = IPC_SERVER_PROCESS_NAME;
+    ipc.serve(function() {
+      var bridgeDb = new BridgeDb();
+      bridgeDb
+        .xrefs(organism, dbConventionalName, dbId)
+        .subscribe(xrefsResponseQueue);
+
+      var endSignal = new Rx.Subject();
+      var debounceSignal = Rx.Observable.fromEvent(ipc.server, 'xrefsRequest')
+        .debounceTime(
+          XREF_REQUEST_DEBOUNCE_TIME
+        )
+        .first();
+
+      ipc.server.on('xrefsRequest', function(xrefsRequest, socket) {
+        bridgeDb
+          .xrefs(xrefsRequest.organism, xrefsRequest.dbConventionalName, xrefsRequest.dbId)
+          .subscribe(function(response) {
+            ipc.server.emit(socket, 'xrefsResponse', response);
+            endSignal.next();
+          }, function(err) {
+            ipc.server.emit(socket, 'err', err);
+            endSignal.error(err);
+          }, function() {
+            ipc.server.emit(socket, 'end');
+            endSignal.complete();
+          });
+      });
+
+      endSignal
+        .skipUntil(debounceSignal)
+      //debounceSignal
+        .first()
+        .subscribe(function(data) {
+        }, function(err) {
+          throw  err;
+        }, function() {
+          ipc.server.stop();
+          fs.unlinkSync(IPC_SERVER_ON_FILE);
+          console.warn('bridgeDb CLI server stopped...');
+          //process.exit(0);
+        });
+
+      debounceSignal.subscribe();
+      /*
+      ipc.server.on('destroy', function() {
+      });
+      //*/
+    });
+    ipc.server.start();
+  } else {
+    ipc.config.id = IPC_SERVER_PROCESS_NAME + new Date().toISOString();
+    ipc.connectTo(IPC_SERVER_PROCESS_NAME, function() {
+      ipc.of[IPC_SERVER_PROCESS_NAME].on(
+        'connect',
+        function(){
+          ipc.of[IPC_SERVER_PROCESS_NAME].emit('xrefsRequest', {
+            organism: organism,
+            dbConventionalName: dbConventionalName,
+            dbId: dbId
+          });
+
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('xrefsResponse', function(xrefsResponse, socket) {
+            xrefsResponseQueue.next(xrefsResponse);
+          });
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('err', function(err, socket) {
+            xrefsResponseQueue.err(err);
+          });
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('end', function() {
+            xrefsResponseQueue.complete();
+            ipc.disconnect(IPC_SERVER_PROCESS_NAME);
+          });
+        });
+    });
+  }
+
+  return xrefsResponseQueue;
+}
 
 program
   .version(npmPackage.version)
@@ -113,16 +208,57 @@ program
   });
 
 // npm run compile:es5 && ./bin/bridgedb xrefs 'Homo sapiens' 'Entrez Gene' '1234'
+//
+// cat test/dbNamesAndIds.csv | while read ln; do xrefDb=`echo $ln | sed s/,.*//g`; xrefId=`echo $ln | sed 's/^.*,//g'`; echo "$xrefDb" "$xrefId"; ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId"; done
+
+// cat test/dbNamesAndIds.csv | while read ln; do xrefDb=`echo $ln | sed s/,.*//g`; xrefId=`echo $ln | sed 's/^.*,//g'`; echo "$xrefDb" "$xrefId"; ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId" | jq ". | .dbId | {\"$xrefId\": .}" | tee $xrefId.tsv & done
 program
   .command("xrefs <organism> <dbConventionalName> <dbId>")
   .action(function(organism, dbConventionalName, dbId) {
-    var bridgeDb = new BridgeDb();
-
     var serialize = ndjson.serialize();
-    bridgeDb
-      .xrefs(organism, dbConventionalName, dbId)
+    makeXrefsRequest(organism, dbConventionalName, dbId)
       .throughNodeStream(serialize)
+      /*
+      .map(function(x) {
+        return JSON.stringify(x);
+      })
+      //*/
+      //.do(console.warn)
       .pipeToStdout();
+  });
+// npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
+// npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
+/*
+cat ../gpml2pvjson-js/test/expected/WP481_94171.json | jq '.entitiesById[] | select(has("dbConventionalName") and .kaavioType=="SingleFreeNode") | .dbConventionalName+"\t"+.dbId'
+*/
+program
+  .command("datasource <input> [as]")
+  .option(
+    "--format [string]",
+    'Column format to return when identifying a data source name format: term or iri. Default: "term"'
+  )
+  .action(function(input, as, options) {
+    var format = !!options['format'] ? options['format'] : 'term';
+    var serialize = ndjson.serialize();
+    var bridgeDb = new BridgeDb();
+    if (!!as) {
+        bridgeDb
+          .convertDataSourceNameTo(as, input)
+          .throughNodeStream(serialize)
+          .pipeToStdout();
+    } else {
+      if (format === 'term') {
+        bridgeDb
+          .dataSourceNameToColumnTerm(input)
+          .throughNodeStream(serialize)
+          .pipeToStdout();
+      } else {
+        bridgeDb
+          .dataSourceNameToColumnIri(input)
+          .throughNodeStream(serialize)
+          .pipeToStdout();
+      }
+    }
   });
 
 /*
@@ -246,8 +382,45 @@ program
               });
           });
       })
-      .throughNodeStream(serialize)
+      .map(function(result) {
+        return '\t' + result.id + '\n\t\t' + result.xrefs.map(function(xref) {
+          return [xref.dataSource, xref.dbId].join('\t');
+        }).join('\n\t\t') + '\n'
+      })
+      //.throughNodeStream(serialize)
       .pipeToStdout();
+
+//          .mergeMap(function(dataSource) {
+//            if (!dataSource || !dataSource.id) {
+//              return Rx.Observable.throw(
+//                new Error(`Cannot process "${dbConventionalName}:${dbId}"`)
+//              );
+//            }
+//            var id = dataSource.id + dbId;
+//            return bridgeDb
+//              .xrefs(organism, dbConventionalName, dbId)
+//            /*
+//            .map(function(xref) {
+//              return [xref.dataSource, xref.dbId].join('\t');
+//            })
+//              .toArray()
+//              .map(function(xrefStrings) {
+//                return xrefStrings.join('\n');
+//              });
+//            //*/
+//            //*
+//              .toArray()
+//              .map(function(xrefs) {
+//                return {
+//                  id: id,
+//                  //dbConventionalName: dbConventionalName,
+//                  //dbId: dbId,
+//                  //organism: organism,
+//                  xrefs: xrefs
+//                };
+//              });
+//            //*/
+//          });
   });
 
 program.parse(process.argv);

@@ -33,6 +33,7 @@ import {
   isString,
   isUndefined,
   omitBy,
+  toPairs,
   zip
 } from "lodash";
 import { Observable } from "rxjs/Observable";
@@ -60,8 +61,8 @@ import "rxjs/add/operator/toArray";
 import "rxjs/add/operator/windowWhen";
 import "rx-extra/add/operator/throughNodeStream";
 import { Subject } from "rxjs/Subject";
-import { TSVGetter } from "./topublish/TSVGetter";
-import { dataTypeParsers } from "./topublish/dataTypeParsers";
+import { TSVGetter } from "./spinoffs/TSVGetter";
+import { dataTypeParsers } from "./spinoffs/dataTypeParsers";
 const VError = require("verror");
 
 const BDB = "http://vocabularies.bridgedb.org/ops#";
@@ -143,9 +144,19 @@ function miriamUrnToPreferredPrefix(miriamUrn: string): string {
   }
 }
 
+export interface DataSourceHeaderRow {
+  header: string;
+  description: string;
+  example_entry: string;
+  id: string;
+  term: string;
+  "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": string;
+}
+
 export class BridgeDb {
   config;
   dataSourceMappings$;
+  dataSourceColumnTermToIri$;
   getTSV;
   private xrefsRequestQueue;
   private xrefsResponseQueue;
@@ -154,7 +165,7 @@ export class BridgeDb {
     defaultsDeep(config, CONFIG_DEFAULT);
     bridgeDb.config = config;
 
-    let xrefsRequestQueue = (bridgeDb.xrefsRequestQueue = new Subject());
+    var xrefsRequestQueue = (bridgeDb.xrefsRequestQueue = new Subject());
     let debounceSignal = xrefsRequestQueue.debounceTime(
       XREF_REQUEST_DEBOUNCE_TIME
     );
@@ -183,25 +194,40 @@ export class BridgeDb {
 
     const getTSV = (bridgeDb.getTSV = new TSVGetter(config.http).get);
 
+    const dataSourcesHeaders$ = getTSV(
+      config.dataSourcesHeadersIri
+    ).map(function(fields): DataSourceHeaderRow {
+      const id = fields[4];
+      return {
+        // NOTE: the column number could be confusing, because it's one-based,
+        // so I'll just use the index instead and ignore the column number.
+        //column: parseFloat(fields[0]),
+        header: fields[1],
+        description: fields[2],
+        example_entry: fields[3],
+        id: id,
+        term: IRI_TO_TERM_MAPPINGS.hasOwnProperty(id)
+          ? IRI_TO_TERM_MAPPINGS[id]
+          : id.split(/[\/|#]/).pop(),
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": fields[5]
+      };
+    });
+
+    bridgeDb.dataSourceColumnTermToIri$ = dataSourcesHeaders$
+      .reduce(function(acc, row: DataSourceHeaderRow) {
+        acc[row.term] = row.id;
+        return acc;
+      }, {})
+      .catch(err => {
+        throw new VError(
+          err,
+          "Setting up dataSourceColumnTermToIri$ in constructor"
+        );
+      })
+      .publishReplay();
+
     bridgeDb.dataSourceMappings$ = Observable.forkJoin(
-      getTSV(config.dataSourcesHeadersIri)
-        .map(function(fields) {
-          const id = fields[4];
-          return {
-            // NOTE: the column number could be confusing, because it's one-based,
-            // so I'll just use the index instead and ignore the column number.
-            //column: parseFloat(fields[0]),
-            header: fields[1],
-            description: fields[2],
-            example_entry: fields[3],
-            id: id,
-            term: IRI_TO_TERM_MAPPINGS.hasOwnProperty(id)
-              ? IRI_TO_TERM_MAPPINGS[id]
-              : id.split(/[\/|#]/).pop(),
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": fields[5]
-          };
-        })
-        .toArray(),
+      dataSourcesHeaders$.toArray(),
       getTSV(config.dataSourcesMetadataIri).toArray()
     )
       .mergeMap(function(results) {
@@ -358,7 +384,8 @@ export class BridgeDb {
       })
       .publishReplay();
 
-    // toggle bridgeDb.dataSourceMappings$ from cold to hot
+    // toggle from cold to hot
+    bridgeDb.dataSourceColumnTermToIri$.connect();
     bridgeDb.dataSourceMappings$.connect();
   } // end constructor
 
@@ -417,6 +444,48 @@ export class BridgeDb {
         throw new VError(err, "calling bridgedb.attributeSet");
       });
   }
+
+  convertDataSourceNameTo = (
+    targetType: string,
+    input: string
+  ): Observable<string> => {
+    let bridgeDb = this;
+    return bridgeDb.dataSourceMappings$
+      .map(mapping => mapping[input][targetType])
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.convertDataSourceNameTo");
+      });
+  };
+
+  dataSourceNameToColumnTerm = (input: string): Observable<string> => {
+    let bridgeDb = this;
+    return bridgeDb.dataSourceMappings$
+      .map(mapping => mapping[input])
+      .map(
+        dataSource =>
+          toPairs(dataSource).find(([key, value]) => value === input)[0]
+      )
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.inputDataSourceFormat");
+      });
+  };
+
+  dataSourceNameToColumnIri = (input: string): Observable<string> => {
+    let bridgeDb = this;
+
+    return bridgeDb
+      .dataSourceNameToColumnTerm(input)
+      .mergeMap(term =>
+        bridgeDb.dataSourceColumnTermToIri$
+          .first()
+          .map(dataSourceColumnTermToIri => dataSourceColumnTermToIri[term])
+      );
+    /*
+      .catch(err => {
+        throw new VError(err, "calling bridgedb.dataSourceNameToColumnIri");
+      });
+      //*/
+  };
 
   dataSourceProperties = (input: string): Observable<DataSource> => {
     let bridgeDb = this;
@@ -623,9 +692,10 @@ export class BridgeDb {
       .filter(function(xrefBatchEnvelope) {
         return (
           xrefBatchEnvelope.organism === organism &&
-          // NOTE: we are not using the dataSource test right below. Instead, we are matching
-          // dataSources in the mergeMap further below. The reason is that the inputDataSource
-          // and the returned dataSource may not match, e.g., 'L' vs. 'Entrez Gene'.
+          // NOTE: we are not using the dataSource test in the line below.
+          // Instead, we are matching dataSources in the mergeMap further below.
+          // The reason is that the inputDataSource and the returned dataSource
+          // may not match, e.g., 'L' vs. 'Entrez Gene'.
           //x.inputDataSource === conventionalName &&
           xrefBatchEnvelope.inputDbId === dbId &&
           (!dataSourceFilter ||
@@ -700,42 +770,159 @@ export class BridgeDb {
       "/xrefsBatch" +
       dataSourceFilterParamSection;
 
-    return bridgeDb
-      .getTSV(postURL, "POST", body)
-      .mergeMap(function(xrefStringsByInput) {
-        const inputDbId = xrefStringsByInput[0];
-        const inputDataSource = xrefStringsByInput[1];
-        const xrefsString = xrefStringsByInput[2];
+    const inputNameType$ = bridgeDb.dataSourceNameToColumnTerm(
+      conventionalNameOrNames[0]
+    );
 
-        // NOTE: splitting by comma, e.g.:
-        //       'T:GO:0031966,Il:ILMN_1240829' -> ['T:GO:0031966', 'Il:ILMN_1240829']
-        return Observable.from(xrefsString.split(","))
-          .mergeMap(function(xrefString: string): Observable<Xref> {
-            if (xrefString === "N/A") {
-              return Observable.empty();
-            }
-            // NOTE: splitting by FIRST colon only, e.g.:
-            //       'T:GO:0031966' -> ['T', 'GO:0031966']
-            let xrefFields = xrefString.split(/:(.+)/);
-            return bridgeDb.parseXrefRow([
-              xrefFields[1],
-              xrefFields[0],
-              undefined
-            ]);
-          })
-          .toArray()
-          .map(function(xrefs) {
-            return {
-              organism: organism,
-              inputDataSource: inputDataSource,
-              inputDbId: inputDbId,
-              xrefs: xrefs,
-              dataSourceFilter: dataSourceFilter
-            };
-          });
-      })
-      .catch(null, function(err) {
-        throw new VError(err, `Error: ${callString}`);
-      });
+    // TODO inputNameType$ and bridgeDb.getTSV(postURL, "POST", body)
+    // can run in parallel.
+    return inputNameType$.first().mergeMap(inputNameType =>
+      bridgeDb
+        .getTSV(postURL, "POST", body)
+        .mergeMap(function(xrefStringsByInput) {
+          const inputDbId = xrefStringsByInput[0];
+          const inputDataSource = xrefStringsByInput[1];
+          const xrefsString = xrefStringsByInput[2];
+
+          // NOTE: splitting by comma, e.g.:
+          //       'T:GO:0031966,Il:ILMN_1240829' -> ['T:GO:0031966', 'Il:ILMN_1240829']
+          return Observable.from(xrefsString.split(","))
+            .mergeMap(function(xrefString: string): Observable<Xref> {
+              if (xrefString === "N/A") {
+                return Observable.empty();
+              }
+              // NOTE: splitting by FIRST colon only, e.g.:
+              //       'T:GO:0031966' -> ['T', 'GO:0031966']
+              let xrefFields = xrefString.split(/:(.+)/);
+              return bridgeDb.parseXrefRow([
+                xrefFields[1],
+                xrefFields[0],
+                undefined
+              ]);
+            })
+            .map(xref => {
+              return {
+                dataSource: xref.isDataItemIn[inputNameType],
+                dbId: xref.dbId
+              };
+            })
+            .toArray()
+            .map(function(xrefs) {
+              return {
+                organism: organism,
+                inputDataSource: inputDataSource,
+                inputDbId: inputDbId,
+                xrefs: xrefs,
+                dataSourceFilter: dataSourceFilter
+              };
+            });
+        })
+        .catch(null, function(err) {
+          throw new VError(err, `Error: ${callString}`);
+        })
+    );
   };
+
+  //  xrefsBatch1 = (
+  //    organism: organism,
+  //    conventionalNameOrNames: string | string[],
+  //    dbIds: string[],
+  //    dataSourceFilter?: string
+  //  ): Observable<{
+  //    organism: string;
+  //    inputDbId: string;
+  //    inputDataSource: string;
+  //    xrefs: Xref[];
+  //    dataSourceFilter?: string;
+  //  }> => {
+  //    let bridgeDb = this;
+  //    const dataSourceFilterParamSection = dataSourceFilter
+  //      ? "?dataSource=" + dataSourceFilter
+  //      : "";
+  //
+  //    const conventionalNames = isArray(conventionalNameOrNames)
+  //      ? conventionalNameOrNames
+  //      : fill(new Array(dbIds.length), conventionalNameOrNames);
+  //
+  //    const inputNameType$ = bridgeDb.dataSourceNameToColumnTerm(
+  //      conventionalNameOrNames[0]
+  //    );
+  //
+  //    const body = zip(dbIds, conventionalNames)
+  //      .map(x => x.join("\t"))
+  //      .join("\n");
+  //
+  //    const callString = `Called xrefsBatch(
+  //	${organism},
+  //	${conventionalNameOrNames},
+  //	${dbIds},
+  //	${dataSourceFilter}
+  //)`;
+  //
+  //    if (isEmpty(body.replace(/[\ \n\t]/g, ""))) {
+  //      return Observable.throw(new Error(`Error: body is empty. ${callString}`));
+  //    }
+  //
+  //    const postURL =
+  //      bridgeDb.config.baseIri +
+  //      organism +
+  //      "/xrefsBatch" +
+  //      dataSourceFilterParamSection;
+  //
+  //    var wow = Observable.forkJoin(
+  //      inputNameType$.toArray(),
+  //      bridgeDb.getTSV(postURL, "POST", body)
+  //    );
+  //
+  //    return Observable.forkJoin(
+  //      inputNameType$.toArray(),
+  //      bridgeDb.getTSV(postURL, "POST", body).toArray()
+  //    ).mergeMap(function([inputNameTypeArr, xrefStringsByInputArr]) {
+  //      console.warn("lib: inputNameTypeArr");
+  //      console.warn(inputNameTypeArr);
+  //      const inputNameType = inputNameTypeArr[0];
+  //      const xrefStringsByInput = xrefStringsByInputArr[0];
+  //      const inputDbId = xrefStringsByInput[0];
+  //      const inputDataSource = xrefStringsByInput[1];
+  //      const xrefsString = xrefStringsByInput[2];
+  //
+  //      // NOTE: splitting by comma, e.g.:
+  //      //       'T:GO:0031966,Il:ILMN_1240829' -> ['T:GO:0031966', 'Il:ILMN_1240829']
+  //      return Observable.from(xrefsString.split(","))
+  //        .mergeMap(function(xrefString: string): Observable<Xref> {
+  //          if (xrefString === "N/A") {
+  //            return Observable.empty();
+  //          }
+  //          // NOTE: splitting by FIRST colon only, e.g.:
+  //          //       'T:GO:0031966' -> ['T', 'GO:0031966']
+  //          let xrefFields = xrefString.split(/:(.+)/);
+  //          return bridgeDb.parseXrefRow([
+  //            xrefFields[1],
+  //            xrefFields[0],
+  //            undefined
+  //          ]);
+  //        })
+  //        .map(xref => {
+  //          return {
+  //            dataSource: xref.isDataItemIn[inputNameType],
+  //            dbId: xref.dbId
+  //          };
+  //        })
+  //        .toArray()
+  //        .map(function(xrefs) {
+  //          return {
+  //            organism: organism,
+  //            inputDataSource: inputDataSource,
+  //            inputDbId: inputDbId,
+  //            xrefs: xrefs,
+  //            dataSourceFilter: dataSourceFilter
+  //          };
+  //        });
+  //    });
+  //    /*
+  //      .catch(null, function(err) {
+  //        throw new VError(err, `Error: ${callString}`);
+  //      });
+  //      //*/
+  //  };
 }
