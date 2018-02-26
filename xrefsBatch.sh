@@ -1,6 +1,6 @@
 #! /bin/bash
 (jq -r '.entitiesById[] | select(has("dbConventionalName") and .kaavioType=="SingleFreeNode") | .dbConventionalName+","+.dbId' |\
-       	head -n 3 |\
+       	#head -n 10 |\
 	while read -r ln; do \
 		xrefDb="${ln/,*/}"; \
 		xrefId="${ln/*,/}"; \

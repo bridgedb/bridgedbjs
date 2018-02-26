@@ -8,12 +8,103 @@ var path = require("path");
 var BridgeDb = require("../es5/BridgeDb").BridgeDb;
 var hl = require("highland");
 var ndjson = require("ndjson");
-var JSONStream = require("JSONStream");
 var npmPackage = require("../package.json");
 var program = require("commander");
 var Rx = require("rx-extra");
 require("../es5/spinoffs/pipeToStdout");
 var VError = require("verror");
+var ipc = require('node-ipc');
+
+// time to wait for no new calls to xrefs() before we
+// batch up all calls in the queue and send to xrefsBatch()
+var XREF_REQUEST_DEBOUNCE_TIME = 100; // ms
+var IPC_SERVER_PROCESS_NAME = 'bridgeDbProcess';
+ipc.config.retry = 250;
+ipc.config.stopRetrying = 3;
+ipc.config.silent = true;
+// TODO look at "path" in ipc.serve(path,callback):
+// https://www.npmjs.com/package/node-ipc#serve
+// We can maybe use that instead of IPC_SERVER_ON_FILE
+var IPC_SERVER_ON_FILE = path.join(__dirname, '.ipc-started');
+
+function makeXrefsRequest(organism, dbConventionalName, dbId) {
+  var primaryBridgeDbProcess = !fs.existsSync(IPC_SERVER_ON_FILE);
+  var xrefsResponseQueue = new Rx.Subject();
+
+  if (primaryBridgeDbProcess) {
+    fs.writeFileSync(IPC_SERVER_ON_FILE, '');
+    ipc.config.id = IPC_SERVER_PROCESS_NAME;
+    ipc.serve(function() {
+      var bridgeDb = new BridgeDb();
+      bridgeDb
+        .xrefs(organism, dbConventionalName, dbId)
+        .subscribe(xrefsResponseQueue);
+
+      var endSignal = new Rx.Subject();
+      var debounceSignal = Rx.Observable.fromEvent(ipc.server, 'xrefsRequest')
+        .debounceTime(
+          XREF_REQUEST_DEBOUNCE_TIME
+        )
+        .first();
+
+      ipc.server.on('xrefsRequest', function(xrefsRequest, socket) {
+        bridgeDb
+          .xrefs(xrefsRequest.organism, xrefsRequest.dbConventionalName, xrefsRequest.dbId)
+          .subscribe(function(response) {
+            ipc.server.emit(socket, 'xrefsResponse', response);
+            endSignal.next();
+          }, function(err) {
+            ipc.server.emit(socket, 'err', err);
+            endSignal.error(err);
+          }, function() {
+            ipc.server.emit(socket, 'end');
+            endSignal.complete();
+          });
+      });
+
+      endSignal
+        .skipUntil(debounceSignal)
+        .first()
+        .subscribe(function(data) {
+        }, function(err) {
+          throw  err;
+        }, function() {
+          ipc.server.stop();
+          fs.unlinkSync(IPC_SERVER_ON_FILE);
+          console.warn('bridgeDb CLI server stopped...');
+        });
+
+      debounceSignal.subscribe();
+    });
+    ipc.server.start();
+  } else {
+    ipc.config.id = IPC_SERVER_PROCESS_NAME + new Date().toISOString();
+    ipc.connectTo(IPC_SERVER_PROCESS_NAME, function() {
+      ipc.of[IPC_SERVER_PROCESS_NAME].on(
+        'connect',
+        function(){
+          ipc.of[IPC_SERVER_PROCESS_NAME].emit('xrefsRequest', {
+            organism: organism,
+            dbConventionalName: dbConventionalName,
+            dbId: dbId
+          });
+
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('xrefsResponse', function(xrefsResponse, socket) {
+            xrefsResponseQueue.next(xrefsResponse);
+          });
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('err', function(err, socket) {
+            xrefsResponseQueue.err(err);
+          });
+          ipc.of[IPC_SERVER_PROCESS_NAME].on('end', function() {
+            xrefsResponseQueue.complete();
+            ipc.disconnect(IPC_SERVER_PROCESS_NAME);
+          });
+        });
+    });
+  }
+
+  return xrefsResponseQueue;
+}
 
 program
   .version(npmPackage.version)
@@ -34,134 +125,34 @@ program.on("--help", function() {
     /* TODO why doesn't the following work?
     [
       "    $ bridgedb xrefsBatch ",
-      "--organism='Homo sapiens' --xrefDataSourceNS='Entrez Gene' ",
+      "--organism='Homo sapiens' --dbConventionalName='Entrez Gene' ",
       "< ./test/dbNamesAndIds.csv > ./xrefs.json"
     ].join("")
     //*/
   );
 });
 
-// cat input.json | ./bin/bridgedb addMapppedXrefs1 Human "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" "type" | jq .
-program
-  .command(
-    "addMapppedXrefs1 <organism> <pathToXrefDataSourceNS> <pathToXrefDataSourceID> <pathToDestination> [mappedXrefDataSourceNS...]"
-  )
-  .action(function(
-    organism,
-    pathToXrefDataSourceNS,
-    pathToXrefDataSourceID,
-    mappedXrefDataSourceNSes
-  ) {
-    var pathToContainerData = _.zip.apply(undefined, [pathToXrefDataSourceNS, pathToXrefDataSourceID].map(function(path) {
-      return path.split('.');
-    })).reduce(function(acc, pair) {
-      var first = pair[0];
-      var second = pair[1];
-      acc.matched = acc.matched && first === second;
-      if (acc.matched) {
-        acc.common.push(first);
-      } else {
-        pair.forEach(function(p, i) {
-          if (acc.sub[i]) {
-            acc.sub[i].push(p);
-          } else {
-            acc.sub[i] = [p];
-          }
-        });
-      }
-      return acc;
-    }, {matched: true, common: [], sub: []});
-    var pathToContainer = pathToContainerData.common.join('.');
-    var relPathToXrefDataSourceNS = pathToContainerData.sub[0].join('.');
-    var relPathToXrefDataSourceID = pathToContainerData.sub[1].join('.');
-    var containerParser = JSONStream.parse(pathToContainer);
-
-    var headerStream = hl('header', containerParser).map(function(header) {
-      return _.toPairs(header)[0];
-    });
-
-    var key = pathToContainerData.common[0];
-    var subKeys = pathToContainerData.common.filter(function(p) {
-      return !!p && p !== "*";
-    })
-      .slice("1");
-
-    var dataStream = hl('data', containerParser);
-
-    var footerStream = hl('footer', containerParser).map(function(footer) {
-      return _.toPairs(footer)[0];
-    });
-
-    var endStream = hl('end', containerParser);
-
-    var parsedDataStream = dataStream.reduce({}, function(acc, data) {
-      acc[data.id] = data;
-      return acc;
-    })
-      .map(function(data) {
-        var composedData;
-        if (subKeys.length === 0) {
-          composedData = data;
-        } else {
-          console.warn("This hasn't been tested and may not work!");
-          composedData = subKeys
-            .reverse()
-            .reduce(function(acc, p, i, x) {
-              if (i < x.length - 1) {
-                acc[p] = {};
-              } else {
-                acc[p] = data;
-              }
-              return acc;
-            }, [key, {}]);
-        }
-        return [key, composedData];
-      });
-
-    process.stdin.pipe(containerParser);
-
-    endStream.each(function() {
-      headerStream.write(hl.nil);
-      dataStream.write(hl.nil);
-      footerStream.write(hl.nil);
-      /*
-      headerStream.end();
-      dataStream.end();
-      footerStream.end();
-      //*/
-    });
-
-    return hl([headerStream, parsedDataStream, footerStream]).merge()
-      .reduce({}, function(acc, item) {
-        acc[item[0]] = item[1];
-        return acc;
-      })
-      .through(JSONStream.stringify(false))
-      .pipe(process.stdout);
-  });
-
 /*
-echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrichBatch " Homo sapiens" xrefDataSourceNS dbId
+echo '[{"dbId": "1234", "dbConventionalName": "Entrez Gene"},{"dbId": "1235", "dbConventionalName": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrichBatch " Homo sapiens" dbConventionalName dbId
 
-cat data.txt | jq -rc . | bin/bridgedb enrichBatch "Homo sapiens" xrefDataSourceNS dbId
+cat data.txt | jq -rc . | bin/bridgedb enrichBatch "Homo sapiens" dbConventionalName dbId
 
-echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrich "Homo sapiens" xrefDataSourceNS dbId ncbigene ensembl wikidata
+echo '[{"dbId": "1234", "dbConventionalName": "Entrez Gene"},{"dbId": "1235", "dbConventionalName": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrich "Homo sapiens" dbConventionalName dbId ncbigene ensembl wikidata
 //*/
 program
   .command(
-    "addMapppedXrefs <organism> <pathToXrefDataSourceNS> <pathToXrefDataSourceID> <pathToDestination> [mappedXrefDataSourceNS...]"
+    "enrich <organism> <dbConventionalNameProperty> <dbIdProperty> [unificationDataSources...]"
   )
   .action(function(
     organism,
-    pathToXrefDataSourceNS,
-    pathToXrefDataSourceID,
-    mappedXrefDataSourceNSes
+    dbConventionalNameProperty,
+    dbIdProperty,
+    unificationDataSources
   ) {
-    //_.update(object, path, updater)
     var bridgeDb = new BridgeDb();
 
-    if (mappedXrefDataSourceNSes.length === 0) {
-      mappedXrefDataSourceNSes = "*";
+    if (unificationDataSources.length === 0) {
+      unificationDataSources = "*";
     }
 
     hl(process.stdin)
@@ -169,8 +160,8 @@ program
       .flatMap(function(input) {
         var outStream = hl();
 
-        var dbConventionalName = input[pathToXrefDataSourceNS];
-        var dbId = input[pathToXrefDataSourceID];
+        var dbConventionalName = input[dbConventionalNameProperty];
+        var dbId = input[dbIdProperty];
 
         bridgeDb
           .xrefExists(organism, dbConventionalName, dbId)
@@ -180,8 +171,8 @@ program
                   .xrefs(organism, dbConventionalName, dbId)
                   .filter(function(xref) {
                     return (
-                      mappedXrefDataSourceNSes === "*" ||
-                      mappedXrefDataSourceNSes.indexOf(
+                      unificationDataSources === "*" ||
+                      unificationDataSources.indexOf(
                         xref.isDataItemIn.preferredPrefix
                       ) > -1
                     );
@@ -223,11 +214,14 @@ program
   .command("xrefs <organism> <dbConventionalName> <dbId>")
   .action(function(organism, dbConventionalName, dbId) {
     var serialize = ndjson.serialize();
-    var bridgeDb = new BridgeDb();
-    bridgeDb
-      .xrefs(organism, dbConventionalName, dbId)
-      .subscribe(xrefsResponseQueue)
+    makeXrefsRequest(organism, dbConventionalName, dbId)
       .throughNodeStream(serialize)
+      /*
+      .map(function(x) {
+        return JSON.stringify(x);
+      })
+      //*/
+      //.do(console.warn)
       .pipeToStdout();
   });
 // npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
