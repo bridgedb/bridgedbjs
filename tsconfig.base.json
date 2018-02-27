@@ -11,7 +11,8 @@
   },
   "files": [
     "src/index.ts",
-    "src/spinoffs/pipeToStdout.ts"
+    "src/spinoffs/pipeToStdout.ts",
+    "src/spinoffs/toNodeStream.ts"
   ],
   "exclude": [
     "dist/**/*",

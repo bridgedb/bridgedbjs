@@ -4,6 +4,7 @@ var _ = require("lodash");
 var crypto = require("crypto");
 var csv = require("csv-streamify");
 var fs = require("fs");
+var jsonpath = require('jsonpath');
 var path = require("path");
 var BridgeDb = require("../es5/BridgeDb").BridgeDb;
 var hl = require("highland");
@@ -13,6 +14,7 @@ var npmPackage = require("../package.json");
 var program = require("commander");
 var Rx = require("rx-extra");
 require("../es5/spinoffs/pipeToStdout");
+require("../es5/spinoffs/toNodeStream");
 var VError = require("verror");
 
 program
@@ -41,82 +43,220 @@ program.on("--help", function() {
   );
 });
 
-// cat input.json | ./bin/bridgedb addMapppedXrefs1 Human "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" "type" | jq .
+// path options
+// https://www.npmjs.com/package/node-red-contrib-json
+
 program
   .command(
-    "addMapppedXrefs1 <organism> <pathToXrefDataSourceNS> <pathToXrefDataSourceID> <pathToDestination> [mappedXrefDataSourceNS...]"
+    `addXrefMappings <organism> <pathToXrefNS> <pathToXrefID>\\
+    <pathToAddXrefMappings> [xrefMappingNS...]`
+  )
+  .option(
+    "--base [string]",
+    `jq expression that is prepended to all other paths.
+    Default: "$."`
   )
   .action(function(
     organism,
-    pathToXrefDataSourceNS,
-    pathToXrefDataSourceID,
-    mappedXrefDataSourceNSes
+    pathToXrefNS,
+    pathToXrefID,
+    pathToAddXrefMappings,
+    xrefMappingNSes
   ) {
-    var pathToContainerData = _.zip.apply(undefined, [pathToXrefDataSourceNS, pathToXrefDataSourceID].map(function(path) {
-      return path.split('.');
-    })).reduce(function(acc, pair) {
-      var first = pair[0];
-      var second = pair[1];
-      acc.matched = acc.matched && first === second;
-      if (acc.matched) {
-        acc.common.push(first);
-      } else {
-        pair.forEach(function(p, i) {
-          if (acc.sub[i]) {
-            acc.sub[i].push(p);
+    //var bridgeDb = new BridgeDb();
+    //*
+    var bridgeDb = new BridgeDb({
+      baseIri: "http://localhost:4522/",
+      dataSourcesHeadersIri: "http://localhost:4522/datasources_headers.txt",
+      dataSourcesMetadataIri: "http://localhost:4522/datasources.txt"
+    });
+    //*/
+
+    var pathToContainerData = _.zip
+      .apply(
+        undefined,
+        [pathToXrefNS, pathToXrefID].map(function(path) {
+          return path.split(".");
+        })
+      )
+      .reduce(
+        function(acc, pair) {
+          var first = pair[0];
+          var second = pair[1];
+          acc.matched = acc.matched && first === second;
+          if (acc.matched) {
+            acc.common.push(first);
           } else {
-            acc.sub[i] = [p];
+            pair.forEach(function(p, i) {
+              if (acc.sub[i]) {
+                acc.sub[i].push(p);
+              } else {
+                acc.sub[i] = [p];
+              }
+            });
           }
-        });
-      }
-      return acc;
-    }, {matched: true, common: [], sub: []});
-    var pathToContainer = pathToContainerData.common.join('.');
-    var relPathToXrefDataSourceNS = pathToContainerData.sub[0].join('.');
-    var relPathToXrefDataSourceID = pathToContainerData.sub[1].join('.');
+          return acc;
+        },
+        { matched: true, common: [], sub: [] }
+      );
+    //var pathToContainer = pathToContainerData.common.join(".");
+    var pathToContainer = pathToContainerData.common.map(s => s === "*" ? true : s);
+    if (pathToContainer.slice(-1)[0] === true) {
+      pathToContainer[pathToContainer.length - 1] = {emitPath: true};
+    }
+    var relPathToXrefDataSourceNS = pathToContainerData.sub[0].join(".");
+    var relPathToXrefDataSourceID = pathToContainerData.sub[1].join(".");
     var containerParser = JSONStream.parse(pathToContainer);
 
-    var headerStream = hl('header', containerParser).map(function(header) {
+    var headerStream = hl("header", containerParser).map(function(header) {
       return _.toPairs(header)[0];
     });
 
     var key = pathToContainerData.common[0];
-    var subKeys = pathToContainerData.common.filter(function(p) {
-      return !!p && p !== "*";
-    })
-      .slice("1");
 
-    var dataStream = hl('data', containerParser);
+    var dataStream = hl("data", containerParser);
 
-    var footerStream = hl('footer', containerParser).map(function(footer) {
+    var footerStream = hl("footer", containerParser).map(function(footer) {
       return _.toPairs(footer)[0];
     });
 
-    var endStream = hl('end', containerParser);
+    var endStream = hl("end", containerParser);
 
-    var parsedDataStream = dataStream.reduce({}, function(acc, data) {
-      acc[data.id] = data;
-      return acc;
-    })
-      .map(function(data) {
-        var composedData;
-        if (subKeys.length === 0) {
-          composedData = data;
-        } else {
-          console.warn("This hasn't been tested and may not work!");
-          composedData = subKeys
-            .reverse()
-            .reduce(function(acc, p, i, x) {
-              if (i < x.length - 1) {
-                acc[p] = {};
-              } else {
-                acc[p] = data;
-              }
-              return acc;
-            }, [key, {}]);
+    var parsedDataStream = dataStream
+      .reduce({ xrefsToMap: {} }, function(acc, data) {
+        var entity = data.value;
+        var entityPath = data.path;
+        var entityKey = entityPath.slice(-1)[0];
+
+        if (!("entitiesByKey" in acc)) {
+          var accIsArray = _.isFinite(entityKey);
+          acc.entitiesByKey = accIsArray ? [] : {};
+          acc.parentKey = entityPath.length > 1 ? entityPath.slice(-2)[0] : null;
         }
-        return [key, composedData];
+
+        var xrefNS = _.get(entity, relPathToXrefDataSourceNS);
+        var xrefID = _.get(entity, relPathToXrefDataSourceID);
+        if (xrefNS && xrefID) {
+          var xrefNSAndID = [xrefNS, xrefID].join(":");
+          if (acc.xrefsToMap[xrefNSAndID]) {
+            acc.xrefsToMap[xrefNSAndID].entityKeys.push(entityKey);
+          } else {
+            acc.xrefsToMap[xrefNSAndID] = {
+              entityKeys: [entityKey],
+              xref: [xrefNS, xrefID]
+            };
+          }
+        }
+        acc.entitiesByKey[entityKey] = entity;
+        return acc;
+      })
+      .flatMap(function(reducedData) {
+        /*
+        console.warn('reducedData');
+        console.warn(reducedData);
+        //*/
+        var values = _.values(reducedData.xrefsToMap);
+        var xrefNSes = _.uniq(
+          values.map(function(value) {
+            return value.xref[0];
+          })
+        );
+        return hl(xrefNSes)
+          .flatMap(function(xrefNS) {
+            return bridgeDb
+              .dataSourceNameToColumnTerm(xrefNS)
+              .filter(function(type) {
+                return type !== null;
+              })
+              .map(function(type) {
+                return xrefNS;
+              })
+              .toNodeStream();
+          })
+          .flatMap(function(xrefNS) {
+            return hl(
+              values.filter(function(value) {
+                return value.xref[0] === xrefNS;
+              })
+            );
+          })
+          .collect()
+          .flatMap(function(valueGroup) {
+            var xrefNSes = valueGroup.map(function(value) {
+              return value.xref[0];
+            });
+            var xrefIDs = valueGroup.map(function(value) {
+              return value.xref[1];
+            });
+            return bridgeDb
+              .xrefsBatch(
+                organism,
+                xrefNSes,
+                xrefIDs
+                //dataSourceFilter?: string
+              )
+              .toNodeStream()
+              .collect()
+              .flatMap(function(xrefsResults) {
+                /*
+                TODO continue approx. here...
+                * Use identifiers.org namespaces
+                * Consider specifying the xref in entitiesById and
+                  then adding the mappings to sameAs.
+                * Then for the SVG, we might only use "type" for class
+                  but use type + mapped sameAs for typeof???
+                * Also, filter to only include primary.
+                //*/
+                xrefsResults.forEach(function(xrefsResult) {
+                  reducedData.xrefsToMap[
+                    xrefsResult.inputDataSource + ":" + xrefsResult.inputDbId
+                  ].entityKeys.forEach(function(entityKey) {
+                    var entity = reducedData.entitiesByKey[entityKey];
+                    // TODO use pathToAddXrefMappings
+                    xrefsResult.xrefs.map(function(xref) {
+                      var mapped = [xref.dataSource, xref.dbId].join(":");
+                      if (entity.type.indexOf(mapped) === -1) {
+                        entity.type.push(mapped);
+                      }
+                    });
+                  });
+                });
+                var parentKey = reducedData.parentKey;
+                if (!!parentKey) {
+                  return hl([headerStream, footerStream])
+                    .merge()
+                    .reduce({[parentKey]: reducedData.entitiesByKey}, function(acc, item) {
+                      acc[item[0]] = item[1];
+                      return acc;
+                    })
+                    .through(JSONStream.stringify(false))
+                } else {
+                  return hl(reducedData.entitiesByKey)
+                    .through(JSONStream.stringify())
+                }
+              });
+          });
       });
+//      .map(function(data) {
+//        var composedData;
+//        if (subKeys.length === 0) {
+//          composedData = data;
+//        } else {
+//          throw new Error("Don't know how to handle case of deeply nested entities.");
+//          /*
+//          console.warn("This hasn't been tested and may not work!");
+//          composedData = subKeys.reverse().reduce(function(acc, p, i, x) {
+//            if (i < x.length - 1) {
+//              acc[p] = {};
+//            } else {
+//              acc[p] = data;
+//            }
+//            return acc;
+//          }, [key, {}]);
+//          //*/
+//        }
+//        return [key, composedData];
+//      });
 
     process.stdin.pipe(containerParser);
 
@@ -131,37 +271,54 @@ program
       //*/
     });
 
-    return hl([headerStream, parsedDataStream, footerStream]).merge()
-      .reduce({}, function(acc, item) {
-        acc[item[0]] = item[1];
-        return acc;
-      })
-      .through(JSONStream.stringify(false))
+    return parsedDataStream
       .pipe(process.stdout);
+  })
+  .on("--help", function() {
+    console.log(`
+  This has been tested on the pvjson format from gpml2pvjson:
+    <https://github.com/wikipathways/gpml2json>
+    If you are using it on another format, exercise caution and verify your results.
+      
+  Paths are in JSON Path format: <http://goessner.net/articles/JsonPath/>
+
+  Examples:
+    cat input.json |\
+      ./bin/bridgedb addMapppedXrefs Human "entitiesById.*.dbConventionalName"\
+        "entitiesById.*.dbId" "type" ensembl |\
+      jq .
+    `);
   });
 
 /*
-echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrichBatch " Homo sapiens" xrefDataSourceNS dbId
+echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},'\
+    '{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' |\
+  jq -rc .[] |\
+  ./bin/bridgedb enrichBatch " Homo sapiens" xrefDataSourceNS dbId
 
 cat data.txt | jq -rc . | bin/bridgedb enrichBatch "Homo sapiens" xrefDataSourceNS dbId
 
-echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' | jq -rc .[] | ./bin/bridgedb enrich "Homo sapiens" xrefDataSourceNS dbId ncbigene ensembl wikidata
+echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},'\
+    '{"dbId": "1235", "xrefDataSourceNS": "Entrez Gene"}]' |\
+  jq -rc .[] |\
+  ./bin/bridgedb enrich "Homo sapiens" xrefDataSourceNS dbId ncbigene ensembl wikidata
 //*/
 program
   .command(
-    "addMapppedXrefs <organism> <pathToXrefDataSourceNS> <pathToXrefDataSourceID> <pathToDestination> [mappedXrefDataSourceNS...]"
+    `addMapppedXrefsSlowly <organism> <pathToXrefNS> <pathToXrefID>\\
+    <pathToAddXrefMappings> [xrefMappingNS...]`
   )
   .action(function(
     organism,
-    pathToXrefDataSourceNS,
-    pathToXrefDataSourceID,
-    mappedXrefDataSourceNSes
+    pathToXrefNS,
+    pathToXrefID,
+    xrefMappingNSes
   ) {
     //_.update(object, path, updater)
     var bridgeDb = new BridgeDb();
 
-    if (mappedXrefDataSourceNSes.length === 0) {
-      mappedXrefDataSourceNSes = "*";
+    if (xrefMappingNSes.length === 0) {
+      xrefMappingNSes = "*";
     }
 
     hl(process.stdin)
@@ -169,8 +326,8 @@ program
       .flatMap(function(input) {
         var outStream = hl();
 
-        var dbConventionalName = input[pathToXrefDataSourceNS];
-        var dbId = input[pathToXrefDataSourceID];
+        var dbConventionalName = input[pathToXrefNS];
+        var dbId = input[pathToXrefID];
 
         bridgeDb
           .xrefExists(organism, dbConventionalName, dbId)
@@ -180,8 +337,8 @@ program
                   .xrefs(organism, dbConventionalName, dbId)
                   .filter(function(xref) {
                     return (
-                      mappedXrefDataSourceNSes === "*" ||
-                      mappedXrefDataSourceNSes.indexOf(
+                      xrefMappingNSes === "*" ||
+                      xrefMappingNSes.indexOf(
                         xref.isDataItemIn.preferredPrefix
                       ) > -1
                     );
@@ -214,11 +371,6 @@ program
       .pipe(process.stdout);
   });
 
-// npm run compile:es5 && ./bin/bridgedb xrefs 'Homo sapiens' 'Entrez Gene' '1234'
-//
-// cat test/dbNamesAndIds.csv | while read ln; do xrefDb=`echo $ln | sed s/,.*//g`; xrefId=`echo $ln | sed 's/^.*,//g'`; echo "$xrefDb" "$xrefId"; ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId"; done
-
-// cat test/dbNamesAndIds.csv | while read ln; do xrefDb=`echo $ln | sed s/,.*//g`; xrefId=`echo $ln | sed 's/^.*,//g'`; echo "$xrefDb" "$xrefId"; ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId" | jq ". | .dbId | {\"$xrefId\": .}" | tee $xrefId.tsv & done
 program
   .command("xrefs <organism> <dbConventionalName> <dbId>")
   .action(function(organism, dbConventionalName, dbId) {
@@ -229,29 +381,56 @@ program
       .subscribe(xrefsResponseQueue)
       .throughNodeStream(serialize)
       .pipeToStdout();
+  })
+  .on("--help", function() {
+    console.log(`
+  Examples:
+    cat input.json |\
+      ./bin/bridgedb addMapppedXrefs Human "entitiesById.*.dbConventionalName"\
+        "entitiesById.*.dbId" "type" ensembl |\
+      jq .
+
+    For developers:
+      npm run compile:es5 && ./bin/bridgedb xrefs 'Homo sapiens' 'Entrez Gene' '1234'
+
+      cat test/dbNamesAndIds.csv |\\
+      while read ln; do \\
+        xrefDb=\${echo $ln | sed s/,.*//g}; \\
+        xrefId=\${echo $ln | sed 's/^.*,//g'}; \\
+        echo "$xrefDb" "$xrefId"; \\
+        ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId"; \\
+      done
+
+      cat test/dbNamesAndIds.csv |\
+      while read ln; do \\
+        xrefDb=\${echo $ln | sed s/,.*//g}; \\
+        xrefId=\${echo $ln | sed 's/^.*,//g'}; \\
+        echo "$xrefDb" "$xrefId"; \\
+        ./bin/bridgedb xrefs "Homo sapiens" "$xrefDb" "$xrefId" |\\
+        jq ". | .dbId | {\"$xrefId\": .}" |\\
+        tee $xrefId.tsv & \\
+      done
+    `);
   });
-// npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
-// npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
-/*
-cat ../gpml2pvjson-js/test/expected/WP481_94171.json | jq '.entitiesById[] | select(has("dbConventionalName") and .kaavioType=="SingleFreeNode") | .dbConventionalName+"\t"+.dbId'
-*/
+
 program
   .command("datasource <input> [as]")
   .option(
     "--format [string]",
-    'Column format to return when identifying a data source name format: term or iri. Default: "term"'
+    `Column format to return when identifying a data source name format: term or iri.
+    Default: "term"`
   )
   .action(function(input, as, options) {
-    var format = !!options['format'] ? options['format'] : 'term';
+    var format = !!options["format"] ? options["format"] : "term";
     var serialize = ndjson.serialize();
     var bridgeDb = new BridgeDb();
     if (!!as) {
-        bridgeDb
-          .convertDataSourceNameTo(as, input)
-          .throughNodeStream(serialize)
-          .pipeToStdout();
+      bridgeDb
+        .convertDataSourceNameTo(as, input)
+        .throughNodeStream(serialize)
+        .pipeToStdout();
     } else {
-      if (format === 'term') {
+      if (format === "term") {
         bridgeDb
           .dataSourceNameToColumnTerm(input)
           .throughNodeStream(serialize)
@@ -263,26 +442,23 @@ program
           .pipeToStdout();
       }
     }
+  })
+  .on("--help", function() {
+    console.log(`
+  Examples:
+
+    For developers:
+      npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
+
+      npm run compile:es5 && ./bin/bridgedb dataSource 'Entrez Gene'
+
+      cat ../gpml2pvjson-js/test/expected/WP481_94171.json |\\
+      jq '.entitiesById[] |'\\
+        ' select(has("dbConventionalName") and .kaavioType=="SingleFreeNode") |'\\
+        ' .dbConventionalName+"\t"+.dbId'
+    `);
   });
 
-/*
-Compile, if needed:
-npm run compile:es5
-
-Run it, as in one of the following examples:
-
-echo $'1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene'
-
-./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' <<< $'1234\n1235\n'
-
-echo $'dbId\n1234\n1235\n' | ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' --headers=true
-
-cat test/dbIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens" --dbConventionalName="Entrez Gene"
-
-./bin/bridgedb xrefsBatch --organism="Homo sapiens" < test/dbNamesAndIds.csv
-
-cat test/dbNamesAndIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens"
-*/
 program
   .command(
     "xrefsBatch [dbIdColumn] [dbConventionalNameColumn] [organismColumn]"
@@ -387,44 +563,80 @@ program
           });
       })
       .map(function(result) {
-        return '\t' + result.id + '\n\t\t' + result.xrefs.map(function(xref) {
-          return [xref.dataSource, xref.dbId].join('\t');
-        }).join('\n\t\t') + '\n'
+        return (
+          "\t" +
+          result.id +
+          "\n\t\t" +
+          result.xrefs
+            .map(function(xref) {
+              return [xref.dataSource, xref.dbId].join("\t");
+            })
+            .join("\n\t\t") +
+          "\n"
+        );
       })
       //.throughNodeStream(serialize)
       .pipeToStdout();
 
-//          .mergeMap(function(dataSource) {
-//            if (!dataSource || !dataSource.id) {
-//              return Rx.Observable.throw(
-//                new Error(`Cannot process "${dbConventionalName}:${dbId}"`)
-//              );
-//            }
-//            var id = dataSource.id + dbId;
-//            return bridgeDb
-//              .xrefs(organism, dbConventionalName, dbId)
-//            /*
-//            .map(function(xref) {
-//              return [xref.dataSource, xref.dbId].join('\t');
-//            })
-//              .toArray()
-//              .map(function(xrefStrings) {
-//                return xrefStrings.join('\n');
-//              });
-//            //*/
-//            //*
-//              .toArray()
-//              .map(function(xrefs) {
-//                return {
-//                  id: id,
-//                  //dbConventionalName: dbConventionalName,
-//                  //dbId: dbId,
-//                  //organism: organism,
-//                  xrefs: xrefs
-//                };
-//              });
-//            //*/
-//          });
+    //          .mergeMap(function(dataSource) {
+    //            if (!dataSource || !dataSource.id) {
+    //              return Rx.Observable.throw(
+    //                new Error(`Cannot process "${dbConventionalName}:${dbId}"`)
+    //              );
+    //            }
+    //            var id = dataSource.id + dbId;
+    //            return bridgeDb
+    //              .xrefs(organism, dbConventionalName, dbId)
+    //            /*
+    //            .map(function(xref) {
+    //              return [xref.dataSource, xref.dbId].join('\t');
+    //            })
+    //              .toArray()
+    //              .map(function(xrefStrings) {
+    //                return xrefStrings.join('\n');
+    //              });
+    //            //*/
+    //            //*
+    //              .toArray()
+    //              .map(function(xrefs) {
+    //                return {
+    //                  id: id,
+    //                  //dbConventionalName: dbConventionalName,
+    //                  //dbId: dbId,
+    //                  //organism: organism,
+    //                  xrefs: xrefs
+    //                };
+    //              });
+    //            //*/
+    //          });
+  })
+  .on("--help", function() {
+    console.log(`
+  Examples:
+
+    For developers:
+      Compile, if needed:
+      npm run compile:es5
+
+      Run it, as in one of the following examples:
+
+      echo $'1234\n1235\n' |\\
+      ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene'
+
+      ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName 'Entrez Gene' \\
+      <<< $'1234\n1235\n'
+
+      echo $'dbId\n1234\n1235\n' |\\
+      ./bin/bridgedb xrefsBatch --organism 'Homo sapiens' --dbConventionalName \\
+        'Entrez Gene' --headers=true
+
+      cat test/dbIds.csv |\\
+      ./bin/bridgedb xrefsBatch --organism="Homo sapiens" --dbConventionalName="Entrez Gene"
+
+      ./bin/bridgedb xrefsBatch --organism="Homo sapiens" < test/dbNamesAndIds.csv
+
+      cat test/dbNamesAndIds.csv | ./bin/bridgedb xrefsBatch --organism="Homo sapiens"
+    `);
   });
 
 program.parse(process.argv);

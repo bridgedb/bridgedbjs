@@ -461,10 +461,12 @@ export class BridgeDb {
     let bridgeDb = this;
     return bridgeDb.dataSourceMappings$
       .map(mapping => mapping[input])
-      .map(
-        dataSource =>
-          toPairs(dataSource).find(([key, value]) => value === input)[0]
-      )
+      .map(dataSource => {
+        const match = toPairs(dataSource).find(
+          ([key, value]) => value === input
+        );
+        return !!match ? match[0] : null;
+      })
       .catch(err => {
         throw new VError(err, "calling bridgedb.inputDataSourceFormat");
       });
@@ -478,7 +480,12 @@ export class BridgeDb {
       .mergeMap(term =>
         bridgeDb.dataSourceColumnTermToIri$
           .first()
-          .map(dataSourceColumnTermToIri => dataSourceColumnTermToIri[term])
+          .map(
+            dataSourceColumnTermToIri =>
+              !!dataSourceColumnTermToIri
+                ? dataSourceColumnTermToIri[term]
+                : null
+          )
       );
     /*
       .catch(err => {
