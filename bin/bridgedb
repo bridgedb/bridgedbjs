@@ -49,7 +49,7 @@ program.on("--help", function() {
 program
   .command(
     `addXrefMappings <organism> <pathToXrefNS> <pathToXrefID>\\
-    <pathToAddXrefMappings> [xrefMappingNS...]`
+    <pathToAddXrefMappings> [mapToXrefNS...]`
   )
   .option(
     "--base [string]",
@@ -61,7 +61,7 @@ program
     pathToXrefNS,
     pathToXrefID,
     pathToAddXrefMappings,
-    xrefMappingNSes
+    mapToXrefNSes
   ) {
     //var bridgeDb = new BridgeDb();
     //*
@@ -137,7 +137,7 @@ program
     var endStream = hl("end", containerParser);
 
     var parsedDataStream = dataStream
-      .reduce({ xrefsToMap: {} }, function(acc, data) {
+      .reduce({ inputXrefsById: {} }, function(acc, data) {
         var entity = data.value;
         var entityPath = data.path;
         var entityKey = entityPath.slice(-1)[0];
@@ -152,12 +152,13 @@ program
         var xrefID = _.get(entity, relPathToXrefDataSourceID);
         if (xrefNS && xrefID) {
           var xrefNSAndID = [xrefNS, xrefID].join(":");
-          if (acc.xrefsToMap[xrefNSAndID]) {
-            acc.xrefsToMap[xrefNSAndID].entityKeys.push(entityKey);
+          if (acc.inputXrefsById[xrefNSAndID]) {
+            acc.inputXrefsById[xrefNSAndID].entityKeys.push(entityKey);
           } else {
-            acc.xrefsToMap[xrefNSAndID] = {
+            acc.inputXrefsById[xrefNSAndID] = {
               entityKeys: [entityKey],
-              xref: [xrefNS, xrefID]
+              NS: xrefNS,
+              ID: xrefID
             };
           }
         }
@@ -169,87 +170,136 @@ program
         console.warn('reducedData');
         console.warn(reducedData);
         //*/
-        var values = _.values(reducedData.xrefsToMap);
-        var xrefNSes = _.uniq(
-          values.map(function(value) {
-            return value.xref[0];
+        var inputXrefs = _.values(reducedData.inputXrefsById);
+        var inputXrefNSes = _.uniq(
+          inputXrefs.map(function(inputXref) {
+            return inputXref.NS;
           })
         );
-        return hl(xrefNSes)
-          .flatMap(function(xrefNS) {
-            return bridgeDb
-              .dataSourceNameToColumnTerm(xrefNS)
-              .filter(function(type) {
-                return type !== null;
-              })
-              .map(function(type) {
-                return xrefNS;
-              })
-              .toNodeStream();
-          })
-          .flatMap(function(xrefNS) {
-            return hl(
-              values.filter(function(value) {
-                return value.xref[0] === xrefNS;
-              })
-            );
-          })
-          .collect()
-          .flatMap(function(valueGroup) {
-            var xrefNSes = valueGroup.map(function(value) {
-              return value.xref[0];
+
+        var xrefNSFormatter$;
+        if (!!mapToXrefNSes) {
+          xrefNSFormatter$ = hl([mapToXrefNSes[0]])
+            .flatMap(function(mapToXrefNS) {
+              return bridgeDb
+                .dataSourceNameToColumnTerm(mapToXrefNS)
+                .first()
+                .map(function(mapToXrefNSType) {
+                  return bridgeDb.convertDataSourceNameTo(mapToXrefNSType);
+                })
+                .toNodeStream()
             });
-            var xrefIDs = valueGroup.map(function(value) {
-              return value.xref[1];
-            });
-            return bridgeDb
-              .xrefsBatch(
-                organism,
-                xrefNSes,
-                xrefIDs
-                //dataSourceFilter?: string
-              )
-              .toNodeStream()
-              .collect()
-              .flatMap(function(xrefsResults) {
-                /*
-                TODO continue approx. here...
-                * Use identifiers.org namespaces
-                * Consider specifying the xref in entitiesById and
-                  then adding the mappings to sameAs.
-                * Then for the SVG, we might only use "type" for class
-                  but use type + mapped sameAs for typeof???
-                * Also, filter to only include primary.
-                //*/
-                xrefsResults.forEach(function(xrefsResult) {
-                  reducedData.xrefsToMap[
-                    xrefsResult.inputDataSource + ":" + xrefsResult.inputDbId
-                  ].entityKeys.forEach(function(entityKey) {
-                    var entity = reducedData.entitiesByKey[entityKey];
-                    // TODO use pathToAddXrefMappings
-                    xrefsResult.xrefs.map(function(xref) {
-                      var mapped = [xref.dataSource, xref.dbId].join(":");
-                      if (entity.type.indexOf(mapped) === -1) {
-                        entity.type.push(mapped);
-                      }
-                    });
+        } else {
+          xrefNSFormatter$ = hl([Rx.Observable.of])
+        }
+
+        return xrefNSFormatter$
+              .flatMap(function(xrefNSFormatter) {
+                return hl(inputXrefNSes)
+                  .flatMap(function(inputXrefNS) {
+                    return bridgeDb
+                      .dataSourceNameToColumnTerm(inputXrefNS)
+                      .filter(function(inputXrefNSType) {
+                        return inputXrefNSType !== null;
+                      })
+                      .map(function(inputXrefNSType) {
+                        return {inputXrefNS, inputXrefNSType};
+                      })
+                      .toNodeStream();
+                  })
+                  .flatMap(function({inputXrefNS, inputXrefNSType}) {
+                    return hl(
+                      inputXrefs.filter(function(inputXref) {
+                        return inputXref.NS === inputXrefNS;
+                      })
+                      .map(function(inputXref) {
+                        inputXref.NSType = inputXrefNSType;
+                        return inputXref;
+                      })
+                    );
+                  })
+                  .collect()
+                  .flatMap(function(inputXrefs) {
+                    return bridgeDb
+                      .xrefsBatch(
+                        organism,
+                        inputXrefs.map(({NS}) => NS),
+                        inputXrefs.map(({ID}) => ID)
+                        //dataSourceFilter?: string
+                      )
+                      .mergeMap(function(xrefsResult) {
+                        return Rx.Observable.from(xrefsResult.xrefs)
+                          .mergeMap(function(xref) {
+                            return xrefNSFormatter(xref.dataSource)
+                              .filter(xrefNS => !mapToXrefNSes ||
+                                mapToXrefNSes.indexOf(xrefNS) > -1)
+                              .map(function(xrefNS) {
+                                return {
+                                  NS: xrefNS,
+                                  ID: xref.dbId
+                                };
+                              });
+                          })
+                          .toArray()
+                          .map(function(xrefs) {
+                            xrefsResult.xrefs = xrefs;
+                            return xrefsResult;
+                            /*
+                            return {
+                              xrefs,
+                              ...xrefResult
+                            };
+                            return {
+                              organism: xrefResult.organism,
+                              inputDataSource: xrefResult.inputDataSource,
+                              inputDbId: xrefResult.inputDbId,
+                              xrefs: xrefs
+                            };
+                            //*/
+                          });
+                      })
+                      .toArray()
+                      .toNodeStream()
+                      .flatMap(function(xrefsResults) {
+                        /*
+                        TODO continue approx. here...
+                        * Use identifiers.org namespaces
+                        * Consider specifying the xref in entitiesById and
+                          then adding the mappings to sameAs.
+                        * Then for the SVG, we might only use "type" for class
+                          but use type + mapped sameAs for typeof???
+                        * Also, filter to only include primary.
+                        //*/
+                        xrefsResults.forEach(function(xrefsResult) {
+                          reducedData.inputXrefsById[
+                            xrefsResult.inputDataSource + ":" + xrefsResult.inputDbId
+                          ].entityKeys.forEach(function(entityKey) {
+                            var entity = reducedData.entitiesByKey[entityKey];
+                            // TODO use pathToAddXrefMappings
+                            xrefsResult.xrefs.map(function(xref) {
+                              var mapped = [xref.NS, xref.ID].join(":");
+                              if (entity.type.indexOf(mapped) === -1) {
+                                entity.type.push(mapped);
+                              }
+                            });
+                          });
+                        });
+                        var parentKey = reducedData.parentKey;
+                        if (!!parentKey) {
+                          return hl([headerStream, footerStream])
+                            .merge()
+                            .reduce({[parentKey]: reducedData.entitiesByKey}, function(acc, item) {
+                              acc[item[0]] = item[1];
+                              return acc;
+                            })
+                            .through(JSONStream.stringify(false))
+                        } else {
+                          return hl(reducedData.entitiesByKey)
+                            .through(JSONStream.stringify())
+                        }
+                      });
                   });
-                });
-                var parentKey = reducedData.parentKey;
-                if (!!parentKey) {
-                  return hl([headerStream, footerStream])
-                    .merge()
-                    .reduce({[parentKey]: reducedData.entitiesByKey}, function(acc, item) {
-                      acc[item[0]] = item[1];
-                      return acc;
-                    })
-                    .through(JSONStream.stringify(false))
-                } else {
-                  return hl(reducedData.entitiesByKey)
-                    .through(JSONStream.stringify())
-                }
               });
-          });
       });
 //      .map(function(data) {
 //        var composedData;
@@ -317,73 +367,6 @@ echo '[{"dbId": "1234", "xrefDataSourceNS": "Entrez Gene"},'\
   jq -rc .[] |\
   ./bin/bridgedb enrich "Homo sapiens" xrefDataSourceNS dbId ncbigene ensembl wikidata
 //*/
-program
-  .command(
-    `addMapppedXrefsSlowly <organism> <pathToXrefNS> <pathToXrefID>\\
-    <pathToAddXrefMappings> [xrefMappingNS...]`
-  )
-  .action(function(
-    organism,
-    pathToXrefNS,
-    pathToXrefID,
-    xrefMappingNSes
-  ) {
-    //_.update(object, path, updater)
-    var bridgeDb = new BridgeDb();
-
-    if (xrefMappingNSes.length === 0) {
-      xrefMappingNSes = "*";
-    }
-
-    hl(process.stdin)
-      .through(ndjson.parse())
-      .flatMap(function(input) {
-        var outStream = hl();
-
-        var dbConventionalName = input[pathToXrefNS];
-        var dbId = input[pathToXrefID];
-
-        bridgeDb
-          .xrefExists(organism, dbConventionalName, dbId)
-          .mergeMap(function(exists) {
-            return exists
-              ? bridgeDb
-                  .xrefs(organism, dbConventionalName, dbId)
-                  .filter(function(xref) {
-                    return (
-                      xrefMappingNSes === "*" ||
-                      xrefMappingNSes.indexOf(
-                        xref.isDataItemIn.preferredPrefix
-                      ) > -1
-                    );
-                  })
-                  .map(function(xref) {
-                    var preferredPrefix = xref.isDataItemIn.preferredPrefix;
-                    var dbId = xref.dbId;
-                    input[preferredPrefix] = dbId;
-                    input.type = input.type || [];
-                    input.type.push(preferredPrefix + ":" + dbId);
-                    return input;
-                  })
-              : Rx.Observable.empty();
-          })
-          .subscribe(
-            null,
-            function(err) {
-              throw err;
-              //outStream.write(err);
-              outStream.error(err);
-            },
-            function() {
-              outStream.write(input);
-              outStream.end();
-            }
-          );
-        return outStream;
-      })
-      .through(ndjson.serialize())
-      .pipe(process.stdout);
-  });
 
 program
   .command("xrefs <organism> <dbConventionalName> <dbId>")

@@ -22,6 +22,7 @@ if (!global.hasOwnProperty("XMLHttpRequest")) {
   global.XMLHttpRequest = require("xhr2");
 }
 
+import { curry } from "lodash/fp";
 import {
   camelCase,
   defaultsDeep,
@@ -259,6 +260,11 @@ export class BridgeDb {
         });
       })
       .map(function(dataSource: DataSource) {
+        // Kluge to temporarily handle this issue:
+        // https://github.com/bridgedb/BridgeDb/issues/58
+        if (dataSource.id === "Sp") {
+          dataSource.id = "urn:miriam:uniprot";
+        }
         // If the Miriam URN is unknown or unspecified, datasources.txt uses
         // the BridgeDb system code as a placeholder value.
         // So here we make sure "id" is actually a Miriam URN.
@@ -445,17 +451,16 @@ export class BridgeDb {
       });
   }
 
-  convertDataSourceNameTo = (
-    targetType: string,
-    input: string
-  ): Observable<string> => {
-    let bridgeDb = this;
-    return bridgeDb.dataSourceMappings$
-      .map(mapping => mapping[input][targetType])
-      .catch(err => {
-        throw new VError(err, "calling bridgedb.convertDataSourceNameTo");
-      });
-  };
+  convertDataSourceNameTo = curry(
+    (targetType: string, input: string): Observable<string> => {
+      let bridgeDb = this;
+      return bridgeDb.dataSourceMappings$
+        .map(mapping => mapping[input][targetType])
+        .catch(err => {
+          throw new VError(err, "calling bridgedb.convertDataSourceNameTo");
+        });
+    }
+  );
 
   dataSourceNameToColumnTerm = (input: string): Observable<string> => {
     let bridgeDb = this;
