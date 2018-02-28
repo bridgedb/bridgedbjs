@@ -105,7 +105,11 @@ program
       pathToContainer[pathToContainer.length - 1] = {emitPath: true};
     }
     var relPathToXrefDataSourceNS = pathToContainerData.sub[0].join(".");
+    console.warn('relPathToXrefDataSourceNS');
+    console.warn(relPathToXrefDataSourceNS);
     var relPathToXrefDataSourceID = pathToContainerData.sub[1].join(".");
+    console.warn('relPathToXrefDataSourceID');
+    console.warn(relPathToXrefDataSourceID);
     var containerParser = JSONStream.parse(pathToContainer);
 
     var headerStream = hl("header", containerParser).map(function(header) {
