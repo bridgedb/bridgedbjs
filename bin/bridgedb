@@ -72,7 +72,7 @@ program
     });
     //*/
 
-    var pathToContainerData = _.zip
+    var {common, sub} = _.zip
       .apply(
         undefined,
         [pathToXrefNS, pathToXrefID].map(function(path) {
@@ -99,24 +99,34 @@ program
         },
         { matched: true, common: [], sub: [] }
       );
-    //var pathToContainer = pathToContainerData.common.join(".");
-    var pathToContainer = pathToContainerData.common.map(s => s === "*" ? true : s);
-    if (pathToContainer.slice(-1)[0] === true) {
-      pathToContainer[pathToContainer.length - 1] = {emitPath: true};
+
+    if (_.intersection(_.uniq(sub), ["*", true]).length > 0) {
+      throw new Error(`There must only be one xrefNS per xrefID, but
+      provided paths may violate that constraint.`);
     }
-    var relPathToXrefDataSourceNS = pathToContainerData.sub[0].join(".");
-    console.warn('relPathToXrefDataSourceNS');
-    console.warn(relPathToXrefDataSourceNS);
-    var relPathToXrefDataSourceID = pathToContainerData.sub[1].join(".");
-    console.warn('relPathToXrefDataSourceID');
-    console.warn(relPathToXrefDataSourceID);
-    var containerParser = JSONStream.parse(pathToContainer);
+
+    var pathToContainerParsed = common.map(s => s === "*" ? true : s);
+    var wildcardCount = pathToContainerParsed.filter(p => p === true).length;
+    if (wildcardCount > 0) {
+      if (wildcardCount > 1) {
+        throw new Error(`Not currently able to parse more than one wildcard.`);
+      } else if (pathToContainerParsed.slice(-1)[0] === true) {
+        pathToContainerParsed[pathToContainerParsed.length - 1] = {emitPath: true};
+      } else {
+        throw new Error(`Not currently able to parse wildcard at different locations
+          for xrefNS and xrefID.`);
+      }
+    }
+    const [relPathToXrefDataSourceNSParsed, relPathToXrefDataSourceIDParsed] = sub;
+    var relPathToXrefDataSourceNS = relPathToXrefDataSourceNSParsed.join(".");
+    var relPathToXrefDataSourceID = relPathToXrefDataSourceIDParsed.join(".");
+    var containerParser = JSONStream.parse(pathToContainerParsed);
 
     var headerStream = hl("header", containerParser).map(function(header) {
       return _.toPairs(header)[0];
     });
 
-    var key = pathToContainerData.common[0];
+    var key = common[0];
 
     var dataStream = hl("data", containerParser);
 
