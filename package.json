@@ -94,6 +94,7 @@
     "lodash": "^4.11.1",
     "ndjson": "^1.5.0",
     "node-ipc": "^9.1.1",
+    "node-jq": "^1.2.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.1",
     "react-addons-shallow-compare": "^15.4.1",

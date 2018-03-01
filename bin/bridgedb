@@ -45,25 +45,122 @@ program.on("--help", function() {
 
 // path options
 // https://www.npmjs.com/package/node-red-contrib-json
+// JSONata: https://github.com/jsonata-js/jsonata/blob/master/tutorial.md
+// JSON Path: http://goessner.net/articles/JsonPath/
+// jq
+// ...
 
+function jsonPathToLodashPath(jsonPath) {
+  const jsonPathParsed = parseJsonPath(jsonPath);
+  const unhandledOperators = _.intersection(jsonPathParsed, ["..", "*"]);
+  if (unhandledOperators.length > 0) {
+    throw new Error(`Cannot currently handle ${unhandledOperators.join()} operator(s).`);
+  }
+  return jsonPathParsed.filter(s => s !== "$").map(s => s === true ? "*" : s).join(".");
+}
+
+function serializeJsonPath(pathComponents) {
+  const unhandledOperators = _.intersection(pathComponents, [".."]);
+  if (unhandledOperators.length > 0) {
+    throw new Error(`Cannot currently handle ${unhandledOperators.join()} operator(s).`);
+  }
+  return pathComponents.map(s => s === true ? "*" : s).join(".");
+}
+
+function parseJsonPath(path) {
+  if (path.indexOf("..") > -1) {
+    throw new Error('Cannot currently handle ".." operator.');
+  }
+  return path.split(".").map(s => s === "*" ? true : s);
+}
+
+/************
+ * jq
+ **********/
+
+function jqToJSONStreamPath(jqPath) {
+  const jqPathParsed = parseJQPath(jqPath);
+  const unhandledOperators = _.intersection(jqPathParsed, [".."]);
+  if (unhandledOperators.length > 0) {
+    throw new Error(`Cannot currently handle ${unhandledOperators.join()} operator(s).`);
+  }
+  return jqPathParsed.map(s => s === true ? "*" : s).join(".");
+}
+
+function jqPathToLodashParsedPath(jqPath) {
+  const jqPathParsed = parseJQPath(jqPath);
+  const unhandledOperators = _.intersection(jqPathParsed, ["..", true]);
+  if (unhandledOperators.length > 0) {
+    throw new Error(`Cannot currently handle ${unhandledOperators.join()} operator(s).`);
+  }
+  return jqPathParsed;
+}
+
+/*
+function serializeJQPath(pathComponents) {
+  const unhandledOperators = _.intersection(pathComponents, [".."]);
+  if (unhandledOperators.length > 0) {
+    throw new Error(`Cannot currently handle ${unhandledOperators.join()} operator(s).`);
+  }
+  return pathComponents.map(s => s === true ? "*" : s).join(".");
+}
+//*/
+
+function parseJQPath(path) {
+  return path.replace(/^\./, "")
+    .split(".")
+    .reduce((acc, s) => {
+      (s.match(/(\w+)(\[\w*\])?/) || [])
+        .slice(1)
+        .filter(_.negate(_.isUndefined))
+        .map(s => s === "[]" ? true : s.replace(/\[(\w+)\]/, "\1"))
+        //.map(s => s.replace(/\[(\w+)\]/, "\1").replace(/\[\]/, true))
+        .forEach(function(s) {
+          acc.push(s);
+        });
+      return acc;
+    }, []);
+}
+
+function resolveJQPath(base, relativePath) {
+  if (base.endsWith(".") && relativePath.startsWith(".")) {
+    return base + relativePath.replace(/^\./, "");
+  } else if (base.endsWith(".") || relativePath.startsWith(".")) {
+    return base + relativePath;
+  } else {
+    return base + "." + relativePath;
+  }
+}
+
+/* Similar to HTML base element
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+ * and xml:base
+ * https://www.w3.org/TR/xmlbase/
+ */
+const DEFAULT_ADDMAPPEDXREFS_BASE = ".";
+//const DEFAULT_ADDMAPPEDXREFS_BASE = "$";
 program
   .command(
-    `addXrefMappings <organism> <pathToXrefNS> <pathToXrefID>\\
-    <pathToAddXrefMappings> [mapToXrefNS...]`
+    `addMappedXrefs <organism> <pathToXrefNS> <pathToXrefID>\\
+    <pathToAddMappedXrefs> [mapToXrefNS...]`
   )
   .option(
-    "--base [string]",
+    "-b,--base [path]",
     `jq expression that is prepended to all other paths.
-    Default: "$."`
+    Default: "${DEFAULT_ADDMAPPEDXREFS_BASE}"`,
+    (base) => !!base ? base : DEFAULT_ADDMAPPEDXREFS_BASE
   )
   .action(function(
     organism,
     pathToXrefNS,
     pathToXrefID,
-    pathToAddXrefMappings,
-    mapToXrefNSes
+    pathToAddMappedXrefs,
+    mapToXrefNSes,
+    optionsRaw
   ) {
-    //var bridgeDb = new BridgeDb();
+    /*
+    var bridgeDb = new BridgeDb();
+    //*/
     //*
     var bridgeDb = new BridgeDb({
       baseIri: "http://localhost:4522/",
@@ -72,17 +169,19 @@ program
     });
     //*/
 
+    const options = _.defaults(optionsRaw, {
+      base: DEFAULT_ADDMAPPEDXREFS_BASE
+    });
+    var base = options.base;
+
     var {common, sub} = _.zip
       .apply(
         undefined,
-        [pathToXrefNS, pathToXrefID].map(function(path) {
-          return path.split(".");
-        })
+        [pathToXrefNS, pathToXrefID].map(p => resolveJQPath(base, p)).map(parseJQPath)
       )
       .reduce(
         function(acc, pair) {
-          var first = pair[0];
-          var second = pair[1];
+          const [first, second] = pair;
           acc.matched = acc.matched && first === second;
           if (acc.matched) {
             acc.common.push(first);
@@ -99,34 +198,46 @@ program
         },
         { matched: true, common: [], sub: [] }
       );
+    const [relPathToXrefDataSourceNSParsed, relPathToXrefDataSourceIDParsed] = sub;
 
-    if (_.intersection(_.uniq(sub), ["*", true]).length > 0) {
+    if (_.intersection(_.uniq(sub), [true]).length > 0) {
       throw new Error(`There must only be one xrefNS per xrefID, but
       provided paths may violate that constraint.`);
     }
 
-    var pathToContainerParsed = common.map(s => s === "*" ? true : s);
-    var wildcardCount = pathToContainerParsed.filter(p => p === true).length;
+    const pathToAddMappedXrefsParsed = parseJQPath(resolveJQPath(base, pathToAddMappedXrefs));
+    var addLocally;
+    if (pathToAddMappedXrefsParsed.indexOf(true) > -1) {
+      if (serializeJsonPath(pathToAddMappedXrefsParsed.slice(0, -1)) ===
+          serializeJsonPath(common)) {
+        addLocally = true;
+      } else {
+        addLocally = false;
+      }
+    } else {
+      addLocally = false;
+    }
+
+    var jsonStreamPath = common;
+    var wildcardCount = common.filter(p => p === true).length;
     if (wildcardCount > 0) {
       if (wildcardCount > 1) {
         throw new Error(`Not currently able to parse more than one wildcard.`);
-      } else if (pathToContainerParsed.slice(-1)[0] === true) {
-        pathToContainerParsed[pathToContainerParsed.length - 1] = {emitPath: true};
+      } else if (common.slice(-1)[0] === true) {
+        jsonStreamPath[jsonStreamPath.length - 1] = {emitPath: true};
       } else {
         throw new Error(`Not currently able to parse wildcard at different locations
           for xrefNS and xrefID.`);
       }
     }
-    const [relPathToXrefDataSourceNSParsed, relPathToXrefDataSourceIDParsed] = sub;
-    var relPathToXrefDataSourceNS = relPathToXrefDataSourceNSParsed.join(".");
-    var relPathToXrefDataSourceID = relPathToXrefDataSourceIDParsed.join(".");
-    var containerParser = JSONStream.parse(pathToContainerParsed);
+    var containerParser = JSONStream.parse(jsonStreamPath);
 
     var headerStream = hl("header", containerParser).map(function(header) {
       return _.toPairs(header)[0];
     });
 
     var key = common[0];
+    var parentKey = common[0];
 
     var dataStream = hl("data", containerParser);
 
@@ -145,11 +256,21 @@ program
         if (!("entitiesByKey" in acc)) {
           var accIsArray = _.isFinite(entityKey);
           acc.entitiesByKey = accIsArray ? [] : {};
-          acc.parentKey = entityPath.length > 1 ? entityPath.slice(-2)[0] : null;
+          acc.parentKey = entityPath.length > 1
+            ?
+              entityPath.slice(-2)[0]
+            :
+              null;
         }
 
-        var xrefNS = _.get(entity, relPathToXrefDataSourceNS);
-        var xrefID = _.get(entity, relPathToXrefDataSourceID);
+        var xrefNS = _.get(
+          entity,
+          relPathToXrefDataSourceNSParsed
+        );
+        var xrefID = _.get(
+          entity,
+          relPathToXrefDataSourceIDParsed
+        );
         if (xrefNS && xrefID) {
           var xrefNSAndID = [xrefNS, xrefID].join(":");
           if (acc.inputXrefsById[xrefNSAndID]) {
@@ -194,57 +315,61 @@ program
         }
 
         return xrefNSFormatter$
-              .flatMap(function(xrefNSFormatter) {
-                return hl(inputXrefNSes)
-                  .flatMap(function(inputXrefNS) {
-                    return bridgeDb
-                      .dataSourceNameToColumnTerm(inputXrefNS)
-                      .filter(function(inputXrefNSType) {
-                        return inputXrefNSType !== null;
-                      })
-                      .map(function(inputXrefNSType) {
-                        return {inputXrefNS, inputXrefNSType};
-                      })
-                      .toNodeStream();
+          .flatMap(function(xrefNSFormatter) {
+            return hl(inputXrefNSes)
+              .flatMap(function(inputXrefNS) {
+                return bridgeDb
+                  .dataSourceNameToColumnTerm(inputXrefNS)
+                  .filter(function(inputXrefNSType) {
+                    return inputXrefNSType !== null;
                   })
-                  .flatMap(function({inputXrefNS, inputXrefNSType}) {
-                    return hl(
-                      inputXrefs.filter(function(inputXref) {
-                        return inputXref.NS === inputXrefNS;
-                      })
-                      .map(function(inputXref) {
-                        inputXref.NSType = inputXrefNSType;
-                        return inputXref;
-                      })
-                    );
+                  .map(function(inputXrefNSType) {
+                    return {inputXrefNS, inputXrefNSType};
                   })
-                  .collect()
-                  .flatMap(function(inputXrefs) {
-                    return bridgeDb
-                      .xrefsBatch(
-                        organism,
-                        inputXrefs.map(({NS}) => NS),
-                        inputXrefs.map(({ID}) => ID)
-                        //dataSourceFilter?: string
-                      )
-                      .mergeMap(function(xrefsResult) {
-                        return Rx.Observable.from(xrefsResult.xrefs)
-                          .mergeMap(function(xref) {
-                            return xrefNSFormatter(xref.dataSource)
-                              .filter(xrefNS => !mapToXrefNSes ||
-                                mapToXrefNSes.indexOf(xrefNS) > -1)
-                              .map(function(xrefNS) {
-                                return {
-                                  NS: xrefNS,
-                                  ID: xref.dbId
-                                };
-                              });
-                          })
-                          .toArray()
-                          .map(function(xrefs) {
-                            xrefsResult.xrefs = xrefs;
-                            return xrefsResult;
-                            /*
+                  .toNodeStream();
+              })
+              .flatMap(function({inputXrefNS, inputXrefNSType}) {
+                return hl(
+                  inputXrefs.filter(function(inputXref) {
+                    return inputXref.NS === inputXrefNS;
+                  })
+                  .map(function(inputXref) {
+                    inputXref.NSType = inputXrefNSType;
+                    return inputXref;
+                  })
+                );
+              })
+              .collect()
+              .flatMap(function(inputXrefs) {
+                if (inputXrefs.length === 0) {
+                  console.warn("No valid input xrefs found.");
+                  return hl();
+                }
+                return bridgeDb
+                  .xrefsBatch(
+                    organism,
+                    inputXrefs.map(({NS}) => NS),
+                    inputXrefs.map(({ID}) => ID)
+                    //dataSourceFilter?: string
+                  )
+                  .mergeMap(function(xrefsResult) {
+                    return Rx.Observable.from(xrefsResult.xrefs)
+                      .mergeMap(function(xref) {
+                        return xrefNSFormatter(xref.dataSource)
+                          .filter(xrefNS => !mapToXrefNSes ||
+                            mapToXrefNSes.indexOf(xrefNS) > -1)
+                          .map(function(xrefNS) {
+                            return {
+                              NS: xrefNS,
+                              ID: xref.dbId
+                            };
+                          });
+                      })
+                      .toArray()
+                      .map(function(xrefs) {
+                        xrefsResult.xrefs = xrefs;
+                        return xrefsResult;
+                        /*
                             return {
                               xrefs,
                               ...xrefResult
@@ -255,51 +380,83 @@ program
                               inputDbId: xrefResult.inputDbId,
                               xrefs: xrefs
                             };
-                            //*/
-                          });
-                      })
-                      .toArray()
-                      .toNodeStream()
-                      .flatMap(function(xrefsResults) {
-                        /*
-                        TODO continue approx. here...
-                        * Use identifiers.org namespaces
-                        * Consider specifying the xref in entitiesById and
-                          then adding the mappings to sameAs.
-                        * Then for the SVG, we might only use "type" for class
-                          but use type + mapped sameAs for typeof???
-                        * Also, filter to only include primary.
                         //*/
-                        xrefsResults.forEach(function(xrefsResult) {
-                          reducedData.inputXrefsById[
-                            xrefsResult.inputDataSource + ":" + xrefsResult.inputDbId
-                          ].entityKeys.forEach(function(entityKey) {
-                            var entity = reducedData.entitiesByKey[entityKey];
-                            // TODO use pathToAddXrefMappings
-                            xrefsResult.xrefs.map(function(xref) {
-                              var mapped = [xref.NS, xref.ID].join(":");
-                              if (entity.type.indexOf(mapped) === -1) {
-                                entity.type.push(mapped);
-                              }
-                            });
+                      });
+                  })
+                  .toArray()
+                  .toNodeStream()
+                  .map(function(xrefsResults) {
+                    /*
+                        TODO continue approx. here...
+                     * Consider specifying the xref in entitiesById and
+                          then adding the mappings to sameAs.
+                     * Then for the SVG, we might only use "type" for class
+                          but use type + mapped sameAs for typeof???
+                      //*/
+                    var parentKey = reducedData.parentKey;
+                    xrefsResults.forEach(function(xrefsResult) {
+                      var inputXrefId = [
+                        xrefsResult.inputDataSource,
+                        xrefsResult.inputDbId
+                      ].join(":");
+                      if (addLocally) {
+                        reducedData.inputXrefsById[
+                          inputXrefId
+                        ].entityKeys.forEach(function(entityKey) {
+                          var entity = reducedData.entitiesByKey[entityKey];
+                          xrefsResult.xrefs.map(function(xref) {
+                            var mappedXref = [xref.NS, xref.ID].join(":");
+                            if (entity.type.indexOf(mappedXref) === -1) {
+                              entity.type.push(mappedXref);
+                            }
                           });
                         });
-                        var parentKey = reducedData.parentKey;
+                      } else {
+                        var xrefMapping;
+                        var xrefMappingStarter = {
+                          closeMatch: []
+                        };
                         if (!!parentKey) {
-                          return hl([headerStream, footerStream])
-                            .merge()
-                            .reduce({[parentKey]: reducedData.entitiesByKey}, function(acc, item) {
-                              acc[item[0]] = item[1];
-                              return acc;
-                            })
-                            .through(JSONStream.stringify(false))
+                          if (!(inputXrefId in reducedData.entitiesByKey)) {
+                            xrefMapping = reducedData.entitiesByKey[inputXrefId] =
+                              xrefMappingStarter;
+                          } else {
+                            xrefMapping = reducedData.entitiesByKey[inputXrefId];
+                          }
                         } else {
-                          return hl(reducedData.entitiesByKey)
-                            .through(JSONStream.stringify())
+                          xrefMapping = _.find(
+                            ({id}) => id === inputXrefId,
+                            reducedData.entitiesByKey
+                          );
+                          if (!xrefMapping) {
+                            xrefMapping = xrefMappingStarter;
+                            reducedData.entitiesByKey.push(xrefMapping);
+                          }
                         }
-                      });
+
+                        if (!("id" in xrefMapping)) {
+                          xrefMapping.id = inputXrefId;
+                        }
+
+                        if (!("closeMatch" in xrefMapping)) {
+                          xrefMapping.closeMatch = [];
+                        }
+                        var closeMatch = xrefMapping.closeMatch;
+                        xrefsResult.xrefs.map(function(xref) {
+                          var mappedXref = [xref.NS, xref.ID].join(":");
+                          if (closeMatch.indexOf(mappedXref) === -1) {
+                            closeMatch.push(mappedXref);
+                          }
+                        });
+                      }
+                    });
+                    return {
+                      entitiesByKey: reducedData.entitiesByKey,
+                      parentKey: parentKey
+                    };
                   });
               });
+          });
       });
 //      .map(function(data) {
 //        var composedData;
@@ -335,7 +492,21 @@ program
       //*/
     });
 
-    return parsedDataStream
+    return hl([headerStream, parsedDataStream, footerStream]).zipAll0()
+      .flatMap(function([header, data, footer]) {
+        const {parentKey, entitiesByKey} = data;
+        if (!!parentKey) {
+          return hl([header, footer])
+            .reduce({[parentKey]: entitiesByKey}, function(acc, item) {
+              acc[item[0]] = item[1];
+              return acc;
+            })
+            .through(JSONStream.stringify(false))
+        } else {
+          return hl(entitiesByKey)
+            .through(JSONStream.stringify())
+        }
+      })
       .pipe(process.stdout);
   })
   .on("--help", function() {
@@ -347,10 +518,43 @@ program
   Paths are in JSON Path format: <http://goessner.net/articles/JsonPath/>
 
   Examples:
-    cat input.json |\
-      ./bin/bridgedb addMapppedXrefs Human "entitiesById.*.dbConventionalName"\
-        "entitiesById.*.dbId" "type" ensembl |\
-      jq .
+
+    echo '[{"dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |\\
+    bridgedb addMappedXrefs Human \\
+      "*.dbConventionalName" "*.dbId" \\
+      "*.type" \\
+      ensembl ncbigene uniprot wikidata |\\
+    jq .
+
+    For developers:
+
+    cat input-array.json |\\
+    ./bin/bridgedb addMappedXrefs Human \\
+      "*.dbConventionalName" "*.dbId" \\
+      "*.type" \\
+      ensembl ncbigene uniprot wikidata |\\
+    jq .
+
+    cat input-array.json |\\
+    ./bin/bridgedb addMappedXrefs Human \\
+      "*.dbConventionalName" "*.dbId" \\
+      "*" \\
+      ensembl ncbigene uniprot wikidata |\\
+    jq .
+
+    cat input.json |\\
+    ./bin/bridgedb addMappedXrefs Human \\
+      "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" \\
+      "entitiesById.*.type" \\
+      ensembl ncbigene uniprot wikidata |\\
+    jq .
+
+    cat input.json |\\
+    ./bin/bridgedb addMappedXrefs Human \\
+      "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" \\
+      "entitiesById" \\
+      ensembl ncbigene uniprot wikidata |\\
+    jq .
     `);
   });
 
@@ -636,4 +840,17 @@ program
     `);
   });
 
+program
+  .command('*')
+  .action(function(cmd){
+    console.error("");
+    console.error('\ \ Unrecognized command "%s". Valid commands shown below:', cmd);
+    program.outputHelp();
+  });
+
 program.parse(process.argv);
+
+// If no command is specified, output help.
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
