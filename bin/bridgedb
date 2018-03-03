@@ -110,7 +110,7 @@ function parseJQPath(path) {
   return path.replace(/^\./, "")
     .split(".")
     .reduce((acc, s) => {
-      (s.match(/(\w+)(\[\w*\])?/) || [])
+      (s.match(/(\w+)?(\[\w*\])?/) || [])
         .slice(1)
         .filter(_.negate(_.isUndefined))
         .map(s => s === "[]" ? true : s.replace(/\[(\w+)\]/, "\1"))
@@ -132,22 +132,36 @@ function resolveJQPath(base, relativePath) {
   }
 }
 
-/* Similar to HTML base element
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
- * and xml:base
- * https://www.w3.org/TR/xmlbase/
+/* _.get doesn't allow for path to indicate identity.
+ * this function allows the parsed path to be [], indicating
+ * we just want to return the entire value.
  */
+function getByParsedPath(value, path) {
+  if (path.length > 0) {
+    return _.get(
+      value,
+      path
+    );
+  } else {
+    return value;
+  }
+}
+
 const DEFAULT_ADDMAPPEDXREFS_BASE = ".";
-//const DEFAULT_ADDMAPPEDXREFS_BASE = "$";
+const NEST0_OBJECT_KEY = "BRIDGEDB_NEST0_OBJECT_KEY";
 program
   .command(
-    `addMappedXrefs <organism> <pathToXrefNS> <pathToXrefID>\\
+    `addMappedXrefs <organism> <pathToXrefNS> <pathToXrefID>
     <pathToAddMappedXrefs> [mapToXrefNS...]`
   )
   .option(
     "-b,--base [path]",
-    `jq expression that is prepended to all other paths.
-    Default: "${DEFAULT_ADDMAPPEDXREFS_BASE}"`,
+    `jq expression that is prepended to relative paths.
+                  Default: "${DEFAULT_ADDMAPPEDXREFS_BASE}"
+
+                  It's similar to HTML or XML BASE. More info:
+                  https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+                  https://www.w3.org/TR/xmlbase/`,
     (base) => !!base ? base : DEFAULT_ADDMAPPEDXREFS_BASE
   )
   .action(function(
@@ -174,123 +188,194 @@ program
     });
     var base = options.base;
 
-    var {common, sub} = _.zip
+    var {common, relPaths} = _.zip
       .apply(
         undefined,
         [pathToXrefNS, pathToXrefID].map(p => resolveJQPath(base, p)).map(parseJQPath)
       )
       .reduce(
-        function(acc, pair) {
+        function(acc, pair, i) {
+          const {common, relPaths} = acc;
           const [first, second] = pair;
           acc.matched = acc.matched && first === second;
           if (acc.matched) {
-            acc.common.push(first);
+            common.push(first);
           } else {
             pair.forEach(function(p, i) {
-              if (acc.sub[i]) {
-                acc.sub[i].push(p);
+              if (acc.relPaths[i]) {
+                acc.relPaths[i].push(p);
               } else {
-                acc.sub[i] = [p];
+                acc.relPaths[i] = [p];
               }
             });
           }
           return acc;
         },
-        { matched: true, common: [], sub: [] }
+        { matched: true, common: [], relPaths: [] }
       );
-    const [relPathToXrefDataSourceNSParsed, relPathToXrefDataSourceIDParsed] = sub;
 
-    if (_.intersection(_.uniq(sub), [true]).length > 0) {
+    const commonIndexOfTrue = common.indexOf(true);
+    var JSONStreamParentPath = common.slice(
+      0,
+      commonIndexOfTrue > -1 ? commonIndexOfTrue : common.length - 1
+    );
+    var JSONStreamPath;
+    if (common.length > 0) {
+      JSONStreamPath = _.concat(JSONStreamParentPath, [{emitPath: true}]);
+    } else {
+      JSONStreamPath = [];
+      // NOTE: using emitPath doesn't work when the input is just one object (Map).
+      // We want to get the following to be consistent with other inputs:
+      // {"path": [], value: THE_INPUT_OBJECT}
+      // But we actually get the key/value pairs of the input object.
+      // So we need to use the kludge above.
+      //var JSONStreamPath = [{emitPath: true}];
+    }
+    var containerParser = JSONStream.parse(JSONStreamPath.length > 0 ? JSONStreamPath : undefined);
+
+    var rootKey = common[0];
+
+    const [relPathToXrefDataSourceNSParsed, relPathToXrefDataSourceIDParsed] = relPaths;
+
+    if (_.intersection(_.uniq(relPaths), [true]).length > 0) {
+      if (common.lastIndexOf(true) > 1) {
+        throw new Error(`Currently unable to handle more than one level of nesting before "[]".
+
+        These are OK:
+        .a
+        .a.z
+        .a.z.x
+        .a.z.x.y
+        .[]
+        .[].z
+        .[].z.y
+        .[].z.y.x
+        .a[]
+        .a[].z
+        .a[].z.y
+        .a[].z.y.x
+      
+        These are not:
+        .a.b[]
+        .a.b.c[]
+        `);
+      } else {
       throw new Error(`There must only be one xrefNS per xrefID, but
-      provided paths may violate that constraint.`);
+      provided paths may violate that constraint.
+      `);
+      }
     }
 
     const pathToAddMappedXrefsParsed = parseJQPath(resolveJQPath(base, pathToAddMappedXrefs));
-    var addLocally;
-    if (pathToAddMappedXrefsParsed.indexOf(true) > -1) {
-      if (serializeJsonPath(pathToAddMappedXrefsParsed.slice(0, -1)) ===
-          serializeJsonPath(common)) {
-        addLocally = true;
-      } else {
-        addLocally = false;
-      }
-    } else {
-      addLocally = false;
-    }
+    /*
+    console.warn('common');
+    console.warn(common);
+    console.warn('JSONStreamParentPath');
+    console.warn(JSONStreamParentPath);
+    console.warn('relPaths');
+    console.warn(relPaths);
+    console.warn('pathToAddMappedXrefsParsed');
+    console.warn(pathToAddMappedXrefsParsed);
+    //*/
+    const addLocally = pathToAddMappedXrefsParsed.join().indexOf(common.join()) === 0;
 
-    var jsonStreamPath = common;
-    var wildcardCount = common.filter(p => p === true).length;
-    if (wildcardCount > 0) {
-      if (wildcardCount > 1) {
-        throw new Error(`Not currently able to parse more than one wildcard.`);
-      } else if (common.slice(-1)[0] === true) {
-        jsonStreamPath[jsonStreamPath.length - 1] = {emitPath: true};
-      } else {
-        throw new Error(`Not currently able to parse wildcard at different locations
-          for xrefNS and xrefID.`);
-      }
-    }
-    var containerParser = JSONStream.parse(jsonStreamPath);
-
-    var headerStream = hl("header", containerParser).map(function(header) {
-      return _.toPairs(header)[0];
+    var headerStream = hl("header", containerParser).map(function(result) {
+      return {
+        event: "header",
+        path: [],
+        value: result
+      };
     });
-
-    var key = common[0];
-    var parentKey = common[0];
 
     var dataStream = hl("data", containerParser);
 
-    var footerStream = hl("footer", containerParser).map(function(footer) {
-      return _.toPairs(footer)[0];
+    var footerStream = hl("footer", containerParser).map(function(result) {
+      return {
+        event: "footer",
+        path: [],
+        value: result
+      };
     });
 
     var endStream = hl("end", containerParser);
 
+    var lastCommonKey = common.slice(-1)[0] || NEST0_OBJECT_KEY;
     var parsedDataStream = dataStream
-      .reduce({ inputXrefsById: {} }, function(acc, data) {
-        var entity = data.value;
-        var entityPath = data.path;
-        var entityKey = entityPath.slice(-1)[0];
-
-        if (!("entitiesByKey" in acc)) {
-          var accIsArray = _.isFinite(entityKey);
-          acc.entitiesByKey = accIsArray ? [] : {};
-          acc.parentKey = entityPath.length > 1
-            ?
-              entityPath.slice(-2)[0]
-            :
-              null;
+      .map(function(data) {
+        if (JSONStreamPath.length > 0) {
+          return data;
+        } else {
+          // This kludge is needed to handle un-nested objects as input, e.g.,
+          // {"id": "abc123", "dbConventionalName": "Entrez Gene", "dbId": "1234"}
+          // We want process them same way we do for other inputs to JSONStream.parse.
+          return {path: [NEST0_OBJECT_KEY], value: data};
         }
+      })
+      .reduce({ inputXrefsById: {} }, function(acc, data) {
+        const {value, path} = data;
+        const valueKey = path.slice(-1)[0];
+        if (!("valuesByKey" in acc)) {
+          acc.valuesByKey = _.isFinite(valueKey) ? [] : {};
+        }
+        var valuesByKey = acc.valuesByKey;
 
-        var xrefNS = _.get(
+        var entityKey = lastCommonKey !== true ? lastCommonKey : path.slice(-1)[0];
+
+        var entityPathRelToValue = common.slice(JSONStreamPath.length)
+          .map(s => s === true ? entityKey : s);
+        var entity = getByParsedPath(
+          value,
+          entityPathRelToValue
+        );
+        /*
+        console.warn('data');
+        console.warn(data);
+        console.warn('path');
+        console.warn(path);
+        console.warn('entityKey');
+        console.warn(entityKey);
+        console.warn('entityPathRelToValue');
+        console.warn(entityPathRelToValue);
+        console.warn('valueKey');
+        console.warn(valueKey);
+        console.warn('entity is plain object: ' + _.isPlainObject(entity));
+        //*/
+        var xrefNS = getByParsedPath(
           entity,
           relPathToXrefDataSourceNSParsed
         );
-        var xrefID = _.get(
+        var xrefID = getByParsedPath(
           entity,
-          relPathToXrefDataSourceIDParsed
+           relPathToXrefDataSourceIDParsed
         );
         if (xrefNS && xrefID) {
+          const entityPathRelToValuesByKey = [valueKey].concat(entityPathRelToValue);
           var xrefNSAndID = [xrefNS, xrefID].join(":");
           if (acc.inputXrefsById[xrefNSAndID]) {
-            acc.inputXrefsById[xrefNSAndID].entityKeys.push(entityKey);
+            acc.inputXrefsById[xrefNSAndID].entityPaths.push(entityPathRelToValuesByKey);
           } else {
             acc.inputXrefsById[xrefNSAndID] = {
-              entityKeys: [entityKey],
+              entityPaths: [entityPathRelToValuesByKey],
               NS: xrefNS,
               ID: xrefID
             };
           }
         }
-        acc.entitiesByKey[entityKey] = entity;
+        valuesByKey[valueKey] = value;
+        /*
+        console.warn('value');
+        console.warn(value);
+        console.warn('valueKey');
+        console.warn(valueKey);
+        //*/
         return acc;
       })
       .flatMap(function(reducedData) {
         /*
         console.warn('reducedData');
-        console.warn(reducedData);
+        console.warn(JSON.stringify(reducedData, null, '  '));
         //*/
+        var {inputXrefsById, valuesByKey} = reducedData;
         var inputXrefs = _.values(reducedData.inputXrefsById);
         var inputXrefNSes = _.uniq(
           inputXrefs.map(function(inputXref) {
@@ -352,6 +437,19 @@ program
                     inputXrefs.map(({ID}) => ID)
                     //dataSourceFilter?: string
                   )
+                  .map(function(xrefsResult) {
+                    const {inputDataSource, inputDbId} = xrefsResult;
+                    xrefsResult.inputId = [
+                      inputDataSource,
+                      inputDbId
+                    ].join(":");
+                    return xrefsResult;
+                  })
+                  .filter(function(xrefsResult) {
+                    // TODO we can probably get rid of this. It's only here
+                    // b/c my dummy server returns incorrect xrefs.
+                    return xrefsResult.inputId in inputXrefsById;
+                  })
                   .mergeMap(function(xrefsResult) {
                     return Rx.Observable.from(xrefsResult.xrefs)
                       .mergeMap(function(xref) {
@@ -369,68 +467,100 @@ program
                       .map(function(xrefs) {
                         xrefsResult.xrefs = xrefs;
                         return xrefsResult;
-                        /*
-                            return {
-                              xrefs,
-                              ...xrefResult
-                            };
-                            return {
-                              organism: xrefResult.organism,
-                              inputDataSource: xrefResult.inputDataSource,
-                              inputDbId: xrefResult.inputDbId,
-                              xrefs: xrefs
-                            };
-                        //*/
                       });
                   })
                   .toArray()
                   .toNodeStream()
                   .map(function(xrefsResults) {
                     /*
-                        TODO continue approx. here...
                      * Consider specifying the xref in entitiesById and
                           then adding the mappings to sameAs.
                      * Then for the SVG, we might only use "type" for class
                           but use type + mapped sameAs for typeof???
                       //*/
-                    var parentKey = reducedData.parentKey;
+
                     xrefsResults.forEach(function(xrefsResult) {
-                      var inputXrefId = [
-                        xrefsResult.inputDataSource,
-                        xrefsResult.inputDbId
-                      ].join(":");
+                      var inputXrefId = xrefsResult.inputId;
+                      /*
+                      console.warn('xrefsResult');
+                      console.warn(xrefsResult);
+                      console.warn('valuesByKey');
+                      console.warn(valuesByKey);
+                      //*/
                       if (addLocally) {
-                        reducedData.inputXrefsById[
+                        inputXrefsById[
                           inputXrefId
-                        ].entityKeys.forEach(function(entityKey) {
-                          var entity = reducedData.entitiesByKey[entityKey];
-                          xrefsResult.xrefs.map(function(xref) {
-                            var mappedXref = [xref.NS, xref.ID].join(":");
-                            if (entity.type.indexOf(mappedXref) === -1) {
-                              entity.type.push(mappedXref);
-                            }
-                          });
+                        ].entityPaths.forEach(function(entityPath) {
+                          var entity = getByParsedPath(valuesByKey, entityPath);
+                          var whereToAdd = pathToAddMappedXrefsParsed.slice(
+                            common.length);
+                          var xrefContainer = getByParsedPath(entity, whereToAdd) || [];
+                          /*
+                          console.warn('entity');
+                          console.warn(entity);
+                          console.warn('entityPath');
+                          console.warn(entityPath);
+                          console.warn('whereToAdd');
+                          console.warn(whereToAdd);
+                          console.warn('xrefContainer');
+                          console.warn(xrefContainer);
+                          //*/
+
+                          var xrefMapping;
+                          if (!_.isArray(xrefContainer)) {
+                            xrefsResult.xrefs.map(function(xref) {
+                              var {NS, ID} = xref;
+                              if (!(NS in xrefContainer)) {
+                                xrefContainer[NS] = ID;
+                              } else {
+                                const preexistingNSValue = xrefContainer[NS];
+                                if (_.isString(preexistingNSValue)) {
+                                  if (preexistingNSValue !== ID) {
+                                    xrefContainer[NS] = [preexistingNSValue, ID];
+                                  }
+                                } else if (_.isArray(preexistingNSValue)) {
+                                  if (preexistingNS.indexOf(ID) === -1) {
+                                    xrefContainer[NS].push(ID);
+                                  }
+                                } else {
+                                  console.warn(`Property ${NS} already set at specified path, and
+                                  it's not a string or array. Skipping addition of ${ID}.`);
+                                  console.warn(JSON.stringify(entity));
+                                }
+                              }
+                            });
+                          } else {
+                            xrefsResult.xrefs.map(function(xref) {
+                              var mappedXref = [xref.NS, xref.ID].join(":");
+                              if (xrefContainer.indexOf(mappedXref) === -1) {
+                                xrefContainer.push(mappedXref);
+                              }
+                            });
+                          }
+                          if (xrefContainer !== entity) {
+                            _.set(entity, whereToAdd, xrefContainer);
+                          }
                         });
                       } else {
                         var xrefMapping;
                         var xrefMappingStarter = {
                           closeMatch: []
                         };
-                        if (!!parentKey) {
-                          if (!(inputXrefId in reducedData.entitiesByKey)) {
-                            xrefMapping = reducedData.entitiesByKey[inputXrefId] =
+                        if (!_.isArray(valuesByKey)) {
+                          if (!(inputXrefId in valuesByKey)) {
+                            xrefMapping = valuesByKey[inputXrefId] =
                               xrefMappingStarter;
                           } else {
-                            xrefMapping = reducedData.entitiesByKey[inputXrefId];
+                            xrefMapping = valuesByKey[inputXrefId];
                           }
                         } else {
                           xrefMapping = _.find(
                             ({id}) => id === inputXrefId,
-                            reducedData.entitiesByKey
+                            valuesByKey
                           );
                           if (!xrefMapping) {
                             xrefMapping = xrefMappingStarter;
-                            reducedData.entitiesByKey.push(xrefMapping);
+                            valuesByKey.push(xrefMapping);
                           }
                         }
 
@@ -450,34 +580,41 @@ program
                         });
                       }
                     });
+
                     return {
-                      entitiesByKey: reducedData.entitiesByKey,
-                      parentKey: parentKey
+                      event: "data",
+                      path: JSONStreamParentPath,
+                      value: NEST0_OBJECT_KEY in valuesByKey
+                        ?
+                          valuesByKey[NEST0_OBJECT_KEY]
+                        :
+                          valuesByKey
                     };
+
+                    /*
+                    if (!valueIsArray) {
+                      return hl([{
+                        event: "data",
+                        container: container,
+                        key: parentKey,
+                        value: valuesByKey
+                      }]);
+                    } else {
+                      return hl(valuesByKey)
+                        .map(function(entity) {
+                          return {
+                            event: "data",
+                            type: "array",
+                            key: parentKey,
+                            value: entity
+                          };
+                        });
+                    }
+                    //*/
                   });
               });
           });
       });
-//      .map(function(data) {
-//        var composedData;
-//        if (subKeys.length === 0) {
-//          composedData = data;
-//        } else {
-//          throw new Error("Don't know how to handle case of deeply nested entities.");
-//          /*
-//          console.warn("This hasn't been tested and may not work!");
-//          composedData = subKeys.reverse().reduce(function(acc, p, i, x) {
-//            if (i < x.length - 1) {
-//              acc[p] = {};
-//            } else {
-//              acc[p] = data;
-//            }
-//            return acc;
-//          }, [key, {}]);
-//          //*/
-//        }
-//        return [key, composedData];
-//      });
 
     process.stdin.pipe(containerParser);
 
@@ -492,69 +629,132 @@ program
       //*/
     });
 
-    return hl([headerStream, parsedDataStream, footerStream]).zipAll0()
-      .flatMap(function([header, data, footer]) {
-        const {parentKey, entitiesByKey} = data;
-        if (!!parentKey) {
-          return hl([header, footer])
-            .reduce({[parentKey]: entitiesByKey}, function(acc, item) {
-              acc[item[0]] = item[1];
-              return acc;
-            })
-            .through(JSONStream.stringify(false))
+    //const stringify = _.curry(JSONStream.stringify);
+    //const stringifier = 
+    //rootKey === true ? curry(JSONStream.stringify) : JSONStream.stringifyObject;
+    
+    var stringifier;
+    var i = 0;
+    return hl([headerStream, parsedDataStream, footerStream])
+      .merge()
+      .reduce({}, function(acc, result) {
+        var {path, value, event} = result;
+        /*
+        console.warn('result');
+        console.warn(result);
+        //*/
+        if (_.isArray(value)) {
+          if (i === 0) {
+            stringifier = JSONStream.stringify();
+            if (_.isEmpty(path)) {
+              acc = [];
+            }
+          }
+          if (_.isEmpty(path)) {
+            value.forEach(function(v) {
+              acc.push(v);
+            });
+          } else {
+            _.updateWith(
+              acc,
+              path,
+              (nsValue) => typeof nsValue === 'undefined'
+                ?
+                value
+                :
+                _.isArray(nsValue) ? nsValue.concat(value) : _.assign(nsValue, value),
+              (nsValue, key, nsObject) => nsValue || _.isFinite(parseInt(key)) ? Array : Object
+            );
+          }
         } else {
-          return hl(entitiesByKey)
-            .through(JSONStream.stringify())
+          if (i === 0) {
+            stringifier = JSONStream.stringify(false);
+            //stringifier = JSONStream.stringifyObject();
+          }
+          if (_.isEmpty(path)) {
+            acc = _.assign(acc, value);
+          } else {
+            //var container = getByParsedPath(acc, path) || {};
+            _.updateWith(
+              acc,
+              path,
+              (nsValue) => _.isArray(nsValue) ? nsValue.concat(value) : _.assign(nsValue, value),
+              (nsValue, key, nsObject) => nsValue || _.isFinite(key) ? [] : {}
+            );
+          }
         }
+        i += 1;
+        return acc;
       })
+      .flatMap(function(s) {
+        return hl(_.isArray(s) ? s : [s])
+          .through(stringifier);
+      })
+      //.through(stringifier())
+      //.through(JSONStream.stringify(true))
       .pipe(process.stdout);
   })
   .on("--help", function() {
     console.log(`
-  This has been tested on the pvjson format from gpml2pvjson:
-    <https://github.com/wikipathways/gpml2json>
-    If you are using it on another format, exercise caution and verify your results.
-      
-  Paths are in JSON Path format: <http://goessner.net/articles/JsonPath/>
+  Paths use the format of basic jq filters, e.g., any of these:
+        .a
+        .a.z
+        .a.z.x
+        .a.z.x.y
+        .[]
+        .[].z
+        .[].z.y
+        .[].z.y.x
+        .a[]
+        .a[].z
+        .a[].z.y
+        .a[].z.y.x
+    More info: https://stedolan.github.io/jq/manual/v1.5/#Basicfilters
 
   Examples:
 
     echo '[{"dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |\\
-    bridgedb addMappedXrefs Human \\
-      "*.dbConventionalName" "*.dbId" \\
-      "*.type" \\
-      ensembl ncbigene uniprot wikidata |\\
-    jq .
+    ./bin/bridgedb addMappedXrefs \\
+      Human \\
+      ".[].dbConventionalName" \\
+      ".[].dbId" \\
+      ".[]" \\
+      ensembl ncbigene uniprot wikidata
 
     For developers:
 
     cat input-array.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
-      "*.dbConventionalName" "*.dbId" \\
-      "*.type" \\
+      ".[].dbConventionalName" ".[].dbId" \\
+      ".[].type" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
     cat input-array.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
-      "*.dbConventionalName" "*.dbId" \\
-      "*" \\
+      ".[].dbConventionalName" ".[].dbId" \\
+      ".[]" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
     cat input.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
-      "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" \\
-      "entitiesById.*.type" \\
+      ".entitiesById[].dbConventionalName" ".entitiesById[].dbId" \\
+      ".entitiesById[].type" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
     cat input.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
-      "entitiesById.*.dbConventionalName" "entitiesById.*.dbId" \\
-      "entitiesById" \\
+      ".entitiesById[].dbConventionalName" ".entitiesById[].dbId" \\
+      ".entitiesById" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
+
+  Note: This has been tested on the pvjson format from gpml2pvjson:
+    <https://github.com/wikipathways/gpml2json>
+    If you are using it on another format, exercise caution and verify your results.
+      
     `);
   });
 

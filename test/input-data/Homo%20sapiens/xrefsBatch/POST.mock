@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+REACT_1071	Reactome	T:GO:0007204,T:GO:0006968,T:GO:0070098,L:1234,En:ENSG00000160791,Re:REACT_1071
+P03952	Uniprot-SwissProt	T:GO:0007204,T:GO:0006968,T:GO:0070098,L:1235,En:ENSG00000160791,Sp:P03952
+1234	Entrez Gene	T:GO:0007204,En:ENSG00000160791
