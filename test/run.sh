@@ -12,7 +12,7 @@ echo '[{"id": "abc123", "dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |
 	".[].dbConventionalName" \
 	".[].dbId" \
 	".[]" \
-	ensembl ncbigene uniprot wikidata |\
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
 	jq '.[0].ensembl == "ENSG00000160791"'
 
 echo '[{"id": "abc123", "dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |\
@@ -21,8 +21,8 @@ echo '[{"id": "abc123", "dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |
 	".[].dbConventionalName" \
 	".[].dbId" \
 	".[].type" \
-	ensembl ncbigene uniprot wikidata |\
-	jq '.[0].type | contains(["ensembl:ENSG0000016079"])'
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
+	jq '.[0].type | contains(["hgnc.symbol:CCR5","ensembl:ENSG00000160791","uniprot:Q38L21","uniprot:P51681","ncbigene:1234"])'
 
 echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	./bin/bridgedb addMappedXrefs \
@@ -30,15 +30,21 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".dbConventionalName" \
 	".dbId" \
 	"." \
-	ensembl ncbigene uniprot wikidata |\
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
 	jq 'keys | contains(["ensembl"])'
 
-./bin/bridgedb addMappedXrefs Human \
-	".[].dbConventionalName" ".[].dbId" \
+# BridgeDb doesn't return anything for Uniprot-SwissProt:P03952:
+# http://webservice.bridgedb.org/Homo%20sapiens/xrefs/Sp/P03952
+# It does, however, return results for Uniprot-TrEMBL:P03952:
+# http://webservice.bridgedb.org/Homo%20sapiens/xrefs/S/P03952
+./bin/bridgedb addMappedXrefs \
+	Human \
+	".[].dbConventionalName" \
+	".[].dbId" \
 	".[].type" \
-	ensembl ncbigene uniprot wikidata \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/nest0-array.json |\
-	jq '.[2].type | contains(["ncbigene:1234"])'
+	jq '.[3].type | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	Human \
@@ -47,7 +53,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	"." \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-array.json |\
-	jq '.[] | select(.id == "Uniprot-SwissProt:P03952") | .closeMatch | contains(["uniprot:P03952"])'
+	jq '.[] | select(.id == "Uniprot-TrEMBL:P03952") | .closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 # nest: 1
 
@@ -58,7 +64,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".entities" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-array.json |\
-	jq '.entities[] | select(.id == "Uniprot-SwissProt:P03952") | .closeMatch | contains(["uniprot:P03952"])'
+	jq '.entities[] | select(.id == "Uniprot-TrEMBL:P03952") | .closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	Human \
@@ -67,11 +73,11 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".entities[].type" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-array.json |\
-	jq '.entities[] | select(.id == "pvjsgeneratedida49") | .type | contains(["uniprot:P03952"])'
+	jq '.entities[] | select(.id == "pvjsgeneratedida49") | .type | contains(["uniprot:P03952","ncbigene:3818"])'
 
-###########
-## OBJECT #
-###########
+############
+### OBJECT #
+############
 
 # nest: 0
 
@@ -82,7 +88,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".[].type" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-object.json |\
-	jq '.pvjsgeneratedida49.type | contains(["uniprot:P03952"])'
+	jq '.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])'
 ./bin/bridgedb addMappedXrefs \
 	Human \
 	".[].dbConventionalName" \
@@ -90,7 +96,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	"." \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-object.json |\
-	jq '.["Uniprot-SwissProt:P03952"].closeMatch | contains(["uniprot:P03952"])'
+	jq '.["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	Human \
@@ -99,7 +105,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	"." \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-object.json |\
-	jq '.["Uniprot-SwissProt:P03952"].closeMatch | contains(["uniprot:P03952"])'
+	jq '.["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 # nest: 1
 
@@ -114,13 +120,61 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	jq 'keys | contains(["pathway", "entitiesById", "more"])'
 
 ./bin/bridgedb addMappedXrefs \
+	Mouse \
+	".entitiesById[].dbConventionalName" \
+	".entitiesById[].dbId" \
+	".entitiesById" \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	< ./test/inputs/WP1_73346.json |\
+	jq '.entitiesById["HMDB:HMDB01206"].closeMatch | contains(["wikidata:Q715317"])'
+
+./bin/bridgedb addMappedXrefs \
+	Human \
+	".entitiesById[].dbConventionalName" \
+	".entitiesById[].dbId" \
+	".entitiesById" \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	< ./test/inputs/WP481_94171.json |\
+	jq '.entitiesById["Entrez Gene:5594"].closeMatch | contains(["ensembl:ENSG00000100030"])'
+
+./bin/bridgedb addMappedXrefs \
+	Human \
+	-b ".entitiesById" \
+	".[].dbConventionalName" \
+	".[].dbId" \
+	"." \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	< ./test/inputs/WP481_94171.json |\
+	jq '.entitiesById["Entrez Gene:5594"].closeMatch | contains(["ensembl:ENSG00000100030"])'
+
+./bin/bridgedb addMappedXrefs \
+	Human \
+	-b ".entitiesById[]" \
+	".dbConventionalName" \
+	".dbId" \
+	".type" \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	< ./test/inputs/WP481_94171.json |\
+	jq '.entitiesById.a0e.type | contains(["uniprot:F8W9P4"])'
+
+./bin/bridgedb addMappedXrefs \
+	Human \
+	-b ".entitiesById[]" \
+	".dbConventionalName" \
+	".dbId" \
+	".xrefs" \
+	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	< ./test/inputs/WP481_94171.json |\
+	jq '.entitiesById.a0e.xrefs | contains(["uniprot:F8W9P4"])'
+
+./bin/bridgedb addMappedXrefs \
 	Human \
 	".entitiesById[].dbConventionalName" \
 	".entitiesById[].dbId" \
 	".entitiesById" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
-	jq '.entitiesById["Uniprot-SwissProt:P03952"].closeMatch | contains(["uniprot:P03952"])'
+	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	-b ".entitiesById" \
@@ -130,7 +184,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	"." \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
-	jq '.entitiesById["Uniprot-SwissProt:P03952"].closeMatch | contains(["uniprot:P03952"])'
+	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
 # nest: 2
 
@@ -141,7 +195,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".sampleData.entitiesById.pvjsgeneratedida49.type" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest2-object.json |\
-	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952"])'
+	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	-b ".sampleData.entitiesById.pvjsgeneratedida49" \
@@ -151,7 +205,7 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".type" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest2-object.json |\
-	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952"])'
+	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])'
 
 ./bin/bridgedb addMappedXrefs \
 	Human \
@@ -160,12 +214,12 @@ echo '{"dbConventionalName": "Entrez Gene", "dbId": "1234"}' |\
 	".entitiesById" \
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
-	jq '.entitiesById["Uniprot-SwissProt:P03952"].closeMatch | contains(["uniprot:P03952"])'
+	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])'
 
-# can't currently handle more than one level of nesting before a wildcard:
-#./bin/bridgedb addMappedXrefs Human \
-#	".sampleData.entitiesById[].dbConventionalName" ".sampleData.entitiesById[].dbId" \
-#	".sampleData.entitiesById[]" \
-#	ensembl ncbigene uniprot wikidata \
-#	< ./test/inputs/nest1-object.json |\
-#	jq .
+## can't currently handle more than one level of nesting before a wildcard:
+##./bin/bridgedb addMappedXrefs Human \
+##	".sampleData.entitiesById[].dbConventionalName" ".sampleData.entitiesById[].dbId" \
+##	".sampleData.entitiesById[]" \
+##	ensembl ncbigene uniprot wikidata \
+##	< ./test/inputs/nest1-object.json |\
+##	jq .

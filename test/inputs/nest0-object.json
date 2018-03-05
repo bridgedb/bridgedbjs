@@ -1,0 +1,165 @@
+{
+  "pvjsgeneratedida01": {
+    "textContent": "TF\nF7",
+    "comments": [
+      {
+        "source": "Reactome",
+        "content": "REACT_4908"
+      }
+    ],
+    "x": 60,
+    "y": 907,
+    "width": 80,
+    "height": 20,
+    "zIndex": 28672,
+    "fill": "transparent",
+    "fontSize": 10,
+    "verticalAlign": "middle",
+    "textAlign": "center",
+    "stroke": "#000000",
+    "textDecoration": "none",
+    "fontFamily": "Arial",
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "strokeWidth": 0,
+    "drawAs": "none",
+    "lineHeight": 1.1,
+    "overflow": "hidden",
+    "textOverflow": "clip",
+    "whiteSpace": "pre",
+    "padding": 8,
+    "id": "pvjsgeneratedida01",
+    "type": [
+      "Label",
+      "SingleFreeNode"
+    ],
+    "kaavioType": "SingleFreeNode",
+    "gpmlElementName": "Label"
+  },
+  "publicationXrefc2b": {
+    "id": "publicationXrefc2b",
+    "dbId": "12907439",
+    "dbConventionalName": "PubMed",
+    "standardName": "Heparin-induced substrate behavior of antithrombin Cambridge II.",
+    "authors": [
+      "Mushunje A, Zhou A, Carrell RW, Huntington JA."
+    ],
+    "type": [
+      "PublicationXref"
+    ],
+    "gpmlElementName": "PublicationXref",
+    "textContent": "89"
+  },
+  "e_1752_a_0": {
+    "id": "e_1752_a_0",
+    "comments": [
+      {
+        "source": "Reactome",
+        "content": "Activated protein C cleaves peptide bonds in activated factor V (factor Va), converting it to an inactive form (factor Vi).  The exact site(s) of cleavage are unknown.  Protein S, on the endothelial cell surface, positively regulates this reaction.  Although the mechanism of this regulation is unclear, the regulation is physiologically important, as people with reduced amounts of protein S, like people with reduced amounts of protein C, are susceptible to thromboembolism."
+      },
+      {
+        "source": "Reactome",
+        "content": "Activated protein C cleaves peptide bonds in activated factor V (factor Va), converting it to an inactive form (factor Vi).  The exact site(s) of cleavage are unknown.  Protein S, on the endothelial cell surface, positively regulates this reaction.  Although the mechanism of this regulation is unclear, the regulation is physiologically important, as people with reduced amounts of protein S, like people with reduced amounts of protein C, are susceptible to thromboembolism."
+      }
+    ],
+    "citations": [
+      "publicationXrefda7"
+    ],
+    "drawAs": "SegmentedLine",
+    "zIndex": 12288,
+    "strokeWidth": 1,
+    "points": [
+      {
+        "x": 1507,
+        "y": 746,
+        "isAttachedTo": "n1755",
+        "attachmentDisplay": {
+          "position": [
+            0.4769230769230769,
+            0
+          ],
+          "offset": [
+            0,
+            -3.0000000000000004
+          ]
+        },
+        "orientation": [
+          0,
+          -1
+        ]
+      },
+      {
+        "x": 1498,
+        "y": 592,
+        "isAttachedTo": "a5236",
+        "attachmentDisplay": {
+          "position": [
+            0.5,
+            0
+          ],
+          "offset": [],
+          "relativeOffset": [
+            -1.75,
+            4.5
+          ]
+        },
+        "orientation": []
+      }
+    ],
+    "stroke": "#000000",
+    "fill": "none",
+    "dbConventionalName": "Reactome",
+    "dbId": "REACT_1071",
+    "type": [
+      "Interaction",
+      "Edge",
+      "SBO:0000167",
+      "SBO:0000393",
+      "SBO:0000394",
+      "DirectedInteraction"
+    ],
+    "kaavioType": "Edge",
+    "gpmlElementName": "Interaction",
+    "markerEnd": "Arrow",
+    "isAttachedTo": [
+      "n1755",
+      "e_1752"
+    ]
+  },
+  "pvjsgeneratedida49": {
+    "textContent": "KLKB1",
+    "wpType": "Protein",
+    "x": 12,
+    "y": 12,
+    "width": 80,
+    "height": 20,
+    "zIndex": 32768,
+    "fontSize": 10,
+    "verticalAlign": "middle",
+    "textAlign": "center",
+    "stroke": "#000000",
+    "fill": "#ffffff",
+    "textDecoration": "none",
+    "fontFamily": "Arial",
+    "fontStyle": "normal",
+    "fontWeight": "normal",
+    "strokeWidth": 1,
+    "drawAs": "rect",
+    "lineHeight": 1.1,
+    "overflow": "hidden",
+    "textOverflow": "clip",
+    "whiteSpace": "pre",
+    "padding": 8,
+    "dbConventionalName": "Uniprot-TrEMBL",
+    "dbId": "P03952",
+    "id": "pvjsgeneratedida49",
+    "type": [
+      "DataNode",
+      "SingleFreeNode",
+      "Protein"
+    ],
+    "kaavioType": "SingleFreeNode",
+    "gpmlElementName": "DataNode",
+    "isPartOf": "pvjsgeneratedidfe1ea"
+  }
+}

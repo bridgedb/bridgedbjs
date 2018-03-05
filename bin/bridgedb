@@ -172,10 +172,10 @@ program
     mapToXrefNSes,
     optionsRaw
   ) {
-    /*
+    //*
     var bridgeDb = new BridgeDb();
     //*/
-    //*
+    /*
     var bridgeDb = new BridgeDb({
       baseIri: "http://localhost:4522/",
       dataSourcesHeadersIri: "http://localhost:4522/datasources_headers.txt",
@@ -519,7 +519,7 @@ program
                                     xrefContainer[NS] = [preexistingNSValue, ID];
                                   }
                                 } else if (_.isArray(preexistingNSValue)) {
-                                  if (preexistingNS.indexOf(ID) === -1) {
+                                  if (preexistingNSValue.indexOf(ID) === -1) {
                                     xrefContainer[NS].push(ID);
                                   }
                                 } else {
@@ -590,27 +590,6 @@ program
                         :
                           valuesByKey
                     };
-
-                    /*
-                    if (!valueIsArray) {
-                      return hl([{
-                        event: "data",
-                        container: container,
-                        key: parentKey,
-                        value: valuesByKey
-                      }]);
-                    } else {
-                      return hl(valuesByKey)
-                        .map(function(entity) {
-                          return {
-                            event: "data",
-                            type: "array",
-                            key: parentKey,
-                            value: entity
-                          };
-                        });
-                    }
-                    //*/
                   });
               });
           });
@@ -629,10 +608,6 @@ program
       //*/
     });
 
-    //const stringify = _.curry(JSONStream.stringify);
-    //const stringifier = 
-    //rootKey === true ? curry(JSONStream.stringify) : JSONStream.stringifyObject;
-    
     var stringifier;
     var i = 0;
     return hl([headerStream, parsedDataStream, footerStream])
@@ -674,7 +649,6 @@ program
           if (_.isEmpty(path)) {
             acc = _.assign(acc, value);
           } else {
-            //var container = getByParsedPath(acc, path) || {};
             _.updateWith(
               acc,
               path,
@@ -690,12 +664,14 @@ program
         return hl(_.isArray(s) ? s : [s])
           .through(stringifier);
       })
-      //.through(stringifier())
-      //.through(JSONStream.stringify(true))
       .pipe(process.stdout);
   })
   .on("--help", function() {
     console.log(`
+  Stream in JSON with xrefs and this method will map those xrefs
+  to equivalents from other datasources and add the mapped xrefs
+  to the JSON, piping it back out without otherwise changing it.
+
   Paths use the format of basic jq filters, e.g., any of these:
         .a
         .a.z
@@ -714,7 +690,7 @@ program
   Examples:
 
     echo '[{"dbConventionalName": "Entrez Gene", "dbId": "1234"}]' |\\
-    ./bin/bridgedb addMappedXrefs \\
+    bridgedb addMappedXrefs \\
       Human \\
       ".[].dbConventionalName" \\
       ".[].dbId" \\
@@ -723,28 +699,30 @@ program
 
     For developers:
 
-    cat input-array.json |\\
-    ./bin/bridgedb addMappedXrefs Human \\
-      ".[].dbConventionalName" ".[].dbId" \\
+    cat ./test/inputs/nest0-array.json |\\
+    ./bin/bridgedb addMappedXrefs \\
+      Human \\
+      ".[].dbConventionalName" \\
+      ".[].dbId" \\
       ".[].type" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
-    cat input-array.json |\\
+    cat ./test/inputs/nest0-array.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
       ".[].dbConventionalName" ".[].dbId" \\
       ".[]" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
-    cat input.json |\\
+    cat ./test/inputs/nest1-object.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
       ".entitiesById[].dbConventionalName" ".entitiesById[].dbId" \\
       ".entitiesById[].type" \\
       ensembl ncbigene uniprot wikidata |\\
     jq .
 
-    cat input.json |\\
+    cat ./test/inputs/nest1-object.json |\\
     ./bin/bridgedb addMappedXrefs Human \\
       ".entitiesById[].dbConventionalName" ".entitiesById[].dbId" \\
       ".entitiesById" \\
