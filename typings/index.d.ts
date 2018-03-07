@@ -27,7 +27,7 @@ interface DataSource {
 }
 
 interface Xref {
-  dbId: string;
+  xrefIdentifier: string;
   symbol?: string;
   id?: string;
   isDataItemIn?: DataSource;

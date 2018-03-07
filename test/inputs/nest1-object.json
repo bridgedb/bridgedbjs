@@ -450,8 +450,8 @@
     },
     "publicationXrefc2b": {
       "id": "publicationXrefc2b",
-      "dbId": "12907439",
-      "dbConventionalName": "PubMed",
+      "xrefIdentifier": "12907439",
+      "xrefDataSource": "PubMed",
       "standardName": "Heparin-induced substrate behavior of antithrombin Cambridge II.",
       "authors": [
         "Mushunje A, Zhou A, Carrell RW, Huntington JA."
@@ -520,8 +520,8 @@
       ],
       "stroke": "#000000",
       "fill": "none",
-      "dbConventionalName": "Reactome",
-      "dbId": "REACT_1071",
+      "xrefDataSource": "Reactome",
+      "xrefIdentifier": "REACT_1071",
       "type": [
         "Interaction",
         "Edge",
@@ -562,8 +562,8 @@
       "textOverflow": "clip",
       "whiteSpace": "pre",
       "padding": 8,
-      "dbConventionalName": "Uniprot-TrEMBL",
-      "dbId": "P03952",
+      "xrefDataSource": "Uniprot-TrEMBL",
+      "xrefIdentifier": "P03952",
       "id": "pvjsgeneratedida49",
       "type": [
         "DataNode",

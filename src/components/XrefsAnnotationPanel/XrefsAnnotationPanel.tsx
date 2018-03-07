@@ -53,12 +53,12 @@ interface ListItemRaw {
 
 /**
  * @private
- * Used to create an HTML string for one or more dbIds/links.
- * @typedef {Object} ListItemValue Set of dbIds,
+ * Used to create an HTML string for one or more xrefIdentifiers/links.
+ * @typedef {Object} ListItemValue Set of xrefIdentifiers,
  *                      each with a linkout when available, such as for a specific Xref.
  * @property {String} text Displayed value, e.g., "WP1"
  * @property {String} [uri] (when available) Link to the main human-readable description/page
- *                          about that dbId.
+ *                          about that xrefIdentifier.
  *                          Sometimes called a "linkout.". See
  *                          {@link http://www.w3.org/2001/XMLSchema#anyURI|xsd:anyURI}.
  *                          Example: {@link http://wikipathways.org/index.php/Pathway:WP1}
@@ -85,7 +85,7 @@ interface ListItem {
 function getLinkout(entityReference) {
   const urlPattern = entityReference.isDataItemIn.hasPrimaryUriPattern;
   if (urlPattern) {
-    return urlPattern.replace("$id", entityReference.dbId);
+    return urlPattern.replace("$id", entityReference.xrefIdentifier);
   } else {
     return compact(
       concat([entityReference.id], entityReference.sameAs)
@@ -97,7 +97,7 @@ function getLinkout(entityReference) {
 
 function convertEntityReferenceToListItems(entityReference): [ListItem] {
   let listItemValue: ListItemValue = {
-    text: entityReference.dbId
+    text: entityReference.xrefIdentifier
   };
 
   const uri = getLinkout(entityReference);
@@ -164,10 +164,10 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
     let state = that.state;
 
     const primaryDataSource = state.dataSource;
-    const primaryDbId = state.dbId;
+    const primaryDbId = state.xrefIdentifier;
     let primaryEntityReference = {
       displayName: state.displayName,
-      dbId: primaryDbId,
+      xrefIdentifier: primaryDbId,
       isDataItemIn: {
         conventionalName: primaryDataSource
       }
@@ -176,15 +176,15 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
     let xrefsRequest = (that.xrefsRequest = bridgeDb.xrefs(
       state.organism,
       state.dataSource,
-      state.dbId
+      state.xrefIdentifier
     ));
 
     xrefsRequest
       .map(function(entityReference): ListItemValueRaw {
-        const dbId = entityReference.dbId;
+        const xrefIdentifier = entityReference.xrefIdentifier;
         let listItem: ListItemValueRaw = {
           key: entityReference.isDataItemIn.conventionalName,
-          text: dbId,
+          text: xrefIdentifier,
           primary: entityReference.isDataItemIn.primary
         };
 
@@ -236,7 +236,7 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
           return acc;
         }, []);
 
-        // Set the first item in the list to be the one with the dataSource/dbId
+        // Set the first item in the list to be the one with the dataSource/xrefIdentifier
         // that was specified for this data node by the pathway author.
         var primaryListItem = remove(sortedListItems, function(element) {
           return element.key === primaryDataSource;
@@ -287,7 +287,7 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
 
     /* TODO see note at componentDidUpdate
 		const xrefsUpdateNeeded = nextProps.dataSource !== state.dataSource ||
-			nextProps.dbId !== state.dbId;
+			nextProps.xrefIdentifier !== state.xrefIdentifier;
 		//*/
 
     /*
@@ -303,7 +303,7 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
     const changedStatePairs = [
       "organism",
       "dataSource",
-      "dbId",
+      "xrefIdentifier",
       "xrefs",
       "entityType",
       "displayName"
@@ -334,7 +334,7 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
     let props = that.props;
     if (
       prevProps.dataSource !== props.dataSource ||
-      prevProps.dbId !== props.dbId
+      prevProps.xrefIdentifier !== props.xrefIdentifier
     ) {
       that.updateXrefs();
     }
