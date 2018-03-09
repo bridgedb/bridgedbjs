@@ -22,11 +22,12 @@ if (!global.hasOwnProperty("XMLHttpRequest")) {
   global.XMLHttpRequest = require("xhr2");
 }
 
-import { curry } from "lodash/fp";
+import { curry, negate } from "lodash/fp";
 import {
   camelCase,
   defaultsDeep,
   fill,
+  invert,
   isArray,
   isEmpty,
   isNaN,
@@ -120,9 +121,12 @@ const DATASOURCE_ID_PROPERTIES = [
   "systemCode"
 ];
 
-const IRI_TO_NAME_MAPPINGS = {
-  "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": "id"
+const IRI_TO_NAME = {
+  "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": "id",
+  "http://identifiers.org/idot/preferredPrefix": "preferredPrefix",
+  "http://identifiers.org/miriam.collection/": "miriamUrn"
 };
+const NAME_TO_IRI = invert(IRI_TO_NAME);
 
 /**
  * miriamUrnToIdentifiersIri
@@ -163,7 +167,7 @@ export interface DataSourcesMetadataHeaderRow {
 export class BridgeDb {
   config;
   dataSourceMappings$;
-  dataSourcesMetadataHeaderNameToIri$;
+  //dataSourcesMetadataHeaderNameToIri$;
   getTSV;
   private xrefsRequestQueue;
   private xrefsResponseQueue;
@@ -236,25 +240,12 @@ export class BridgeDb {
         description: fields[2],
         example_entry: fields[3],
         id: id,
-        name: IRI_TO_NAME_MAPPINGS.hasOwnProperty(id)
-          ? IRI_TO_NAME_MAPPINGS[id]
+        name: IRI_TO_NAME.hasOwnProperty(id)
+          ? IRI_TO_NAME[id]
           : id.split(/[\/|#]/).pop(),
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": fields[5]
       };
     });
-
-    bridgeDb.dataSourcesMetadataHeaderNameToIri$ = dataSourcesMetadataHeaders$
-      .reduce(function(acc, row: DataSourcesMetadataHeaderRow) {
-        acc[row.name] = row.id;
-        return acc;
-      }, {})
-      .catch(err => {
-        throw new VError(
-          err,
-          "Setting up dataSourcesMetadataHeaderNameToIri$ in constructor"
-        );
-      })
-      .publishReplay();
 
     bridgeDb.dataSourceMappings$ = Observable.forkJoin(
       dataSourcesMetadataHeaders$.toArray(),
@@ -267,9 +258,13 @@ export class BridgeDb {
         return Observable.from(rows).map(function(fields) {
           return fields.reduce(function(acc, field, i) {
             const metadata = metadataByColumnIndex[i];
-            acc[metadata.name] = dataTypeParsers[metadata[RDF + "datatype"]](
-              field
-            );
+            const { id, name } = metadata;
+            // NOTE: side effects
+            if (!!id && !(id in IRI_TO_NAME)) {
+              IRI_TO_NAME[id] = name;
+              NAME_TO_IRI[name] = id;
+            }
+            acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](field);
             return acc;
           }, {});
         });
@@ -289,7 +284,7 @@ export class BridgeDb {
         });
       })
       .map(function(dataSource: DataSource) {
-        // Kluge to temporarily handle this issue:
+        // Kludge to temporarily handle this issue:
         // https://github.com/bridgedb/BridgeDb/issues/58
         if (dataSource.id === "Sp") {
           dataSource.id = "urn:miriam:uniprot";
@@ -410,6 +405,8 @@ export class BridgeDb {
       .reduce(function(acc, dataSource) {
         DATASOURCE_ID_PROPERTIES.forEach(function(propertyName) {
           const propertyValue = dataSource[propertyName];
+          const propertyId = NAME_TO_IRI[propertyName];
+          dataSource[propertyId] = propertyValue;
           acc[propertyValue] = dataSource;
         });
         return acc;
@@ -420,7 +417,6 @@ export class BridgeDb {
       .publishReplay();
 
     // toggle from cold to hot
-    bridgeDb.dataSourcesMetadataHeaderNameToIri$.connect();
     bridgeDb.dataSourceMappings$.connect();
   } // end constructor
 
@@ -488,7 +484,9 @@ export class BridgeDb {
     (targetType: string, input: string): Observable<string> => {
       let bridgeDb = this;
       return bridgeDb.dataSourceMappings$
-        .map(mapping => mapping[input][targetType])
+        .map(function(mapping) {
+          return !!mapping[input] && mapping[input][targetType];
+        })
         .catch(err => {
           throw new VError(err, "calling bridgedb.convertXrefDataSourceTo");
         });
@@ -499,11 +497,15 @@ export class BridgeDb {
     let bridgeDb = this;
     return bridgeDb.dataSourceMappings$
       .map(mapping => mapping[input])
+      .filter(negate(isEmpty))
       .map(dataSource => {
-        const match = toPairs(dataSource).find(
-          ([key, value]) => value === input
-        );
-        return !!match ? match[0] : null;
+        return toPairs(dataSource)
+          .filter(([key, value]) => value === input)
+          .map(([key, value]) => key)
+          .reduce(function(acc: string, key: string): string {
+            // we want to return the IRI, if it's available.
+            return acc.length > key.length ? acc : key;
+          });
       })
       .catch(err => {
         throw new VError(
@@ -511,28 +513,6 @@ export class BridgeDb {
           "calling bridgedb.identifyHeaderNameForXrefDataSource"
         );
       });
-  };
-
-  dataSourceNameToColumnIri = (input: string): Observable<string> => {
-    let bridgeDb = this;
-
-    return bridgeDb
-      .identifyHeaderNameForXrefDataSource(input)
-      .mergeMap(name =>
-        bridgeDb.dataSourcesMetadataHeaderNameToIri$
-          .first()
-          .map(
-            dataSourcesMetadataHeaderNameToIri =>
-              !!dataSourcesMetadataHeaderNameToIri
-                ? dataSourcesMetadataHeaderNameToIri[name]
-                : null
-          )
-      );
-    /*
-      .catch(err => {
-        throw new VError(err, "calling bridgedb.dataSourceNameToColumnIri");
-      });
-      //*/
   };
 
   dataSourceProperties = (input: string): Observable<DataSource> => {
@@ -753,6 +733,7 @@ export class BridgeDb {
               desiredXrefDataSources.join()
           );
         })
+        .map(x => x.xrefs)
         //.do(null, xrefsRequestQueue.complete)
         .catch(err => {
           throw new VError(err, "calling bridgedb.xrefs");
@@ -772,7 +753,9 @@ export class BridgeDb {
     xrefs: Xref[];
   }> => {
     let bridgeDb = this;
-    const desiredXrefDataSources = arrayify(desiredXrefDataSourceOrSources);
+    const desiredXrefDataSources = arrayify(
+      desiredXrefDataSourceOrSources
+    ) as string[];
     const dataSourceFilterParamSection = desiredXrefDataSources.length === 1
       ? "?dataSource=" + desiredXrefDataSources[0]
       : "";
@@ -798,17 +781,19 @@ export class BridgeDb {
       "/xrefsBatch" +
       dataSourceFilterParamSection;
 
-    // TODO is there any ambiguity between column names?
-    // TODO what about input IRIs?
-    const inputXrefDataSourceHeaderName$ = bridgeDb
-      .identifyHeaderNameForXrefDataSource(xrefDataSources[0])
-      .first();
+    const inputXrefDataSourceHeaderName$ = Observable.from(xrefDataSources)
+      .mergeMap(function(xrefDataSource) {
+        return bridgeDb.identifyHeaderNameForXrefDataSource(xrefDataSource);
+      })
+      .find(isString);
 
     const desiredXrefDataSourceHeaderName$ = isEmpty(desiredXrefDataSources)
       ? inputXrefDataSourceHeaderName$
-      : bridgeDb
-          .identifyHeaderNameForXrefDataSource(desiredXrefDataSources[0])
-          .first();
+      : Observable.from(desiredXrefDataSources)
+          .mergeMap(function(xrefDataSource) {
+            return bridgeDb.identifyHeaderNameForXrefDataSource(xrefDataSource);
+          })
+          .find(isString);
 
     const dataSourceConventionalNames$ = Observable.from(xrefDataSources)
       .mergeMap(function(xrefDataSource) {
@@ -828,6 +813,7 @@ export class BridgeDb {
       ]
     ) {
       const body = zip(xrefIdentifiers, dataSourceConventionalNames)
+        .filter(pair => !!pair[1])
         .map(x => x.join("\t"))
         .join("\n");
 
