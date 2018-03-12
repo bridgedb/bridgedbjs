@@ -6,13 +6,15 @@
 
 # nest: 0
 
+#/bridgedb xrefs -i '.entitiesById' -f 'json' Mouse '.entitiesById[].xrefDataSource' '.entitiesById[].xrefIdentifier' ensembl hgnc.symbol ncbigene uniprot chebi hmdb wikidata
+
 echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}]' |\
 	./bin/bridgedb xrefs -f "json" \
 	-i ".[]" \
 	Human \
 	".[].xrefDataSource" \
 	".[].xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq '.[0].ensembl == "ENSG00000160791"' |\
 	sed 's/true/pass/'
 
@@ -22,7 +24,7 @@ echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234
 	Human \
 	".[].xrefDataSource" \
 	".[].xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq '.[0].type | contains(["hgnc.symbol:CCR5","ensembl:ENSG00000160791","uniprot:Q38L21","uniprot:P51681","ncbigene:1234"])' |\
 	sed 's/true/pass/'
 
@@ -32,7 +34,7 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	Human \
 	".xrefDataSource" \
 	".xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol |\
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq 'keys | contains(["ensembl"])' |\
 	sed 's/true/pass/'
 
@@ -45,7 +47,7 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	Human \
 	".[].xrefDataSource" \
 	".[].xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	< ./test/inputs/nest0-array.json |\
 	jq '.[3].type | contains(["uniprot:P03952","ncbigene:3818"])' |\
 	sed 's/true/pass/'
@@ -55,7 +57,7 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	Human \
 	".[].xrefDataSource" \
 	".[].xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata \
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	< ./test/inputs/nest0-array.json |\
 	jq '.[] | select(.id == "Uniprot-TrEMBL:P03952") | .closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
 	sed 's/true/pass/'
@@ -103,7 +105,7 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	Human \
 	".[].xrefDataSource" \
 	".[].xrefIdentifier" \
-	ensembl ncbigene uniprot wikidata \
+	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	< ./test/inputs/nest0-object.json |\
 	jq '.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])' |\
 	sed 's/true/pass/'

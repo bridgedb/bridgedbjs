@@ -31,6 +31,7 @@ program
   .action(function(input, as, options) {
     var serialize = ndjson.serialize();
     if (process.env.NODE_ENV === "development") {
+      console.warn("Using development mock server.");
       //*TODO: use this instance for testing:
       var bridgeDb = new BridgeDb({
         baseIri: "http://localhost:4522/",
