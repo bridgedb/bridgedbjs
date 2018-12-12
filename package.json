@@ -52,31 +52,17 @@
     "watch:ui": "npm run start:ui"
   },
   "watch": {
-    "dev": [
-      "index.d.ts",
-      "src/*.{ts,tsx}",
-      "test/*.{ts,tsx,js,jsx}"
-    ],
-    "test": [
-      "index.js",
-      "ui/*.{js,jsx}",
-      "test/*.{js,jsx}"
-    ]
+    "dev": ["index.d.ts", "src/*.{ts,tsx}", "test/*.{ts,tsx,js,jsx}"],
+    "test": ["index.js", "ui/*.{js,jsx}", "test/*.{js,jsx}"]
   },
   "browserify": {
-    "transform": [
-      "deglobalify",
-      "cssify"
-    ]
+    "transform": ["deglobalify", "cssify"]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/bridgedb/bridgedbjs.git"
   },
-  "keywords": [
-    "bridgedb",
-    "biology"
-  ],
+  "keywords": ["bridgedb", "biology"],
   "author": "BridgeDb team",
   "license": "Apache-2.0",
   "bugs": {
@@ -121,7 +107,7 @@
     "@types/jsonstream": "^0.8.28",
     "@types/lodash": "^4.14.68",
     "@types/node": "^8.0.34",
-    "@types/react": "^15.0.34",
+    "@types/react": "https://github.com/ariutta/types-react-v15.git#50edb5d44342e201cba7945e6040ebdd8b15c063",
     "@types/react-dom": "^15.5.1",
     "@types/rx": "^4.1.1",
     "@types/urijs": "^1.15.33",
@@ -163,11 +149,7 @@
     ],
     "grepOptions": {
       "include": [],
-      "exclude": [
-        ".git",
-        "jsdoc-conf.json",
-        "npm-debug.log"
-      ],
+      "exclude": [".git", "jsdoc-conf.json", "npm-debug.log"],
       "excludeDir": [
         "./docs",
         "./test",
