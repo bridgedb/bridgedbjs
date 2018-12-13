@@ -266,10 +266,10 @@ export class BridgeDb {
             }
             acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](field);
             return acc;
-          }, {});
+          }, ({} as DataSource));
         });
       })
-      .map(function(dataSource) {
+      .map(function(dataSource: DataSource): DataSource {
         // remove empty properties, ie., properties with these values:
         // ''
         // NaN
@@ -277,11 +277,11 @@ export class BridgeDb {
         // undefined
         // TODO what about empty plain object {} or array []
 
-        return omitBy(dataSource, function(value) {
+        return (omitBy(dataSource, function(value: any): boolean {
           return (
             value === "" || isNaN(value) || isNull(value) || isUndefined(value)
           );
-        });
+        }) as DataSource);
       })
       .map(function(dataSource: DataSource) {
         // Kludge to temporarily handle this issue:

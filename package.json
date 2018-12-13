@@ -23,7 +23,7 @@
     "typings/organism.d.ts"
   ],
   "scripts": {
-    "assets": "mkdir -p es5/components && mkdir -p esnext/components && cp ./node_modules/react-select/dist/react-select.css ./es5/components/react-select.css && cp ./node_modules/react-select/dist/react-select.css ./src/components/react-select.css && cp ./node_modules/react-select/dist/react-select.css ./esnext/components/react-select.css && echo ok || echo not ok",
+    "assets": "css_path=$(node -p 'require.resolve(\"react-select/dist/react-select.css\")'); mkdir -p es5/components && mkdir -p esnext/components && cp $css_path ./es5/components/react-select.css && cp $css_path ./src/components/react-select.css && cp $css_path ./esnext/components/react-select.css && echo ok || echo not ok",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "build": "npm run compile && mkdir -p dist && rm -rf dist/* && browserify ./es5/index.js -o ./dist/index.js -d -t cssify -t deglobalify",

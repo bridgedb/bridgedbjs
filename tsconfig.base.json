@@ -11,13 +11,19 @@
   },
   "files": [
     "src/index.ts",
+    "src/BridgeDb.ts",
+    "src/components/DataSourceSelect.tsx",
+    "src/components/EntityTypeSelect.tsx",
+    "src/components/Xref.tsx",
+    "src/components/XrefsAnnotationPanel/index.ts",
+    "src/components/XrefsAnnotationPanel/XrefsAnnotationPanel.tsx",
+    "src/components/XrefsAnnotationPanel/styles.style.tsx",
+    "src/spinoffs/dataTypeParsers.ts",
+    "src/spinoffs/TSVGetter.ts",
+    "src/spinoffs/jsonld-utils.ts",
     "src/spinoffs/mockserverPM/mockserverPM.ts",
     "src/spinoffs/pipeToStdout.ts",
     "src/spinoffs/toNodeStream.ts"
   ],
-  "exclude": [
-    "dist/**/*",
-    "tmp/**/*",
-    "src/**/*.css"
-  ]
+  "exclude": ["dist/**/*", "tmp/**/*", "src/**/*.css"]
 }

@@ -59,6 +59,7 @@ export const Description = style({
   margin: '0 0 0 auto',
   fontSize: '14px',
   fontStyle: 'italic',
+	/*
 	[`h2`]: {
 		fontWeight: 'normal',
 		fontVariant: 'normal',
@@ -72,6 +73,7 @@ export const Description = style({
 		border: '0',
 		zoom: 1,
 	},
+	//*/
 });
 
 export const AnnotationItemsContainer = style({
@@ -87,7 +89,7 @@ export const AnnotationItemsContainer = style({
 		'& ::-webkit-scrollbar': {
 			width: '12px',
 		},
-	},
+	}/*,
 	[`ul`]: {
 		lineHeight: '120%',
 		listStyle: 'none',
@@ -99,14 +101,17 @@ export const AnnotationItemsContainer = style({
 		overflowY: 'auto',
 		overflowX: 'hidden',
 	}
+	//*/
 });
 
 export const AnnotationItem = style({
+	/*
 	[`li`]: {
 		padding: '0px',
 		display: 'block',
 		margin: '0 auto 0 auto',
 	}
+	//*/
 });
 
 export const AnnotationItemTitle = style({
