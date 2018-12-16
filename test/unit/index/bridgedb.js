@@ -7,7 +7,6 @@ var fs = require('fs');
 var highland = require('highland');
 var http    =  require('http');
 var mockserver  =  require('mockserver');
-var run = require('gulp-run');
 var sinon      = require('sinon');
 var wd = require('wd');
 
