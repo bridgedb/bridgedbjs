@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "inlineSourceMap": true,
     "jsx": "react",
