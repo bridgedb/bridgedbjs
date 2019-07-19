@@ -105,7 +105,10 @@ module.exports = function createXrefsCLI(program) {
       optionsRaw
     ) {
       if (process.env.NODE_ENV === "development") {
-        console.warn("Using development mock server.");
+        if (!process.env.MOCK_SERVER_WARNING_GIVEN) {
+          console.warn("Using development mock server.");
+          process.env.MOCK_SERVER_WARNING_GIVEN = "yes";
+        }
         var bridgeDb = new BridgeDb({
           //baseIri: "http://localhost:4522/",
           dataSourcesHeadersIri:
