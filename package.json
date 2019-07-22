@@ -129,7 +129,7 @@
     "babelify": "^7.3.0",
     "browserify": "^16.3.0",
     "colors": "^0.6.2",
-    "css-loader": "^0.28.11",
+    "css-loader": "^3.1.0",
     "cssify": "^1.0.3",
     "deglobalify": "^0.2.0",
     "global": "^4.3.2",
