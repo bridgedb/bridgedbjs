@@ -1,12 +1,12 @@
-var _ = require('lodash');
-var highland = require('highland');
-var BridgeDb = require('../../index.js');
+var _ = require("lodash");
+var highland = require("highland");
+var BridgeDb = require("../../index.js");
 
 var bridgeDb1 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+  baseIri: "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/",
   datasetsMetadataIri:
-    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php',
-  organism: 'Homo sapiens'
+    "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php",
+  organism: "Homo sapiens"
 });
 
 /*
@@ -166,17 +166,17 @@ bridgeDb1.xref.get(
 
 //*
 var bridgeDb4 = BridgeDb({
-  Organism: 'C. elegans'
+  Organism: "C. elegans"
 });
 var entityReference4 = {
-  '@id': 'http://identifiers.org/ncbigene/173041'
+  "@id": "http://identifiers.org/ncbigene/173041"
 };
-bridgeDb4.xref.get(
-    _.clone(entityReference4))
-.each(function(entityReferenceXref) {
-  console.log('xref (single) for:');
-  console.log(JSON.stringify(entityReference4, null, '\t'));
-  console.log('**********************************************');
-  console.log(JSON.stringify(entityReferenceXref, null, '\t'));
-});
+bridgeDb4.xref
+  .get(_.clone(entityReference4))
+  .each(function(entityReferenceXref) {
+    console.log("xref (single) for:");
+    console.log(JSON.stringify(entityReference4, null, "\t"));
+    console.log("**********************************************");
+    console.log(JSON.stringify(entityReferenceXref, null, "\t"));
+  });
 //*/

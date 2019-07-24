@@ -1,35 +1,36 @@
-var BridgeDb = require('../../index.js');
+var BridgeDb = require("../../index.js");
 
 var bridgeDb1 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+  baseIri: "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/",
   datasetsMetadataIri:
-    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+    "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php"
 });
 
 function runGetAll(runNumber, timeout, expectedIterationCount) {
-  bridgeDb1.dataset.query()
-  .collect()
-  .each(function(dataset) {
-    if (runNumber === 1) {
-      console.log('***************************************************');
-      console.log('expected iteration count: ' + expectedIterationCount);
-      console.log('***************************************************');
-    }
-    //console.log('Data sets:');
-    //console.log(JSON.stringify(dataset, null, '\t'));
-    console.log('  #' + runNumber + ' ======================');
-    console.log('     Count: ' + dataset.length);
-    if (dataset.length !== 132) {
-      console.log('********************************************************');
-      console.log('********************************************************');
-      console.log('********************************************************');
-      console.log('********************************************************');
-      console.log('********************************************************');
-      console.log('********************************************************');
-      console.log('********************************************************');
-    }
-    console.log('     Timeout: ' + timeout + 'ms');
-  });
+  bridgeDb1.dataset
+    .query()
+    .collect()
+    .each(function(dataset) {
+      if (runNumber === 1) {
+        console.log("***************************************************");
+        console.log("expected iteration count: " + expectedIterationCount);
+        console.log("***************************************************");
+      }
+      //console.log('Data sets:');
+      //console.log(JSON.stringify(dataset, null, '\t'));
+      console.log("  #" + runNumber + " ======================");
+      console.log("     Count: " + dataset.length);
+      if (dataset.length !== 132) {
+        console.log("********************************************************");
+        console.log("********************************************************");
+        console.log("********************************************************");
+        console.log("********************************************************");
+        console.log("********************************************************");
+        console.log("********************************************************");
+        console.log("********************************************************");
+      }
+      console.log("     Timeout: " + timeout + "ms");
+    });
 }
 
 function getTimeout(index, start, step) {
@@ -43,8 +44,7 @@ function runGetAllMultiple(start, step, expectedIterationCount) {
       runNumber += 1;
       var timeout = getTimeout(runNumber, start, step);
       runGetAll(runNumber, timeout, expectedIterationCount);
-    },
-    getTimeout(i, start, step));
+    }, getTimeout(i, start, step));
   }
 }
 //*/
@@ -55,9 +55,9 @@ runGetAllMultiple(1000, 0, 1);
 //*/
 
 var bridgeDb2 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+  baseIri: "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/",
   datasetsMetadataIri:
-    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+    "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php"
 });
 
 /*

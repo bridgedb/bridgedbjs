@@ -17,11 +17,10 @@ module.exports = function(
     .xrefs(organism, xrefDataSource, xrefIdentifier, desiredXrefDataSources)
     //.throughNodeStream(serialize)
     .mergeMap(function(xrefs) {
-      return Rx.Observable
-        .from(xrefs)
-        .map(({ xrefDataSource, xrefIdentifier }) =>
+      return Rx.Observable.from(xrefs).map(
+        ({ xrefDataSource, xrefIdentifier }) =>
           [xrefDataSource, xrefIdentifier].join("\t")
-        );
+      );
     })
     .map(line => line + "\n")
     .pipeToStdout();

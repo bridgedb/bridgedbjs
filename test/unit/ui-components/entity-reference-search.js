@@ -1,17 +1,17 @@
-var $ = require('jquery');
+var $ = require("jquery");
 
-var Rx = global.Rx = require('rx-extra');
+var Rx = (global.Rx = require("rx-extra"));
 
-var yolk = require('yolk');
+var yolk = require("yolk");
 var h = yolk.h;
 var noop = function() {};
 var render = yolk.render;
-var renderInDocument = require('../../render-in-document');
+var renderInDocument = require("../../render-in-document");
 
 process.env.MOCKSERVER_PORT = 4522;
 
 var bridgeDbUI = {
-  XrefSearch: require('../../../lib/ui-components/xref-search.js')
+  XrefSearch: require("../../../lib/ui-components/xref-search.js")
 };
 
 // Note: must be greater than the debounce period
@@ -27,12 +27,12 @@ function fireEvent(node, eventName) {
     // the node may be the document itself, nodeType 9 = DOCUMENT_NODE
     doc = node;
   } else {
-    throw new Error('Invalid node passed to fireEvent: ' + node.id);
+    throw new Error("Invalid node passed to fireEvent: " + node.id);
   }
 
   if (node.dispatchEvent) {
     // Gecko-style approach (now the standard) takes more work
-    var eventClass = '';
+    var eventClass = "";
 
     // Different events have different event classes.
     // If this switch statement can't map an eventName to an eventClass,
@@ -40,25 +40,27 @@ function fireEvent(node, eventName) {
     switch (eventName) {
       // Dispatching of 'click' appears to not work correctly in Safari.
       // Use 'mousedown' or 'mouseup' instead.
-      case 'click':
-      case 'mousedown':
-      case 'mouseup':
-        eventClass = 'MouseEvents';
+      case "click":
+      case "mousedown":
+      case "mouseup":
+        eventClass = "MouseEvents";
         break;
 
-      case 'focus':
-      case 'change':
-      case 'blur':
-      case 'select':
-        eventClass = 'HTMLEvents';
+      case "focus":
+      case "change":
+      case "blur":
+      case "select":
+        eventClass = "HTMLEvents";
         break;
 
       default:
-        throw 'fireEvent: Couldn\'t find an event class for event \'' + eventName + '\'.';
+        throw "fireEvent: Couldn't find an event class for event '" +
+          eventName +
+          "'.";
     }
     event = doc.createEvent(eventClass);
 
-    var bubbles = eventName == 'change' ? false : true;
+    var bubbles = eventName == "change" ? false : true;
     event.initEvent(eventName, bubbles, true); // All events created as bubbling and cancelable.
 
     event.synthetic = true; // allow detection of synthetic events
@@ -68,14 +70,14 @@ function fireEvent(node, eventName) {
     // IE-old school style
     event = doc.createEventObject();
     event.synthetic = true; // allow detection of synthetic events
-    node.fireEvent('on' + eventName, event);
+    node.fireEvent("on" + eventName, event);
   }
 }
 
-describe('create an xref search element', function() {
-  it('add query and run', function(done) {
+describe("create an xref search element", function() {
+  it("add query and run", function(done) {
     var vnode = h(bridgeDbUI.XrefSearch, {
-      organism: 'Homo sapiens'
+      organism: "Homo sapiens"
     });
     var result = renderInDocument(vnode);
     var node = result.node;
@@ -84,12 +86,12 @@ describe('create an xref search element', function() {
     var $node = $(node);
 
     setTimeout(function() {
-      assert.equal(node.tagName, 'FORM');
+      assert.equal(node.tagName, "FORM");
 
-      var input = node.querySelector('#xref-search-input');
-      input.textContent = 'BRCA';
-      fireEvent(input, 'change');
-      assert.equal(input.textContent, 'BRCA');
+      var input = node.querySelector("#xref-search-input");
+      input.textContent = "BRCA";
+      fireEvent(input, "change");
+      assert.equal(input.textContent, "BRCA");
 
       // TODO should we check whether modal opened in a unit test?
 
@@ -97,5 +99,4 @@ describe('create an xref search element', function() {
       done();
     }, timeout);
   });
-
 });

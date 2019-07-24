@@ -1,18 +1,18 @@
-var $ = require('jquery');
+var $ = require("jquery");
 
-var Rx = require('rx-extra');
+var Rx = require("rx-extra");
 
-var yolk = require('yolk');
+var yolk = require("yolk");
 var h = yolk.h;
 var noop = function() {};
 var render = yolk.render;
-var renderInDocument = require('../../render-in-document');
+var renderInDocument = require("../../render-in-document");
 
-var BridgeDb = require('../../../lib/main.js');
+var BridgeDb = require("../../../lib/main.js");
 process.env.MOCKSERVER_PORT = 4522;
 
 var bridgeDbUI = {
-  EntityTypeControl: require('../../../lib/ui-components/entity-type-control.js')
+  EntityTypeControl: require("../../../lib/ui-components/entity-type-control.js")
 };
 
 var timeout = 300;
@@ -27,12 +27,12 @@ function fireEvent(node, eventName) {
     // the node may be the document itself, nodeType 9 = DOCUMENT_NODE
     doc = node;
   } else {
-    throw new Error('Invalid node passed to fireEvent: ' + node.id);
+    throw new Error("Invalid node passed to fireEvent: " + node.id);
   }
 
   if (node.dispatchEvent) {
     // Gecko-style approach (now the standard) takes more work
-    var eventClass = '';
+    var eventClass = "";
 
     // Different events have different event classes.
     // If this switch statement can't map an eventName to an eventClass,
@@ -40,25 +40,27 @@ function fireEvent(node, eventName) {
     switch (eventName) {
       // Dispatching of 'click' appears to not work correctly in Safari.
       // Use 'mousedown' or 'mouseup' instead.
-      case 'click':
-      case 'mousedown':
-      case 'mouseup':
-        eventClass = 'MouseEvents';
+      case "click":
+      case "mousedown":
+      case "mouseup":
+        eventClass = "MouseEvents";
         break;
 
-      case 'focus':
-      case 'change':
-      case 'blur':
-      case 'select':
-        eventClass = 'HTMLEvents';
+      case "focus":
+      case "change":
+      case "blur":
+      case "select":
+        eventClass = "HTMLEvents";
         break;
 
       default:
-        throw 'fireEvent: Couldn\'t find an event class for event \'' + eventName + '\'.';
+        throw "fireEvent: Couldn't find an event class for event '" +
+          eventName +
+          "'.";
     }
     event = doc.createEvent(eventClass);
 
-    var bubbles = eventName == 'change' ? false : true;
+    var bubbles = eventName == "change" ? false : true;
     event.initEvent(eventName, bubbles, true); // All events created as bubbling and cancelable.
 
     event.synthetic = true; // allow detection of synthetic events
@@ -68,12 +70,12 @@ function fireEvent(node, eventName) {
     // IE-old school style
     event = doc.createEventObject();
     event.synthetic = true; // allow detection of synthetic events
-    node.fireEvent('on' + eventName, event);
+    node.fireEvent("on" + eventName, event);
   }
 }
 
-describe('create an entity type select (dropdown) element', function() {
-  it('select when entity type is NOT pre-selected', function(done) {
+describe("create an entity type select (dropdown) element", function() {
+  it("select when entity type is NOT pre-selected", function(done) {
     var vnode = h(bridgeDbUI.EntityTypeControl);
     var result = renderInDocument(vnode);
     var node = result.node;
@@ -82,22 +84,22 @@ describe('create an entity type select (dropdown) element', function() {
     var $node = $(node);
 
     setTimeout(function() {
-      assert.equal(node.tagName, 'SELECT');
-      assert.equal($node.find('option:selected').text(), 'Select type');
+      assert.equal(node.tagName, "SELECT");
+      assert.equal($node.find("option:selected").text(), "Select type");
 
-      $node.val('gpml:GeneProduct');
-      fireEvent($node[0], 'change');
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      $node.val("gpml:GeneProduct");
+      fireEvent($node[0], "change");
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
       cleanup();
       done();
     }, timeout);
   });
 
-  it('select when entity type is pre-selected', function(done) {
+  it("select when entity type is pre-selected", function(done) {
     var selectedEntityType$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.EntityTypeControl, {
-      entityType: selectedEntityType$,
+      entityType: selectedEntityType$
     });
     var result = renderInDocument(vnode);
     var node = result.node;
@@ -106,28 +108,28 @@ describe('create an entity type select (dropdown) element', function() {
     var $node = $(node);
 
     selectedEntityType$.onNext({
-      id: 'gpml:GeneProduct'
+      id: "gpml:GeneProduct"
     });
 
     setTimeout(function() {
-      assert.equal(node.tagName, 'SELECT');
+      assert.equal(node.tagName, "SELECT");
 
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
-      $node.val('biopax:Pathway');
-      fireEvent($node[0], 'change');
-      assert.equal($node.find('option:selected').text(), 'Pathway');
+      $node.val("biopax:Pathway");
+      fireEvent($node[0], "change");
+      assert.equal($node.find("option:selected").text(), "Pathway");
 
-      $node.val('gpml:Metabolite');
-      fireEvent($node[0], 'change');
-      assert.equal($node.find('option:selected').text(), 'Metabolite');
+      $node.val("gpml:Metabolite");
+      fireEvent($node[0], "change");
+      assert.equal($node.find("option:selected").text(), "Metabolite");
 
       cleanup();
       done();
     }, timeout);
   });
 
-  it('enable and then select', function(done) {
+  it("enable and then select", function(done) {
     var disabled$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.EntityTypeControl, {
       disabled: disabled$
@@ -141,23 +143,23 @@ describe('create an entity type select (dropdown) element', function() {
     disabled$.onNext(true);
 
     setTimeout(function() {
-      assert.equal(node.tagName, 'SELECT');
+      assert.equal(node.tagName, "SELECT");
 
-      assert.equal($node.prop('disabled'), true);
+      assert.equal($node.prop("disabled"), true);
 
       setTimeout(function() {
         disabled$.onNext(false);
 
-        assert.equal($node.find('option:selected').text(), 'Select type');
-        assert.equal($node.prop('disabled'), false);
+        assert.equal($node.find("option:selected").text(), "Select type");
+        assert.equal($node.prop("disabled"), false);
 
-        $node.val('biopax:Pathway');
-        fireEvent($node[0], 'change');
-        assert.equal($node.find('option:selected').text(), 'Pathway');
+        $node.val("biopax:Pathway");
+        fireEvent($node[0], "change");
+        assert.equal($node.find("option:selected").text(), "Pathway");
 
-        $node.val('gpml:Metabolite');
-        fireEvent($node[0], 'change');
-        assert.equal($node.find('option:selected').text(), 'Metabolite');
+        $node.val("gpml:Metabolite");
+        fireEvent($node[0], "change");
+        assert.equal($node.find("option:selected").text(), "Metabolite");
 
         cleanup();
         done();
@@ -165,10 +167,10 @@ describe('create an entity type select (dropdown) element', function() {
     }, timeout);
   });
 
-  it('programmatically set entity type', function(done) {
+  it("programmatically set entity type", function(done) {
     var selectedEntityType$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.EntityTypeControl, {
-      entityType: selectedEntityType$,
+      entityType: selectedEntityType$
     });
     var result = renderInDocument(vnode);
     var node = result.node;
@@ -177,56 +179,56 @@ describe('create an entity type select (dropdown) element', function() {
     var $node = $(node);
 
     selectedEntityType$.onNext({
-      id: 'gpml:GeneProduct'
+      id: "gpml:GeneProduct"
     });
 
     setTimeout(function() {
-      assert.equal(node.tagName, 'SELECT');
+      assert.equal(node.tagName, "SELECT");
 
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
       cleanup();
       done();
     }, timeout);
   });
 
-  it('programmatically set entity type and then programmatically update', function(done) {
+  it("programmatically set entity type and then programmatically update", function(done) {
     var selectedEntityType$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.EntityTypeControl, {
-      entityType: selectedEntityType$,
+      entityType: selectedEntityType$
     });
     var result = renderInDocument(vnode);
     var node = result.node;
     var cleanup = result.cleanup;
 
     selectedEntityType$.onNext({
-      id: 'gpml:GeneProduct'
+      id: "gpml:GeneProduct"
     });
 
     var $node = $(node);
 
-    assert.equal(node.tagName, 'SELECT');
+    assert.equal(node.tagName, "SELECT");
 
     setTimeout(function() {
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
       selectedEntityType$.onNext({
-        id: 'gpml:GeneProduct'
+        id: "gpml:GeneProduct"
       });
 
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
       setTimeout(function() {
-        assert.equal($node.find('option:selected').text(), 'Gene Product');
+        assert.equal($node.find("option:selected").text(), "Gene Product");
 
         selectedEntityType$.onNext({
-          id: 'biopax:Protein'
+          id: "biopax:Protein"
         });
 
-        assert.equal($node.find('option:selected').text(), 'Protein');
+        assert.equal($node.find("option:selected").text(), "Protein");
 
         setTimeout(function() {
-          assert.equal($node.find('option:selected').text(), 'Protein');
+          assert.equal($node.find("option:selected").text(), "Protein");
 
           cleanup();
           done();
@@ -235,33 +237,32 @@ describe('create an entity type select (dropdown) element', function() {
     }, timeout);
   });
 
-  it('programmatically set entity type and then select', function(done) {
+  it("programmatically set entity type and then select", function(done) {
     var selectedEntityType$ = new Rx.Subject();
     var vnode = h(bridgeDbUI.EntityTypeControl, {
-      entityType: selectedEntityType$,
+      entityType: selectedEntityType$
     });
     var result = renderInDocument(vnode);
     var node = result.node;
     var cleanup = result.cleanup;
 
     selectedEntityType$.onNext({
-      id: 'gpml:GeneProduct'
+      id: "gpml:GeneProduct"
     });
 
     var $node = $(node);
 
-    assert.equal(node.tagName, 'SELECT');
+    assert.equal(node.tagName, "SELECT");
 
     setTimeout(function() {
-      assert.equal($node.find('option:selected').text(), 'Gene Product');
+      assert.equal($node.find("option:selected").text(), "Gene Product");
 
-      $node.val('biopax:Pathway');
-      fireEvent($node[0], 'change');
-      assert.equal($node.find('option:selected').text(), 'Pathway');
+      $node.val("biopax:Pathway");
+      fireEvent($node[0], "change");
+      assert.equal($node.find("option:selected").text(), "Pathway");
 
       cleanup();
       done();
-
     }, timeout);
   });
 });

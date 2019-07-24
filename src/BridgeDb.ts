@@ -256,17 +256,20 @@ export class BridgeDb {
         var rows = results[1];
 
         return Observable.from(rows).map(function(fields) {
-          return fields.reduce(function(acc, field, i) {
-            const metadata = metadataByColumnIndex[i];
-            const { id, name } = metadata;
-            // NOTE: side effects
-            if (!!id && !(id in IRI_TO_NAME)) {
-              IRI_TO_NAME[id] = name;
-              NAME_TO_IRI[name] = id;
-            }
-            acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](field);
-            return acc;
-          }, ({} as DataSource));
+          return fields.reduce(
+            function(acc, field, i) {
+              const metadata = metadataByColumnIndex[i];
+              const { id, name } = metadata;
+              // NOTE: side effects
+              if (!!id && !(id in IRI_TO_NAME)) {
+                IRI_TO_NAME[id] = name;
+                NAME_TO_IRI[name] = id;
+              }
+              acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](field);
+              return acc;
+            },
+            {} as DataSource
+          );
         });
       })
       .map(function(dataSource: DataSource): DataSource {
@@ -277,11 +280,11 @@ export class BridgeDb {
         // undefined
         // TODO what about empty plain object {} or array []
 
-        return (omitBy(dataSource, function(value: any): boolean {
+        return omitBy(dataSource, function(value: any): boolean {
           return (
             value === "" || isNaN(value) || isNull(value) || isUndefined(value)
           );
-        }) as DataSource);
+        }) as DataSource;
       })
       .map(function(dataSource: DataSource) {
         // Kludge to temporarily handle this issue:
@@ -540,9 +543,11 @@ export class BridgeDb {
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
         // TODO is this TS correct?
-        .catch((err): Observable<any> => {
-          throw new VError(err, "calling bridgedb.isFreeSearchSupported");
-        })
+        .catch(
+          (err): Observable<any> => {
+            throw new VError(err, "calling bridgedb.isFreeSearchSupported");
+          }
+        )
     );
   }
 
@@ -567,9 +572,11 @@ export class BridgeDb {
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
         // TODO is this TS correct?
-        .catch((err): Observable<any> => {
-          throw new VError(err, "calling bridgedb.isMappingSupported");
-        })
+        .catch(
+          (err): Observable<any> => {
+            throw new VError(err, "calling bridgedb.isMappingSupported");
+          }
+        )
     );
   }
 
@@ -603,13 +610,11 @@ export class BridgeDb {
       });
   }
 
-  private parseXrefRow = (
-    [xrefIdentifier, dataSourceConventionalName, symbol]: [
-      string,
-      string,
-      string | undefined
-    ]
-  ): Observable<Xref> => {
+  private parseXrefRow = ([
+    xrefIdentifier,
+    dataSourceConventionalName,
+    symbol
+  ]: [string, string, string | undefined]): Observable<Xref> => {
     let bridgeDb = this;
     if (!xrefIdentifier || !dataSourceConventionalName) {
       return Observable.empty();
@@ -694,9 +699,11 @@ export class BridgeDb {
         // NOTE: must compare with 'true' as a string, because the response is just a string, not a parsed JS boolean.
         .map(res => res === "true")
         // TODO is this TS correct?
-        .catch((err): Observable<any> => {
-          throw new VError(err, "calling bridgedb.xrefExists");
-        })
+        .catch(
+          (err): Observable<any> => {
+            throw new VError(err, "calling bridgedb.xrefExists");
+          }
+        )
     );
   }
 
@@ -756,9 +763,10 @@ export class BridgeDb {
     const desiredXrefDataSources = arrayify(
       desiredXrefDataSourceOrSources
     ) as string[];
-    const dataSourceFilterParamSection = desiredXrefDataSources.length === 1
-      ? "?dataSource=" + desiredXrefDataSources[0]
-      : "";
+    const dataSourceFilterParamSection =
+      desiredXrefDataSources.length === 1
+        ? "?dataSource=" + desiredXrefDataSources[0]
+        : "";
 
     const xrefDataSources = isArray(oneOrMoreXrefDataSources)
       ? oneOrMoreXrefDataSources
@@ -805,13 +813,11 @@ export class BridgeDb {
       inputXrefDataSourceHeaderName$,
       desiredXrefDataSourceHeaderName$,
       dataSourceConventionalNames$
-    ).mergeMap(function(
-      [
-        inputXrefDataSourceHeaderName,
-        desiredXrefDataSourceHeaderName,
-        dataSourceConventionalNames
-      ]
-    ) {
+    ).mergeMap(function([
+      inputXrefDataSourceHeaderName,
+      desiredXrefDataSourceHeaderName,
+      dataSourceConventionalNames
+    ]) {
       const body = zip(xrefIdentifiers, dataSourceConventionalNames)
         .filter(pair => !!pair[1])
         .map(x => x.join("\t"))

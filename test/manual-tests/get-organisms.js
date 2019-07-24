@@ -1,11 +1,11 @@
-var _ = require('lodash');
-var BridgeDb = require('../../index.js');
-var highland = require('highland');
+var _ = require("lodash");
+var BridgeDb = require("../../index.js");
+var highland = require("highland");
 
 var bridgeDb1 = BridgeDb({
-  baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+  baseIri: "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/",
   datasetsMetadataIri:
-    'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+    "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php"
 });
 
 var bridgeDb2 = BridgeDb();
@@ -70,21 +70,22 @@ bridgeDb1.organism.query()
 //*
 var input1;
 input1 = {
-  '@id': 'http://identifiers.org/ncbigene/4292',
-  '@type': 'EntityReference'
+  "@id": "http://identifiers.org/ncbigene/4292",
+  "@type": "EntityReference"
 };
 input1 = {
-  name: 'Human',
-  '@type': 'Organism'
+  name: "Human",
+  "@type": "Organism"
 };
-input1 = 'Human';
-bridgeDb1.organism._getInstanceOrganism(_.clone(input1))
-.each(function(organism) {
-  console.log('Provided input:');
-  console.log(input1);
-  console.log('Matching organism found:');
-  console.log(JSON.stringify(organism, null, '\t'));
-});
+input1 = "Human";
+bridgeDb1.organism
+  ._getInstanceOrganism(_.clone(input1))
+  .each(function(organism) {
+    console.log("Provided input:");
+    console.log(input1);
+    console.log("Matching organism found:");
+    console.log(JSON.stringify(organism, null, "\t"));
+  });
 //*/
 
 /*

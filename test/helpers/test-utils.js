@@ -1,20 +1,20 @@
 /* Utilities for performing tests.
  */
 
-var _ = require('lodash');
-var argv = require('yargs').argv;
-var colors = require('colors');
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
+var _ = require("lodash");
+var argv = require("yargs").argv;
+var colors = require("colors");
+var chai = require("chai");
+var chaiAsPromised = require("chai-as-promised");
 var expect = chai.expect;
-var fs = require('fs');
-var multiplex = require('./multiplex.js');
-var pd = require('pretty-data').pd;
-var Rx = require('rx-extra');
-var RxFs = require('rx-fs');
-var strcase = require('tower-strcase');
+var fs = require("fs");
+var multiplex = require("./multiplex.js");
+var pd = require("pretty-data").pd;
+var Rx = require("rx-extra");
+var RxFs = require("rx-fs");
+var strcase = require("tower-strcase");
 
-var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
+var PLACEHOLDER = "--------------- EMPTY/PLACEHOLDER ---------------";
 
 // NOTE: the following describes the mocha component architecture
 //
@@ -55,7 +55,7 @@ var PLACEHOLDER = '--------------- EMPTY/PLACEHOLDER ---------------';
  * @returns {Boolean}
  */
 var isJSONorJSONParsable = function(input) {
-  if (typeof input === 'object') {
+  if (typeof input === "object") {
     return true;
   }
   var result;
@@ -89,9 +89,11 @@ var isJSONorJSONParsable = function(input) {
 var normalizedCompareForSort = function(a, b) {
   var aToCompare;
   var bToCompare;
-  if ((_.isString(a) && _.isString(b)) ||
-      (_.isNumber(a) && _.isNumber(b)) ||
-      (_.isBoolean(a) && _.isBoolean(b))) {
+  if (
+    (_.isString(a) && _.isString(b)) ||
+    (_.isNumber(a) && _.isNumber(b)) ||
+    (_.isBoolean(a) && _.isBoolean(b))
+  ) {
     aToCompare = a;
     bToCompare = b;
   } else {
@@ -126,38 +128,33 @@ var normalizedSort = function(a, b) {
   var aKeys = _.keys(a);
   var bKeys = _.keys(b);
   var commonKeysWithNonEqualTruthyValues = _.intersection(aKeys, bKeys)
-  .filter(function(key) {
-    return !_.isEmpty(a[key]) && !_.isEmpty(b[key]);
-  })
-  .filter(function(key) {
-    return JSON.stringify(a[key]) !== JSON.stringify(b[key]);
-  })
-  .sort(function(key1, key2) {
-    if (key1 > key2) {
-      return 1;
-    }
-    if (key1 < key2) {
-      return -1;
-    }
-    return 0;
-  });
+    .filter(function(key) {
+      return !_.isEmpty(a[key]) && !_.isEmpty(b[key]);
+    })
+    .filter(function(key) {
+      return JSON.stringify(a[key]) !== JSON.stringify(b[key]);
+    })
+    .sort(function(key1, key2) {
+      if (key1 > key2) {
+        return 1;
+      }
+      if (key1 < key2) {
+        return -1;
+      }
+      return 0;
+    });
 
-  var identifyingKeys = [
-    'id',
-    'name',
-    'db',
-    'identifier',
-  ];
-  var primarySortKey = commonKeysWithNonEqualTruthyValues
-  .find(function(key) {
+  var identifyingKeys = ["id", "name", "db", "identifier"];
+  var primarySortKey = commonKeysWithNonEqualTruthyValues.find(function(key) {
     return identifyingKeys.indexOf(key) > -1;
   });
   if (primarySortKey) {
     return normalizedCompareForSort(a[primarySortKey], b[primarySortKey]);
   } else {
-    var nonIdentifyingKeys = ['@context'];
-    var fallbackSortKey = commonKeysWithNonEqualTruthyValues
-    .find(function(key) {
+    var nonIdentifyingKeys = ["@context"];
+    var fallbackSortKey = commonKeysWithNonEqualTruthyValues.find(function(
+      key
+    ) {
       return nonIdentifyingKeys.indexOf(key) === -1;
     });
     if (fallbackSortKey) {
@@ -169,65 +166,65 @@ var normalizedSort = function(a, b) {
 };
 
 function stringifyJSONReadable(json) {
-  return JSON.stringify(json, null, '  ');
+  return JSON.stringify(json, null, "  ");
 }
 
 var testUtils = (function() {
   var kindMappings = {
-    'unchanged': {
-      name: 'Unchanged',
+    unchanged: {
+      name: "Unchanged",
       lhs: {
-        bgColor: 'bgBlack',
-        color: 'white',
+        bgColor: "bgBlack",
+        color: "white"
       },
       rhs: {
-        bgColor: 'bgBlack',
-        color: 'white',
+        bgColor: "bgBlack",
+        color: "white"
       }
     },
-    'edited': {
-      name: 'Edited',
+    edited: {
+      name: "Edited",
       lhs: {
-        bgColor: 'bgYellow',
-        color: 'black',
+        bgColor: "bgYellow",
+        color: "black"
       },
       rhs: {
-        bgColor: 'bgYellow',
-        color: 'black',
+        bgColor: "bgYellow",
+        color: "black"
       }
     },
-    'added': {
-      name: 'Added',
+    added: {
+      name: "Added",
       lhs: {
-        bgColor: 'bgRed',
-        color: 'white',
+        bgColor: "bgRed",
+        color: "white"
       },
       rhs: {
-        bgColor: 'bgGreen',
-        color: 'black',
+        bgColor: "bgGreen",
+        color: "black"
       }
     },
-    'deleted': {
-      name: 'Deleted',
+    deleted: {
+      name: "Deleted",
       lhs: {
-        bgColor: 'bgGreen',
-        color: 'black',
+        bgColor: "bgGreen",
+        color: "black"
       },
       rhs: {
-        bgColor: 'bgRed',
-        color: 'white',
+        bgColor: "bgRed",
+        color: "white"
       }
     },
     // moved (an item in an array)
-    'moved': {
-      name: 'Moved',
+    moved: {
+      name: "Moved",
       lhs: {
-        bgColor: 'bgBlue',
-        color: 'white',
+        bgColor: "bgBlue",
+        color: "white"
       },
       rhs: {
-        bgColor: 'bgBlue',
-        color: 'white',
+        bgColor: "bgBlue",
+        color: "white"
       }
     }
   };
@@ -244,15 +241,15 @@ var testUtils = (function() {
     var expectedString = stringifyJSONReadable(expected);
     var actualString = stringifyJSONReadable(actual);
     if (actualString === expectedString) {
-      result.kind = 'unchanged';
+      result.kind = "unchanged";
       return [result];
     }
-    if (typeof actual === 'undefined') {
-      result.kind = 'deleted';
+    if (typeof actual === "undefined") {
+      result.kind = "deleted";
       return [result];
     }
-    if (typeof expected === 'undefined') {
-      result.kind = 'added';
+    if (typeof expected === "undefined") {
+      result.kind = "added";
       return [result];
     }
     var expectedType = typeof expected;
@@ -263,10 +260,12 @@ var testUtils = (function() {
 
     var expectedIsPlainObject = _.isPlainObject(expected);
     var actualIsPlainObject = _.isPlainObject(actual);
-    if ((actualType !== expectedType) ||
-        (actualIsArray !== expectedIsArray) ||
-        (actualIsPlainObject !== expectedIsPlainObject)) {
-      result.kind = 'edited';
+    if (
+      actualType !== expectedType ||
+      actualIsArray !== expectedIsArray ||
+      actualIsPlainObject !== expectedIsPlainObject
+    ) {
+      result.kind = "edited";
       return [result];
     }
     if (actualIsArray) {
@@ -279,7 +278,9 @@ var testUtils = (function() {
           if (itemLength < maxArrayLength) {
             var itemsToAddCount = maxArrayLength - itemLength;
             //var itemsToAdd = _.fill(new Array(itemsToAddCount), 'test-utils-placeholder');
-            _.fill(new Array(itemsToAddCount), PLACEHOLDER).forEach(function(toAdd) {
+            _.fill(new Array(itemsToAddCount), PLACEHOLDER).forEach(function(
+              toAdd
+            ) {
               item.push(toAdd);
             });
           }
@@ -287,8 +288,12 @@ var testUtils = (function() {
       }
       var expectedArrayStrings = expected.map(stringifyJSONReadable);
       var actualArrayStrings = actual.map(stringifyJSONReadable);
-      return _.zip(expected, expectedArrayStrings, actual, actualArrayStrings)
-      .map(function(zipped) {
+      return _.zip(
+        expected,
+        expectedArrayStrings,
+        actual,
+        actualArrayStrings
+      ).map(function(zipped) {
         var expectedItem = zipped[0];
         var expectedItemString = zipped[1];
 
@@ -300,19 +305,19 @@ var testUtils = (function() {
           actual: actualItem
         };
         if (actualItemString === expectedItemString) {
-          resultItem.kind = 'unchanged';
+          resultItem.kind = "unchanged";
           return resultItem;
         }
         if (expectedArrayStrings.indexOf(actualItemString) > -1) {
-          resultItem.kind = 'moved';
+          resultItem.kind = "moved";
           return resultItem;
         }
         if (expectedItemString === PLACEHOLDER) {
-          resultItem.kind = 'deleted';
+          resultItem.kind = "deleted";
           return resultItem;
         }
         if (actualItemString === PLACEHOLDER) {
-          resultItem.kind = 'added';
+          resultItem.kind = "added";
           return resultItem;
         }
       });
@@ -342,18 +347,18 @@ var testUtils = (function() {
         };
 
         if (actualValueString !== expectedValueString) {
-          resultItem.kind = 'edited';
+          resultItem.kind = "edited";
           return resultItem;
         } else {
-          resultItem.kind = 'unchanged';
+          resultItem.kind = "unchanged";
           return resultItem;
         }
 
-        console.error('expected');
+        console.error("expected");
         console.error(expectedProperty);
-        console.error('actual');
+        console.error("actual");
         console.error(actualProperty);
-        throw new Error('Cannot handle above value for actual or expected.');
+        throw new Error("Cannot handle above value for actual or expected.");
       });
       var xorResults = xorKeys.map(function(xorKey) {
         var expectedValue = expected[xorKey];
@@ -371,35 +376,35 @@ var testUtils = (function() {
         var resultItem = {};
 
         if (expectedHasProperty) {
-          resultItem.kind = 'deleted';
+          resultItem.kind = "deleted";
           resultItem.expected = expectedProperty;
           resultItem.actual = PLACEHOLDER;
           return resultItem;
         }
         if (actualHasProperty) {
-          resultItem.kind = 'added';
+          resultItem.kind = "added";
           resultItem.expected = PLACEHOLDER;
           resultItem.actual = actualProperty;
           return resultItem;
         }
 
-        console.error('expected');
+        console.error("expected");
         console.error(expectedProperty);
-        console.error('actual');
+        console.error("actual");
         console.error(actualProperty);
-        throw new Error('Cannot handle above value for actual or expected.');
+        throw new Error("Cannot handle above value for actual or expected.");
       });
       return intersectionResults.concat(xorResults);
     }
-    console.error('expected');
+    console.error("expected");
     console.error(expectedItemString);
-    console.error('actual');
+    console.error("actual");
     console.error(actualItemString);
-    throw new Error('Cannot handle above value for actual or expected.');
+    throw new Error("Cannot handle above value for actual or expected.");
   }
 
   function diffDeep(expected, actual, depth) {
-    if (typeof depth === 'undefined' || depth === null) {
+    if (typeof depth === "undefined" || depth === null) {
       depth = 1;
     }
 
@@ -411,18 +416,20 @@ var testUtils = (function() {
     var expectedType = typeof expected;
     var actualType = typeof actual;
 
-    var expectedIsUndefined = (expectedType === 'undefined');
-    var actualIsUndefined = (actualType === 'undefined');
+    var expectedIsUndefined = expectedType === "undefined";
+    var actualIsUndefined = actualType === "undefined";
 
     if (expectedIsUndefined && actualIsUndefined) {
-      throw new Error('At least one of actual and expected must not be undefined.');
+      throw new Error(
+        "At least one of actual and expected must not be undefined."
+      );
     } else if (expectedIsUndefined) {
       result.expected = PLACEHOLDER;
-      result.kind = 'added';
+      result.kind = "added";
       return [result];
     } else if (actualIsUndefined) {
       result.actual = PLACEHOLDER;
-      result.kind = 'deleted';
+      result.kind = "deleted";
       return [result];
     }
 
@@ -432,16 +439,22 @@ var testUtils = (function() {
     var expectedIsPlainObject = _.isPlainObject(expected);
     var actualIsPlainObject = _.isPlainObject(actual);
 
-    if ((actualType !== expectedType) ||
-        (actualIsArray !== expectedIsArray) ||
-        (actualIsPlainObject !== expectedIsPlainObject)) {
-      result.kind = 'edited';
+    if (
+      actualType !== expectedType ||
+      actualIsArray !== expectedIsArray ||
+      actualIsPlainObject !== expectedIsPlainObject
+    ) {
+      result.kind = "edited";
       return [result];
     }
     if (depth === 0) {
-      return diffOne(expected, actual).reduce(function(accumulator, diffResult) {
+      return diffOne(expected, actual).reduce(function(
+        accumulator,
+        diffResult
+      ) {
         return accumulator.concat(diffResult);
-      }, []);
+      },
+      []);
     }
     if (actualIsPlainObject) {
       var expectedKeys = _.keys(expected);
@@ -471,7 +484,7 @@ var testUtils = (function() {
         };
 
         if (expectedValueString === actualValueString) {
-          resultItem.kind = 'unchanged';
+          resultItem.kind = "unchanged";
           return resultItem;
         } else {
           return diffDeep(expectedProperty, actualProperty, depth - 1);
@@ -491,13 +504,13 @@ var testUtils = (function() {
         var resultItem = {};
 
         if (!actualValue && !!expectedValue) {
-          resultItem.kind = 'deleted';
+          resultItem.kind = "deleted";
           resultItem.expected = expectedProperty;
           resultItem.actual = PLACEHOLDER;
           return resultItem;
         }
         if (!expectedValue && !!actualValue) {
-          resultItem.kind = 'added';
+          resultItem.kind = "added";
           resultItem.expected = PLACEHOLDER;
           resultItem.actual = actualProperty;
           return resultItem;
@@ -507,8 +520,7 @@ var testUtils = (function() {
     }
 
     if (actualIsArray) {
-      return _.zip(expected, actual)
-      .map(function(zipped) {
+      return _.zip(expected, actual).map(function(zipped) {
         var expectedItem = zipped[0];
         var actualItem = zipped[1];
         return diffDeep(expectedItem, actualItem, depth - 1);
@@ -540,15 +552,14 @@ var testUtils = (function() {
     var ignoreOrder = currentTest.ignoreOrder;
 
     var messageOnFailure = [
-      'Failed Test:',
+      "Failed Test:",
       !!currentTest.parent && currentTest.parent.title,
       currentTest.title
     ]
-    .filter(function(str) {
-      return !!str;
-    })
-    .join(' ')
-    .red;
+      .filter(function(str) {
+        return !!str;
+      })
+      .join(" ").red;
 
     if (deepEqual(expectedJson, actualJson)) {
       // We're good
@@ -558,48 +569,58 @@ var testUtils = (function() {
     var expectedToCompare;
     var actualToCompare;
     if (ignoreOrder && _.isArray(expectedJson) && _.isArray(actualJson)) {
-      var expectedStringifiedList = expectedJson
-      .map(JSON.stringify);
+      var expectedStringifiedList = expectedJson.map(JSON.stringify);
 
-      var actualStringifiedList = actualJson
-      .map(JSON.stringify);
+      var actualStringifiedList = actualJson.map(JSON.stringify);
 
-      expectedToCompare = _.difference(expectedStringifiedList, actualStringifiedList)
-      .map(JSON.parse)
-      .sort(normalizedSort);
+      expectedToCompare = _.difference(
+        expectedStringifiedList,
+        actualStringifiedList
+      )
+        .map(JSON.parse)
+        .sort(normalizedSort);
 
-      actualToCompare = _.difference(actualStringifiedList, expectedStringifiedList)
-      .map(JSON.parse)
-      .sort(normalizedSort);
+      actualToCompare = _.difference(
+        actualStringifiedList,
+        expectedStringifiedList
+      )
+        .map(JSON.parse)
+        .sort(normalizedSort);
 
       if (deepEqual(expectedToCompare, actualToCompare)) {
         // We're good, except for sort order, which we can ignore
-        console.warn('    Warning: actual sorted differently from expected'.yellow);
+        console.warn(
+          "    Warning: actual sorted differently from expected".yellow
+        );
         return Rx.Observable.empty();
       }
 
       var expectedStringifiedListSanContext = _.cloneDeep(expectedJson)
-      .map(function(x) {
-        delete x['@context'];
-        return x;
-      })
-      .map(JSON.stringify);
+        .map(function(x) {
+          delete x["@context"];
+          return x;
+        })
+        .map(JSON.stringify);
 
       var actualStringifiedListSanContext = _.cloneDeep(actualJson)
-      .map(function(x) {
-        delete x['@context'];
-        return x;
-      })
-      .map(JSON.stringify);
+        .map(function(x) {
+          delete x["@context"];
+          return x;
+        })
+        .map(JSON.stringify);
 
-      var equalSanContext = _.difference(
+      var equalSanContext =
+        _.difference(
           expectedStringifiedListSanContext,
           actualStringifiedListSanContext
-      ).length === 0;
+        ).length === 0;
 
       // TODO make this work when we don't ignore order and also when inputs are not arrays.
       if (equalSanContext) {
-        console.warn('    actual matches expected, except for sort order and @context'.yellow);
+        console.warn(
+          "    actual matches expected, except for sort order and @context"
+            .yellow
+        );
       }
     } else {
       expectedToCompare = expectedJson;
@@ -607,96 +628,110 @@ var testUtils = (function() {
     }
 
     var jsonDiffs = diffDeep(expectedToCompare, actualToCompare)
-    .reduce(function(accumulator, diffResult) {
-      return accumulator.concat(diffResult);
-    }, [])
-    .filter(function(diffResult) {
-      return diffResult.kind !== 'unchanged';
-    })
-    .filter(function(diffResult) {
-      return !ignoreOrder || diffResult.kind !== 'moved';
-    });
-
-    var coloredSideStrings = jsonDiffs.map(function(jsonDiff) {
-      var kindMapping = kindMappings[jsonDiff.kind];
-      var lhsColoredString = stringifyJSONReadable(jsonDiff.expected)
-        [kindMapping.lhs.color][kindMapping.lhs.bgColor];
-      var rhsColoredString = stringifyJSONReadable(jsonDiff.actual)
-        [kindMapping.rhs.color][kindMapping.rhs.bgColor];
-      return {
-        lhs: lhsColoredString,
-        rhs: rhsColoredString
-      };
-    })
-    .reduce(function(accumulator, coloredSideStringsForItem) {
-      var sideStringDataSets = [
-        coloredSideStringsForItem.lhs,
-        coloredSideStringsForItem.rhs
-      ]
-      .map(function(sideString) {
-        return sideString.split('\n');
+      .reduce(function(accumulator, diffResult) {
+        return accumulator.concat(diffResult);
+      }, [])
+      .filter(function(diffResult) {
+        return diffResult.kind !== "unchanged";
       })
-      .map(function(sideStringLines) {
+      .filter(function(diffResult) {
+        return !ignoreOrder || diffResult.kind !== "moved";
+      });
+
+    var coloredSideStrings = jsonDiffs
+      .map(function(jsonDiff) {
+        var kindMapping = kindMappings[jsonDiff.kind];
+        var lhsColoredString = stringifyJSONReadable(jsonDiff.expected)[
+          kindMapping.lhs.color
+        ][kindMapping.lhs.bgColor];
+        var rhsColoredString = stringifyJSONReadable(jsonDiff.actual)[
+          kindMapping.rhs.color
+        ][kindMapping.rhs.bgColor];
         return {
-          lines: sideStringLines,
-          lineCount: sideStringLines.length
+          lhs: lhsColoredString,
+          rhs: rhsColoredString
         };
-      });
+      })
+      .reduce(
+        function(accumulator, coloredSideStringsForItem) {
+          var sideStringDataSets = [
+            coloredSideStringsForItem.lhs,
+            coloredSideStringsForItem.rhs
+          ]
+            .map(function(sideString) {
+              return sideString.split("\n");
+            })
+            .map(function(sideStringLines) {
+              return {
+                lines: sideStringLines,
+                lineCount: sideStringLines.length
+              };
+            });
 
-      var maxSideLineCount = _.maxBy(sideStringDataSets, 'lineCount').lineCount;
-      var coloredStrings = _.map(sideStringDataSets, function(sideStringData) {
-        var sideStringLineCount = sideStringData.lineCount;
-        var sideStringLines = sideStringData.lines;
-        if (sideStringLineCount < maxSideLineCount) {
-          var linesToAddCount = maxSideLineCount - sideStringLineCount;
-          sideStringLines = sideStringLines.concat(_.fill(new Array(linesToAddCount), ''));
-        }
-        return sideStringLines.join('\n');
-      });
+          var maxSideLineCount = _.maxBy(sideStringDataSets, "lineCount")
+            .lineCount;
+          var coloredStrings = _.map(sideStringDataSets, function(
+            sideStringData
+          ) {
+            var sideStringLineCount = sideStringData.lineCount;
+            var sideStringLines = sideStringData.lines;
+            if (sideStringLineCount < maxSideLineCount) {
+              var linesToAddCount = maxSideLineCount - sideStringLineCount;
+              sideStringLines = sideStringLines.concat(
+                _.fill(new Array(linesToAddCount), "")
+              );
+            }
+            return sideStringLines.join("\n");
+          });
 
-      accumulator.lhs += '\n\n' + coloredStrings[0];
-      accumulator.rhs += '\n\n' + coloredStrings[1];
-      return accumulator;
-    }, {lhs: '', rhs: ''});
+          accumulator.lhs += "\n\n" + coloredStrings[0];
+          accumulator.rhs += "\n\n" + coloredStrings[1];
+          return accumulator;
+        },
+        { lhs: "", rhs: "" }
+      );
 
     return multiplex({
       header: {
         label: [
-          'Diff Results:  ',
-          _.values(kindMappings).map(function(kindMapping) {
-            var lhs = kindMapping.lhs;
-            var rhs = kindMapping.rhs;
-            return kindMapping.name +
-              'expected'[lhs.color][lhs.bgColor] + '/' +
-              'actual'[rhs.color][rhs.bgColor];
-          }).join(', '),
-          '\n',
-          messageOnFailure,
-        ]
-        .join('')
+          "Diff Results:  ",
+          _.values(kindMappings)
+            .map(function(kindMapping) {
+              var lhs = kindMapping.lhs;
+              var rhs = kindMapping.rhs;
+              return (
+                kindMapping.name +
+                "expected"[lhs.color][lhs.bgColor] +
+                "/" +
+                "actual"[rhs.color][rhs.bgColor]
+              );
+            })
+            .join(", "),
+          "\n",
+          messageOnFailure
+        ].join("")
       },
       left: {
-        label: 'Expected',
-        content: coloredSideStrings.lhs,
+        label: "Expected",
+        content: coloredSideStrings.lhs
         //height: coloredSideStrings.lhs.split('\n').length * 3,
       },
       right: {
-        label: 'Actual',
-        content: coloredSideStrings.rhs,
+        label: "Actual",
+        content: coloredSideStrings.rhs
         //height: coloredSideStrings.rhs.split('\n').length * 3,
-      },
-//      delayedRender: function(cb) {
-//        after(function(next) {
-//          next(null);
-//          setTimeout(function() {
-//            cb();
-//          }, 500);
-//        });
-//      }
+      }
+      //      delayedRender: function(cb) {
+      //        after(function(next) {
+      //          next(null);
+      //          setTimeout(function() {
+      //            cb();
+      //          }, 500);
+      //        });
+      //      }
     });
 
     //return Rx.Observable.throw(new Error('JSON results do not match.'));
-
   }
 
   /**
@@ -706,9 +741,9 @@ var testUtils = (function() {
    * @return
    */
   function displayActualJson(actualJson) {
-    console.log('**************************************');
-    console.log('**           Actual JSON            **');
-    console.log('**************************************');
+    console.log("**************************************");
+    console.log("**           Actual JSON            **");
+    console.log("**************************************");
     console.log(pd.json(actualJson).white.bgBlue);
   }
 
@@ -720,10 +755,12 @@ var testUtils = (function() {
    */
   function getLkgDataString(lkgDataPath) {
     var lkgExists = fs.existsSync(lkgDataPath);
-    var lkgDataString = lkgExists ? fs.readFileSync(lkgDataPath, {
-      encoding: 'utf8'
-    }) : false;
-    return !!lkgDataString ? lkgDataString : '{}';
+    var lkgDataString = lkgExists
+      ? fs.readFileSync(lkgDataPath, {
+          encoding: "utf8"
+        })
+      : false;
+    return !!lkgDataString ? lkgDataString : "{}";
   }
 
   /**
@@ -750,8 +787,10 @@ var testUtils = (function() {
     //*/
 
     if (updateEnabled) {
-      console.log('Updating expected test data, overwriting existing data ' +
-        '(if any) for current test.');
+      console.log(
+        "Updating expected test data, overwriting existing data " +
+          "(if any) for current test."
+      );
     }
 
     return updateEnabled;
@@ -775,68 +814,87 @@ var testUtils = (function() {
 
     var expected = currentTest.expected;
     var expectedPath = currentTest.expectedPath;
-    if (typeof expected === 'undefined' && typeof expectedPath === 'undefined') {
+    if (
+      typeof expected === "undefined" &&
+      typeof expectedPath === "undefined"
+    ) {
       var message = [
-        'No expected value provided.',
+        "No expected value provided.",
         'Suggestion: specify "expected" or "expectedPath" in test, e.g.:',
-        'it(\'...\', function() {this.test.expected = {a: 1};})',
-        'or',
-        'it(\'...\', function() {this.test.expectedPath = __dirname + \'/abc.json\';})',
-      ].join('\n');
+        "it('...', function() {this.test.expected = {a: 1};})",
+        "or",
+        "it('...', function() {this.test.expectedPath = __dirname + '/abc.json';})"
+      ].join("\n");
       return Rx.Observable.throw(message);
-    } else if (typeof expected === 'undefined') {
+    } else if (typeof expected === "undefined") {
       var expectedFileExists = fs.existsSync(expectedPath);
       if (expectedFileExists) {
         expected = JSON.parse(
-            fs.readFileSync(expectedPath, {
-              encoding: 'utf8'
-            })
+          fs.readFileSync(expectedPath, {
+            encoding: "utf8"
+          })
         );
       }
     }
-    return source
-    .flatMap(function(actual) {
+    return source.flatMap(function(actual) {
       if (!isJSONorJSONParsable(actual)) {
-        console.log('***************************************************');
-        console.log('**      Invalid Actual Result    **');
+        console.log("***************************************************");
+        console.log("**      Invalid Actual Result    **");
         console.log(actual);
-        console.log('***************************************************');
-        return Rx.Observable.throw('actual (above) is neither JSON nor string parsable as JSON');
+        console.log("***************************************************");
+        return Rx.Observable.throw(
+          "actual (above) is neither JSON nor string parsable as JSON"
+        );
       }
 
       if (updateAll) {
-        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
-        .let(RxFs.createWriteObservable(expectedPath));
+        return Rx.Observable.return(JSON.stringify(actual, null, "  ")).let(
+          RxFs.createWriteObservable(expectedPath)
+        );
       }
 
-      if (typeof expected === 'undefined') {
-        console.log('*********************************************************');
-        console.log('**         New Test - No Expected JSON Available       **');
-        console.log('** Saving actual JSON (below) to:                      **');
-        console.log('** ' + expectedPath.green.bold + ' **');
-        console.log('*********************************************************');
+      if (typeof expected === "undefined") {
+        console.log(
+          "*********************************************************"
+        );
+        console.log(
+          "**         New Test - No Expected JSON Available       **"
+        );
+        console.log(
+          "** Saving actual JSON (below) to:                      **"
+        );
+        console.log("** " + expectedPath.green.bold + " **");
+        console.log(
+          "*********************************************************"
+        );
         displayActualJson(actual);
-        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
-        .let(RxFs.createWriteObservable(expectedPath));
+        return Rx.Observable.return(JSON.stringify(actual, null, "  ")).let(
+          RxFs.createWriteObservable(expectedPath)
+        );
       }
 
       var outputPath;
-      return compareJsonAndHandleMismatches.call(testCoordinator, expected, actual)
-      .flatMap(function(userResponseOnFailure) {
-        console.log('userResponseOnFailure:"' + userResponseOnFailure + '"');
-        if (!expectedPath) {
-          return Rx.Observable.throw('No expectedPath');
-        } else if (userResponseOnFailure === 'save') {
-          outputPath = expectedPath;
-        } else if (userResponseOnFailure === 'next') {
-          outputPath = expectedPath + '.FAILED-' + new Date().toISOString() + '.jsonld';
-        } else {
-          return Rx.Observable.throw('Unknown response:' + userResponseOnFailure);
-        }
+      return compareJsonAndHandleMismatches
+        .call(testCoordinator, expected, actual)
+        .flatMap(function(userResponseOnFailure) {
+          console.log('userResponseOnFailure:"' + userResponseOnFailure + '"');
+          if (!expectedPath) {
+            return Rx.Observable.throw("No expectedPath");
+          } else if (userResponseOnFailure === "save") {
+            outputPath = expectedPath;
+          } else if (userResponseOnFailure === "next") {
+            outputPath =
+              expectedPath + ".FAILED-" + new Date().toISOString() + ".jsonld";
+          } else {
+            return Rx.Observable.throw(
+              "Unknown response:" + userResponseOnFailure
+            );
+          }
 
-        return Rx.Observable.return(JSON.stringify(actual, null, '  '))
-        .let(RxFs.createWriteObservable(outputPath));
-      });
+          return Rx.Observable.return(JSON.stringify(actual, null, "  ")).let(
+            RxFs.createWriteObservable(outputPath)
+          );
+        });
     });
   }
 

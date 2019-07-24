@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 //var document = require('global/document');
-var document = global.document || require('global/document');
-var render = require('yolk').render;
+var document = global.document || require("global/document");
+var render = require("yolk").render;
 
 module.exports = function renderInDocument(vnode) {
-  var node = document.createElement('div');
+  var node = document.createElement("div");
   document.body.appendChild(node);
 
   var cleanup = function() {

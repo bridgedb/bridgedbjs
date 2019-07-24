@@ -1,1 +1,1 @@
-export {XrefsAnnotationPanel} from './XrefsAnnotationPanel';
+export { XrefsAnnotationPanel } from "./XrefsAnnotationPanel";

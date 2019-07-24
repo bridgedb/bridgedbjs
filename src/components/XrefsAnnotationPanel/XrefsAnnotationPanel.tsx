@@ -68,7 +68,7 @@ interface ListItemRaw {
  *                          Sometimes called a "linkout.". See
  *                          {@link http://www.w3.org/2001/XMLSchema#anyURI|xsd:anyURI}.
  *                          Example: {@link http://wikipathways.org/index.php/Pathway:WP1}
-*/
+ */
 
 interface ListItemValue {
   text: string;
@@ -81,7 +81,7 @@ interface ListItemValue {
  * @typedef {Object} ListItem
  * @property {String} key Title of the list element, e.g., "WikiPathways"
  * @property {ListItemValue[]} values
-*/
+ */
 
 interface ListItem {
   key: string;
@@ -93,11 +93,11 @@ function getLinkout(entityReference) {
   if (urlPattern) {
     return urlPattern.replace("$id", entityReference.xrefIdentifier);
   } else {
-    return compact(
-      concat([entityReference.id], entityReference.sameAs)
-    ).filter(function(uri) {
-      return uri.indexOf("http") > -1;
-    })[0];
+    return compact(concat([entityReference.id], entityReference.sameAs)).filter(
+      function(uri) {
+        return uri.indexOf("http") > -1;
+      }
+    )[0];
   }
 }
 
@@ -131,7 +131,7 @@ function addWikiPathwaysSearch(
         text: displayName,
         uri:
           "http://www.wikipathways.org/index.php?title=Special:SearchPathways&doSearch=1&query=" +
-            displayName
+          displayName
       }
     ]
   });
@@ -393,17 +393,19 @@ export class XrefsAnnotationPanel extends React.Component<any, any> {
 
                       return (
                         <span key={i}>
-                          {uri
-                            ? <a
-                                className={styles.AnnotationItemLinkText}
-                                href={uri}
-                                target="_blank"
-                              >
-                                {text}
-                              </a>
-                            : <span className={styles.AnnotationItemText}>
-                                {text}
-                              </span>}
+                          {uri ? (
+                            <a
+                              className={styles.AnnotationItemLinkText}
+                              href={uri}
+                              target="_blank"
+                            >
+                              {text}
+                            </a>
+                          ) : (
+                            <span className={styles.AnnotationItemText}>
+                              {text}
+                            </span>
+                          )}
                           {separator}
                         </span>
                       );

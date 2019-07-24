@@ -12,7 +12,9 @@ var mocks = argv.m || argv.mocks || path.join(__dirname, "../../../test/mocks");
 var port = argv.p || argv.port || 4522;
 var verbose = !(argv.hasOwnProperty("q")
   ? argv.q
-  : argv.hasOwnProperty("quiet") ? argv.quiet : false);
+  : argv.hasOwnProperty("quiet")
+  ? argv.quiet
+  : false);
 
 if (!mocks || !port) {
   console.log(

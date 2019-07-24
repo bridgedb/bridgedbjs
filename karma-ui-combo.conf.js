@@ -1,44 +1,39 @@
-var bridgeDbDefaultConfig = require('./lib/config.js');
+var bridgeDbDefaultConfig = require("./lib/config.js");
 //require('./test/mockserver.js');
 
 module.exports = function(config) {
   var options = {
-    basePath: '',
-    frameworks: ['mocha', 'chai', 'browserify'],
-    browsers: [
-      'Chrome',
-      'Firefox'
-    ],
-    files: ['test/unit/ui-components/ui-combo.test.js'],
+    basePath: "",
+    frameworks: ["mocha", "chai", "browserify"],
+    browsers: ["Chrome", "Firefox"],
+    files: ["test/unit/ui-components/ui-combo.test.js"],
     preprocessors: {
-      'test/unit/ui-components/ui-combo.test.js': 'browserify'
+      "test/unit/ui-components/ui-combo.test.js": "browserify"
     },
     browserify: {
       debug: true,
-      transform: ['brfs']
+      transform: ["brfs"]
     },
     colors: true,
-    reporters: [
-      'coverage',
-      'mocha',
-    ],
+    reporters: ["coverage", "mocha"],
     browserDisconnectTimeout: 60000,
     browserNoActivityTimeout: 60000,
     client: {
       mocha: {
-        timeout: 59000,
-      },
-    },
+        timeout: 59000
+      }
+    }
   };
 
   process.env.MOCKSERVER_PORT = 4522;
   var proxies = {};
   proxies[bridgeDbDefaultConfig.baseIri] = {
-    target: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+    target: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
     changeOrigin: true
   };
   proxies[bridgeDbDefaultConfig.datasetsMetadataIri] = {
-    target: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
+    target:
+      "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt",
     changeOrigin: true
   };
   options.proxies = proxies;
@@ -48,7 +43,7 @@ module.exports = function(config) {
   }
 
   if (process.env.GROWL) {
-    options.reporters.push('growl');
+    options.reporters.push("growl");
   }
 
   config.set(options);

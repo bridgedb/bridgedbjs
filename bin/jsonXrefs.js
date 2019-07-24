@@ -28,13 +28,14 @@ ensembl ncbigene uniprot wikidata
 // ...
 
 function parseJQPath(path) {
-  return path.replace(/^\./, "")
+  return path
+    .replace(/^\./, "")
     .split(".")
     .reduce((acc, s) => {
       (s.match(/(\w+)?(\[\w*\])?/) || [])
         .slice(1)
         .filter(_.negate(_.isUndefined))
-        .map(s => s === "[]" ? true : s.replace(/\[(\w+)\]/, "\1"))
+        .map(s => (s === "[]" ? true : s.replace(/\[(\w+)\]/, "\1")))
         //.map(s => s.replace(/\[(\w+)\]/, "\1").replace(/\[\]/, true))
         .forEach(function(s) {
           acc.push(s);
@@ -59,20 +60,20 @@ function resolveJQPath(base, relativePath) {
  */
 function getByParsedPath(value, path) {
   if (path.length > 0) {
-    return _.get(
-      value,
-      path
-    );
+    return _.get(value, path);
   } else {
     return value;
   }
 }
 
 module.exports = function(
-    bridgeDb, organism,
-    pathToXrefDataSource, pathToXrefIdentifier,
-    desiredXrefDataSources,
-    { base, format, insertionPoint }) {
+  bridgeDb,
+  organism,
+  pathToXrefDataSource,
+  pathToXrefIdentifier,
+  desiredXrefDataSources,
+  { base, format, insertionPoint }
+) {
   var pathToInsertionPoint = insertionPoint;
 
   var { common, relPaths } = _.zip
@@ -210,9 +211,8 @@ module.exports = function(
       }
       var valuesByKey = acc.valuesByKey;
 
-      var entityKey = lastCommonKey !== true
-        ? lastCommonKey
-        : path.slice(-1)[0];
+      var entityKey =
+        lastCommonKey !== true ? lastCommonKey : path.slice(-1)[0];
 
       var entityPathRelToValue = common
         .slice(JSONStreamPath.length)
@@ -428,9 +428,10 @@ it's not a string or array. Skipping addition of ${xrefIdentifier}.`);
               return {
                 event: "data",
                 path: JSONStreamParentPath,
-                value: NEST0_OBJECT_KEY in valuesByKey
-                  ? valuesByKey[NEST0_OBJECT_KEY]
-                  : valuesByKey
+                value:
+                  NEST0_OBJECT_KEY in valuesByKey
+                    ? valuesByKey[NEST0_OBJECT_KEY]
+                    : valuesByKey
               };
             });
         });
@@ -453,11 +454,13 @@ it's not a string or array. Skipping addition of ${xrefIdentifier}.`);
   var i = 0;
 
   if (pathToInsertionPoint === "none") {
-    return parsedDataStream
-      .flatMap(x => hl(x[0].xrefs))
-      //.through(JSONStream.stringify(false))
-      .through(ndjson.serialize())
-      .pipe(process.stdout);
+    return (
+      parsedDataStream
+        .flatMap(x => hl(x[0].xrefs))
+        //.through(JSONStream.stringify(false))
+        .through(ndjson.serialize())
+        .pipe(process.stdout)
+    );
   }
 
   return hl([headerStream, parsedDataStream, footerStream])
@@ -483,8 +486,8 @@ it's not a string or array. Skipping addition of ${xrefIdentifier}.`);
               typeof nsValue === "undefined"
                 ? value
                 : _.isArray(nsValue)
-                  ? nsValue.concat(value)
-                  : _.assign(nsValue, value),
+                ? nsValue.concat(value)
+                : _.assign(nsValue, value),
             (nsValue, key, nsObject) =>
               nsValue || _.isFinite(parseInt(key)) ? Array : Object
           );
@@ -512,7 +515,9 @@ it's not a string or array. Skipping addition of ${xrefIdentifier}.`);
       return acc;
     })
     .flatMap(function(s) {
-      return hl(_.isArray(s) ? s : [s]).through(stringifier).concat(hl(["\n"]));
+      return hl(_.isArray(s) ? s : [s])
+        .through(stringifier)
+        .concat(hl(["\n"]));
     })
     .pipe(process.stdout);
 };

@@ -43,9 +43,8 @@ module.exports = function(
   var headersOption = options.hasOwnProperty("headers")
     ? Boolean(options.headers)
     : false;
-  var delimiterOption = options.format in delimiterFor
-    ? delimiterFor[options.format]
-    : "\t";
+  var delimiterOption =
+    options.format in delimiterFor ? delimiterFor[options.format] : "\t";
   var newlineOption = options.newline || "\n";
   var quoteOption = options.quote || '"';
   var commentOption = options.comment || "#";
@@ -54,19 +53,28 @@ module.exports = function(
   const xrefDataSourceArgType = argType(xrefDataSourceArg);
   const xrefIdentifierArgType = argType(xrefIdentifierArg);
 
-  var organismColumn = organismArgType === "auto"
-    ? 0
-    : organismArgType === "columnIndex" ? parseInt(organismArg) : organismArg;
+  var organismColumn =
+    organismArgType === "auto"
+      ? 0
+      : organismArgType === "columnIndex"
+      ? parseInt(organismArg)
+      : organismArg;
 
-  var xrefDataSourceColumn = xrefDataSourceArgType === "auto"
-    ? _.isFinite(parseInt(organismColumn)) ? organismColumn + 1 : 0
-    : xrefDataSourceArgType === "columnIndex"
+  var xrefDataSourceColumn =
+    xrefDataSourceArgType === "auto"
+      ? _.isFinite(parseInt(organismColumn))
+        ? organismColumn + 1
+        : 0
+      : xrefDataSourceArgType === "columnIndex"
       ? parseInt(xrefDataSourceArg)
       : xrefDataSourceArg;
 
-  var xrefIdentifierColumn = xrefIdentifierArgType === "auto"
-    ? _.isFinite(parseInt(xrefDataSourceColumn)) ? xrefDataSourceColumn + 1 : 0
-    : xrefIdentifierArgType === "columnIndex"
+  var xrefIdentifierColumn =
+    xrefIdentifierArgType === "auto"
+      ? _.isFinite(parseInt(xrefDataSourceColumn))
+        ? xrefDataSourceColumn + 1
+        : 0
+      : xrefIdentifierArgType === "columnIndex"
       ? parseInt(xrefIdentifierArg)
       : xrefIdentifierArg;
 
@@ -93,13 +101,12 @@ module.exports = function(
     `^${commentOption}.*$[${newlineOption}]?`,
     "gm"
   );
-  Rx.Observable
-    .fromNodeReadableStream(
-      hl(process.stdin)
-        // Ignore comments
-        .through(replaceStream(commentLineRe, ""))
-        .through(parser)
-    )
+  Rx.Observable.fromNodeReadableStream(
+    hl(process.stdin)
+      // Ignore comments
+      .through(replaceStream(commentLineRe, ""))
+      .through(parser)
+  )
     .mergeMap(function(row) {
       const organism = organismField(row);
       const xrefDataSource = xrefDataSourceField(row);
@@ -149,9 +156,10 @@ module.exports = function(
       } else {
         // long format
         return mappedXrefs$.mergeMap(function(xrefs) {
-          const firstColumn = typeof xrefDataSourceOption !== "undefined"
-            ? xrefIdentifier
-            : [xrefDataSource, xrefIdentifier].join(delimiterOption);
+          const firstColumn =
+            typeof xrefDataSourceOption !== "undefined"
+              ? xrefIdentifier
+              : [xrefDataSource, xrefIdentifier].join(delimiterOption);
 
           return Rx.Observable.from(xrefs).map(xref => {
             return [

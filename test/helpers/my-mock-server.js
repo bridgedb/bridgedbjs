@@ -1,4 +1,4 @@
-var http    =  require('http');
-var mockserver  =  require('mockserver');
+var http = require("http");
+var mockserver = require("mockserver");
 
-http.createServer(mockserver('../input-data/')).listen(4522);
+http.createServer(mockserver("../input-data/")).listen(4522);

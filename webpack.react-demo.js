@@ -1,30 +1,36 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 var webpack = require("webpack");
 
 module.exports = {
-  entry: './test/e2e/ui-components-local.test.tsx',
+  entry: "./test/e2e/ui-components-local.test.tsx",
   output: {
-    path: 'dist',
-    filename: 'index_bundle.js'
+    path: "dist",
+    filename: "index_bundle.js"
   },
   resolve: {
-    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx', 'json'],
+    extensions: [
+      ".webpack.js",
+      ".web.js",
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx",
+      "json"
+    ],
     alias: {
-      'fs': 'browserfs/dist/shims/fs.js',
-      'buffer': 'browserfs/dist/shims/buffer.js',
-      'path': 'browserfs/dist/shims/path.js',
-      'processGlobal': 'browserfs/dist/shims/process.js',
-      'bufferGlobal': 'browserfs/dist/shims/bufferGlobal.js',
-      'bfsGlobal': require.resolve('browserfs')
+      fs: "browserfs/dist/shims/fs.js",
+      buffer: "browserfs/dist/shims/buffer.js",
+      path: "browserfs/dist/shims/path.js",
+      processGlobal: "browserfs/dist/shims/process.js",
+      bufferGlobal: "browserfs/dist/shims/bufferGlobal.js",
+      bfsGlobal: require.resolve("browserfs")
     }
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
-        use: [
-          {loader: 'ts-loader'}
-        ]
+        use: [{ loader: "ts-loader" }]
       }
     ]
   },
@@ -34,9 +40,9 @@ module.exports = {
     // NOTE: If you intend to use BrowserFS in a script tag, you do not need
     // to expose a BrowserFS global.
     new webpack.ProvidePlugin({
-      BrowserFS: 'bfsGlobal',
-      process: 'processGlobal',
-      Buffer: 'bufferGlobal'
+      BrowserFS: "bfsGlobal",
+      process: "processGlobal",
+      Buffer: "bufferGlobal"
     })
   ],
   // DISABLE Webpack's built-in process and Buffer polyfills!

@@ -19,21 +19,21 @@ program
 
 program
   .command("datasource <input> [as]")
-    .description(
-      `If "as" not specified: identify the format used to specify a given xref data source.
+  .description(
+    `If "as" not specified: identify the format used to specify a given xref data source.
       If "as" specified: format an xref data source as specified.
 
     For example, Entrez Gene -> ncbigene
 
     The data comes from BridgeDb.
     `
-    )
+  )
   .action(function(input, as, options) {
     var serialize = ndjson.serialize();
     if (process.env.NODE_ENV === "development") {
       if (!process.env.MOCK_SERVER_WARNING_GIVEN) {
         console.warn("Using development mock server.");
-        process.env.MOCK_SERVER_WARNING_GIVEN = 'yes';
+        process.env.MOCK_SERVER_WARNING_GIVEN = "yes";
       }
       //*TODO: use this instance for testing:
       var bridgeDb = new BridgeDb({
@@ -58,25 +58,28 @@ program
     }
   })
   .on("--help", function() {
-    console.log(fs
-      .readFileSync(path.join(__dirname, "datasource.help.sh"), "utf8")
-      // We drop the shebang when displaying here as help
-      .replace(/^.*\n/, "")
-      // We also drop bash comment characters
-      .replace(/^#(\ )?/gm, "")
-      // and replace path to bridgedb with just bridgedb
-      .replace(/(\.\/)?bin\/(bridgedb)/gm, "\$2"));
+    console.log(
+      fs
+        .readFileSync(path.join(__dirname, "datasource.help.sh"), "utf8")
+        // We drop the shebang when displaying here as help
+        .replace(/^.*\n/, "")
+        // We also drop bash comment characters
+        .replace(/^#(\ )?/gm, "")
+        // and replace path to bridgedb with just bridgedb
+        .replace(/(\.\/)?bin\/(bridgedb)/gm, "$2")
+    );
   });
 
 createXrefsCLI(program);
 
-program
-  .command('*')
-  .action(function(cmd){
-    console.error("");
-    console.error('\ \ Unrecognized command "%s". Valid commands shown below:', cmd);
-    program.outputHelp();
-  });
+program.command("*").action(function(cmd) {
+  console.error("");
+  console.error(
+    '  Unrecognized command "%s". Valid commands shown below:',
+    cmd
+  );
+  program.outputHelp();
+});
 
 program.parse(process.argv);
 

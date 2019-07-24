@@ -1,29 +1,31 @@
-var _ = require('lodash');
-var BridgeDb = require('../../../index.js');
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var colors = require('colors');
+var _ = require("lodash");
+var BridgeDb = require("../../../index.js");
+var chai = require("chai");
+var chaiAsPromised = require("chai-as-promised");
+var colors = require("colors");
 var expect = chai.expect;
-var fs = require('fs');
-var mockserverMocha  =  require('../../mockserver-mocha.js');
-var sinon      = require('sinon');
-var testUtils = require('../../test-utils.js');
-var wd = require('wd');
+var fs = require("fs");
+var mockserverMocha = require("../../mockserver-mocha.js");
+var sinon = require("sinon");
+var testUtils = require("../../test-utils.js");
+var wd = require("wd");
 
-var testContext = JSON.parse(fs.readFileSync(__dirname + '/../../jsonld-context.jsonld'));
+var testContext = JSON.parse(
+  fs.readFileSync(__dirname + "/../../jsonld-context.jsonld")
+);
 
 var handleResult = testUtils.handleResult;
 
-var desired = {'browserName': 'phantomjs'};
-desired.name = 'example with ' + desired.browserName;
-desired.tags = ['dev-test'];
+var desired = { browserName: "phantomjs" };
+desired.name = "example with " + desired.browserName;
+desired.tags = ["dev-test"];
 
 chai.use(chaiAsPromised);
 chai.should();
 chaiAsPromised.transferPromiseness = wd.transferPromiseness;
 
-describe('BridgeDb.EntityReference.enrich', function() {
-  var standardBridgeDbApiUrlStub = 'http://webservice.bridgedb.org/';
+describe("BridgeDb.EntityReference.enrich", function() {
+  var standardBridgeDbApiUrlStub = "http://webservice.bridgedb.org/";
   var suite = this;
   suite.allPassed = true;
 
@@ -35,13 +37,13 @@ describe('BridgeDb.EntityReference.enrich', function() {
   });
 
   beforeEach(function(done) {
-    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && this.currentTest.state === "passed";
 
     done();
   });
 
   afterEach(function(done) {
-    suite.allPassed = suite.allPassed && (this.currentTest.state === 'passed');
+    suite.allPassed = suite.allPassed && this.currentTest.state === "passed";
     done();
   });
 
@@ -49,41 +51,50 @@ describe('BridgeDb.EntityReference.enrich', function() {
     done();
   });
 
-  it('should enrich entity reference by identifier & datasource_name (expanded)\n' +
-      '        xref: false\n' +
-      '        context: false\n' +
-      '        dataset: true\n' +
-      '        organism: true',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
+  it(
+    "should enrich entity reference by identifier & datasource_name (expanded)\n" +
+      "        xref: false\n" +
+      "        context: false\n" +
+      "        dataset: true\n" +
+      "        organism: true",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
 
-        test.expectedPath = __dirname +
-              '/uniprot-P29754-xref-false-context-false-' +
-              'dataset-true-organism-true.jsonld';
+      test.expectedPath =
+        __dirname +
+        "/uniprot-P29754-xref-false-context-false-" +
+        "dataset-true-organism-true.jsonld";
 
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
-          context: testContext
-        });
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" +
+          process.env.MOCKSERVER_PORT +
+          "/datasources.txt",
+        context: testContext
+      });
 
-        bridgeDbInstance.entityReference.enrich({
-          identifier: 'P29754',
-          displayName: 'AGTRA_MOUSE',
-          'https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name': 'Uniprot-TrEMBL'
-        }, {
-          xref: false,
-          context: false,
-          dataset: true,
-          organism: true
-        })
+      bridgeDbInstance.entityReference
+        .enrich(
+          {
+            identifier: "P29754",
+            displayName: "AGTRA_MOUSE",
+            "https://github.com/bridgedb/BridgeDb/blob/master/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt#datasource_name":
+              "Uniprot-TrEMBL"
+          },
+          {
+            xref: false,
+            context: false,
+            dataset: true,
+            organism: true
+          }
+        )
         .map(function(result) {
           expect(result.xref).to.not.exist;
-          expect(result['@context']).to.not.exist;
+          expect(result["@context"]).to.not.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.exist;
           return result;
@@ -92,42 +103,51 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by identifier/datasource_name\n" +
+      "        xref: false\n" +
+      "        context: true\n" +
+      "        dataset: true\n" +
+      "        organism: false",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
+
+      test.expectedPath =
+        __dirname +
+        "/Agilent-A_23_P69058-xref-false-context-true-" +
+        "dataset-true-organism-false.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" +
+          process.env.MOCKSERVER_PORT +
+          "/datasources.txt",
+        context: testContext
       });
 
-  it('should enrich entity reference by identifier/datasource_name\n' +
-      '        xref: false\n' +
-      '        context: true\n' +
-      '        dataset: true\n' +
-      '        organism: false',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
-
-        test.expectedPath = __dirname +
-              '/Agilent-A_23_P69058-xref-false-context-true-' +
-              'dataset-true-organism-false.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt',
-          context: testContext
-        });
-
-        bridgeDbInstance.entityReference.enrich({
-          identifier: 'A_23_P69058',
-          'datasource_name': 'Agilent'
-        }, {
-          xref: false,
-          context: true,
-          dataset: true,
-          organism: false
-        })
+      bridgeDbInstance.entityReference
+        .enrich(
+          {
+            identifier: "A_23_P69058",
+            datasource_name: "Agilent"
+          },
+          {
+            xref: false,
+            context: true,
+            dataset: true,
+            organism: false
+          }
+        )
         .map(function(result) {
           expect(result.xref).to.not.exist;
-          expect(result['@context']).to.exist;
+          expect(result["@context"]).to.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.not.exist;
           return result;
@@ -136,40 +156,47 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by identifier/datasource_name\n" +
+      "        xref: false\n" +
+      "        context: true\n" +
+      "        dataset: true\n" +
+      "        organism: true",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
+      test.expectedPath =
+        __dirname +
+        "/Agilent-A_23_P69058-xref-false-context-true-" +
+        "dataset-true-organism-true.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        baseIri: "http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/",
+        //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt"
       });
 
-  it('should enrich entity reference by identifier/datasource_name\n' +
-      '        xref: false\n' +
-      '        context: true\n' +
-      '        dataset: true\n' +
-      '        organism: true',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
-        test.expectedPath = __dirname +
-              '/Agilent-A_23_P69058-xref-false-context-true-' +
-              'dataset-true-organism-true.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          //baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-        });
-
-        bridgeDbInstance.entityReference.enrich({
-          identifier: 'A_23_P69058',
-          'datasource_name': 'Agilent'
-        }, {
-          xref: false,
-          context: true,
-          dataset: true,
-          organism: true
-        })
+      bridgeDbInstance.entityReference
+        .enrich(
+          {
+            identifier: "A_23_P69058",
+            datasource_name: "Agilent"
+          },
+          {
+            xref: false,
+            context: true,
+            dataset: true,
+            organism: true
+          }
+        )
         .map(function(result) {
           expect(result.xref).to.not.exist;
-          expect(result['@context']).to.exist;
+          expect(result["@context"]).to.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.exist;
           return result;
@@ -178,42 +205,49 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by @id\n" +
+      "        xref: false\n" +
+      "        context: true\n" +
+      "        dataset: true\n" +
+      "        organism: false",
+    function(done) {
+      var testCoordinator = this;
+
+      var test = this.test;
+      test.expectedPath =
+        __dirname +
+        "/ncbigene-4292-xref-false-context-true-" +
+        "dataset-true-organism-false.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt"
       });
 
-  it('should enrich entity reference by @id\n' +
-      '        xref: false\n' +
-      '        context: true\n' +
-      '        dataset: true\n' +
-      '        organism: false',
-      function(done) {
-        var testCoordinator = this;
-
-        var test = this.test;
-        test.expectedPath = __dirname +
-              '/ncbigene-4292-xref-false-context-true-' +
-              'dataset-true-organism-false.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-        });
-
-        bridgeDbInstance.entityReference.enrich([
+      bridgeDbInstance.entityReference
+        .enrich(
+          [
+            {
+              "@id": "http://identifiers.org/ncbigene/4292"
+            }
+          ],
           {
-            '@id': 'http://identifiers.org/ncbigene/4292'
+            xref: false,
+            context: true,
+            dataset: true,
+            organism: false
           }
-        ], {
-          xref: false,
-          context: true,
-          dataset: true,
-          organism: false
-        })
+        )
         .map(function(result) {
           expect(result.xref).to.not.exist;
-          expect(result['@context']).to.exist;
+          expect(result["@context"]).to.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.not.exist;
           return result;
@@ -222,42 +256,49 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by @id\n" +
+      "        xref: false\n" +
+      "        context: true\n" +
+      "        dataset: true\n" +
+      "        organism: true",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
+
+      test.expectedPath =
+        __dirname +
+        "/ncbigene-4292-xref-false-context-true-" +
+        "dataset-true-organism-true.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt"
       });
 
-  it('should enrich entity reference by @id\n' +
-      '        xref: false\n' +
-      '        context: true\n' +
-      '        dataset: true\n' +
-      '        organism: true',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
-
-        test.expectedPath = __dirname +
-            '/ncbigene-4292-xref-false-context-true-' +
-            'dataset-true-organism-true.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-          'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-        });
-
-        bridgeDbInstance.entityReference.enrich([
+      bridgeDbInstance.entityReference
+        .enrich(
+          [
+            {
+              "@id": "http://identifiers.org/ncbigene/4292"
+            }
+          ],
           {
-            '@id': 'http://identifiers.org/ncbigene/4292'
+            xref: false,
+            context: true,
+            dataset: true,
+            organism: true
           }
-        ], {
-          xref: false,
-          context: true,
-          dataset: true,
-          organism: true
-        })
+        )
         .map(function(result) {
           expect(result.xref).to.not.exist;
-          expect(result['@context']).to.exist;
+          expect(result["@context"]).to.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.exist;
           return result;
@@ -266,48 +307,56 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by @id\n" +
+      "        xref: true\n" +
+      "        context: false\n" +
+      "        dataset: true\n" +
+      "        organism: false",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
+      test.expectedPath =
+        __dirname +
+        "/ncbigene-4292-xref-true-context-false-" +
+        "dataset-true-organism-false.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt"
       });
 
-  it('should enrich entity reference by @id\n' +
-      '        xref: true\n' +
-      '        context: false\n' +
-      '        dataset: true\n' +
-      '        organism: false',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
-        test.expectedPath = __dirname +
-            '/ncbigene-4292-xref-true-context-false-' +
-            'dataset-true-organism-false.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-          'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-        });
-
-        bridgeDbInstance.entityReference.enrich([
+      bridgeDbInstance.entityReference
+        .enrich(
+          [
+            {
+              "@id": "http://identifiers.org/ncbigene/4292"
+            }
+          ],
           {
-            '@id': 'http://identifiers.org/ncbigene/4292'
+            xref: true,
+            context: false,
+            dataset: true,
+            organism: false
           }
-        ], {
-          xref: true,
-          context: false,
-          dataset: true,
-          organism: false
-        })
+        )
         .map(function(currentXrefs) {
-          return JSON.parse(JSON.stringify(currentXrefs)
-          .replace(
-            new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-            standardBridgeDbApiUrlStub
-          ));
+          return JSON.parse(
+            JSON.stringify(currentXrefs).replace(
+              new RegExp(bridgeDbInstance.config.baseIri, "g"),
+              standardBridgeDbApiUrlStub
+            )
+          );
         })
         .map(function(result) {
           expect(result.xref).to.exist;
-          expect(result['@context']).to.not.exist;
+          expect(result["@context"]).to.not.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.not.exist;
           return result;
@@ -316,49 +365,57 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
+    }
+  );
+
+  it(
+    "should enrich entity reference by @id\n" +
+      "        xref: true\n" +
+      "        context: false\n" +
+      "        dataset: true\n" +
+      "        organism: true",
+    function(done) {
+      var testCoordinator = this;
+      var test = this.test;
+      test.expectedPath =
+        __dirname +
+        "/ncbigene-4292-xref-true-context-false-" +
+        "dataset-true-organism-true.jsonld";
+
+      var bridgeDbInstance = new BridgeDb({
+        //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
+        baseIri: "http://localhost:" + process.env.MOCKSERVER_PORT + "/",
+        datasetsMetadataIri:
+          //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
+          "http://localhost:" + process.env.MOCKSERVER_PORT + "/datasources.txt"
       });
 
-  it('should enrich entity reference by @id\n' +
-      '        xref: true\n' +
-      '        context: false\n' +
-      '        dataset: true\n' +
-      '        organism: true',
-      function(done) {
-        var testCoordinator = this;
-        var test = this.test;
-        test.expectedPath = __dirname +
-            '/ncbigene-4292-xref-true-context-false-' +
-            'dataset-true-organism-true.jsonld';
-
-        var bridgeDbInstance = new BridgeDb({
-          //baseIri: 'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb.php/',
-          baseIri: 'http://localhost:' + process.env.MOCKSERVER_PORT + '/',
-          datasetsMetadataIri:
-            //'http://pointer.ucsf.edu/d3/r/data-sources/bridgedb-datasources.php'
-            'http://localhost:' + process.env.MOCKSERVER_PORT + '/datasources.txt'
-        });
-
-        bridgeDbInstance.entityReference.enrich([
+      bridgeDbInstance.entityReference
+        .enrich(
+          [
+            {
+              "@id": "http://identifiers.org/ncbigene/4292"
+            }
+          ],
           {
-            '@id': 'http://identifiers.org/ncbigene/4292'
+            xref: true,
+            context: false,
+            dataset: true,
+            organism: true
           }
-        ], {
-          xref: true,
-          context: false,
-          dataset: true,
-          organism: true
-        })
+        )
         .last()
         .map(function(currentXrefs) {
-          return JSON.parse(JSON.stringify(currentXrefs)
-          .replace(
-            new RegExp(bridgeDbInstance.config.baseIri, 'g'),
-            standardBridgeDbApiUrlStub
-          ));
+          return JSON.parse(
+            JSON.stringify(currentXrefs).replace(
+              new RegExp(bridgeDbInstance.config.baseIri, "g"),
+              standardBridgeDbApiUrlStub
+            )
+          );
         })
         .map(function(result) {
           expect(result.xref).to.exist;
-          expect(result['@context']).to.not.exist;
+          expect(result["@context"]).to.not.exist;
           expect(result.isDataItemIn).to.exist;
           expect(result.organism).to.exist;
           return result;
@@ -366,7 +423,8 @@ describe('BridgeDb.EntityReference.enrich', function() {
         .let(handleResult.bind(testCoordinator))
         .doOnError(done)
         .subscribeOnCompleted(done);
-      });
+    }
+  );
 
   /* TODO this one no longer works. do we want to still support this functionality?
   it('should enrich entity references using createEnrichmentStream, ' +
@@ -428,5 +486,4 @@ describe('BridgeDb.EntityReference.enrich', function() {
     });
   });
   //*/
-
 });
