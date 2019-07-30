@@ -19,14 +19,24 @@ program
 
 program
   .command("datasource <input> [as]")
-  .description(
-    `If "as" not specified: identify the format used to specify a given xref data source.
-      If "as" specified: format an xref data source as specified.
+  .description(`
+  To IDENTIFY the format of a data source, leave "as" empty.
+      Example: What format is "Entrez Gene"?
+        bridgedb datasource "Entrez Gene"
+        yields: "http://vocabularies.bridgedb.org/ops#conventionalName"
+                (BridgeDb conventional name)
+      Example: What format is "ncbigene"?
+        bridgedb datasource "ncbigene"
+        yields: "http://identifiers.org/idot/preferredPrefix"
+                (identifiers.org (Miriam) preferred prefix)
 
-    For example, Entrez Gene -> ncbigene
+  To CONVERT a data source to another format, specify "as".
+      Example: what is the identifiers.org preferred prefix for BridgeDb conventional name "Entrez Gene"?
+        bridgedb datasource "Entrez Gene" "http://identifiers.org/idot/preferredPrefix"
+        yields: "ncbigene"
 
-    The data comes from BridgeDb.
-    `
+  The data comes from BridgeDb.
+`
   )
   .action(function(input, as, options) {
     var serialize = ndjson.serialize();

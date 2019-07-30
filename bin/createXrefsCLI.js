@@ -1,7 +1,10 @@
 var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");
-var BridgeDb = require("../es5/BridgeDb").BridgeDb;
+//var BridgeDb = require("../es5/BridgeDb").BridgeDb;
+var BridgeDbModule = require("../es5/BridgeDb");
+var BridgeDb = BridgeDbModule.BridgeDb;
+var CONFIG_DEFAULT = BridgeDbModule.CONFIG_DEFAULT;
 var hl = require("highland");
 var ndjson = require("ndjson");
 var JSONStream = require("JSONStream");
@@ -42,6 +45,9 @@ const helpTextDescriptions = [
   };
 });
 
+// NOTE: BridgeDb internally uses ms, but using seconds here.
+const TIMEOUT_DEFAULT = CONFIG_DEFAULT.http.timeout / 1000;
+
 module.exports = function createXrefsCLI(program) {
   program
     .command(
@@ -49,17 +55,22 @@ module.exports = function createXrefsCLI(program) {
     )
     .description(
       `Get alternate xrefs (datasource identifiers) and
-    optionally insert them into to your json, csv or tsv.
+optionally insert them into to your json, csv or tsv.
 
-    For example, ensembl:ENSG00000132031 -> ncbigene:4148 and uniprot:O15232
+For example, ensembl:ENSG00000132031 -> ncbigene:4148 and uniprot:O15232
 
-    The xrefs come from BridgeDb.
-    `
+The xrefs come from BridgeDb.
+`
     )
     .option(
       "-f,--format [string]",
       `Input format, e.g., none, json, csv, tsv. Default: none`,
       format => (!!format ? format : "none")
+    )
+    .option(
+      "-t, --timeout <seconds>",
+      `Timeout in seconds for HTTP requests. Default: ${TIMEOUT_DEFAULT}`,
+      timeout => (!!timeout ? parseInt(timeout) : TIMEOUT_DEFAULT)
     )
     .option(
       "-i,--insertion-point [path]",
@@ -68,9 +79,9 @@ module.exports = function createXrefsCLI(program) {
     .option(
       "-b,--base [path]",
       `(json only) prepended to all other paths. Default: "${DEFAULT_ADDMAPPEDXREFS_BASE}"
-                                Similar in concept to HTML and XML BASE. More info:
-                                https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-                                https://www.w3.org/TR/xmlbase/`,
+    Similar in concept to HTML and XML BASE. More info:
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    https://www.w3.org/TR/xmlbase/`,
       base => (!!base ? base : DEFAULT_ADDMAPPEDXREFS_BASE)
     )
     // DSV options
@@ -160,7 +171,7 @@ xrefIdentifier: gene, protein or metabolite identifier, e.g., "1234" or "ENSG000
 desiredXrefDataSource: limit results to a single data source, e.g., "ensembl", or
                         to multiple data sources, e.g.,
                         "ensembl" "uniprot" "hgnc.symbol"
-      `);
+`);
 
       console.log(
         helpTextDescriptions
