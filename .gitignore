@@ -1,3 +1,7 @@
+.direnv/
+.envrc
+.nixpkgs-version.json
+shell.nix
 demo/
 dist/
 docs/

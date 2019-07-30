@@ -10,7 +10,6 @@ var fs = require("fs");
 var insertCss = require("insert-css");
 
 var jsonldMarkup = require("jsonld-markup");
-//var jsonldVis = require('jsonld-vis');
 var noop = function() {};
 
 var latestBridgeDbCommitHash = "d01b14ea4924a421cf2c604fb550f63cd51d99cf";
