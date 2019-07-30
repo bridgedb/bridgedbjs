@@ -1,7 +1,6 @@
 var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");
-//var BridgeDb = require("../es5/BridgeDb").BridgeDb;
 var BridgeDbModule = require("../es5/BridgeDb");
 var BridgeDb = BridgeDbModule.BridgeDb;
 var CONFIG_DEFAULT = BridgeDbModule.CONFIG_DEFAULT;
@@ -46,7 +45,7 @@ const helpTextDescriptions = [
 });
 
 // NOTE: BridgeDb internally uses ms, but using seconds here.
-const TIMEOUT_DEFAULT = CONFIG_DEFAULT.http.timeout / 1000;
+const TIMEOUT_DEFAULT_SECONDS = CONFIG_DEFAULT.http.timeout / 1000;
 
 module.exports = function createXrefsCLI(program) {
   program
@@ -65,12 +64,14 @@ The xrefs come from BridgeDb.
     .option(
       "-f,--format [string]",
       `Input format, e.g., none, json, csv, tsv. Default: none`,
+      // TODO: we are specifying default both here and below for options/optionsRaw
       format => (!!format ? format : "none")
     )
     .option(
       "-t, --timeout <seconds>",
-      `Timeout in seconds for HTTP requests. Default: ${TIMEOUT_DEFAULT}`,
-      timeout => (!!timeout ? parseInt(timeout) : TIMEOUT_DEFAULT)
+      `Timeout in seconds for HTTP requests. Default: ${TIMEOUT_DEFAULT_SECONDS}`,
+      // TODO: we are specifying default both here and below for options/optionsRaw
+      timeout => (!!timeout ? parseInt(timeout) : TIMEOUT_DEFAULT_SECONDS)
     )
     .option(
       "-i,--insertion-point [path]",
@@ -79,9 +80,10 @@ The xrefs come from BridgeDb.
     .option(
       "-b,--base [path]",
       `(json only) prepended to all other paths. Default: "${DEFAULT_ADDMAPPEDXREFS_BASE}"
-    Similar in concept to HTML and XML BASE. More info:
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-    https://www.w3.org/TR/xmlbase/`,
+        Similar in concept to HTML and XML BASE. More info:
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+        https://www.w3.org/TR/xmlbase/`,
+      // TODO: we are specifying default both here and below for options/optionsRaw
       base => (!!base ? base : DEFAULT_ADDMAPPEDXREFS_BASE)
     )
     // DSV options
@@ -115,6 +117,17 @@ The xrefs come from BridgeDb.
       desiredXrefDataSources,
       optionsRaw
     ) {
+      const options = _.defaults(optionsRaw, {
+        base: DEFAULT_ADDMAPPEDXREFS_BASE,
+        insertionPoint: "none",
+        format: "none",
+        timeout: TIMEOUT_DEFAULT_SECONDS
+      });
+
+      const { format, timeout: timeoutSeconds } = options;
+      // NOTE: http (internal to BridgeDb) expects milliseconds.
+      const timeout = timeoutSeconds * 1000;
+
       if (process.env.NODE_ENV === "development") {
         if (!process.env.MOCK_SERVER_WARNING_GIVEN) {
           console.warn("Using development mock server.");
@@ -124,20 +137,13 @@ The xrefs come from BridgeDb.
           //baseIri: "http://localhost:4522/",
           dataSourcesHeadersIri:
             "http://localhost:4522/datasources_headers.txt",
-          dataSourcesMetadataIri: "http://localhost:4522/datasources.txt"
+          dataSourcesMetadataIri: "http://localhost:4522/datasources.txt",
+          http: { timeout }
         });
         //*/
       } else {
-        var bridgeDb = new BridgeDb();
+        var bridgeDb = new BridgeDb({ http: { timeout } });
       }
-
-      const options = _.defaults(optionsRaw, {
-        base: DEFAULT_ADDMAPPEDXREFS_BASE,
-        insertionPoint: "none",
-        format: "none"
-      });
-
-      const { format } = options;
 
       if (format in xrefsForFormat) {
         xrefsForFormat[format](

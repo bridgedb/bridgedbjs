@@ -41,7 +41,6 @@
     "stop-broken-on-nixos:mockserver": "echo 'Stopping mockserver'; pm2 --silent stop mockserverPM; pm2 --silent delete mockserverPM; # Broken because 'pm2 start --name' not setting app name on NixOS.",
     "stop:mockserver": "echo 'Stopping mockserver'; if [ $(pm2 list -m | awk '/+---/ {print $2}' | wc -l) -eq 1 ]; then pm2 --silent kill; else echo 'Multiple pm2 processes running. Please stop mockserver manually.'; fi",
     "test": "npm-run-all --silent -p test:*;",
-    "test-broken:cli": "echo 'Why does this never advance to stop:mockserver?'; export NODE_ENV=development; npm-run-all -s start:mockserver -p test:cli:* -s stop:mockserver",
     "test:cli": "export NODE_ENV=development; echo 'Using mock server'; export MOCK_SERVER_WARNING_GIVEN='yes'; npm-run-all -s start:mockserver -p test:cli:datasource test:cli:dsvXrefs test:cli:jsonXrefs test:cli:noneXrefs -s stop:mockserver",
     "test:cli:datasource": "sh ./test/datasource.sh; sh ./bin/datasource.help.sh > /dev/null",
     "test:cli:dsvXrefs": "sh ./test/dsvXrefs.sh; sh ./bin/dsvXrefs.help.sh > /dev/null",

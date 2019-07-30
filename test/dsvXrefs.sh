@@ -36,3 +36,10 @@ echo $'gene\n1234\n1235\n' |\
 	< test/RefSeqSample.tsv |\
 	grep -c "Entrez Gene	7157	ensembl	ENSG00000141510" |\
 	sed 's/15/OK/'
+
+# testing timeout
+./bin/bridgedb xrefs -t 2 -f "tsv" "Homo sapiens" "Entrez Gene" 0 \
+	ensembl \
+	< test/RefSeqSample.tsv |\
+	grep -c "Entrez Gene	7157	ensembl	ENSG00000141510" |\
+	sed 's/15/OK/'
