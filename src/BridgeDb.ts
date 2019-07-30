@@ -85,8 +85,9 @@ const CSV_OPTIONS = { objectMode: true, delimiter: "\t" };
 const XREF_REQUEST_DEBOUNCE_TIME = 10; // ms
 const XREF_REQUEST_CHUNK_SIZE = 100;
 
-const BRIDGE_DB_REPO_CDN = "https://cdn.rawgit.com/bridgedb/BridgeDb/";
-const BRIDGE_DB_COMMIT_HASH = "2d248d637ff6fe6285fcf34f89d9fe22a2326a67";
+const BRIDGE_DB_REPO_CDN =
+  "https://raw.githubusercontent.com/bridgedb/BridgeDb/";
+const BRIDGE_DB_COMMIT_HASH = "465f9f944d09cefbb167eceb9c69499a764100a2";
 export const CONFIG_DEFAULT = {
   baseIri: "https://webservice.bridgedb.org/",
   context: [
@@ -483,7 +484,7 @@ export class BridgeDb {
       });
   }
 
-  convertXrefDataSourceTo = curry(
+  convertXrefDataSourceTo: Function = curry(
     (targetType: string, input: string): Observable<string> => {
       let bridgeDb = this;
       return bridgeDb.dataSourceMappings$
