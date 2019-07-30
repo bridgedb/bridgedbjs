@@ -38,7 +38,7 @@ import * as styles from "./styles.style";
 // Icon1 below is a weird kludge I'm forced to use, even though either of the two lines above should work.
 // see https://github.com/wmira/react-icons-kit/blob/d61d7bc7337d8b68ad66b654bc4e02bf49d0bb26/index.d.ts#L13
 import { Icon, IconProp } from "react-icons-kit";
-const Icon1: React.Component<IconProp> & Icon & any = Icon;
+const Icon1: React.Component<IconProp> & typeof Icon & any = Icon;
 
 import { remove as iconRemove } from "react-icons-kit/fa/remove";
 //import {ic_clear as iconRemove} from 'react-icons-kit/md/ic_clear';
