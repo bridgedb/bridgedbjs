@@ -1,45 +1,117 @@
 #! /bin/bash
 
-echo $'1234\n1235\n' |\
+trap 'previous_command=$this_command; this_command=$BASH_COMMAND' DEBUG
+
+# Here's the query to get the raw BridgeDb response:
+#curl -X POST --header 'Content-Type: text/html' \
+#	--header 'Accept: */*' \
+#	-d $'1234\n1235\n' \
+#	'https://webservice.bridgedb.org/Human/xrefsBatch/Entrez%20Gene'
+
+expect="Result to be 2 lines long."
+result=$(echo $'1234\n1235\n' |\
 	./bin/bridgedb xrefs -f "tsv" -i 1 "Homo sapiens" "Entrez Gene" 0 |\
 	wc -l |\
-	sed 's/^\ *2/OK/'
+	grep -E '^2$')
 
-echo $'1234\n1235\n' |\
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="Result to have PDB:1ND8."
+result=$(echo $'1234\n1235\n' |\
 	./bin/bridgedb xrefs -f "tsv" "Homo sapiens" "Entrez Gene" 0 |\
 	grep -c "Entrez Gene	1234	PDB	1ND8" |\
-	sed 's/1/OK/'
+	grep -E '^1$')
+	#sed 's/1/OK/'
 
-./bin/bridgedb xrefs -f "tsv" "Homo sapiens" "Entrez Gene" 0 \
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="Result to have HGNC:CCR6."
+result=$(./bin/bridgedb xrefs -f "tsv" "Homo sapiens" "Entrez Gene" 0 \
 	<<< $'1234\n1235\n' |\
 	grep -c "Entrez Gene	1235	HGNC	CCR6" |\
-	sed 's/1/OK/'
+	grep -E '^1$')
 
-echo $'gene\n1234\n1235\n' |\
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="Result to have Uniprot-TrEMBL:Q38L21."
+result=$(echo $'gene\n1234\n1235\n' |\
 	./bin/bridgedb xrefs -f "tsv" --headers=true \
 	"Homo sapiens" "Entrez Gene" "gene" |\
 	grep -c "Entrez Gene	1234	Uniprot-TrEMBL	Q38L21" |\
-	sed 's/1/OK/'
+	grep -E '^1$')
 
-./bin/bridgedb xrefs -f "csv" "Homo sapiens" "Entrez Gene" 0 \
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+# Here's the query to get the raw BridgeDb response:
+#curl -X POST --header 'Content-Type: text/html' \
+#	--header 'Accept: */*' \
+#	-d $'1234\n1235\n1236\n' \
+#	'https://webservice.bridgedb.org/Human/xrefsBatch/Entrez%20Gene'
+
+expect="Result to have OMIM:600242."
+result=$(./bin/bridgedb xrefs -f "csv" "Homo sapiens" "Entrez Gene" 0 \
 	< test/xrefIdentifiers.csv |\
 	grep -c "Entrez Gene,1236,OMIM,600242" |\
-	sed 's/1/OK/'
+	grep -E '^1$')
 
-./bin/bridgedb xrefs -f "csv" "Homo sapiens" 0 1 \
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="Result to have 250 xrefs."
+result=$(./bin/bridgedb xrefs -f "csv" "Homo sapiens" 0 1 \
 	< test/xrefDataSourcesAndIdentifiers.csv |\
 	wc -l |\
-	sed 's/^\ *248/OK/'
+	grep -E '^250$')
 
-./bin/bridgedb xrefs -f "tsv" "Homo sapiens" "Entrez Gene" 0 \
-	ensembl \
-	< test/RefSeqSample.tsv |\
-	grep -c "Entrez Gene	7157	ensembl	ENSG00000141510" |\
-	sed 's/15/OK/'
-
-# testing timeout
-./bin/bridgedb xrefs -t 2 -f "tsv" "Homo sapiens" "Entrez Gene" 0 \
-	ensembl \
-	< test/RefSeqSample.tsv |\
-	grep -c "Entrez Gene	7157	ensembl	ENSG00000141510" |\
-	sed 's/15/OK/'
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi

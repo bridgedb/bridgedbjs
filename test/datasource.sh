@@ -1,22 +1,108 @@
 #! /bin/bash
 
-./bin/bridgedb datasource "Entrez Gene" |\
-	sed 's/"http:\/\/vocabularies.bridgedb.org\/ops#conventionalName"/OK/'
+trap 'previous_command=$this_command; this_command=$BASH_COMMAND' DEBUG
 
-./bin/bridgedb datasource "ensembl" |\
-	sed 's/"http:\/\/identifiers.org\/idot\/preferredPrefix"/OK/'
+expect="conventionalName"
+result=$(./bin/bridgedb datasource "Entrez Gene" |\
+	grep -E '"http:\/\/vocabularies.bridgedb.org\/ops#conventionalName"')
 
-./bin/bridgedb datasource "http://identifiers.org/ensembl/" |\
-	sed 's/"http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#about"/OK/'
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
 
-./bin/bridgedb datasource "Entrez Gene" preferredPrefix |\
-	sed 's/"ncbigene"/OK/'
+##################################
 
-./bin/bridgedb datasource "Entrez Gene" id |\
-	sed 's/"http:\/\/identifiers.org\/ncbigene\/"/OK/'
+expect="preferredPrefix"
+result=$(./bin/bridgedb datasource "ensembl" |\
+	grep -E '"http:\/\/identifiers.org\/idot\/preferredPrefix"')
 
-./bin/bridgedb datasource "Entrez Gene" "http://identifiers.org/idot/preferredPrefix" |\
-	sed 's/"ncbigene"/OK/'
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
 
-./bin/bridgedb datasource "Entrez Gene" "http://www.w3.org/1999/02/22-rdf-syntax-ns#about" |\
-	sed 's/"http:\/\/identifiers.org\/ncbigene\/"/OK/'
+##################################
+
+expect="about"
+result=$(./bin/bridgedb datasource "http://identifiers.org/ensembl/" |\
+	grep -E '"http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#about"')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="ncbigene"
+result=$(./bin/bridgedb datasource "Entrez Gene" preferredPrefix |\
+	grep -E '"ncbigene"')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="ncbigene"
+result=$(./bin/bridgedb datasource "Entrez Gene" id |\
+	grep -E '"http:\/\/identifiers.org\/ncbigene\/"')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="ncbigene"
+result=$(./bin/bridgedb datasource "Entrez Gene" "http://identifiers.org/idot/preferredPrefix" |\
+	grep -E '"ncbigene"')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="ncbigene"
+result=$(./bin/bridgedb datasource "Entrez Gene" "http://www.w3.org/1999/02/22-rdf-syntax-ns#about" |\
+	grep -E '"http:\/\/identifiers.org\/ncbigene\/"')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################

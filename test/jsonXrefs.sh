@@ -1,5 +1,7 @@
 #! /bin/bash
 
+trap 'previous_command=$this_command; this_command=$BASH_COMMAND' DEBUG
+
 #########
 # ARRAY #
 #########
@@ -8,7 +10,8 @@
 
 #/bridgedb xrefs -i '.entitiesById' -f 'json' Mouse '.entitiesById[].xrefDataSource' '.entitiesById[].xrefIdentifier' ensembl hgnc.symbol ncbigene uniprot chebi hmdb wikidata
 
-echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}]' |\
+expect="array, nest 0, ..."
+result=$(echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}]' |\
 	./bin/bridgedb xrefs -f "json" \
 	-i ".[]" \
 	Human \
@@ -16,9 +19,21 @@ echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234
 	".[].xrefIdentifier" \
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq '.[0].ensembl == "ENSG00000160791"' |\
-	sed 's/true/OK/'
+	grep 'true')
 
-echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}]' |\
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="array, nest 0, specifying output datasources"
+result=$(echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}]' |\
 	./bin/bridgedb xrefs -f "json" \
 	-i ".[].type" \
 	Human \
@@ -26,9 +41,21 @@ echo '[{"id": "abc123", "xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234
 	".[].xrefIdentifier" \
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq '.[0].type | contains(["hgnc.symbol:CCR5","ensembl:ENSG00000160791","uniprot:Q38L21","uniprot:P51681","ncbigene:1234"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
-echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="array, nest 0, keys contain ensembl"
+result=$(echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	./bin/bridgedb xrefs -f "json" \
 	-i "." \
 	Human \
@@ -36,12 +63,25 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	".xrefIdentifier" \
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata |\
 	jq 'keys | contains(["ensembl"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 # BridgeDb doesn't return anything for Uniprot-SwissProt:P03952:
 # http://webservice.bridgedb.org/Homo%20sapiens/xrefs/Sp/P03952
 # It does, however, return results for Uniprot-TrEMBL:P03952:
 # http://webservice.bridgedb.org/Homo%20sapiens/xrefs/S/P03952
+expect="array, nest 0, get uniprot:P03952"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".[].type" \
 	Human \
@@ -50,8 +90,21 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata \
 	< ./test/inputs/nest0-array.json |\
 	jq '.[3].type | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="array, nest 0, get uniprot:P03952 via closeMatch"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i "." \
 	Human \
@@ -60,10 +113,23 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata \
 	< ./test/inputs/nest0-array.json |\
 	jq '.[] | select(.id == "Uniprot-TrEMBL:P03952") | .closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 # nest: 1
 
+expect="array, nest 1, get uniprot:P03952"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entities" \
 	Human \
@@ -72,8 +138,21 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-array.json |\
 	jq '.entities[] | select(.id == "Uniprot-TrEMBL:P03952") | .closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="array, nest 1, get uniprot:P03952 for another input"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entities[].type" \
 	Human \
@@ -82,7 +161,18 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-array.json |\
 	jq '.entities[] | select(.id == "pvjsgeneratedida49") | .type | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 ############
 ### OBJECT #
@@ -90,6 +180,8 @@ echo '{"xrefDataSource": "Entrez Gene", "xrefIdentifier": "1234"}' |\
 
 # nest: 0
 
+expect="object, nest 0, echo input"
+result=$(
 echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG00000132031"}}' |\
 ./bin/bridgedb xrefs -f "json" \
 	-i ".xref.alternates" \
@@ -98,8 +190,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	".xref.identifier" \
 	ncbigene uniprot |
 	jq '.xref.alternates | contains(["ncbigene:4148","uniprot:O15232"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 0, piped file input"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".[].type" \
 	Human \
@@ -108,8 +213,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl hgnc.symbol ncbigene uniprot hmdb chebi wikidata \
 	< ./test/inputs/nest0-object.json |\
 	jq '.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 0, piped file input, closeMatch"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i "." \
 	Human \
@@ -118,8 +236,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-object.json |\
 	jq '.["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 0, piped file input, closeMatch again"
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i "." \
 	Human \
@@ -128,10 +259,23 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest0-object.json |\
 	jq '.["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 # nest: 1
 
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".entitiesById[]" \
 	-i ".type" \
@@ -141,8 +285,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
 	jq 'keys | contains(["pathway", "entitiesById", "more"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entitiesById" \
 	Mouse \
@@ -151,8 +308,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/WP1_73346.json |\
 	jq '.entitiesById["HMDB:HMDB01206"].closeMatch | contains(["wikidata:Q715317"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entitiesById" \
 	Human \
@@ -161,8 +331,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/WP481_94171.json |\
 	jq '.entitiesById["Entrez Gene:5594"].closeMatch | contains(["ensembl:ENSG00000100030"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".entitiesById" \
 	-i "." \
@@ -172,8 +355,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/WP481_94171.json |\
 	jq '.entitiesById["Entrez Gene:5594"].closeMatch | contains(["ensembl:ENSG00000100030"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".entitiesById[]" \
 	-i ".type" \
@@ -183,8 +379,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/WP481_94171.json |\
 	jq '.entitiesById.a0e.type | contains(["uniprot:F8W9P4"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".entitiesById[]" \
 	-i ".xrefs" \
@@ -194,8 +403,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata hmdb chembl.compound chebi hgnc.symbol \
 	< ./test/inputs/WP481_94171.json |\
 	jq '.entitiesById.a0e.xrefs | contains(["uniprot:F8W9P4"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entitiesById" \
 	Human \
@@ -204,8 +426,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
 	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 1, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".entitiesById" \
 	-i "." \
@@ -215,10 +450,23 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
 	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 # nest: 2
 
+expect="object, nest 2, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".sampleData.entitiesById.pvjsgeneratedida49.type" \
 	Human \
@@ -227,8 +475,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest2-object.json |\
 	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 2, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-b ".sampleData.entitiesById.pvjsgeneratedida49" \
 	-i ".type" \
@@ -238,8 +499,21 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest2-object.json |\
 	jq '.sampleData.entitiesById.pvjsgeneratedida49.type | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
 
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="object, nest 2, ..."
+result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entitiesById" \
 	Human \
@@ -248,7 +522,18 @@ echo '{"id": "abc123","xref":{"dataSource": "ensembl","identifier": "ENSG0000013
 	ensembl ncbigene uniprot wikidata \
 	< ./test/inputs/nest1-object.json |\
 	jq '.entitiesById["Uniprot-TrEMBL:P03952"].closeMatch | contains(["uniprot:P03952","ncbigene:3818"])' |\
-	sed 's/true/OK/'
+	grep 'true')
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
 
 ## can't currently handle more than one level of nesting before a wildcard:
 ##./bin/bridgedb xrefs -f "json" Human \

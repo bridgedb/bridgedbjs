@@ -1,9 +1,31 @@
 #! /bin/bash
 
-./bin/bridgedb xrefs "Homo sapiens" "Entrez Gene" "1234" |\
-	grep -c "UCSC Genome Browser	uc062izs.1" |\
-	sed 's/1/OK/'
+expect="get UCSC Genome Browser	uc062izs.1"
+result=$(./bin/bridgedb xrefs "Homo sapiens" "Entrez Gene" "1234" |\
+	grep -c "UCSC Genome Browser	uc062izs.1")
 
-./bin/bridgedb xrefs "Homo sapiens" "Entrez Gene" "1235" ensembl hgnc.symbol |\
-	grep -c "hgnc.symbol	CCR6" |\
-	sed 's/1/OK/'
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################
+
+expect="get hgnc.symbol:CCR6"
+result=$(./bin/bridgedb xrefs "Homo sapiens" "Entrez Gene" "1235" ensembl hgnc.symbol |\
+	grep -c "hgnc.symbol	CCR6")
+
+cmd=$previous_command ret=$?
+if [ $ret -ne 0 ]; then
+	echo '****************************************************************';
+	echo "Command below failed (error code $ret). Expected: $expect";
+	echo '****************************************************************';
+	echo "  $cmd";
+	echo '';
+fi
+
+##################################

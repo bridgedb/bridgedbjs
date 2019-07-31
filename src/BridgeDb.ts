@@ -22,7 +22,7 @@ if (!global.hasOwnProperty("XMLHttpRequest")) {
   global.XMLHttpRequest = require("xhr2");
 }
 
-import { curry, negate } from "lodash/fp";
+import { curry, negate, uniq } from "lodash/fp";
 import {
   camelCase,
   defaultsDeep,
@@ -819,10 +819,14 @@ export class BridgeDb {
       desiredXrefDataSourceHeaderName,
       dataSourceConventionalNames
     ]) {
-      const body = zip(xrefIdentifiers, dataSourceConventionalNames)
-        .filter(pair => !!pair[1])
-        .map(x => x.join("\t"))
-        .join("\n");
+      // TODO: find out how we're getting duplicate rows in the body.
+      // For at least one example, see RefSeqSample.tsv in test dir.
+      // It has duplicates.
+      const body = uniq(
+        zip(xrefIdentifiers, dataSourceConventionalNames)
+          .filter(pair => !!pair[1])
+          .map(x => x.join("\t"))
+      ).join("\n");
 
       if (isEmpty(body.replace(/[\ \n\t]/g, ""))) {
         return Observable.throw(

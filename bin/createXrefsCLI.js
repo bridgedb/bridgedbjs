@@ -134,7 +134,7 @@ The xrefs come from BridgeDb.
           process.env.MOCK_SERVER_WARNING_GIVEN = "yes";
         }
         var bridgeDb = new BridgeDb({
-          //baseIri: "http://localhost:4522/",
+          baseIri: "http://localhost:4522/",
           dataSourcesHeadersIri:
             "http://localhost:4522/datasources_headers.txt",
           dataSourcesMetadataIri: "http://localhost:4522/datasources.txt",
