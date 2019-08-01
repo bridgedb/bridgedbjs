@@ -27,7 +27,8 @@ Rx.Observable.prototype.pipeToStdout = function(
       },
       function(err) {
         process.exitCode = 1;
-        process.stderr.write(err);
+        const out = typeof err === "string" ? err : String(err);
+        process.stderr.write(out);
       },
       function() {
         // done

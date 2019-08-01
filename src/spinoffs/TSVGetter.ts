@@ -19,7 +19,7 @@ if (!global.hasOwnProperty("XMLHttpRequest")) {
 
 import { defaultsDeep } from "lodash";
 
-const csv = require("csv-streamify");
+const csv = require("fast-csv");
 
 import { Observable } from "rxjs/Observable";
 
@@ -35,38 +35,57 @@ import "rx-extra/add/operator/throughNodeStream";
 
 const VError = require("verror");
 
-export const CONFIG_DEFAULT = {
+const HTTP_OPTIONS_DEFAULT = {
   timeout: 3 * 1000,
   retryLimit: 2,
   retryDelay: 3 * 1000
 };
+export type HTTP_OPTIONS_PARTIAL = Partial<typeof HTTP_OPTIONS_DEFAULT>;
+export type HTTP_OPTIONS_FULL = typeof HTTP_OPTIONS_DEFAULT;
 
-const CSV_OPTIONS = { objectMode: true, delimiter: "\t" };
+const TSV_OPTIONS_DEFAULT = {
+  objectMode: true,
+  delimiter: "\t",
+  comment: "#",
+  headers: false
+};
+export type TSV_OPTIONS_PARTIAL = Partial<typeof TSV_OPTIONS_DEFAULT>;
+export type TSV_OPTIONS_FULL = typeof TSV_OPTIONS_DEFAULT;
+
+export const CONFIG_DEFAULT = {
+  http: HTTP_OPTIONS_DEFAULT as HTTP_OPTIONS_PARTIAL,
+  tsv: TSV_OPTIONS_DEFAULT as TSV_OPTIONS_PARTIAL
+};
+export type CONFIG_DEFAULT_PARTIAL = Partial<typeof CONFIG_DEFAULT>;
 
 export class TSVGetter {
-  config;
-  constructor(config: Partial<typeof CONFIG_DEFAULT> = CONFIG_DEFAULT) {
-    this.config = defaultsDeep(config, CONFIG_DEFAULT);
+  tsvOptions: TSV_OPTIONS_FULL;
+  httpOptions: HTTP_OPTIONS_FULL;
+  constructor(config: CONFIG_DEFAULT_PARTIAL = CONFIG_DEFAULT) {
+    const configFilled = defaultsDeep(config, CONFIG_DEFAULT);
+    this.tsvOptions = configFilled.tsv;
+    this.httpOptions = configFilled.http;
   }
 
   get = (
     url: string,
     method: string = "GET",
     body?: string
-  ): Observable<string[]> => {
-    const { config } = this;
+  ): Observable<Map<string, string>> => {
+    const { httpOptions, tsvOptions } = this;
 
     const callString = `in TSVGetter.get(
 	url=${url},
 	method=${method},
 	body=${body}
-) with config=${JSON.stringify(config, null, "  ")}`;
+) with httpOptions=${JSON.stringify(httpOptions, null, "  ")}
+       tsvOptions=${JSON.stringify(tsvOptions, null, "  ")}`;
 
     const ajaxRequest: AjaxRequest = {
       url: encodeURI(url),
       method: method,
       responseType: "text",
-      timeout: config.timeout,
+      timeout: httpOptions.timeout,
       crossDomain: true
     };
     if (body) {
@@ -75,24 +94,14 @@ export class TSVGetter {
       ajaxRequest.headers["Content-Type"] = "text/plain";
     }
     // TODO I shouldn't need so many catches in here, should I?
-    return (
-      Observable.ajax(ajaxRequest)
-        .map((ajaxResponse): string => ajaxResponse.xhr.response)
-        .catch(err => {
-          throw new VError(err, callString);
-        })
-        .throughNodeStream(csv(CSV_OPTIONS))
-        .catch(err => {
-          throw new VError(err, callString);
-        })
-        // each row is an array of fields
-        .filter(function(fields) {
-          // Remove commented out rows
-          return fields[0].indexOf("#") !== 0;
-        })
-        .catch(err => {
-          throw new VError(err, callString);
-        })
-    );
+    return Observable.ajax(ajaxRequest)
+      .map((ajaxResponse): string => ajaxResponse.xhr.response)
+      .catch(err => {
+        throw new VError(err, callString);
+      })
+      .throughNodeStream(csv.parse(tsvOptions))
+      .catch(err => {
+        throw new VError(err, callString);
+      });
   };
 }

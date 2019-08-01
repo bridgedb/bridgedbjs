@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 
+var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");
-var BridgeDb = require("../es5/BridgeDb").BridgeDb;
+
+var BridgeDbModule = require("../es5/BridgeDb");
+var BridgeDb = BridgeDbModule.BridgeDb;
+var DATASOURCE_ID_PROPERTIES = BridgeDbModule.DATASOURCE_ID_PROPERTIES;
+var IRI_TO_NAME = BridgeDbModule.IRI_TO_NAME;
+
 var ndjson = require("ndjson");
 var JSONStream = require("JSONStream");
 var npmPackage = require("../package.json");
@@ -19,23 +25,17 @@ program
 
 program
   .command("datasource <input> [as]")
-  .description(`
-  To IDENTIFY the format of a data source, leave "as" empty.
-      Example: What format is "Entrez Gene"?
-        bridgedb datasource "Entrez Gene"
-        yields: "http://vocabularies.bridgedb.org/ops#conventionalName"
-                (BridgeDb conventional name)
-      Example: What format is "ncbigene"?
-        bridgedb datasource "ncbigene"
-        yields: "http://identifiers.org/idot/preferredPrefix"
-                (identifiers.org (Miriam) preferred prefix)
+  .description(
+`  DETECT the format (unique identifier system) of a data source, or
+  CONVERT a data source from one format to another.
 
-  To CONVERT a data source to another format, specify "as".
-      Example: what is the identifiers.org preferred prefix for BridgeDb conventional name "Entrez Gene"?
-        bridgedb datasource "Entrez Gene" "http://identifiers.org/idot/preferredPrefix"
-        yields: "ncbigene"
+  Supported formats:
+  names: ${DATASOURCE_ID_PROPERTIES.join("\n         ")}
+   IRIs: ${_.keys(IRI_TO_NAME).join("\n         ")}
 
-  The data comes from BridgeDb.
+  The data comes from BridgeDb's datasources file.
+
+  More help: bridgedb datasource --help
 `
   )
   .action(function(input, as, options) {
@@ -45,13 +45,11 @@ program
         console.warn("Using development mock server.");
         process.env.MOCK_SERVER_WARNING_GIVEN = "yes";
       }
-      //*TODO: use this instance for testing:
       var bridgeDb = new BridgeDb({
         baseIri: "http://localhost:4522/",
-        dataSourcesHeadersIri: "http://localhost:4522/datasources_headers.txt",
-        dataSourcesMetadataIri: "http://localhost:4522/datasources.txt"
+        dataSourcesHeadersIri: "http://localhost:4522/datasources_headers.tsv",
+        dataSourcesMetadataIri: "http://localhost:4522/datasources.tsv"
       });
-      //*/
     } else {
       var bridgeDb = new BridgeDb();
     }
@@ -74,7 +72,7 @@ program
         // We drop the shebang when displaying here as help
         .replace(/^.*\n/, "")
         // We also drop bash comment characters
-        .replace(/^#(\ )?/gm, "")
+        .replace(/^#/gm, " ")
         // and replace path to bridgedb with just bridgedb
         .replace(/(\.\/)?bin\/(bridgedb)/gm, "$2")
     );

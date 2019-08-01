@@ -54,11 +54,11 @@ module.exports = function createXrefsCLI(program) {
     )
     .description(
       `Get alternate xrefs (datasource identifiers) and
-optionally insert them into to your json, csv or tsv.
+  optionally insert them into to your json, csv or tsv.
 
-For example, ensembl:ENSG00000132031 -> ncbigene:4148 and uniprot:O15232
+  For example, ensembl:ENSG00000132031 -> ncbigene:4148 and uniprot:O15232
 
-The xrefs come from BridgeDb.
+  The xrefs come from BridgeDb.
 `
     )
     .option(
@@ -136,8 +136,8 @@ The xrefs come from BridgeDb.
         var bridgeDb = new BridgeDb({
           baseIri: "http://localhost:4522/",
           dataSourcesHeadersIri:
-            "http://localhost:4522/datasources_headers.txt",
-          dataSourcesMetadataIri: "http://localhost:4522/datasources.txt",
+            "http://localhost:4522/datasources_headers.tsv",
+          dataSourcesMetadataIri: "http://localhost:4522/datasources.tsv",
           http: { timeout }
         });
         //*/

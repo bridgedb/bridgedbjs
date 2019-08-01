@@ -87,23 +87,23 @@ const XREF_REQUEST_CHUNK_SIZE = 100;
 
 const BRIDGE_DB_REPO_CDN =
   "https://raw.githubusercontent.com/bridgedb/BridgeDb/";
-const BRIDGE_DB_COMMIT_HASH = "465f9f944d09cefbb167eceb9c69499a764100a2";
+const BRIDGE_DB_COMMIT_HASH_OR_BRANCH = "master";
 export const CONFIG_DEFAULT = {
   baseIri: "https://webservice.bridgedb.org/",
   context: [
     BRIDGE_DB_REPO_CDN,
-    BRIDGE_DB_COMMIT_HASH,
+    BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
     "/org.bridgedb.bio/resources/org/bridgedb/bio/jsonld-context.jsonld"
   ].join(""),
   dataSourcesMetadataHeadersIri: [
     BRIDGE_DB_REPO_CDN,
-    BRIDGE_DB_COMMIT_HASH,
-    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.txt"
+    BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
+    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.tsv"
   ].join(""),
   dataSourcesMetadataIri: [
     BRIDGE_DB_REPO_CDN,
-    BRIDGE_DB_COMMIT_HASH,
-    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.txt"
+    BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
+    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.tsv"
   ].join(""),
   http: {
     timeout: 4 * 1000,
@@ -114,15 +114,17 @@ export const CONFIG_DEFAULT = {
 
 // these properties can be trusted to
 // uniquely identify a data source.
-const DATASOURCE_ID_PROPERTIES = [
+export const DATASOURCE_ID_PROPERTIES = [
   "id",
+  // miriamUrn is calculated from id. it's not actually in datasources.tsv.
   "miriamUrn",
   "conventionalName",
   "preferredPrefix",
-  "systemCode"
+  "systemCode",
+  "wikidataProperty"
 ];
 
-const IRI_TO_NAME = {
+export const IRI_TO_NAME = {
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": "id",
   "http://identifiers.org/idot/preferredPrefix": "preferredPrefix",
   "http://identifiers.org/miriam.collection/": "miriamUrn"
@@ -156,13 +158,15 @@ function miriamUrnToPreferredPrefix(miriamUrn: string): string {
   }
 }
 
+// corresponds to datasources_headers.tsv
 export interface DataSourcesMetadataHeaderRow {
   header: string;
   description: string;
   example_entry: string;
   id: string;
-  name: string;
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": string;
+  // calculated from id. not actually in datasources_headers.tsv
+  name: string;
 }
 
 export class BridgeDb {
@@ -170,6 +174,7 @@ export class BridgeDb {
   dataSourceMappings$;
   //dataSourcesMetadataHeaderNameToIri$;
   getTSV;
+  getTSVNoHeaders;
   private xrefsRequestQueue;
   private xrefsResponseQueue;
   constructor(config: Partial<typeof CONFIG_DEFAULT> = CONFIG_DEFAULT) {
@@ -227,46 +232,50 @@ export class BridgeDb {
     // toggle from cold to hot
     bridgeDb.xrefsResponseQueue.connect();
 
-    const getTSV = (bridgeDb.getTSV = new TSVGetter(config.http).get);
+    const getTSV = (bridgeDb.getTSV = new TSVGetter({
+      http: config.http,
+      tsv: { headers: true }
+    }).get);
+
+    const getTSVNoHeaders = (bridgeDb.getTSVNoHeaders = new TSVGetter({
+      http: config.http,
+      tsv: { headers: false }
+    }).get);
 
     const dataSourcesMetadataHeaders$ = getTSV(
       config.dataSourcesMetadataHeadersIri
-    ).map(function(fields): DataSourcesMetadataHeaderRow {
-      const id = fields[4];
-      return {
-        // NOTE: the column number could be confusing, because it's one-based,
-        // so I'll just use the index instead and ignore the column number.
-        //column: parseFloat(fields[0]),
-        header: fields[1],
-        description: fields[2],
-        example_entry: fields[3],
-        id: id,
-        name: IRI_TO_NAME.hasOwnProperty(id)
-          ? IRI_TO_NAME[id]
-          : id.split(/[\/|#]/).pop(),
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": fields[5]
-      };
+    ).map(function(row): DataSourcesMetadataHeaderRow {
+      const id = row["http://www.w3.org/1999/02/22-rdf-syntax-ns#about"];
+      row["id"] = id;
+      row["name"] = IRI_TO_NAME.hasOwnProperty(id)
+        ? IRI_TO_NAME[id]
+        : id.split(/[\/|#]/).pop();
+      return (<unknown>row) as DataSourcesMetadataHeaderRow;
     });
 
     bridgeDb.dataSourceMappings$ = Observable.forkJoin(
-      dataSourcesMetadataHeaders$.toArray(),
+      dataSourcesMetadataHeaders$.reduce(
+        (acc, row: DataSourcesMetadataHeaderRow) => {
+          const header = row.header;
+          acc[header] = row;
+          return acc;
+        },
+        {}
+      ),
       getTSV(config.dataSourcesMetadataIri).toArray()
     )
-      .mergeMap(function(results) {
-        var metadataByColumnIndex = results[0];
-        var rows = results[1];
-
-        return Observable.from(rows).map(function(fields) {
-          return fields.reduce(
-            function(acc, field, i) {
-              const metadata = metadataByColumnIndex[i];
+      .mergeMap(function([metadataByColumnHeader, rows]) {
+        return Observable.from(rows).map(function(row) {
+          return Object.entries(row).reduce(
+            function(acc, [key, value], i) {
+              const metadata = metadataByColumnHeader[key];
               const { id, name } = metadata;
               // NOTE: side effects
               if (!!id && !(id in IRI_TO_NAME)) {
                 IRI_TO_NAME[id] = name;
                 NAME_TO_IRI[name] = id;
               }
-              acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](field);
+              acc[name] = dataTypeParsers[metadata[RDF + "datatype"]](value);
               return acc;
             },
             {} as DataSource
@@ -293,7 +302,7 @@ export class BridgeDb {
         if (dataSource.id === "Sp") {
           dataSource.id = "urn:miriam:uniprot";
         }
-        // If the Miriam URN is unknown or unspecified, datasources.txt uses
+        // If the Miriam URN is unknown or unspecified, datasources.tsv uses
         // the BridgeDb system code as a placeholder value.
         // So here we make sure "id" is actually a Miriam URN.
         if (
@@ -431,7 +440,7 @@ export class BridgeDb {
   ) {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(
+      .getTSVNoHeaders(
         bridgeDb.config.baseIri +
           organism +
           "/attributes/" +
@@ -458,7 +467,7 @@ export class BridgeDb {
     let bridgeDb = this;
     const attrNameParamSection = attrName ? "?attrName=" + attrName : "";
     return bridgeDb
-      .getTSV(
+      .getTSVNoHeaders(
         bridgeDb.config.baseIri +
           organism +
           "/attributeSearch/" +
@@ -474,7 +483,7 @@ export class BridgeDb {
   attributeSet(organism: organism): Observable<string[]> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + organism + "/attributeSet")
+      .getTSVNoHeaders(bridgeDb.config.baseIri + organism + "/attributeSet")
       .reduce(function(acc, row) {
         acc.push(row[0]);
         return acc;
@@ -584,7 +593,7 @@ export class BridgeDb {
   organismProperties(organism: organism): Observable<{}> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + organism + "/properties")
+      .getTSVNoHeaders(bridgeDb.config.baseIri + organism + "/properties")
       .reduce(function(acc, fields) {
         const key = camelCase(fields[0]);
         const value = fields[1];
@@ -599,7 +608,7 @@ export class BridgeDb {
   organisms(): Observable<{}> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + "contents")
+      .getTSVNoHeaders(bridgeDb.config.baseIri + "contents")
       .map(function(fields) {
         return {
           en: fields[0],
@@ -644,7 +653,7 @@ export class BridgeDb {
   search(organism: organism, query: string): Observable<Xref> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + organism + "/search/" + query)
+      .getTSVNoHeaders(bridgeDb.config.baseIri + organism + "/search/" + query)
       .mergeMap(bridgeDb.parseXrefRow)
       .catch(err => {
         throw new VError(err, "calling bridgedb.search");
@@ -654,7 +663,9 @@ export class BridgeDb {
   sourceDataSources(organism: organism): Observable<DataSource> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + organism + "/sourceDataSources")
+      .getTSVNoHeaders(
+        bridgeDb.config.baseIri + organism + "/sourceDataSources"
+      )
       .map(function(fields) {
         return fields[0];
       })
@@ -667,7 +678,9 @@ export class BridgeDb {
   targetDataSources(organism: organism): Observable<DataSource> {
     let bridgeDb = this;
     return bridgeDb
-      .getTSV(bridgeDb.config.baseIri + organism + "/targetDataSources")
+      .getTSVNoHeaders(
+        bridgeDb.config.baseIri + organism + "/targetDataSources"
+      )
       .map(function(fields) {
         return fields[0];
       })
@@ -842,7 +855,7 @@ export class BridgeDb {
       );
 
       return bridgeDb
-        .getTSV(postURL, "POST", body)
+        .getTSVNoHeaders(postURL, "POST", body)
         .mergeMap(function(xrefStringsByInput) {
           const inputXrefIdentifier = xrefStringsByInput[0];
           const inputXrefDataSource = xrefStringsByInput[1];
