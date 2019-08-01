@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# on NixOS: -U
+# on macOS: -p
+UNIV_OPT=$(if echo '' | shasum -U > /dev/null 2>&1; then echo '-U'; elif echo '' | shasum -p > /dev/null 2>&1; then echo '-p'; else echo ''; fi);
+
+check_file_in=$(echo "$@" | awk -v RS=' -' '/(c|-check) / {print $2}')
+# TODO: right now, we are only accepting input on stdin.
+# If we parse all the command line args, we could use something
+# like the following, except the file wouldn't necessarily be $1.
+#shasum "$UNIV_OPT" -a 1 -c "$check_file_out" < "${1:-/dev/stdin}"
+
+if [ -f "$check_file_in" ]; then
+  check_file_out=$(mktemp -q)
+  hash_value=$(awk '{print $1}' "$check_file_in")
+  if [[ "$UNIV_OPT" -eq "-U" ]]; then
+    echo "$hash_value U-" > "$check_file_out"
+  elif [[ "$UNIV_OPT" -eq "-p" ]]; then
+    echo "$hash_value ?-" > "$check_file_out"
+  else
+    echo "$hash_value  -" > "$check_file_out"
+  fi
+
+  shasum "$UNIV_OPT" -a 1 -c "$check_file_out" < /dev/stdin
+else
+  shasum "$UNIV_OPT" -a 1 | sed 's/\ .-/ ?-/' < /dev/stdin
+fi

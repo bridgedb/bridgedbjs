@@ -127,7 +127,9 @@ export const DATASOURCE_ID_PROPERTIES = [
 export const IRI_TO_NAME = {
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#about": "id",
   "http://identifiers.org/idot/preferredPrefix": "preferredPrefix",
-  "http://identifiers.org/miriam.collection/": "miriamUrn"
+  "http://identifiers.org/miriam.collection/": "miriamUrn",
+  "https://www.mediawiki.org/wiki/Wikibase/DataModel#Property":
+    "wikidataProperty"
 };
 const NAME_TO_IRI = invert(IRI_TO_NAME);
 
@@ -164,6 +166,7 @@ export interface DataSourcesMetadataHeaderRow {
   description: string;
   example_entry: string;
   id: string;
+  wikidata_property: string;
   "http://www.w3.org/1999/02/22-rdf-syntax-ns#datatype": string;
   // calculated from id. not actually in datasources_headers.tsv
   name: string;
@@ -809,27 +812,30 @@ export class BridgeDb {
       })
       .find(isString);
 
-    const desiredXrefDataSourceHeaderName$ = isEmpty(desiredXrefDataSources)
+    // NOTE: we require the user to specify inputs of just one format, but
+    //       we now allow specifying outputs of any number of formats.
+    const desiredXrefDataSourceHeaderNames$ = isEmpty(desiredXrefDataSources)
       ? inputXrefDataSourceHeaderName$
       : Observable.from(desiredXrefDataSources)
           .mergeMap(function(xrefDataSource) {
             return bridgeDb.identifyHeaderNameForXrefDataSource(xrefDataSource);
           })
-          .find(isString);
+          .filter(isString)
+          .distinct();
 
-    const dataSourceConventionalNames$ = Observable.from(xrefDataSources)
-      .mergeMap(function(xrefDataSource) {
-        return convertXrefDataSourceToConventionalName(xrefDataSource);
-      })
-      .toArray();
+    const dataSourceConventionalNames$ = Observable.from(
+      xrefDataSources
+    ).mergeMap(function(xrefDataSource) {
+      return convertXrefDataSourceToConventionalName(xrefDataSource);
+    });
 
     return Observable.forkJoin(
       inputXrefDataSourceHeaderName$,
-      desiredXrefDataSourceHeaderName$,
-      dataSourceConventionalNames$
+      desiredXrefDataSourceHeaderNames$.toArray(),
+      dataSourceConventionalNames$.toArray()
     ).mergeMap(function([
       inputXrefDataSourceHeaderName,
-      desiredXrefDataSourceHeaderName,
+      desiredXrefDataSourceHeaderNames,
       dataSourceConventionalNames
     ]) {
       // TODO: find out how we're getting duplicate rows in the body.
@@ -850,17 +856,14 @@ export class BridgeDb {
       const convertXrefDataSourceToInputFormat = bridgeDb.convertXrefDataSourceTo(
         inputXrefDataSourceHeaderName
       );
-      const convertXrefDataSourceToDesiredInputFormat = bridgeDb.convertXrefDataSourceTo(
-        desiredXrefDataSourceHeaderName
-      );
 
       return bridgeDb
         .getTSVNoHeaders(postURL, "POST", body)
-        .mergeMap(function(xrefStringsByInput) {
-          const inputXrefIdentifier = xrefStringsByInput[0];
-          const inputXrefDataSource = xrefStringsByInput[1];
-          const xrefsString = xrefStringsByInput[2];
-
+        .mergeMap(function([
+          inputXrefIdentifier,
+          inputXrefDataSource,
+          xrefsString
+        ]) {
           // NOTE: splitting by comma, e.g.:
           //       'T:GO:0031966,Il:ILMN_1240829' -> ['T:GO:0031966', 'Il:ILMN_1240829']
           return Observable.from(xrefsString.split(","))
@@ -878,17 +881,23 @@ export class BridgeDb {
                 returnedXrefIdentifier
               ] = xrefString.split(/:(.+)/);
 
-              return convertXrefDataSourceToDesiredInputFormat(
-                returnedXrefDataSource
-              ).map(function(desiredXrefDataSource) {
-                return {
-                  xrefDataSource: desiredXrefDataSource,
-                  xrefIdentifier: returnedXrefIdentifier
-                };
-              });
+              return Observable.from(desiredXrefDataSourceHeaderNames)
+                .mergeMap(desiredXrefDataSourceHeaderName => {
+                  return bridgeDb.convertXrefDataSourceTo(
+                    desiredXrefDataSourceHeaderName,
+                    returnedXrefDataSource
+                  ) as string;
+                })
+                .map(function(desiredXrefDataSource) {
+                  return {
+                    xrefDataSource: desiredXrefDataSource,
+                    xrefIdentifier: returnedXrefIdentifier
+                  };
+                });
             })
             .filter(({ xrefDataSource }) => {
               return (
+                !isUndefined(xrefDataSource) &&
                 !isEmpty(xrefDataSource) &&
                 (desiredXrefDataSources.length === 0 ||
                   desiredXrefDataSources.indexOf(xrefDataSource) > -1)

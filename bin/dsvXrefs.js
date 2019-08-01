@@ -1,7 +1,8 @@
-var replaceStream = require("replacestream");
 var _ = require("lodash/fp");
 // TODO does csv follow this: https://tools.ietf.org/html/rfc4180
-var csv = require("csv-streamify");
+// this comment was from when I was using csv-streamify.
+// is it still relevant?
+const csv = require("fast-csv");
 var hl = require("highland");
 var Rx = require("rx-extra");
 require("../es5/spinoffs/pipeToStdout");
@@ -89,24 +90,18 @@ module.exports = function(
     xrefIdentifierColumn
   );
 
-  var parser = csv({
-    delimiter: delimiterOption,
-    newline: newlineOption,
-    quote: quoteOption,
+  var parser = csv.parse({
     objectMode: true,
-    columns: headersOption
+    comment: "#",
+    delimiter: delimiterOption,
+    // TODO: csv-streamify supported this option, but
+    //       fast-csv does not. Is that a problem?
+    //newline: newlineOption,
+    quote: quoteOption,
+    headers: headersOption
   });
 
-  var commentLineRe = new RegExp(
-    `^${commentOption}.*$[${newlineOption}]?`,
-    "gm"
-  );
-  Rx.Observable.fromNodeReadableStream(
-    hl(process.stdin)
-      // Ignore comments
-      .through(replaceStream(commentLineRe, ""))
-      .through(parser)
-  )
+  Rx.Observable.fromNodeReadableStream(hl(process.stdin).through(parser))
     .mergeMap(function(row) {
       const organism = organismField(row);
       const xrefDataSource = xrefDataSourceField(row);
@@ -129,6 +124,7 @@ module.exports = function(
         xrefIdentifier,
         desiredXrefDataSources
       );
+
       if (insertionPoint !== "none") {
         // wide format
         return mappedXrefs$.map(function(xrefs) {
