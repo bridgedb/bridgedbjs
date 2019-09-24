@@ -12,10 +12,6 @@ declare global {
       XMLHttpRequest: XMLHttpRequest;
     }
   }
-  // Augment Browser `window`
-  //interface Window extends NodeJS.Global { }
-  // Augment Web Worker `self`
-  //interface WorkerGlobalScope extends NodeJS.Global { }
 }
 
 if (!global.hasOwnProperty("XMLHttpRequest")) {
@@ -269,7 +265,7 @@ export class BridgeDb {
     )
       .mergeMap(function([metadataByColumnHeader, rows]) {
         return Observable.from(rows).map(function(row) {
-          return Object.entries(row).reduce(
+          return toPairs(row).reduce(
             function(acc, [key, value], i) {
               const metadata = metadataByColumnHeader[key];
               const { id, name } = metadata;

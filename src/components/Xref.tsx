@@ -27,13 +27,13 @@ export class Xref extends React.Component<any, any> {
     };
     let entityTypeSelectStyle = {
       float: "left"
-    };
+    } as React.CSSProperties;
     let dataSourceSelectStyle = {
       float: "left"
-    };
+    } as React.CSSProperties;
     let dbIdStyle = {
       float: "left"
-    };
+    } as React.CSSProperties;
     return (
       <div>
         <WPEntityTypeSelect

@@ -6,6 +6,8 @@
       "dom.iterable",
       "es5",
       "es6",
+      "es2017",
+      "es2017.object",
       "scripthost"
     ],
     "module": "commonjs",

@@ -1,4 +1,3 @@
-var replaceStream = require("replacestream");
 var _ = require("lodash");
 var fs = require("fs");
 var path = require("path");

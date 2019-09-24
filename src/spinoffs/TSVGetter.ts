@@ -7,10 +7,6 @@ declare global {
       XMLHttpRequest: XMLHttpRequest;
     }
   }
-  // Augment Browser `window`
-  //interface Window extends NodeJS.Global { }
-  // Augment Web Worker `self`
-  //interface WorkerGlobalScope extends NodeJS.Global { }
 }
 
 if (!global.hasOwnProperty("XMLHttpRequest")) {
