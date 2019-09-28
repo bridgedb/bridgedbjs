@@ -1,6 +1,6 @@
 {
   "name": "bridgedb",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "description": "JS client for BridgeDb.org ID mapping framework webservices",
   "main": "es5/index.js",
   "module": "esnext/index.js",
@@ -53,17 +53,30 @@
     "watch:ui": "npm run start:ui"
   },
   "watch": {
-    "dev": ["index.d.ts", "src/*.{ts,tsx}", "test/*.{ts,tsx,js,jsx}"],
-    "test": ["index.js", "ui/*.{js,jsx}", "test/*.{js,jsx}"]
+    "dev": [
+      "index.d.ts",
+      "src/*.{ts,tsx}",
+      "test/*.{ts,tsx,js,jsx}"
+    ],
+    "test": [
+      "index.js",
+      "ui/*.{js,jsx}",
+      "test/*.{js,jsx}"
+    ]
   },
   "browserify": {
-    "transform": ["cssify"]
+    "transform": [
+      "cssify"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/bridgedb/bridgedbjs.git"
   },
-  "keywords": ["bridgedb", "biology"],
+  "keywords": [
+    "bridgedb",
+    "biology"
+  ],
   "author": "BridgeDb team",
   "license": "Apache-2.0",
   "bugs": {
@@ -130,7 +143,11 @@
     ],
     "grepOptions": {
       "include": [],
-      "exclude": [".git", "jsdoc-conf.json", "npm-debug.log"],
+      "exclude": [
+        ".git",
+        "jsdoc-conf.json",
+        "npm-debug.log"
+      ],
       "excludeDir": [
         "./docs",
         "./test",
