@@ -98,11 +98,12 @@ result=$(./bin/bridgedb datasource "Entrez Gene" "http://www.w3.org/1999/02/22-r
 
 cmd=$previous_command ret=$?
 if [ $ret -ne 0 ]; then
-	echo '****************************************************************';
-	echo "Command below failed (error code $ret). Expected: $expect";
-	echo '****************************************************************';
-	echo "  $cmd";
-	echo '';
+	echo '****************************************************************' 1>&2;
+	echo "Command below failed (error code $ret). Expected: $expect" 1>&2;
+	echo '****************************************************************' 1>&2;
+	echo "  $cmd" 1>&2;
+	echo '' 1>&2;
+  exit 1
 fi
 
 ##################################
