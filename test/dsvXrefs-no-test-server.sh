@@ -9,27 +9,33 @@ SCRIPT_BASENAME=$( basename ${BASH_SOURCE[0]} )
 TMPFILE=$(mktemp /tmp/${SCRIPT_BASENAME}.XXXXXX) || exit 1
 TMPFILE_SHASUM="$TMPFILE.sha1sum"
 
-touch "$TMPFILE"
-touch "$TMPFILE_SHASUM"
-
 cleanup() {
-  rm "$TMPFILE"
-  rm "$TMPFILE_SHASUM"
+  if [ -e "$TMPFILE" ]; then
+    rm "$TMPFILE"
+    rm "$TMPFILE_SHASUM"
+  fi
 }
 
 debug() {
 	cmd=$previous_command ret=$?
-	if [ $ret -ne 0 ]; then
-		echo '****************************************************************' > /dev/stderr;
-		echo "Command failed (error code $ret). Expected $expect in $SCRIPT_PATH" > /dev/stderr;
-		echo '****************************************************************' > /dev/stderr;
-		echo "$cmd" > /dev/stderr;
-		echo '' > /dev/stderr;
-		echo "* Unexpected result:" > /dev/stderr;
-		cat "$TMPFILE" > /dev/stderr;
-		echo '' > /dev/stderr;
-		echo "* Unexpected sha1sum: $(cat "$TMPFILE" | bin/sha1sumup)" > /dev/stderr;
-		echo '' > /dev/stderr;
+	if [ $ret -eq 143 ]; then
+		echo '****************************************************************' 1>&2;
+		echo "Command killed or failed (error code $ret) when running $expect in $SCRIPT_PATH" 1>&2;
+		echo '****************************************************************' 1>&2;
+	elif [ $ret -ne 0 ]; then
+		echo '****************************************************************' 1>&2;
+		echo "Command failed (error code $ret). Expected $expect in $SCRIPT_PATH" 1>&2;
+		echo '****************************************************************' 1>&2;
+		echo "$cmd" 1>&2;
+		echo '' 1>&2;
+    if [ -e "$TMPFILE" ]; then
+      echo "* Unexpected result:" 1>&2;
+      cat "$TMPFILE" 1>&2;
+      echo '' 1>&2;
+      echo "* Unexpected sha1sum: $(cat "$TMPFILE" | bin/sha1sumup)" 1>&2;
+      echo '' 1>&2;
+    fi
+    exit 1
 	fi
 }
 
