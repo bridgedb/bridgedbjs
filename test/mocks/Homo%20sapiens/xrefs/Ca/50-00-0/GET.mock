@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+692	Chemspider
+HMDB0001426	HMDB
+DB03843	DrugBank
+CHEBI:16842	ChEBI
+16842	ChEBI
+CHEMBL1255	ChEMBL compound
+Q161210	Wikidata
+4196	Guide to Pharmacology
+CHEBI:5142	ChEBI
+DTXSID7020637	EPA CompTox
+50-00-0	CAS
+HMDB01426	HMDB
+712	PubChem-compound
+D00017	KEGG Drug
+C00067	KEGG Compound
+WSFSSNUMVMOOMR-UHFFFAOYSA-N	InChIKey

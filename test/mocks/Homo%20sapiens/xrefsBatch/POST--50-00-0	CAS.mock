@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+Vary: Authorization,Accept-Encoding
+Keep-Alive: timeout=10, max=50
+Connection: Keep-Alive
+
+50-00-0	CAS	Cs:692,Ch:HMDB0001426,Dr:DB03843,Ce:CHEBI:16842,Ce:16842,Cl:CHEMBL1255,Wd:Q161210,Gpl:4196,Ce:CHEBI:5142,Ect:DTXSID7020637,Ca:50-00-0,Ch:HMDB01426,Cpc:712,Kd:D00017,Ck:C00067,Ik:WSFSSNUMVMOOMR-UHFFFAOYSA-N

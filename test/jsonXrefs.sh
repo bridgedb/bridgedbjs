@@ -44,7 +44,7 @@ trap cleanup EXIT INT QUIT TERM
 
 # nest: 0
 
-#/bridgedb xrefs -i '.entitiesById' -f 'json' Mouse '.entitiesById[].xrefDataSource' '.entitiesById[].xrefIdentifier' ensembl hgnc.symbol ncbigene uniprot chebi hmdb wikidata
+# bridgedb xrefs -i '.entitiesById' -f 'json' Mouse '.entitiesById[].xrefDataSource' '.entitiesById[].xrefIdentifier' ensembl hgnc.symbol ncbigene uniprot chebi hmdb wikidata
 
 expect="array, nest 0, ..."
 echo '87099983da62c1a3b1c5b51405bdb7419eca97a2 ?-' > "$TMPFILE_SHASUM"
@@ -239,7 +239,7 @@ result=$(
 ##################################
 
 expect="object, nest 1, ..."
-echo 'becc16a42902d6f8ff32f8626d876cd997775b7e ?-' > "$TMPFILE_SHASUM"
+echo '88927215c8fcdbe4775a3cb2ce23bfba3466f2a0 ?-' > "$TMPFILE_SHASUM"
 result=$(
 ./bin/bridgedb xrefs -f "json" \
 	-i ".entitiesById" \
