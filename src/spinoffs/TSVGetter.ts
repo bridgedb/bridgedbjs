@@ -34,7 +34,7 @@ const VError = require("verror");
 const HTTP_OPTIONS_DEFAULT = {
   timeout: 3 * 1000,
   retryLimit: 2,
-  retryDelay: 3 * 1000
+  retryDelay: 3 * 1000,
 };
 export type HTTP_OPTIONS_PARTIAL = Partial<typeof HTTP_OPTIONS_DEFAULT>;
 export type HTTP_OPTIONS_FULL = typeof HTTP_OPTIONS_DEFAULT;
@@ -43,14 +43,14 @@ const TSV_OPTIONS_DEFAULT = {
   objectMode: true,
   delimiter: "\t",
   comment: "#",
-  headers: false
+  headers: false,
 };
 export type TSV_OPTIONS_PARTIAL = Partial<typeof TSV_OPTIONS_DEFAULT>;
 export type TSV_OPTIONS_FULL = typeof TSV_OPTIONS_DEFAULT;
 
 export const CONFIG_DEFAULT = {
   http: HTTP_OPTIONS_DEFAULT as HTTP_OPTIONS_PARTIAL,
-  tsv: TSV_OPTIONS_DEFAULT as TSV_OPTIONS_PARTIAL
+  tsv: TSV_OPTIONS_DEFAULT as TSV_OPTIONS_PARTIAL,
 };
 export type CONFIG_DEFAULT_PARTIAL = Partial<typeof CONFIG_DEFAULT>;
 
@@ -67,7 +67,7 @@ export class TSVGetter {
     url: string,
     method: string = "GET",
     body?: string
-  ): Observable<Map<string, string>> => {
+  ): Observable<string[] | Map<string, string>> => {
     const { httpOptions, tsvOptions } = this;
 
     const callString = `in TSVGetter.get(
@@ -82,7 +82,7 @@ export class TSVGetter {
       method: method,
       responseType: "text",
       timeout: httpOptions.timeout,
-      crossDomain: true
+      crossDomain: true,
     };
     if (body) {
       ajaxRequest.body = body;
@@ -92,11 +92,11 @@ export class TSVGetter {
     // TODO I shouldn't need so many catches in here, should I?
     return Observable.ajax(ajaxRequest)
       .map((ajaxResponse): string => ajaxResponse.xhr.response)
-      .catch(err => {
+      .catch((err) => {
         throw new VError(err, callString);
       })
       .throughNodeStream(csv.parse(tsvOptions))
-      .catch(err => {
+      .catch((err) => {
         throw new VError(err, callString);
       });
   };
