@@ -90,17 +90,17 @@ export const CONFIG_DEFAULT = {
   context: [
     BRIDGE_DB_REPO_CDN,
     BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
-    "/org.bridgedb.bio/resources/org/bridgedb/bio/jsonld-context.jsonld",
+    "/org.bridgedb.bio/src/main/resources/org/bridgedb/bio/jsonld-context.jsonld",
   ].join(""),
   dataSourcesMetadataHeadersIri: [
     BRIDGE_DB_REPO_CDN,
     BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
-    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources_headers.tsv",
+    "/org.bridgedb.bio/src/main/resources/org/bridgedb/bio/datasources_headers.tsv",
   ].join(""),
   dataSourcesMetadataIri: [
     BRIDGE_DB_REPO_CDN,
     BRIDGE_DB_COMMIT_HASH_OR_BRANCH,
-    "/org.bridgedb.bio/resources/org/bridgedb/bio/datasources.tsv",
+    "/org.bridgedb.bio/src/main/resources/org/bridgedb/bio/datasources.tsv",
   ].join(""),
   http: {
     timeout: 4 * 1000,
